@@ -1,9 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import EmployeesPage from "./pages/EmployeesPage";
 import ProjectsPage from "./pages/ProjectsPage";
-import CvsPage from './pages/CvsPage';
-import EntitiesPage from './pages/EntitiesPage';
-import './App.css';
+import CvsPage from "./pages/CvsPage";
+import EntitiesPage from "./pages/EntitiesPage";
 
 function App() {
   return (
