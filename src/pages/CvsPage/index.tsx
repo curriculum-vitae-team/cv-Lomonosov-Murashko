@@ -1,9 +1,7 @@
 import React from 'react'
 
-function CvsPage() {
+export const CvsPage = () => {
   return (
     <div>CvsPage</div>
   )
-}
-
-export default CvsPage;
+};

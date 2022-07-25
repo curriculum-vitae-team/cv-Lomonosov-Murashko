@@ -1,9 +1,7 @@
 import React from 'react'
 
-function EntitiesPage() {
+export const EntitiesPage = () => {
   return (
     <div>EntitiesPage</div>
   )
-}
-
-export default EntitiesPage;
+};

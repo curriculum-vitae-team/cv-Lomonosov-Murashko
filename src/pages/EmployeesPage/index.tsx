@@ -1,7 +1,7 @@
-import Header from "../../components/Header";
+import { Header } from "../../components/Header";
 import { Container } from "@mui/system";
 
-function EmployeesPage() {
+export const EmployeesPage = () => {
   return (
     <>
       <Header />
@@ -10,6 +10,4 @@ function EmployeesPage() {
       </Container>
     </>
   );
-}
-
-export default EmployeesPage;
+};
