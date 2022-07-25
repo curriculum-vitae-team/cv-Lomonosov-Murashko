@@ -8,7 +8,7 @@ export const StyledHeader = styled(Box)({
 
 export const Img = styled('img')({
   width: "7em",
-  height: "3em",
+  minHeight: "3em",
 });
 
 export const StyledGrid = styled(Grid)({

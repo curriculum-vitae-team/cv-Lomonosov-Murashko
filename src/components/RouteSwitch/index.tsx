@@ -5,6 +5,7 @@ import { EntitiesPage } from "../../pages/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage";
 import { Header } from "../Header";
+import { Footer } from "../Footer";
 
 export const RouteSwitch = () => {
   return (
@@ -18,6 +19,7 @@ export const RouteSwitch = () => {
         <Route path="/entities" element={<EntitiesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
