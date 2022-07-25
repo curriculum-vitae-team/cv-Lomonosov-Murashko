@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export const EntitiesPage = () => {
-  return (
-    <div>EntitiesPage</div>
-  )
+  return <div>EntitiesPage</div>;
 };
