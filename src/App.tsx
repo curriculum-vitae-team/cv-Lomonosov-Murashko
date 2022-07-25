@@ -1,14 +1,19 @@
-import Header from "./components/Header";
-import { Container } from '@mui/system';
+import { Routes, Route } from 'react-router-dom';
+import EmployeesPage from "./pages/EmployeesPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import CvsPage from './pages/CvsPage';
+import EntitiesPage from './pages/EntitiesPage';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Container maxWidth={"md"}>
-        <div>TEST</div>
-      </Container>
+      <Routes>
+        <Route path="/employees" element={<EmployeesPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/cvs" element={<CvsPage />} />
+        <Route path="/entities" element={<EntitiesPage />} />
+      </Routes>
     </div>
   );
 }
