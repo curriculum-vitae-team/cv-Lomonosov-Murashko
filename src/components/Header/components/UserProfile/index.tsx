@@ -3,7 +3,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Typography } from "@mui/material";
 import { StyledGrid } from "./UserProfile.styles";
 
-function UserProfile() {
+export const UserProfile = () => {
   return (
     <StyledGrid>
       {/* if user have icon -> display his avatar, othervise fake icon */}
@@ -12,6 +12,4 @@ function UserProfile() {
       <TranslateIcon sx={{ width: "0.875em" }} />
     </StyledGrid>
   );
-}
-
-export default UserProfile;
+};

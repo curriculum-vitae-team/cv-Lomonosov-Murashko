@@ -1,11 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import EmployeesPage from "./pages/EmployeesPage";
-import ProjectsPage from "./pages/ProjectsPage";
-import CvsPage from "./pages/CvsPage";
-import EntitiesPage from "./pages/EntitiesPage";
+import { EmployeesPage } from "./pages/EmployeesPage";
+import { ProjectsPage } from "./pages/ProjectsPage";
+import { CvsPage } from "./pages/CvsPage";
+import { EntitiesPage } from "./pages/EntitiesPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Routes>

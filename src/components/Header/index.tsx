@@ -1,9 +1,8 @@
-import React from "react";
 import { StyledHeader, Img, StyledGrid } from "./Header.styles";
-import UserProfile from "./components/UserProfile";
+import { UserProfile } from "./components/UserProfile";
 import logo from "../../assets/images/logo.svg";
 
-function Header() {
+export const Header = () => {
   return (
       <StyledHeader>
         <StyledGrid>
@@ -12,6 +11,4 @@ function Header() {
         </StyledGrid>
       </StyledHeader>
   )
-}
-
-export default Header;
+};

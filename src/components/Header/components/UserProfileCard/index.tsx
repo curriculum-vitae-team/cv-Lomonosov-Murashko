@@ -1,9 +1,7 @@
 import React from 'react'
 
-function UserProfileCard() {
+export const UserProfileCard = () => {
   return (
     <div>UserProfileCard</div>
   )
-}
-
-export default UserProfileCard;
+};
