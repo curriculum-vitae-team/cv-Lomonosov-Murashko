@@ -5,18 +5,19 @@ import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
 import { SideBar } from "../SideBar";
+import { ROUTE } from "../../route/route";
 
 export const Router = () => {
   return (
     <BrowserRouter>
       <SideBar />
       <Routes>
-        <Route path="/" element={<Navigate to="/employees" />} />
-        <Route path="/employees" element={<EmployeesPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/cvs" element={<CvsPage />} />
-        <Route path="/entities" element={<EntitiesPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={ROUTE.EMPTY} element={<Navigate to={ROUTE.EMPLOYEES} />} />
+        <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
+        <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
+        <Route path={ROUTE.CVS} element={<CvsPage />} />
+        <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
+        <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
