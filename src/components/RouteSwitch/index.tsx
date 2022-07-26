@@ -8,16 +8,14 @@ import { SideBar } from "../SideBar";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
 import { Stack } from "@mui/material";
-import { Container } from "@mui/system";
 
 export const RouteSwitch = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Container maxWidth="lg">
-        <Stack direction="row">
-          <SideBar />
-          <Routes>
+      <Stack direction="row">
+        <SideBar />
+        <Routes>
           <Route path="/" element={<Navigate to="/employees" />} />
           <Route path="/employees" element={<EmployeesPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
@@ -25,8 +23,7 @@ export const RouteSwitch = () => {
           <Route path="/entities" element={<EntitiesPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        </Stack>
-      </Container>
+      </Stack>
       <Footer />
     </BrowserRouter>
   );
