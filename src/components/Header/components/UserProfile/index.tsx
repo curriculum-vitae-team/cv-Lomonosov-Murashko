@@ -1,14 +1,33 @@
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { StyledTypography, StyledTranslateIcon } from './UserProfile.styles';
-import { StyledGrid } from "./UserProfile.styles";
+import { useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  StyledTypography,
+  StyledTranslateIcon,
+  StyledGrid,
+  StyledBox,
+} from "./UserProfile.styles";
+import { UserProfileCard } from "../UserProfileCard";
 
 export const UserProfile = () => {
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+
+  const handleProfileCardClose = () => {
+    setIsProfileOpen(false);
+  };
+
+  const handleProfileCardOpen = () => {
+    setIsProfileOpen(true);
+  };
+
   return (
     <StyledGrid>
       {/* if user have icon -> display his avatar, othervise fake icon */}
-      <AccountCircleIcon />
-      <StyledTypography>Murashko Ilya</StyledTypography>
+      <StyledBox onClick={handleProfileCardOpen}>
+        <AccountCircleIcon />
+        <StyledTypography>Murashko Ilya</StyledTypography>
+      </StyledBox>
       <StyledTranslateIcon />
+      {isProfileOpen && <UserProfileCard onClose={handleProfileCardClose} />}
     </StyledGrid>
   );
 };
