@@ -7,14 +7,14 @@ export const StyledWrapperStack = styled(Stack)({
   height: "calc(100vh - 6em)",
   paddingTop: "1em",
   background: "#fff",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
-});
+  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
+}) as typeof Stack;
 
 export const StyledStack = styled(Stack)({
   flexDirection: "row",
-  padding: "0.375em 0 0.365em 1em"
-});
+  padding: "0.375em 0 0.365em 1em",
+}) as typeof Stack;
 
 export const StyledNavLink = styled(NavLink)({
-  display: 'flex'
+  display: "flex",
 });

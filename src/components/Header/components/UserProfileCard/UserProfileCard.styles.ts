@@ -14,16 +14,16 @@ export const StyledStack = styled(Stack)({
   color: "#000",
   borderRadius: "10px",
   background: "#fff",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
-});
+  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
+}) as typeof Stack;
 
 export const StyledTypography = styled(Typography)({
-  marginBottom: "3em"
-});
+  marginBottom: "3em",
+}) as typeof Typography;
 
 export const StyledButton = styled(Button)({
-  width: "60%"
-});
+  width: "60%",
+}) as typeof Button;
 
 export const StyledBox = styled(Box)({
   height: "100vh",
@@ -31,5 +31,5 @@ export const StyledBox = styled(Box)({
   position: "fixed",
   top: "0",
   left: "0",
-  backgroundColor: "rgba(0, 0, 0, 0.4)"
-});
+  backgroundColor: "rgba(0, 0, 0, 0.4)",
+}) as typeof Box;
