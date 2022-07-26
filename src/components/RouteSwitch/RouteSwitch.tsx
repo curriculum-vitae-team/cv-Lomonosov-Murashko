@@ -22,6 +22,7 @@ export const RouteSwitch = () => {
           <Route path="/cvs" element={<CvsPage />} />
           <Route path="/entities" element={<EntitiesPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          {/* Some comment */}
         </Routes>
       </Stack>
       <Footer />
