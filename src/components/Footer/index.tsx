@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 export const Footer = () => {
   return (
     <StyledStack justifyContent="center" alignItems="center">
-      <Typography>CV Builder</Typography>
+      <Typography variant="body1">CV Builder</Typography>
     </StyledStack>
   );
 };
