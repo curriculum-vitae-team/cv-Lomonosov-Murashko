@@ -5,10 +5,7 @@ import {
   StyledBox,
 } from "./UserProfileCard.styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-type UserProfileCardProps = {
-  onClose: () => void;
-};
+import { UserProfileCardProps } from "./UserProfileCard.types";
 
 export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
   const handleSignOutClick = () => {
