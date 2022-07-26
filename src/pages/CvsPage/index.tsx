@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export const CvsPage = () => {
-  return (
-    <div>CvsPage</div>
-  )
+  return <div>CvsPage</div>;
 };
