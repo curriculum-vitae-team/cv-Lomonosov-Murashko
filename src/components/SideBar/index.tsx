@@ -10,7 +10,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
 
 export const SideBar = () => {
-  const handleNavLinkCLick = (isActive: boolean) => {
+  const handleNavLinkClick = (isActive: boolean) => {
     return isActive ? { color: "#1890FF" } : { color: "#000" };
   };
 
@@ -18,7 +18,7 @@ export const SideBar = () => {
     <StyledWrapperStack>
       <StyledStack>
         <StyledNavLink
-          style={({ isActive }) => handleNavLinkCLick(isActive)}
+          style={({ isActive }) => handleNavLinkClick(isActive)}
           to="/employees"
         >
           <EmojiPeopleIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
@@ -27,7 +27,7 @@ export const SideBar = () => {
       </StyledStack>
       <StyledStack>
         <StyledNavLink
-          style={({ isActive }: any) => handleNavLinkCLick(isActive)}
+          style={({ isActive }) => handleNavLinkClick(isActive)}
           to="/projects"
         >
           <DnsIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
@@ -36,7 +36,7 @@ export const SideBar = () => {
       </StyledStack>
       <StyledStack>
         <StyledNavLink
-          style={({ isActive }: any) => handleNavLinkCLick(isActive)}
+          style={({ isActive }) => handleNavLinkClick(isActive)}
           to="/cvs"
         >
           <AutoStoriesIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
@@ -45,7 +45,7 @@ export const SideBar = () => {
       </StyledStack>
       <StyledStack>
         <StyledNavLink
-          style={({ isActive }: any) => handleNavLinkCLick(isActive)}
+          style={({ isActive }) => handleNavLinkClick(isActive)}
           to="/entities"
         >
           <FolderIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
