@@ -18,7 +18,7 @@ export const SideBar = () => {
     <StyledWrapperStack>
       <StyledStack>
         <StyledNavLink
-          style={({ isActive }: any) => handleNavLinkCLick(isActive)}
+          style={({ isActive }) => handleNavLinkCLick(isActive)}
           to="/employees"
         >
           <EmojiPeopleIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
