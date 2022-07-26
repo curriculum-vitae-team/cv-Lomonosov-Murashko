@@ -9,7 +9,7 @@ import { Header } from "../Header/Header";
 import { Footer } from "../Footer";
 import { Stack } from "@mui/material";
 
-export const RouteSwitch = () => {
+export const Router = () => {
   return (
     <BrowserRouter>
       <Header />

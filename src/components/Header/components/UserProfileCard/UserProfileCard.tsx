@@ -1,8 +1,8 @@
 import {
-  StyledStack,
   StyledTypography,
   StyledButton,
-  StyledBox,
+  StyledOverlayDiv,
+  StyledDiv
 } from "./UserProfileCard.styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { UserProfileCardProps } from "./UserProfileCard.types";
@@ -12,15 +12,17 @@ export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
     // log out
   };
 
+  const onUserProfileCardClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+  };
+
   return (
-    <StyledBox onClick={onClose}>
-      <StyledStack
-        onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
-      >
+    <StyledOverlayDiv onClick={onClose}>
+      <StyledDiv onClick={onUserProfileCardClick} sx={{  }}>
         <AccountCircleIcon sx={{ width: "3em", height: "3em" }} />
         <StyledTypography>Murashko Ilya</StyledTypography>
         <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
-      </StyledStack>
-    </StyledBox>
+      </StyledDiv>
+    </StyledOverlayDiv>
   );
 };

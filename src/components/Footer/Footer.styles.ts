@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Stack } from "@mui/material";
+import { styled, Stack } from "@mui/material";
 
 export const StyledStack = styled(Stack)({
   position: "absolute",
@@ -9,4 +8,4 @@ export const StyledStack = styled(Stack)({
   color: "#fff",
   width: "100%",
   minHeight: "3em",
-}) as typeof Stack;
+});

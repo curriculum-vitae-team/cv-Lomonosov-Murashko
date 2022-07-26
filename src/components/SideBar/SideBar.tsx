@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import {
   StyledStack,
-  StyledWrapperStack,
+  StyledDiv,
   StyledNavLink,
 } from "./SideBar.styles";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -15,7 +15,7 @@ export const SideBar = () => {
   };
 
   return (
-    <StyledWrapperStack>
+    <StyledDiv>
       <StyledStack>
         <StyledNavLink
           style={({ isActive }) => handleNavLinkClick(isActive)}
@@ -52,6 +52,6 @@ export const SideBar = () => {
           <Typography>Entities</Typography>
         </StyledNavLink>
       </StyledStack>
-    </StyledWrapperStack>
+    </StyledDiv>
   );
 };
