@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Grid, Typography, Box } from "@mui/material";
-import TranslateIcon from "@mui/icons-material/Translate";
 
 export const StyledGrid = styled(Grid)({
   display: "flex",
@@ -16,10 +15,6 @@ export const StyledTypography = styled(Typography)({
   "&:hover": {
     color: "#1890FF",
   }
-});
-
-export const StyledTranslateIcon = styled(TranslateIcon)({
-  width: "0.875em"
 });
 
 export const StyledBox = styled(Box)({
