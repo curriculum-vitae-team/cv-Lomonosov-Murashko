@@ -1,7 +1,7 @@
-import { styled, Stack } from "@mui/material";
+import { styled, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-export const StyledDiv = styled('div')({
+export const StyledDiv = styled("div")({
   minWidth: "13em",
   height: "calc(100vh - 6em)",
   paddingTop: "1em",
@@ -17,3 +17,9 @@ export const StyledStack = styled(Stack)({
 export const StyledNavLink = styled(NavLink)({
   display: "flex",
 });
+
+export const NavLinkTypography = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "isActive",
+})(({ isActive }: { isActive: boolean }) => ({
+  color: isActive ? "#1890FF" : "#000",
+}));
