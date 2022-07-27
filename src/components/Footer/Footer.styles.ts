@@ -1,9 +1,9 @@
-import { styled, Stack } from "@mui/material";
+import { styled } from "@mui/material";
 
-export const StyledStack = styled(Stack)({
-  position: "absolute",
-  bottom: "0",
-  right: "0",
+export const StyledFooter = styled('footer')({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   backgroundColor: "#001529",
   color: "#fff",
   width: "100%",
