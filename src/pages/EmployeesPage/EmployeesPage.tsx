@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Typography, Grid } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { StyledDiv, StyledGrid } from "./EmployeesPage.styles";
 import { Employees } from "./components/Employees";
-import { IEmployee } from "../../interfaces/employesInterface";
+import { StyledDiv, StyledGrid } from "./EmployeesPage.styles";
+import { IEmployee } from "../../interfaces/employeesInterface";
 
 const emp = [
   {
@@ -93,19 +93,26 @@ export const EmployeesPage = () => {
 
   return (
     <StyledDiv>
-      <Typography>Employees</Typography>
+      <Typography>employees</Typography>
       <StyledGrid container>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
           <Typography>Name</Typography>
-          <FilterListIcon onClick={sortByName} />
+          <FilterListIcon
+            className={isNameSortedByOrder ? "active" : ""}
+            onClick={sortByName}
+          />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
           <Typography>Last Name</Typography>
-          <FilterListIcon onClick={sortByLastName} />
+          <FilterListIcon
+            className={isLastNameSortedByOrder ? "active" : ""}
+            onClick={sortByLastName}
+          />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
           <Typography>Email</Typography>
         </Grid>
+        <Grid item xs={3}></Grid>
       </StyledGrid>
       <Employees employees={employees} />
     </StyledDiv>
