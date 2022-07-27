@@ -17,9 +17,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.EMPLOYEES}>
           {({ isActive }) => (
             <>
-              <EmojiPeopleIcon
-                sx={{ width: "0.6em", paddingRight: "0.35em" }}
-              />
+              <EmojiPeopleIcon />
               <NavLinkTypography isActive={isActive}>
                 Employees
               </NavLinkTypography>
@@ -31,7 +29,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.PROJECTS}>
           {({ isActive }) => (
             <>
-              <DnsIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
+              <DnsIcon />
               <NavLinkTypography isActive={isActive}>
                 Projects
               </NavLinkTypography>
@@ -43,9 +41,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.CVS}>
           {({ isActive }) => (
             <>
-              <AutoStoriesIcon
-                sx={{ width: "0.6em", paddingRight: "0.35em" }}
-              />
+              <AutoStoriesIcon />
               <NavLinkTypography isActive={isActive}>Cvs</NavLinkTypography>
             </>
           )}
@@ -55,7 +51,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.ENTITIES}>
           {({ isActive }) => (
             <>
-              <FolderIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
+              <FolderIcon />
               <NavLinkTypography isActive={isActive}>
                 Entities
               </NavLinkTypography>
