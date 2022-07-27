@@ -6,10 +6,13 @@ import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
 import { SideBar } from "../SideBar";
 import { ROUTE } from "../../route/route";
+import { Header } from "../Header";
+import { Footer } from "../Footer";
 
 export const Router = () => {
   return (
     <BrowserRouter>
+      <Header />
       <SideBar />
       <Routes>
         <Route path={ROUTE.EMPTY} element={<Navigate to={ROUTE.EMPLOYEES} />} />
@@ -19,6 +22,7 @@ export const Router = () => {
         <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
         <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
