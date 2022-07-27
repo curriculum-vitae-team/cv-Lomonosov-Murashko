@@ -1,7 +1,11 @@
 import { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import TranslateIcon from "@mui/icons-material/Translate";
-import { StyledTypography, StyledGrid, StyledBox } from "./UserProfile.styles";
+import {
+  StyledTypography,
+  StyledGrid,
+  StyledBox,
+  StyledTranslateIcon,
+} from "./UserProfile.styles";
 import { UserProfileCard } from "../UserProfileCard";
 
 export const UserProfile = () => {
@@ -22,7 +26,7 @@ export const UserProfile = () => {
         <AccountCircleIcon />
         <StyledTypography>Murashko Ilya</StyledTypography>
       </StyledBox>
-      <TranslateIcon sx={{ width: "0.875em" }} />
+      <StyledTranslateIcon />
       {isProfileOpen && <UserProfileCard onClose={handleProfileCardClose} />}
     </StyledGrid>
   );

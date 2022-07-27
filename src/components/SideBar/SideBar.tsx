@@ -1,57 +1,43 @@
-import { Typography } from "@mui/material";
 import {
   StyledStack,
-  StyledWrapperStack,
+  StyledDiv,
   StyledNavLink,
+  NavLinkTypography,
 } from "./SideBar.styles";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import { ROUTE } from "../../route/route";
+
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 
 export const SideBar = () => {
-  const handleNavLinkClick = (isActive: boolean) => {
-    return isActive ? { color: "#1890FF" } : { color: "#000" };
-  };
-
   return (
-    <StyledWrapperStack>
+    <StyledDiv>
       <StyledStack>
-        <StyledNavLink
-          style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/employees"
-        >
-          <EmojiPeopleIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Employees</Typography>
+        <StyledNavLink to={ROUTE.EMPLOYEES}>
+          <EmojiPeopleIcon />
+          <NavLinkTypography>Employees</NavLinkTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
-        <StyledNavLink
-          style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/projects"
-        >
-          <DnsIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Projects</Typography>
+        <StyledNavLink to={ROUTE.PROJECTS}>
+          <DnsIcon />
+          <NavLinkTypography>Projects</NavLinkTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
-        <StyledNavLink
-          style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/cvs"
-        >
-          <AutoStoriesIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Cvs</Typography>
+        <StyledNavLink to={ROUTE.CVS}>
+          <AutoStoriesIcon />
+          <NavLinkTypography>Cvs</NavLinkTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
-        <StyledNavLink
-          style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/entities"
-        >
-          <FolderIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Entities</Typography>
+        <StyledNavLink to={ROUTE.ENTITIES}>
+          <FolderIcon />
+          <NavLinkTypography>Entities</NavLinkTypography>
         </StyledNavLink>
       </StyledStack>
-    </StyledWrapperStack>
+    </StyledDiv>
   );
 };
