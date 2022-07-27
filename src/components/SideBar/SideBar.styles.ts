@@ -1,4 +1,4 @@
-import { styled, Stack } from "@mui/material";
+import { styled, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 export const StyledDiv = styled('div')({
@@ -16,4 +16,9 @@ export const StyledStack = styled(Stack)({
 
 export const StyledNavLink = styled(NavLink)({
   display: "flex",
+  textDecoration: "none"
+});
+
+export const StyledTypography = styled(Typography)({
+  paddingLeft: "0.35em"
 });

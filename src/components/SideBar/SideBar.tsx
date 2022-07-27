@@ -1,13 +1,14 @@
-import { Typography } from "@mui/material";
 import {
   StyledStack,
   StyledDiv,
   StyledNavLink,
+  StyledTypography,
 } from "./SideBar.styles";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
+import { ROUTE } from "../../route/route";
 
 export const SideBar = () => {
   const handleNavLinkClick = (isActive: boolean) => {
@@ -19,37 +20,37 @@ export const SideBar = () => {
       <StyledStack>
         <StyledNavLink
           style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/employees"
+          to={ROUTE.EMPLOYEES}
         >
-          <EmojiPeopleIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Employees</Typography>
+          <EmojiPeopleIcon sx={{ width: "0.6em" }} />
+          <StyledTypography>Employees</StyledTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
         <StyledNavLink
           style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/projects"
+          to={ROUTE.PROJECTS}
         >
-          <DnsIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Projects</Typography>
+          <DnsIcon sx={{ width: "0.6em" }} />
+          <StyledTypography>Projects</StyledTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
         <StyledNavLink
           style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/cvs"
+          to={ROUTE.CVS}
         >
-          <AutoStoriesIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Cvs</Typography>
+          <AutoStoriesIcon />
+          <StyledTypography>Cvs</StyledTypography>
         </StyledNavLink>
       </StyledStack>
       <StyledStack>
         <StyledNavLink
           style={({ isActive }) => handleNavLinkClick(isActive)}
-          to="/entities"
+          to={ROUTE.ENTITIES}
         >
-          <FolderIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
-          <Typography>Entities</Typography>
+          <FolderIcon sx={{ width: "0.6em" }} />
+          <StyledTypography>Entities</StyledTypography>
         </StyledNavLink>
       </StyledStack>
     </StyledDiv>

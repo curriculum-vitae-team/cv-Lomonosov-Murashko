@@ -1,4 +1,3 @@
-// import { Layout } from "../Layout";
 import { Router } from "../Router";
 import { CssBaseline } from '@mui/material';
 import { Header } from "../Header";
@@ -11,9 +10,6 @@ export const App = () => {
       <Header />
       <Router />
       <Footer />
-      {/* <Layout>
-        
-      </Layout> */}
     </>
   );
 };
