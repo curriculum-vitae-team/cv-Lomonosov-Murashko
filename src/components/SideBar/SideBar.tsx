@@ -9,6 +9,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { ROUTE } from "../../route/route";
+import { SideBarIcons } from "./SideBarIcons";
 
 export const SideBar = () => {
   return (
@@ -17,9 +18,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.EMPLOYEES}>
           {({ isActive }) => (
             <>
-              <EmojiPeopleIcon
-                sx={{ width: "0.6em", paddingRight: "0.35em" }}
-              />
+              <SideBarIcons.EmojiPeople isActive={isActive} />
               <NavLinkTypography isActive={isActive}>
                 Employees
               </NavLinkTypography>
@@ -31,7 +30,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.PROJECTS}>
           {({ isActive }) => (
             <>
-              <DnsIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
+              <SideBarIcons.Dns isActive={isActive} />
               <NavLinkTypography isActive={isActive}>
                 Projects
               </NavLinkTypography>
@@ -43,9 +42,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.CVS}>
           {({ isActive }) => (
             <>
-              <AutoStoriesIcon
-                sx={{ width: "0.6em", paddingRight: "0.35em" }}
-              />
+              <SideBarIcons.AutoStories isActive={isActive} />
               <NavLinkTypography isActive={isActive}>Cvs</NavLinkTypography>
             </>
           )}
@@ -55,7 +52,7 @@ export const SideBar = () => {
         <StyledNavLink to={ROUTE.ENTITIES}>
           {({ isActive }) => (
             <>
-              <FolderIcon sx={{ width: "0.6em", paddingRight: "0.35em" }} />
+              <SideBarIcons.FolderIcon isActive={isActive} />
               <NavLinkTypography isActive={isActive}>
                 Entities
               </NavLinkTypography>
