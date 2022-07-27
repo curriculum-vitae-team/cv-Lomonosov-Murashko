@@ -2,9 +2,9 @@ import {
   StyledTypography,
   StyledButton,
   StyledOverlayDiv,
-  StyledDiv
+  StyledDiv,
+  StyledAccountCircleIcon
 } from "./UserProfileCard.styles";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { UserProfileCardProps } from "./UserProfileCard.types";
 
 export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
@@ -19,7 +19,7 @@ export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
   return (
     <StyledOverlayDiv onClick={onClose}>
       <StyledDiv onClick={onUserProfileCardClick} sx={{  }}>
-        <AccountCircleIcon sx={{ width: "3em", height: "3em" }} />
+        <StyledAccountCircleIcon sx={{ width: "3em", height: "3em" }} />
         <StyledTypography>Murashko Ilya</StyledTypography>
         <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
       </StyledDiv>

@@ -1,4 +1,5 @@
 import { styled, Button, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const StyledDiv = styled('div')({
   position: "absolute",
@@ -31,4 +32,9 @@ export const StyledOverlayDiv = styled('div')({
   top: "0",
   left: "0",
   backgroundColor: "rgba(0, 0, 0, 0.4)",
+});
+
+export const StyledAccountCircleIcon = styled(AccountCircleIcon)({
+  width: "3em",
+  height: "3em"
 });

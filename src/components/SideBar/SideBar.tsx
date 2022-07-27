@@ -4,10 +4,10 @@ import {
   StyledNavLink,
   StyledTypography,
 } from "./SideBar.styles";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { ROUTE } from "../../route/route";
 
 export const SideBar = () => {
@@ -22,7 +22,7 @@ export const SideBar = () => {
           style={({ isActive }) => handleNavLinkClick(isActive)}
           to={ROUTE.EMPLOYEES}
         >
-          <EmojiPeopleIcon sx={{ width: "0.6em" }} />
+          <EmojiPeopleIcon />
           <StyledTypography>Employees</StyledTypography>
         </StyledNavLink>
       </StyledStack>
@@ -31,7 +31,7 @@ export const SideBar = () => {
           style={({ isActive }) => handleNavLinkClick(isActive)}
           to={ROUTE.PROJECTS}
         >
-          <DnsIcon sx={{ width: "0.6em" }} />
+          <DnsIcon />
           <StyledTypography>Projects</StyledTypography>
         </StyledNavLink>
       </StyledStack>
@@ -49,7 +49,7 @@ export const SideBar = () => {
           style={({ isActive }) => handleNavLinkClick(isActive)}
           to={ROUTE.ENTITIES}
         >
-          <FolderIcon sx={{ width: "0.6em" }} />
+          <FolderIcon />
           <StyledTypography>Entities</StyledTypography>
         </StyledNavLink>
       </StyledStack>

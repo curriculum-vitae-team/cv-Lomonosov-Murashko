@@ -1,4 +1,5 @@
 import { styled, Grid, Typography, Box } from "@mui/material";
+import TranslateIcon from "@mui/icons-material/Translate";
 
 export const StyledGrid = styled(Grid)({
   display: "flex",
@@ -19,4 +20,8 @@ export const StyledTypography = styled(Typography)({
 export const StyledBox = styled(Box)({
   display: "flex",
   cursor: "pointer",
+});
+
+export const StyledTranslateIcon = styled(TranslateIcon)({
+  width: "0.875em"
 });
