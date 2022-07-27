@@ -4,10 +4,6 @@ import {
   StyledNavLink,
   NavLinkTypography,
 } from "./SideBar.styles";
-import DnsIcon from "@mui/icons-material/Dns";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import FolderIcon from "@mui/icons-material/Folder";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { ROUTE } from "../../route/route";
 import { SideBarIcons } from "./SideBarIcons";
 
