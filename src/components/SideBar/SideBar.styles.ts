@@ -16,11 +16,12 @@ export const StyledStack = styled(Stack)({
 
 export const StyledNavLink = styled(NavLink)({
   display: "flex",
+  color: "#000",
+  "&.active": {
+    color: "#1890FF",
+  },
 });
 
-export const NavLinkTypography = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "isActive",
-})(({ isActive }: { isActive: boolean }) => ({
-  color: isActive ? "#1890FF" : "#000",
-  paddingLeft: "0.5em"
-}));
+export const NavLinkTypography = styled(Typography)({
+  paddingLeft: "0.5em",
+});

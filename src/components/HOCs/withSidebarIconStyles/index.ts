@@ -1,1 +1,0 @@
-export { withSidebarIconStyles } from "./withSidebarIconStyles";
