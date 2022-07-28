@@ -6,17 +6,17 @@ export const StyledWrapperGrid = styled(Grid)({
   padding: "0.5em",
   "& svg:hover": {
     cursor: "pointer",
-    color: "red"
+    color: "red",
   },
   "& > div": {
-    padding: "0 0.5em"
-  }
+    padding: "0 0.5em",
+  },
 });
 
 export const StyledGrid = styled(Grid)({
-  textAlign: "end"
+  textAlign: "end",
 });
 
 export const StyledLink = styled(Link)({
-  color: "#000"
+  color: "#000",
 });

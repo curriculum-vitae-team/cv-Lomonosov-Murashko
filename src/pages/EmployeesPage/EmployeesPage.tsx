@@ -5,6 +5,7 @@ import { Employees } from "./components/Employees";
 import { StyledDiv, StyledGrid } from "./EmployeesPage.styles";
 import { IEmployee } from "../../interfaces/employeesInterface";
 
+// TODO: delete later, fake employee data
 const emp = [
   {
     id: 1,
@@ -37,6 +38,8 @@ export const EmployeesPage = () => {
   const [isNameSortedByOrder, setIsNameSortedByOrder] = useState(false);
   const [isLastNameSortedByOrder, setIsLastNameSortedByOrder] = useState(false);
 
+  // TODO: move to redux
+
   const sortEmployeesByOrder = (sortingField: string) => {
     return employees.sort((a: IEmployee, b: IEmployee) => {
       if (
@@ -52,6 +55,8 @@ export const EmployeesPage = () => {
       return 0;
     });
   };
+
+  // TODO: move to redux
 
   const sortEmployeesInReverseOrder = (sortingField: string) => {
     return employees.sort((a: IEmployee, b: IEmployee) => {

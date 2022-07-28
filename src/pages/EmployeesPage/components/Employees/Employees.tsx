@@ -8,7 +8,9 @@ type EmployeesProps = {
 export const Employees = ({ employees }: EmployeesProps) => {
   return (
     <>
-      {employees.map((employee: IEmployee) => <Employee key={employee.id} info={employee} />)}
+      {employees.map((employee: IEmployee) => (
+        <Employee key={employee.id} info={employee} />
+      ))}
     </>
-  )
-}
+  );
+};

@@ -10,7 +10,7 @@ type EmployeeProps = {
 
 export const Employee = ({ info }: EmployeeProps) => {
   const deleteEmployee = (id: number) => {
-    // employees.filter((employee: IEmployee) => employee.id !== id);
+    // TODO: move method to redux (employees.filter((employee: IEmployee) => employee.id !== id);)
   };
 
   return (

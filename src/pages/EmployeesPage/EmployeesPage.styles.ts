@@ -1,10 +1,9 @@
 import { styled, Grid } from "@mui/material";
 import { transform } from "typescript";
 
-
-export const StyledDiv = styled('div')({
+export const StyledDiv = styled("div")({
   width: "100%",
-  padding: "1.5em 1em 0 1em"
+  padding: "1.5em 1em 0 1em",
 });
 
 export const StyledGrid = styled(Grid)({
@@ -22,9 +21,9 @@ export const StyledGrid = styled(Grid)({
     cursor: "pointer",
   },
   "& > div": {
-    padding: "0 0.5em"
+    padding: "0 0.5em",
   },
   "& svg.active": {
-    transform: "rotate(-180deg)"
-  }
+    transform: "rotate(-180deg)",
+  },
 });
