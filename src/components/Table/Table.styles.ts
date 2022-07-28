@@ -1,11 +1,9 @@
+import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import { Table } from "../../components/Table";
 
-export const StyledTable = styled(Table)({
-  display: "flex",
+export const StyledGrid = styled(Grid)({
   marginTop: "1em",
   padding: "1em",
-  backgroundColor: "#f9f9f9",
   borderRadius: "5px",
   "& svg": {
     fontSize: "1em",
