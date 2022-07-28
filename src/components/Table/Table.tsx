@@ -1,4 +1,3 @@
-import { Grid, TableBody, TableHead } from "@mui/material";
 import { useState } from "react";
 import { TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";

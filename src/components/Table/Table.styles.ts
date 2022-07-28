@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const StyledGrid = styled(Grid)({
+  zIndex: "1",
   marginTop: "1em",
   padding: "1em",
   borderRadius: "5px",
