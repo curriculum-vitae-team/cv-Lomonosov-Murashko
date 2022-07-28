@@ -3,7 +3,7 @@ import {
   StyledButton,
   StyledOverlayDiv,
   StyledDiv,
-  StyledAccountCircleIcon
+  StyledAccountCircleIcon,
 } from "./UserProfileCard.styles";
 import { UserProfileCardProps } from "./UserProfileCard.types";
 
@@ -18,8 +18,8 @@ export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
 
   return (
     <StyledOverlayDiv onClick={onClose}>
-      <StyledDiv onClick={onUserProfileCardClick} sx={{  }}>
-        <StyledAccountCircleIcon sx={{ width: "3em", height: "3em" }} />
+      <StyledDiv onClick={onUserProfileCardClick} sx={{}}>
+        <StyledAccountCircleIcon />
         <StyledTypography>Murashko Ilya</StyledTypography>
         <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
       </StyledDiv>
