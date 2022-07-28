@@ -1,8 +1,14 @@
-import { Grid } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+} from "@mui/material";
 import { IEmployee } from "../../../../interfaces/employeesInterface";
-import { StyledWrapperGrid, StyledGrid, StyledLink } from "./Employee.styles";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ROUTE } from "../../../../route/route";
+import { StyledWrapperGrid } from "./Employee.styles";
+import { ExpandMore } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 type EmployeeProps = {
   info: IEmployee;
@@ -10,25 +16,41 @@ type EmployeeProps = {
 
 export const Employee = ({ info }: EmployeeProps) => {
   const deleteEmployee = (id: number) => {
-    // TODO: move method to redux (employees.filter((employee: IEmployee) => employee.id !== id);)
+    // TODO: delete employee
   };
 
   return (
-    <StyledLink to={ROUTE.EMPLOYEES + "/" + info.id}>
-      <StyledWrapperGrid container>
-        <Grid item xs={3}>
-          {info.name}
-        </Grid>
-        <Grid item xs={3}>
-          {info.lastName}
-        </Grid>
-        <Grid item xs={3}>
-          {info.email}
-        </Grid>
-        <StyledGrid item xs={3}>
-          <DeleteOutlineIcon onClick={() => deleteEmployee(info.id)} />
-        </StyledGrid>
-      </StyledWrapperGrid>
-    </StyledLink>
+    <Accordion>
+      <AccordionSummary
+        id="header"
+        aria-controls="content"
+        expandIcon={<ExpandMore />}
+      >
+        <StyledWrapperGrid container>
+          <Grid item xs={2.4}>
+            {info.name}
+          </Grid>
+          <Grid item xs={2.4}>
+            {info.lastName}
+          </Grid>
+          <Grid item xs={2.4}>
+            {info.email}
+          </Grid>
+          <Grid item xs={2.4}>
+            {info.department}
+          </Grid>
+          <Grid item xs={2.1}>
+            {info.specialization}
+          </Grid>
+          <Grid item xs={0.3}></Grid>
+        </StyledWrapperGrid>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Button>
+          <Link to={info.id.toString()}>Profile</Link>
+        </Button>
+        <Button onClick={() => deleteEmployee(info.id)}>Delete</Button>
+      </AccordionDetails>
+    </Accordion>
   );
 };

@@ -1,20 +1,19 @@
 import { styled, Grid } from "@mui/material";
-import { transform } from "typescript";
 
 export const StyledDiv = styled("div")({
   width: "100%",
-  padding: "1.5em 1em 0 1em",
+  fontSize: "13px",
 });
 
 export const StyledGrid = styled(Grid)({
   display: "flex",
-  margin: "1em 0",
+  marginTop: "1em",
   padding: "1em",
-  backgroundColor: "#cfe0e8",
+  backgroundColor: "#f9f9f9",
   borderRadius: "5px",
   "& svg": {
     fontSize: "1em",
-    margin: "0.25em 0 0 0.3em",
+    margin: "0.5em 0 0 0.3em",
     transition: "transform 0.4s ease-in",
   },
   "& svg:hover": {
@@ -26,4 +25,24 @@ export const StyledGrid = styled(Grid)({
   "& svg.active": {
     transform: "rotate(-180deg)",
   },
+});
+
+export const StyledButton = styled("button")({
+  backgroundColor: "#1890FF",
+  color: "#fff",
+  fontSize: "1em",
+  margin: "1em",
+  cursor: "pointer",
+  border: "none",
+  padding: "0.7em",
+  borderRadius: "2px",
+  float: "right",
+});
+
+export const DivContainer = styled("div")({
+  marginLeft: "2px",
+  borderTop: "1.25em solid #f9f9f9",
+  borderRight: "1.5em solid #f9f9f9",
+  borderLeft: "1.5em solid #f9f9f9",
+  borderBottom: "1.25em solid #f9f9f9",
 });

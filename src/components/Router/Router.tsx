@@ -4,6 +4,7 @@ import { EmployeesPage } from "../../pages/EmployeesPage/EmployeesPage";
 import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
+import { EmployeeInfoPage } from "../../pages/EmployeesPage/components/EmployeeInfoPage";
 import { ROUTE } from "../../route/route";
 import { Layout } from "../Layout";
 import { RedirectPage } from "../../pages/RedirectPage";
@@ -15,6 +16,7 @@ export const Router = () => {
         <Route path={ROUTE.EMPTY} element={<Layout />}>
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
+          <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeeInfoPage />} />
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />

@@ -8,7 +8,7 @@ export const theme = createTheme({
           fontSize: "16px"
         },
         a: {
-          textDecoration: "none"
+          textDecoration: "none",
         }
       }
     }
