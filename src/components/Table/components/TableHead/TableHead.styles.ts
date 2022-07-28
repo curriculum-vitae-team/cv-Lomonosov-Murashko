@@ -11,11 +11,14 @@ export const StyledDiv = styled("div")({
 export const StyledGrid = styled(Grid)({
   display: "flex",
 
-  padding: "1em",
+  padding: "1em 0",
   borderRadius: "5px",
+  "& div.css-1lzyqrg-MuiGrid-root": {
+    justifyContent: "flex-start",
+  },
   "& svg": {
     fontSize: "1em",
-    margin: "0.5em 0 0 0.3em",
+    margin: "0.1em 0 0 0.3em",
     transition: "transform 0.4s ease-in",
   },
   "& svg:hover": {

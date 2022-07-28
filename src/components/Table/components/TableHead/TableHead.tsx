@@ -1,5 +1,4 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Grid } from "@mui/material";
 import { TableHeadItem } from "../TableHeadItem";
 import { StyledDiv, StyledGrid } from "./TableHead.styles";
 import { TableHeadProps } from "./TableHead.types";

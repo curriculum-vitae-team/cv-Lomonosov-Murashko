@@ -5,7 +5,6 @@ import {
   AccordionSummary,
   Button,
   Grid,
-  Typography,
 } from "@mui/material";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -34,9 +33,7 @@ export function TableRow<T extends { id: string }>({
             .filter((key) => key !== "id")
             .map((key) => (
               <Grid item xs={gridXS} key={item.id + "-" + (key as string)}>
-                <Typography textAlign="center">
-                  {item[key] as unknown as ReactNode}
-                </Typography>
+                <div>{item[key] as unknown as ReactNode}</div>
               </Grid>
             ))}
         </Grid>

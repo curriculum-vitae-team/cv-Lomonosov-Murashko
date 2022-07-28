@@ -26,6 +26,7 @@ export function Table<T extends { [x: string]: any; id: string }>({
 
   return (
     <StyledGrid container>
+      <button className="addEmployee">Add Employee</button>
       <TableHeadComponent
         columns={head}
         sortBy={sortBy}
