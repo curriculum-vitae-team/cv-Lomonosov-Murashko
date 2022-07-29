@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import { useCallback } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { StyledStack, StyledTable } from "./EmployeesPage.styles";
@@ -51,6 +52,10 @@ const head = [
 ];
 
 export const EmployeesPage = () => {
+  const handleItemDelete = useCallback((id: string) => {
+    console.log(id);
+  }, []);
+
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
@@ -59,9 +64,7 @@ export const EmployeesPage = () => {
       </StyledStack>
 
       <StyledTable
-        onDelete={(id) => {
-          console.log(id);
-        }}
+        onDelete={handleItemDelete}
         head={head}
         items={emp}
         redirectButtonText="Profile"
