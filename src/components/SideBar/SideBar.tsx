@@ -7,7 +7,7 @@ export const SideBar = () => {
   return (
     <StyledDiv>
       {sideBarLinks.map(({ to, name, Icon }, i) => (
-        <SideBarLink to={to} name={name} icon={<Icon />} key={i} />
+        <SideBarLink to={to} name={name} icon={<Icon />} key={to} />
       ))}
     </StyledDiv>
   );
