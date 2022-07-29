@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { StyledStack, StyledTable } from "./EmployeesPage.styles";
+import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 const emp = [
   {
@@ -63,15 +63,7 @@ export const EmployeesPage = () => {
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>
-      <div
-        style={{
-          margin: "24px",
-          marginBottom: "0",
-          width: "calc(100% - 48px)",
-          height: "100%",
-          background: "#fff",
-        }}
-      >
+      <StyledDiv>
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
@@ -80,7 +72,7 @@ export const EmployeesPage = () => {
           deleteButtonText="Delete"
           entryType={TableEntry.EMPLOYEE}
         />
-      </div>
+      </StyledDiv>
     </Stack>
   );
 };
