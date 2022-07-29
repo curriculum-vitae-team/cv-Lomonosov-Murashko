@@ -1,5 +1,4 @@
-import { Paper, styled, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Paper, styled } from "@mui/material";
 
 export const StyledPaper = styled(Paper)({
   minWidth: "13em",

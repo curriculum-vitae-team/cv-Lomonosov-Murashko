@@ -1,6 +1,6 @@
 import { TableEntry } from "../../constants/table";
 
-export type TableProps<T extends { [x: string]: any; id: string }> = {
+export type TableProps<T extends { [x: string]: unknown; id: string }> = {
   items: T[];
   head: TableHead;
   redirectButtonText: string;

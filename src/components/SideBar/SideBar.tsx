@@ -6,7 +6,7 @@ import { sideBarLinks } from "./SideBar.data";
 export const SideBar = () => {
   return (
     <StyledPaper>
-      {sideBarLinks.map(({ to, name, Icon }, i) => (
+      {sideBarLinks.map(({ to, name, Icon }) => (
         <SideBarLink to={to} name={name} icon={<Icon />} key={to} />
       ))}
     </StyledPaper>
