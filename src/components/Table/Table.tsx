@@ -4,6 +4,7 @@ import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
 import { StyledGrid } from "./Table.styles";
 import { Button } from "@mui/material";
+import { byColumn } from "./helpers/byColumn";
 
 export function Table<T extends { [x: string]: any; id: string }>({
   items,
@@ -15,14 +16,6 @@ export function Table<T extends { [x: string]: any; id: string }>({
 }: TableProps<T>) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
-
-  function byColumn<T>(column: keyof T, sortAsc: boolean) {
-    if (sortAsc) {
-      return (a: T, b: T) => (a[column] < b[column] ? -1 : 1);
-    }
-
-    return (a: T, b: T) => (b[column] < a[column] ? -1 : 1);
-  }
 
   return (
     <StyledGrid container>
