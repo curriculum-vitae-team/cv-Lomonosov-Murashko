@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { TableProps } from "./Table.types";
+import { Item, TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
 import { StyledGrid } from "./Table.styles";
@@ -7,14 +7,14 @@ import { Button } from "@mui/material";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
 
-export function Table<T extends { [x: string]: string | number; id: string }>({
+export function Table({
   items,
   head,
   onDelete,
   redirectButtonText,
   deleteButtonText,
   entryType,
-}: TableProps<T>) {
+}: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
 
@@ -46,7 +46,7 @@ export function Table<T extends { [x: string]: string | number; id: string }>({
         onSortByChange={handleSortByChange}
         gridXS={12 / head.length}
       />
-      {[...items].sort(byColumn<T>(sortBy, sortAsc)).map((item) => (
+      {[...items].sort(byColumn<Item>(sortBy, sortAsc)).map((item) => (
         <TableRowComponent
           redirectButtonText={redirectButtonText}
           deleteButtonText={deleteButtonText}

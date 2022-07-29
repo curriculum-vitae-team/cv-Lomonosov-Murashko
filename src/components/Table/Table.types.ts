@@ -1,7 +1,7 @@
 import { TableEntry } from "../../constants/table";
 
-export type TableProps<T extends { [x: string]: unknown; id: string }> = {
-  items: T[];
+export type TableProps = {
+  items: Item[];
   head: TableHead;
   redirectButtonText: string;
   deleteButtonText: string;
@@ -14,3 +14,8 @@ export type TableHead = {
   columnName: string;
   isSortable: boolean;
 }[];
+
+export type Item = {
+  [x: string]: string | number;
+  id: string;
+};
