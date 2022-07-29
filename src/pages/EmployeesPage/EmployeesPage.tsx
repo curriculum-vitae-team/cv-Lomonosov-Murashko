@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { Breadcrumb } from "../../components/Breadcrumb";
+import { TableEntry } from "../../constants/table";
 import { StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 const emp = [
@@ -63,8 +64,9 @@ export const EmployeesPage = () => {
         }}
         head={head}
         items={emp}
-        redirectButtonText={"Profile"}
-        deleteButtonText={"Delete"}
+        redirectButtonText="Profile"
+        deleteButtonText="Delete"
+        entryType={TableEntry.EMPLOYEE}
       />
     </Stack>
   );

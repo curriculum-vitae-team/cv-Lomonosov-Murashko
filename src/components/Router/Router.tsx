@@ -5,7 +5,7 @@ import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
 import { EmployeeInfoPage } from "../../pages/EmployeesPage/components/EmployeeInfoPage";
-import { ROUTE } from "../../route/route";
+import { ROUTE } from "../../constants/route";
 import { Layout } from "../Layout";
 import { RedirectPage } from "../../pages/RedirectPage";
 

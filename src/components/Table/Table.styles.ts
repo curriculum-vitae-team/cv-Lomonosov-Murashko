@@ -24,15 +24,18 @@ export const StyledGrid = styled(Grid)({
   "& svg.active": {
     transform: "rotate(-180deg)",
   },
-  "& button.addEmployee": {
+  "& .MuiButton-root": {
     backgroundColor: "#1890FF",
     border: "none",
     margin: "1rem 1rem 0 0",
-    padding: "0.7em",
+
     borderRadius: "2px",
     color: "#fff",
     cursor: "pointer",
     textAlign: "right",
+  },
+  "& .MuiButton-root:hover": {
+    background: "#1890FF",
   },
   "& div.MuiAccordionSummary-gutters": {
     padding: "0 0 0 0.5rem",

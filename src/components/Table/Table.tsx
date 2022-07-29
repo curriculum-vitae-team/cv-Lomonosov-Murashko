@@ -3,6 +3,7 @@ import { TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
 import { StyledGrid } from "./Table.styles";
+import { Button } from "@mui/material";
 
 export function Table<T extends { [x: string]: any; id: string }>({
   items,
@@ -10,6 +11,7 @@ export function Table<T extends { [x: string]: any; id: string }>({
   onDelete,
   redirectButtonText,
   deleteButtonText,
+  entryType,
 }: TableProps<T>) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
@@ -24,7 +26,13 @@ export function Table<T extends { [x: string]: any; id: string }>({
 
   return (
     <StyledGrid container>
-      <button className="addEmployee">Add Employee</button>
+      <Button
+        onClick={() => {
+          // TODO: Navigate to creation
+        }}
+      >
+        Add {entryType}
+      </Button>
       <TableHeadComponent
         columns={head}
         sortBy={sortBy}
