@@ -8,10 +8,8 @@ export function TableHead({
   sortBy,
   onSortByChange,
   sortAsc,
+  gridXS,
 }: TableHeadProps) {
-  const accordionButtonXS = 0;
-  const gridXS = (12 - accordionButtonXS) / columns.length;
-
   return (
     <StyledDiv>
       <StyledGrid container>

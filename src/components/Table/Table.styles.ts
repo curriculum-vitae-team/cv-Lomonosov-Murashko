@@ -42,7 +42,7 @@ export const StyledGrid = styled(Grid)({
     justifyContent: "flex-end",
     padding: "0 0 0.5em 0",
     "& a, button": {
-      color: "#1890FF",
+      color: "#fff",
     },
   },
 });

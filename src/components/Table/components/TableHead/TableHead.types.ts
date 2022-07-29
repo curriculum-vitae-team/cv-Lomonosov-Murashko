@@ -5,4 +5,5 @@ export type TableHeadProps = {
   sortBy: string;
   sortAsc: boolean;
   onSortByChange: (columnName: string) => void;
+  gridXS: number;
 };
