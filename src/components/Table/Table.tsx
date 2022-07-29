@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
@@ -17,6 +17,18 @@ export function Table<T extends { [x: string]: any; id: string }>({
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
 
+  const handleSortByChange = useCallback(
+    (columnName: string) => {
+      if (columnName === sortBy) {
+        setSortAsc((prev) => !prev);
+      } else {
+        setSortBy(columnName);
+        setSortAsc(true);
+      }
+    },
+    [sortBy]
+  );
+
   return (
     <StyledGrid container>
       <Button
@@ -30,14 +42,7 @@ export function Table<T extends { [x: string]: any; id: string }>({
         columns={head}
         sortBy={sortBy}
         sortAsc={sortAsc}
-        onSortByChange={(columnName) => {
-          if (columnName === sortBy) {
-            setSortAsc((prev) => !prev);
-          } else {
-            setSortBy(columnName);
-            setSortAsc(true);
-          }
-        }}
+        onSortByChange={handleSortByChange}
       />
       {[...items].sort(byColumn<T>(sortBy, sortAsc)).map((item) => (
         <TableRowComponent
