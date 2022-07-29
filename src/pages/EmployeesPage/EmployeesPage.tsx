@@ -53,13 +53,13 @@ const head = [
 
 export const EmployeesPage = () => {
   const handleItemDelete = useCallback((id: string) => {
-    console.log(id);
+    // TODO: 
   }, []);
 
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
-        <Breadcrumb />
+        <Breadcrumb customPath="Ilya Murashko"/>
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>

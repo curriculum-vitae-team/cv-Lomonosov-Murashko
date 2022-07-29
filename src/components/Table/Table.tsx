@@ -6,7 +6,7 @@ import { StyledGrid } from "./Table.styles";
 import { Button } from "@mui/material";
 import { byColumn } from "./helpers/byColumn";
 
-export function Table<T extends { [x: string]: any; id: string }>({
+export function Table<T extends { [x: string]: unknown; id: string }>({
   items,
   head,
   onDelete,

@@ -4,7 +4,13 @@ import { StyledDiv } from "./Breadcrumb.styles";
 import { Crumb } from "./components/Crumb";
 import { CrumbLink } from "./components/CrumbLink";
 
-export const Breadcrumb = () => {
+type BreadcrumbProps = {
+  customPath?: string;
+};
+
+// TODO: handle Uppercase
+
+export const Breadcrumb = ({ customPath }: BreadcrumbProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -18,7 +24,6 @@ export const Breadcrumb = () => {
     const index = crumbs.findIndex((val) => val === path);
     const newPath = crumbs.slice(0, index + 1).join("/");
 
-    console.log("path:", path, "newPath:", newPath);
     navigate("/" + newPath);
   };
 
@@ -29,13 +34,11 @@ export const Breadcrumb = () => {
           .toUpperCase()
           .concat(crumb.slice(1, crumb.length));
 
-        console.log(path);
-
         return isLast(index) ? (
-          <Crumb key={index} path={path} />
+          <Crumb key={crumb + "-" + index} path={customPath || path} />
         ) : (
           <CrumbLink
-            key={index}
+            key={crumb + "-" + index}
             crumb={crumb}
             onLinkClick={handlePathClick}
             path={path}
