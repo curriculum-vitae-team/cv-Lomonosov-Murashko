@@ -23,5 +23,5 @@ export const StyledBox = styled(Box)({
 });
 
 export const StyledTranslateIcon = styled(TranslateIcon)({
-  width: "0.875em"
+  width: "0.875em",
 });

@@ -1,7 +1,7 @@
 import { styled, Button, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-export const StyledDiv = styled('div')({
+export const StyledDiv = styled("div")({
   position: "absolute",
   display: "flex",
   flexDirection: "column",
@@ -25,7 +25,7 @@ export const StyledButton = styled(Button)({
   width: "60%",
 });
 
-export const StyledOverlayDiv = styled('div')({
+export const StyledOverlayDiv = styled("div")({
   height: "100vh",
   width: "100vw",
   position: "fixed",
@@ -36,5 +36,5 @@ export const StyledOverlayDiv = styled('div')({
 
 export const StyledAccountCircleIcon = styled(AccountCircleIcon)({
   width: "3em",
-  height: "3em"
+  height: "3em",
 });

@@ -21,7 +21,7 @@ export const UserProfile = () => {
 
   return (
     <StyledGrid>
-      {/* if user have icon -> display his avatar, othervise fake icon */}
+      {/* TODO: if user has icon -> display their avatar, otherwise fake icon */}
       <StyledBox onClick={handleProfileCardOpen}>
         <AccountCircleIcon />
         <StyledTypography>Murashko Ilya</StyledTypography>
