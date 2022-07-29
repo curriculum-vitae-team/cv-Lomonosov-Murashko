@@ -1,6 +1,6 @@
 import {
   StyledStack,
-  StyledDiv,
+  StyledPaper,
   StyledNavLink,
   NavLinkTypography,
 } from "./SideBar.styles";
@@ -13,7 +13,7 @@ import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 
 export const SideBar = () => {
   return (
-    <StyledDiv>
+    <StyledPaper>
       <StyledStack>
         <StyledNavLink to={ROUTE.EMPLOYEES}>
           <EmojiPeopleIcon />
@@ -38,6 +38,6 @@ export const SideBar = () => {
           <NavLinkTypography>Entities</NavLinkTypography>
         </StyledNavLink>
       </StyledStack>
-    </StyledDiv>
+    </StyledPaper>
   );
 };

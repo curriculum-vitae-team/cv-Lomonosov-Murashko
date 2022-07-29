@@ -1,9 +1,9 @@
-import { styled, Stack, Typography } from "@mui/material";
+import { styled, Stack, Typography, Paper } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-export const StyledDiv = styled("div")({
+export const StyledPaper = styled(Paper)({
   minWidth: "13em",
-  marginRight: "2px",
+  zIndex: "1",
   height: "calc(100vh - 6em)",
   paddingTop: "1em",
   background: "#fff",
