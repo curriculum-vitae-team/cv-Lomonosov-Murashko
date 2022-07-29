@@ -6,7 +6,7 @@ export const StyledTable = styled(Table)({
   display: "flex",
   marginTop: "1em",
   padding: "1em",
-  backgroundColor: "#f9f9f9",
+
   borderRadius: "5px",
   "& svg": {
     fontSize: "1em",
@@ -26,4 +26,5 @@ export const StyledTable = styled(Table)({
 
 export const StyledStack = styled(Stack)({
   padding: "1.25rem",
+  background: "#fff",
 });

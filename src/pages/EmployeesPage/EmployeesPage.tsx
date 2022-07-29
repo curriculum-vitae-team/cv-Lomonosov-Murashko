@@ -61,16 +61,26 @@ export const EmployeesPage = () => {
       <StyledStack direction="column" spacing={2}>
         <Breadcrumb />
         <Typography variant="h6">Employees</Typography>
+        <Typography variant="caption">Employees list</Typography>
       </StyledStack>
-
-      <StyledTable
-        onDelete={handleItemDelete}
-        head={head}
-        items={emp}
-        redirectButtonText="Profile"
-        deleteButtonText="Delete"
-        entryType={TableEntry.EMPLOYEE}
-      />
+      <div
+        style={{
+          margin: "24px",
+          marginBottom: "0",
+          width: "calc(100% - 48px)",
+          height: "100%",
+          background: "#fff",
+        }}
+      >
+        <StyledTable
+          onDelete={handleItemDelete}
+          head={head}
+          items={emp}
+          redirectButtonText="Profile"
+          deleteButtonText="Delete"
+          entryType={TableEntry.EMPLOYEE}
+        />
+      </div>
     </Stack>
   );
 };
