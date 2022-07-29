@@ -11,9 +11,7 @@ export function Table<T extends { [x: string]: any; id: string }>({
   redirectButtonText,
   deleteButtonText,
 }: TableProps<T>) {
-  const [sortBy, setSortBy] = useState(
-    Object.getOwnPropertyNames(head[0]).find((el) => el !== "isSortable")!
-  );
+  const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
 
   function byColumn<T>(column: keyof T, sortAsc: boolean) {

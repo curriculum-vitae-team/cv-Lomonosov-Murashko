@@ -3,12 +3,12 @@ import { TableHeadItem } from "../TableHeadItem";
 import { StyledDiv, StyledGrid } from "./TableHead.styles";
 import { TableHeadProps } from "./TableHead.types";
 
-export function TableHead<T extends { isSortable: boolean }>({
+export function TableHead({
   columns,
   sortBy,
   onSortByChange,
   sortAsc,
-}: TableHeadProps<T>) {
+}: TableHeadProps) {
   const accordionButtonXS = 0;
   const gridXS = (12 - accordionButtonXS) / columns.length;
 
@@ -16,18 +16,16 @@ export function TableHead<T extends { isSortable: boolean }>({
     <StyledDiv>
       <StyledGrid container>
         {columns.map((col, i) => {
-          const key = Object.getOwnPropertyNames(col).find(
-            (el) => el !== "isSortable"
-          ) as keyof typeof col;
-          const value = col[key] as unknown as string;
+          const { columnKey, columnName } = col;
+
           return (
             <TableHeadItem
-              isSortedBy={sortBy === key}
+              isSortedBy={sortBy === columnKey}
               sortAsc={sortAsc}
               isSortable={col.isSortable}
               onClick={onSortByChange}
-              name={value}
-              itemName={key as string}
+              name={columnName}
+              itemName={columnKey}
               xs={gridXS}
               key={i}
             />

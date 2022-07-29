@@ -38,11 +38,15 @@ const emp = [
 ];
 
 const head = [
-  { name: "First Name", isSortable: true },
-  { lastName: "Last Name", isSortable: true },
-  { email: "Email", isSortable: false },
-  { department: "Department", isSortable: false },
-  { specialization: "Specialization", isSortable: true },
+  { columnKey: "name", columnName: "First Name", isSortable: true },
+  { columnKey: "lastName", columnName: "Last Name", isSortable: true },
+  { columnKey: "email", columnName: "Email", isSortable: false },
+  { columnKey: "department", columnName: "Department", isSortable: false },
+  {
+    columnKey: "specialization",
+    columnName: "Specialization",
+    isSortable: true,
+  },
 ];
 
 export const EmployeesPage = () => {
