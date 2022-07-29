@@ -9,20 +9,20 @@ export const StyledGrid = styled(Grid)({
   borderRight: "20px solid #f9f9f9",
   borderBottom: "24px solid #f9f9f9",
   borderRadius: "5px",
-  "& svg": {
+  "& .MuiSvgIcon-root": {
     fontSize: "1em",
     transition: "transform 0.4s ease-in",
   },
-  "& svg:hover": {
+  "& .MuiSvgIcon-root:hover": {
     cursor: "pointer",
+  },
+  "& .MuiSvgIcon-root.active": {
+    transform: "rotate(-180deg)",
   },
   "& > div": {
     padding: "0 0.5em",
     fontSize: "0.8rem",
     textAlign: "left",
-  },
-  "& svg.active": {
-    transform: "rotate(-180deg)",
   },
   "& .MuiButton-root": {
     backgroundColor: "#1890FF",
