@@ -1,3 +1,4 @@
+import { Stack } from "@mui/material";
 import { styled } from "@mui/system";
 import { Table } from "../../components/Table";
 
@@ -21,4 +22,8 @@ export const StyledTable = styled(Table)({
   "& svg.active": {
     transform: "rotate(-180deg)",
   },
+});
+
+export const StyledStack = styled(Stack)({
+  padding: "1.25rem",
 });
