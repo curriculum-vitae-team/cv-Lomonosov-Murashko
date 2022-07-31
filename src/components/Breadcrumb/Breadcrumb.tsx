@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
@@ -6,14 +7,14 @@ import { BreadcrumbProps } from "./Breadcrumbs.types";
 
 import { emp } from "../../pages/EmployeesPage/EmployeesPage";
 
-export const Breadcrumb = ({ type }: BreadcrumbProps) => {
-  const [pathnamesCopy, setPathnamesCopy] = useState<string[]>([]);
+export const Breadcrumb = ({ type, isUpperCase }: BreadcrumbProps) => {
+  const [currentPathnames, setCurrentPathnames] = useState<string[]>([]);
   const { pathname } = useLocation();
   const { employeeId, projectId, cvId } = useParams();
 
   const pathnames = pathname.split("/").filter((path: string) => path);
 
-  const handleEmployeePage = ((pathnames: string[]) => {
+  const handleEmployeePage = (pathnames: string[]) => {
     emp.forEach((employee: IEmployee) => {
       if (employee.id === employeeId) {
         const ID = pathnames.findIndex((path: string) => path === employeeId);
@@ -21,21 +22,29 @@ export const Breadcrumb = ({ type }: BreadcrumbProps) => {
       }
     });
     return pathnames;
-  });
+  };
+
+  const handleProjectPage = (pathnames: string[]) => {
+    // handle page
+  };
+
+  const handleCvPage = (pathnames: string[]) => {
+    // handle page
+  };
 
   useEffect(() => {
     switch (type) {
       case "employee":
-        setPathnamesCopy([...handleEmployeePage([...pathnames])]);
+        setCurrentPathnames([...handleEmployeePage([...pathnames])]);
         break;
-      case "project": 
-        // handle project id
+      case "project":
+        // setCurrentPathnames([...handleProjectPage([...pathnames])]);
         break;
       case "cv":
-        // handle cv id
+        // setCurrentPathnames([...handleCvPage([...pathnames])]);
         break;
       default:
-        setPathnamesCopy([...pathnames]);
+        setCurrentPathnames([...pathnames]);
         break;
     }
   }, [type, pathname]);
@@ -46,14 +55,17 @@ export const Breadcrumb = ({ type }: BreadcrumbProps) => {
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      {pathnamesCopy.map((name, index) => {
+      {currentPathnames.map((name: string, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
+        const path = isUpperCase
+          ? name[0].toUpperCase().concat(name.slice(1))
+          : name;
 
         return isLast(index) ? (
-          <Typography key={name}>{name}</Typography>
+          <Typography key={name}>{path}</Typography>
         ) : (
           <Link key={name} to={routeTo}>
-            {name}
+            {path}
           </Link>
         );
       })}
