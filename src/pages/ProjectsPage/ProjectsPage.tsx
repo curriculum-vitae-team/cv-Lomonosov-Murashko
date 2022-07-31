@@ -1,6 +1,10 @@
 import React from 'react'
+import { Breadcrumb } from '../../components/Breadcrumb';
 export const ProjectsPage = () => {
   return (
-    <div>ProjectsPage</div>
+    <div>
+      <Breadcrumb />
+      ProjectsPage
+    </div>
   )
 };

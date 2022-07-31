@@ -18,6 +18,7 @@ export const Router = () => {
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeeInfoPage />} />
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
+          <Route path={ROUTE.TARGET_PROJECT} element={<NotFoundPage />} />
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />

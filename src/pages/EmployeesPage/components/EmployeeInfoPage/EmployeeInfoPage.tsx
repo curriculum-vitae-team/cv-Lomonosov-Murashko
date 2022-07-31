@@ -5,7 +5,7 @@ export const EmployeeInfoPage = () => {
 
   return (
     <div>
-      <Breadcrumb />
+      <Breadcrumb type="employee"/>
     </div>
   );
 };

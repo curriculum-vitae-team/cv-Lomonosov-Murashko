@@ -3,7 +3,7 @@ import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
-const emp = [
+export const emp = [
   {
     id: "1",
     name: "Ilya",
@@ -52,15 +52,13 @@ const head = [
 
 export const EmployeesPage = () => {
   const handleItemDelete = (id: string) => {
-    // TODO: 
-    console.log(id);
-    
+    // TODO:
   };
 
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
-        <Breadcrumb customPath="Ilya Murashko"/>
+        <Breadcrumb />
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>
