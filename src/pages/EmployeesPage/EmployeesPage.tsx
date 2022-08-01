@@ -1,10 +1,10 @@
 import { Stack, Typography } from "@mui/material";
-import { useCallback } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
+import { ROUTE_SEGMENT } from "../../constants/route";
 import { TableEntry } from "../../constants/table";
 import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
-const emp = [
+export const emp = [
   {
     id: "1",
     name: "Ilya",
@@ -52,14 +52,14 @@ const head = [
 ];
 
 export const EmployeesPage = () => {
-  const handleItemDelete = useCallback((id: string) => {
-    // TODO: 
-  }, []);
+  const handleItemDelete = (id: string) => {
+    // TODO:
+  };
 
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
-        <Breadcrumb customPath="Ilya Murashko"/>
+        <Breadcrumb upperCasedParts={[ROUTE_SEGMENT.EMPLOYEES]} />
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>

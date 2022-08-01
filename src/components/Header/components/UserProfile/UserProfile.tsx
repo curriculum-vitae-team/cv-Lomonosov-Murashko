@@ -8,7 +8,7 @@ import {
 } from "./UserProfile.styles";
 import { UserProfileCard } from "../UserProfileCard";
 
-export const UserProfile = () => {
+export function UserProfile() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   const handleProfileCardClose = () => {
@@ -30,4 +30,4 @@ export const UserProfile = () => {
       {isProfileOpen && <UserProfileCard onClose={handleProfileCardClose} />}
     </StyledGrid>
   );
-};
+}

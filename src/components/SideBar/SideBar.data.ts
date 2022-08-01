@@ -11,7 +11,7 @@ class SideBarLinkData implements ISideBarLink {
   constructor(
     public to: string,
     public name: string,
-    public Icon: React.ComponentType
+    public Icon: React.ComponentType,
   ) {}
 }
 

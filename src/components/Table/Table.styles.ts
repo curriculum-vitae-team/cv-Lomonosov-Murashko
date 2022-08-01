@@ -21,7 +21,7 @@ export const StyledGrid = styled(Grid)({
     fontSize: "0.8rem",
     textAlign: "left",
   },
-  "& .MuiButton-root": {
+  "& .MuiButton-root ": {
     backgroundColor: "#1890FF",
     border: "none",
     margin: "1rem 1rem 0 0",

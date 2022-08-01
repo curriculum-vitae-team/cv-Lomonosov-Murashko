@@ -4,12 +4,12 @@ import { EmployeesPage } from "../../pages/EmployeesPage/EmployeesPage";
 import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
-import { EmployeeInfoPage } from "../../pages/EmployeesPage/components/EmployeeInfoPage";
+import { EmployeeInfoPage } from "../../pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ROUTE } from "../../constants/route";
 import { Layout } from "../Layout";
 import { RedirectPage } from "../../pages/RedirectPage";
 
-export const Router = () => {
+export function Router() {
   return (
     <BrowserRouter>
       <Routes>
@@ -18,6 +18,7 @@ export const Router = () => {
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeeInfoPage />} />
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
+          <Route path={ROUTE.TARGET_PROJECT} element={<NotFoundPage />} />
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
@@ -25,4 +26,4 @@ export const Router = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}
