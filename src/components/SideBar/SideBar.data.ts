@@ -1,11 +1,10 @@
-import { ISideBarLink } from "./SideBar.types";
-import { ROUTE } from "../../route/route";
-
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import FolderIcon from "@mui/icons-material/Folder";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import React from "react";
+import { ROUTE } from "../../route/route";
+import { ISideBarLink } from "./SideBar.types";
 
 class SideBarLinkData implements ISideBarLink {
   constructor(

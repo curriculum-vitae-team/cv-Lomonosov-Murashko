@@ -2,7 +2,7 @@ import { StyledHeader, Img, StyledGrid } from "./Header.styles";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import logo from "../../assets/images/logo.svg";
 
-export const Header = () => {
+export function Header() {
   return (
     <StyledHeader>
       <StyledGrid>
@@ -11,4 +11,4 @@ export const Header = () => {
       </StyledGrid>
     </StyledHeader>
   );
-};
+}

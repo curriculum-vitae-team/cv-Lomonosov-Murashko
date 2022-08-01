@@ -5,12 +5,12 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          fontSize: "16px"
+          fontSize: "16px",
         },
         a: {
-          textDecoration: "none"
-        }
-      }
-    }
-  }
+          textDecoration: "none",
+        },
+      },
+    },
+  },
 });

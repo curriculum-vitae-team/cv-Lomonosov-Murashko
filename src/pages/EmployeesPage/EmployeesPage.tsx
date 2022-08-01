@@ -1,7 +1,3 @@
-export const EmployeesPage = () => {
-  return (
-    <>
-      Employee Page
-    </>
-  );
-};
+export function EmployeesPage() {
+  return <>Employee Page</>;
+}
