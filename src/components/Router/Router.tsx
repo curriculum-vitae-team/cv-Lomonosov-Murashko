@@ -9,7 +9,7 @@ import { ROUTE } from "../../constants/route";
 import { Layout } from "../Layout";
 import { RedirectPage } from "../../pages/RedirectPage";
 
-export const Router = () => {
+export function Router() {
   return (
     <BrowserRouter>
       <Routes>
@@ -26,4 +26,4 @@ export const Router = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}

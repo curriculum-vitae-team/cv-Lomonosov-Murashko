@@ -11,9 +11,6 @@ export const theme = createTheme({
         a: {
           textDecoration: "none",
         },
-        "*": {
-          boxSizing: "border-box",
-        },
       },
     },
   },

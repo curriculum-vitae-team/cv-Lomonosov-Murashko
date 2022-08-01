@@ -1,5 +1,5 @@
 import React from "react";
 
-export const EntitiesPage = () => {
+export function EntitiesPage() {
   return <div>EntitiesPage</div>;
-};
+}
