@@ -1,5 +1,4 @@
 import { Stack, Typography } from "@mui/material";
-import { Breadcrumb } from "../../components/Breadcrumb";
 
 export const NotFoundPage = () => {
   return (
@@ -7,7 +6,6 @@ export const NotFoundPage = () => {
       <Typography variant="h3" component="h3">
         404: Not Found
       </Typography>
-      <Breadcrumb />
     </Stack>
   );
 };

@@ -4,7 +4,7 @@ import { EmployeesPage } from "../../pages/EmployeesPage/EmployeesPage";
 import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
 import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
 import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
-import { EmployeeInfoPage } from "../../pages/EmployeesPage/components/EmployeeInfoPage";
+import { EmployeeInfoPage } from "../../pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ROUTE } from "../../constants/route";
 import { Layout } from "../Layout";
 import { RedirectPage } from "../../pages/RedirectPage";

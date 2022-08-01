@@ -1,5 +1,6 @@
-export interface IEmployee {
-  id: string;
+import { IEntryData } from "./IEntryData";
+
+export interface IEmployee extends IEntryData {
   name: string;
   lastName: string;
   email: string;
