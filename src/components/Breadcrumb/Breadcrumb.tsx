@@ -29,15 +29,15 @@ export const Breadcrumb = ({
   paramsKeys.forEach((param) =>
     upperCasedParts?.includes(param)
       ? pathnamesIndexesToUpperCase.push(
-          pathnames.current.findIndex((pathname) => pathname === params[param])
+          pathnames.current.findIndex((pathname) => pathname === params[param]),
         )
-      : null
+      : null,
   );
 
   pathnames.current.forEach((pathname, i) =>
     upperCasedParts?.includes(pathname as ROUTE_SEGMENT)
       ? pathnamesIndexesToUpperCase.push(i)
-      : null
+      : null,
   );
 
   useEffect(() => {
@@ -49,8 +49,8 @@ export const Breadcrumb = ({
           switcher.getPathNamesWithReplacedId(
             pathnames.current,
             replacementTarget.entryData,
-            replacementTarget.entryId
-          )
+            replacementTarget.entryId,
+          ),
         );
       });
     } else {
