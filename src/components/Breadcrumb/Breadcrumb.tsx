@@ -19,8 +19,6 @@ export const Breadcrumb = () => {
       {pathnames.map((pathname, index) => {
         const routeTo = `${pathnames.slice(0, index + 1).join("/")}`;
 
-        console.log(routeTo);
-
         const configItem = config[pathname] || pathname;
 
         return isLast(index) ? (
