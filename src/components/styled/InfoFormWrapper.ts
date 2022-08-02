@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { styled } from "@mui/system";
 
-export const StyledDiv = styled("div")({
+export const InfoFormWrapper = styled("div")({
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",

@@ -5,19 +5,12 @@ import {
   SubmitHandler,
   useFormState,
 } from "react-hook-form";
-import { StyledDiv } from "./EmployeeInfo.styles";
 
 import { emp } from "../../EmployeesPage";
 import { useNavigate, useParams } from "react-router";
 import { ROUTE } from "@/constants/route";
-
-interface IEmployee {
-  name: string;
-  lastName: string;
-  email: string;
-  department: string;
-  specialization: string;
-}
+import { IEmployee } from "@/interfaces/IEmployee";
+import { InfoFormWrapper } from "@/components/styled/InfoFormWrapper";
 
 export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();
@@ -36,7 +29,7 @@ export const EmployeeInfo = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledDiv>
+        <InfoFormWrapper>
           <div className="textfield-wrapper">
             <Typography>First Name</Typography>
             <Controller
@@ -125,7 +118,7 @@ export const EmployeeInfo = () => {
               )}
             />
           </div>
-        </StyledDiv>
+        </InfoFormWrapper>
         <div className="buttons">
           <Button type="submit" value="Save">
             Save
