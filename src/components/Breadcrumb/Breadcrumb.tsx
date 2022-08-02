@@ -16,8 +16,6 @@ export const Breadcrumb = ({
   const params = useParams<ROUTE_PARAM>();
   const paramsKeys = Object.keys(params) as ROUTE_PARAM[];
 
-  console.log(params);
-
   const createPathname = () => {
     return pathname.split("/").filter((path: string) => path);
   };
