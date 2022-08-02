@@ -27,7 +27,7 @@ export function Table({
         setSortAsc(true);
       }
     },
-    [sortBy]
+    [sortBy],
   );
 
   return (

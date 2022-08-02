@@ -6,7 +6,7 @@ export abstract class BreadcrumbSwitcher {
   public getPathNamesWithReplacedId(
     pathnames: string[],
     entriesData: IEntryData[],
-    targetId: string | undefined
+    targetId: string | undefined,
   ): string[] {
     const newPathNames = [...pathnames];
 
