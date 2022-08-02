@@ -6,9 +6,7 @@ import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
-import { PageTop } from "@/components/styled/PageTop";
-import { PageBody } from "@/components/styled/PageBody";
-import { PageTopTypography } from "@/components/PageTopTypography";
+import { ROUTE } from "@/constants/route";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -57,7 +55,7 @@ export const EmployeePage = () => {
             <Tab
               label="Info"
               component={Link}
-              to={pathnames.slice(0, pathnames.length - 1).join("/")}
+              to={ROUTE.EMPLOYEES + "/" + employeeId}
             />
             <Tab label="CV" component={Link} to="cv" />
           </Tabs>
