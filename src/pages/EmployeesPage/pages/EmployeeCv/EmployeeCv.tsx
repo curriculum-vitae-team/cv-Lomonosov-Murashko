@@ -1,3 +1,9 @@
+import { StyledDiv } from "./EmployeeCv.styles";
+
 export const EmployeeCv = () => {
-  return <div>EmployeeCv</div>;
+  return (
+    <form>
+      <StyledDiv>EmployeeCv</StyledDiv>
+    </form>
+  );
 };

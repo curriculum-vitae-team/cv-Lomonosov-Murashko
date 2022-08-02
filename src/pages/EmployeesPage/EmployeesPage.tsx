@@ -1,8 +1,11 @@
-import { Stack, Typography } from "@mui/material";
+import { PageTopTypography } from "@/components/PageTopTypography";
+import { PageBody } from "@/components/styled/PageBody";
+import { PageTop } from "@/components/styled/PageTop";
+import { PageWrapper } from "@/components/styled/PageWrapper";
+import { StyledTable } from "@/components/styled/StyledTable";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { BreadcrumbsConfig } from "../../context/BreadcrumbsConfig";
-import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 export const emp = [
   {
@@ -73,8 +76,8 @@ export const EmployeesPage = () => {
   };
 
   return (
-    <Stack>
-      <StyledStack direction="column" spacing={2}>
+    <PageWrapper>
+      <PageTop>
         <BreadcrumbsConfig
           config={{
             employees: "Employees",
@@ -82,10 +85,9 @@ export const EmployeesPage = () => {
         >
           <Breadcrumb />
         </BreadcrumbsConfig>
-        <Typography variant="h6">Employees</Typography>
-        <Typography variant="caption">Employees list</Typography>
-      </StyledStack>
-      <StyledDiv>
+        <PageTopTypography title="Employees" caption="Employees list" />
+      </PageTop>
+      <PageBody>
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
@@ -94,7 +96,7 @@ export const EmployeesPage = () => {
           deleteButtonText="Delete"
           entryType={TableEntry.EMPLOYEE}
         />
-      </StyledDiv>
-    </Stack>
+      </PageBody>
+    </PageWrapper>
   );
 };
