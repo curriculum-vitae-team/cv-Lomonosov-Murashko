@@ -19,6 +19,7 @@ export enum ROUTE {
   PROJECTS = "/projects",
   TARGET_PROJECT = "/projects/:projectId",
   CVS = "/cvs",
+  TARGET_CV = "/cvs/:cvId",
   ENTITIES = "/entities",
   ANY_OTHER = "*",
   TARGET_EMPLOYEE_INFO = "info",

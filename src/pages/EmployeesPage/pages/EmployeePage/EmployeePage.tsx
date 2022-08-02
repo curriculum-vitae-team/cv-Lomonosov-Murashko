@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Breadcrumb } from "../../../../components/Breadcrumb";
-import { StyledStack, StyledDiv } from "./EmployeePage.styles";
 import { Typography, Box, Tabs, Tab, Stack } from "@mui/material";
 
 import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
+import { PageTop } from "@/components/styled/PageTop";
+import { PageBody } from "@/components/styled/PageBody";
+import { PageTopTypography } from "@/components/PageTopTypography";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -27,7 +29,7 @@ export const EmployeePage = () => {
 
   return (
     <Stack>
-      <StyledStack spacing={2}>
+      <PageTop>
         <BreadcrumbsConfig
           config={{
             info: "Info",
@@ -40,12 +42,12 @@ export const EmployeePage = () => {
         >
           <Breadcrumb />
         </BreadcrumbsConfig>
-        <Typography variant="h6">Employees</Typography>
-        <Typography variant="caption">
-          {employee.name + " " + employee.lastName + "`s profile"}
-        </Typography>
-      </StyledStack>
-      <StyledDiv>
+        <PageTopTypography
+          title="Employees"
+          caption={employee.name + " " + employee.lastName + "`s profile"}
+        />
+      </PageTop>
+      <PageBody>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
@@ -61,7 +63,7 @@ export const EmployeePage = () => {
           </Tabs>
         </Box>
         <Outlet />
-      </StyledDiv>
+      </PageBody>
     </Stack>
   );
 };
