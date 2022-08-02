@@ -8,7 +8,8 @@ import {
 import { StyledDiv } from "./EmployeeInfo.styles";
 
 import { emp } from "../../EmployeesPage";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { ROUTE } from "@/constants/route";
 
 interface IEmployee {
   name: string;
@@ -22,6 +23,8 @@ export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();
   const { errors } = useFormState({ control });
   const { employeeId } = useParams();
+
+  const navigate = useNavigate();
 
   const employee = emp.find(({ id }) => id === employeeId)!;
 
@@ -127,7 +130,11 @@ export const EmployeeInfo = () => {
           <Button type="submit" value="Save">
             Save
           </Button>
-          <Button onClick={() => reset()} type="reset" value="Cancel">
+          <Button
+            onClick={() => navigate(ROUTE.EMPLOYEES)}
+            type="reset"
+            value="Cancel"
+          >
             Cancel
           </Button>
         </div>
