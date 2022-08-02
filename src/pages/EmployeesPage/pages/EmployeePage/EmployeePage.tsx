@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
 
 export const EmployeePage = () => {
-  const [selectedTab, setSelectedTab] = useState<number>(0);
-
   const { employeeId } = useParams();
 
   const employee = emp.find(({ id }) => id === employeeId)!;
@@ -22,6 +20,10 @@ export const EmployeePage = () => {
   const { pathname } = useLocation();
 
   const pathnames = pathname.split("/");
+
+  const [selectedTab, setSelectedTab] = useState<number>(
+    pathnames[pathnames.length - 1].toLowerCase() === "cv" ? 1 : 0,
+  );
 
   return (
     <Stack>
