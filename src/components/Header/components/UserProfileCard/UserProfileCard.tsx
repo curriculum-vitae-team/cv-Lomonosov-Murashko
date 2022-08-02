@@ -7,7 +7,7 @@ import {
 } from "./UserProfileCard.styles";
 import { UserProfileCardProps } from "./UserProfileCard.types";
 
-export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
+export function UserProfileCard({ onClose }: UserProfileCardProps) {
   const handleSignOutClick = () => {
     // log out
   };
@@ -25,4 +25,4 @@ export const UserProfileCard = ({ onClose }: UserProfileCardProps) => {
       </StyledDiv>
     </StyledOverlayDiv>
   );
-};
+}

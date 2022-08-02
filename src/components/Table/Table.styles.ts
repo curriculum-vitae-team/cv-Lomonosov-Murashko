@@ -4,40 +4,45 @@ import { styled } from "@mui/system";
 export const StyledGrid = styled(Grid)({
   zIndex: "1",
   justifyContent: "flex-end",
-  "& svg": {
+
+  backgroundColor: "#fff",
+  "& .MuiSvgIcon-root": {
     fontSize: "1em",
     transition: "transform 0.4s ease-in",
   },
-  "& svg:hover": {
+  "& .MuiSvgIcon-root:hover": {
     cursor: "pointer",
   },
-  "& > div": {
+  "& .MuiSvgIcon-root.active": {
+    transform: "rotate(-180deg)",
+  },
+  "& .MuiTypography-root": {
     padding: "0 0.5em",
     fontSize: "0.8rem",
     textAlign: "left",
   },
-  "& svg.active": {
-    transform: "rotate(-180deg)",
-  },
-  "& button.addEmployee": {
+  "& .MuiButton-root ": {
     backgroundColor: "#1890FF",
     border: "none",
     margin: "1rem 1rem 0 0",
-    padding: "0.7em",
+
     borderRadius: "2px",
     color: "#fff",
     cursor: "pointer",
     textAlign: "right",
   },
-  "& div.MuiAccordionSummary-gutters": {
+  "& .MuiButton-root:hover": {
+    background: "#1890FF",
+  },
+  "& .MuiAccordionSummary-gutters": {
     padding: "0 0 0 0.5rem",
   },
-  "& div.css-15v22id-MuiAccordionDetails-root": {
+  "& .MuiAccordionDetails-root": {
     display: "flex",
     justifyContent: "flex-end",
     padding: "0 0 0.5em 0",
     "& a, button": {
-      color: "#1890FF",
+      color: "#fff",
     },
   },
 });
@@ -48,5 +53,5 @@ export const StyledDiv = styled("div")({
   borderTop: "24px solid #f9f9f9",
   borderRight: "20px solid #f9f9f9",
   borderRadius: "5px",
-  marginBottom: "1rem"
+  marginBottom: "1rem",
 });

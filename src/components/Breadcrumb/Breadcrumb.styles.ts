@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 export const StyledDiv = styled("div")({
   display: "flex",
   justifyContent: "flex-start",
-  padding: "1.25rem",
+  fontSize: "14px",
   "& > div": {
     padding: "0 0.5rem",
     cursor: "pointer",

@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { styled } from "@mui/system";
-import { Table } from "../../components/Table";
+import { Table } from "@/components/Table";
 
 export const StyledTable = styled(Table)({
   display: "flex",
   marginTop: "1em",
   padding: "1em",
-  backgroundColor: "#f9f9f9",
+
   borderRadius: "5px",
   "& svg": {
     fontSize: "1em",
@@ -24,7 +24,16 @@ export const StyledTable = styled(Table)({
   },
 });
 
-export const StyledTypography = styled(Typography)({
-  padding: "0.35rem 0.5rem 0.5rem 1rem",
-  fontWeight: "bold"
+export const StyledStack = styled(Stack)({
+  padding: "1.25rem",
+  background: "#fff",
+});
+
+export const StyledDiv = styled("div")({
+  margin: "24px",
+  marginBottom: "0",
+  width: "calc(100% - 48px)",
+  height: "100%",
+  background: "#fff",
+  padding: "24px",
 });

@@ -1,6 +1,8 @@
 import { Stack, Typography } from "@mui/material";
-import { Breadcrumb } from "../../components/Breadcrumb";
-import { StyledTable, StyledTypography } from "./EmployeesPage.styles";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ROUTE_SEGMENT } from "@/constants/route";
+import { TableEntry } from "@/constants/table";
+import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 export const emp = [
   {
@@ -54,32 +56,39 @@ export const emp = [
 ];
 
 const head = [
-  { name: "First Name", isSortable: true },
-  { lastName: "Last Name", isSortable: true },
-  { email: "Email", isSortable: false },
-  { department: "Department", isSortable: false },
-  { specialization: "Specialization", isSortable: true },
+  { columnKey: "name", columnName: "First Name", isSortable: true },
+  { columnKey: "lastName", columnName: "Last Name", isSortable: true },
+  { columnKey: "email", columnName: "Email", isSortable: false },
+  { columnKey: "department", columnName: "Department", isSortable: false },
+  {
+    columnKey: "specialization",
+    columnName: "Specialization",
+    isSortable: true,
+  },
 ];
 
 export const EmployeesPage = () => {
+  const handleItemDelete = (id: string) => {
+    // TODO:
+  };
+
   return (
     <Stack>
-      <Breadcrumb />
-      <StyledTypography variant="h5">
-        Employees
-      </StyledTypography>
-      <Typography padding="1rem" variant="body2">
-        Employees list
-      </Typography>
-      <StyledTable
-        onDelete={(id) => {
-          console.log(id);
-        }}
-        head={head}
-        items={emp}
-        redirectButtonText={"Profile"}
-        deleteButtonText={"Delete"}
-      />
+      <StyledStack direction="column" spacing={2}>
+        <Breadcrumb upperCasedParts={[ROUTE_SEGMENT.EMPLOYEES]} />
+        <Typography variant="h6">Employees</Typography>
+        <Typography variant="caption">Employees list</Typography>
+      </StyledStack>
+      <StyledDiv>
+        <StyledTable
+          onDelete={handleItemDelete}
+          head={head}
+          items={emp}
+          redirectButtonText="Profile"
+          deleteButtonText="Delete"
+          entryType={TableEntry.EMPLOYEE}
+        />
+      </StyledDiv>
     </Stack>
   );
 };

@@ -1,9 +1,8 @@
-import { styled, Stack, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Paper, styled } from "@mui/material";
 
-export const StyledDiv = styled("div")({
+export const StyledPaper = styled(Paper)({
   minWidth: "13em",
-  marginRight: "2px",
+  zIndex: "1",
   height: "calc(100vh - 6em)",
   paddingTop: "1em",
   background: "#fff",
@@ -13,21 +12,4 @@ export const StyledDiv = styled("div")({
       minWidth: "10em",
     },
   },
-});
-
-export const StyledStack = styled(Stack)({
-  flexDirection: "row",
-  padding: "0.375em 0 0.365em 1em",
-});
-
-export const StyledNavLink = styled(NavLink)({
-  display: "flex",
-  color: "#000",
-  "&.active": {
-    color: "#1890FF",
-  },
-});
-
-export const NavLinkTypography = styled(Typography)({
-  paddingLeft: "0.5em",
 });

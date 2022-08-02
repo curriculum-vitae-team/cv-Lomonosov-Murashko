@@ -35,5 +35,5 @@ export const StyledTypography = styled(Typography)({
 export const WrapperDiv = styled("div")({
   position: "relative",
   display: "flex",
-  flexDirection: "column"
+  flexDirection: "column",
 });

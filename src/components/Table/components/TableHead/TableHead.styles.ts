@@ -10,24 +10,28 @@ export const StyledDiv = styled("div")({
 
 export const StyledGrid = styled(Grid)({
   display: "flex",
-
   padding: "1em 0",
+  paddingLeft: "8px",
   borderRadius: "5px",
-  "& div.css-1lzyqrg-MuiGrid-root": {
+  background: "#FAFAFA",
+  "& .MuiGrid-item": {
     justifyContent: "flex-start",
   },
-  "& svg": {
+  "& .MuiSvgIcon-root": {
     fontSize: "1em",
     margin: "0.1em 0 0 0.3em",
     transition: "transform 0.4s ease-in",
   },
-  "& svg:hover": {
+  "& .MuiSvgIcon-root:hover": {
     cursor: "pointer",
   },
   "& > div": {
     padding: "0 0.5em",
   },
-  "& svg.active": {
+  "& .MuiSvgIcon-root.active": {
     transform: "rotate(-180deg)",
+  },
+  "& .MuiGrid-root": {
+    paddingLeft: 0,
   },
 });

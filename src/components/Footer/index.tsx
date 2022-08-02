@@ -1,10 +1,10 @@
-import { StyledFooter } from "./Footer.styles";
 import { Typography } from "@mui/material";
+import { StyledFooter } from "./Footer.styles";
 
-export const Footer = () => {
+export function Footer() {
   return (
     <StyledFooter>
       <Typography variant="body1">CV Builder</Typography>
     </StyledFooter>
   );
-};
+}
