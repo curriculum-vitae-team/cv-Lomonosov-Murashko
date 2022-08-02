@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { Breadcrumb } from "../../components/Breadcrumb";
-import { ROUTE_SEGMENT } from "../../constants/route";
 import { TableEntry } from "../../constants/table";
+import { BreadcrumbsConfig } from "../../context/BreadcrumbsConfig";
 import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 export const emp = [
@@ -59,7 +59,13 @@ export const EmployeesPage = () => {
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
-        <Breadcrumb upperCasedParts={[ROUTE_SEGMENT.EMPLOYEES]} />
+        <BreadcrumbsConfig
+          config={{
+            employees: "Employees",
+          }}
+        >
+          <Breadcrumb />
+        </BreadcrumbsConfig>
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>

@@ -10,7 +10,7 @@ export const proj = [
 export const ProjectsPage = () => {
   return (
     <div>
-      <Breadcrumb upperCasedParts={[ROUTE_SEGMENT.PROJECTS]} />
+      <Breadcrumb />
       ProjectsPage
     </div>
   );
