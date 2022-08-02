@@ -7,8 +7,6 @@
   "extends": [
     "react-app",
     "react-app/jest",
-    "airbnb",
-    "airbnb-typescript",
     "plugin:import/typescript",
     "plugin:prettier/recommended"
   ],
