@@ -23,29 +23,10 @@ export const EmployeeInfo = () => {
   const { errors } = useFormState({ control });
   const { employeeId } = useParams();
 
-  let employ = {
-    name: "",
-    lastName: "",
-    email: "",
-    department: "",
-    specialization: "",
-  };
-
-  emp.forEach((employee: any) => {
-    if (employee.id === employeeId) {
-      employ = {
-        name: employee.name,
-        lastName: employee.lastName,
-        email: employee.email,
-        department: employee.department,
-        specialization: employee.specialization,
-      };
-    }
-  });
+  const employee = emp.find(({ id }) => id === employeeId)!;
 
   const onSubmit: SubmitHandler<IEmployee> = (data) => {
     // save employee info
-    console.log(data);
     reset();
   };
 
@@ -59,7 +40,7 @@ export const EmployeeInfo = () => {
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="name"
-              defaultValue={employ.name}
+              defaultValue={employee.name}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -79,7 +60,7 @@ export const EmployeeInfo = () => {
                 required: "Please, specify the correct pattern",
               }}
               name="lastName"
-              defaultValue={employ.lastName}
+              defaultValue={employee.lastName}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -96,7 +77,7 @@ export const EmployeeInfo = () => {
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="email"
-              defaultValue={employ.email}
+              defaultValue={employee.email}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -113,7 +94,7 @@ export const EmployeeInfo = () => {
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="department"
-              defaultValue={employ.department}
+              defaultValue={employee.department}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -130,7 +111,7 @@ export const EmployeeInfo = () => {
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="specialization"
-              defaultValue={employ.specialization}
+              defaultValue={employee.specialization}
               render={({ field }) => (
                 <TextField
                   {...field}

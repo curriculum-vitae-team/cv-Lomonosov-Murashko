@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Breadcrumb } from "../../../../components/Breadcrumb";
-import {
-  StyledWrapperDiv,
-  StyledTypography,
-  WrapperDiv,
-} from "./EmployeePage.styles";
-import { Typography, Box, Tabs, Tab } from "@mui/material";
+import { StyledStack, StyledDiv } from "./EmployeePage.styles";
+import { Typography, Box, Tabs, Tab, Stack } from "@mui/material";
 
 import { emp } from "../../EmployeesPage";
 import { Outlet, useParams } from "react-router";
@@ -24,24 +20,26 @@ export const EmployeePage = () => {
   };
 
   return (
-    <WrapperDiv>
-      <BreadcrumbsConfig
-        config={{
-          info: "Info",
-          cv: "CV",
-          employees: "Employees",
-          [employeeId!]: employee
-            ? employee.name + " " + employee.lastName
-            : employeeId!,
-        }}
-      >
-        <Breadcrumb />
-      </BreadcrumbsConfig>
-      <StyledTypography variant="h5">Employees</StyledTypography>
-      <Typography padding="1rem" variant="body2">
-        {employee.name + " " + employee.lastName + "`s profile"}
-      </Typography>
-      <StyledWrapperDiv>
+    <Stack>
+      <StyledStack spacing={2}>
+        <BreadcrumbsConfig
+          config={{
+            info: "Info",
+            cv: "CV",
+            employees: "Employees",
+            [employeeId!]: employee
+              ? employee.name + " " + employee.lastName
+              : employeeId!,
+          }}
+        >
+          <Breadcrumb />
+        </BreadcrumbsConfig>
+        <Typography variant="h6">Employees</Typography>
+        <Typography variant="caption">
+          {employee.name + " " + employee.lastName + "`s profile"}
+        </Typography>
+      </StyledStack>
+      <StyledDiv>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
@@ -53,7 +51,7 @@ export const EmployeePage = () => {
           </Tabs>
         </Box>
         <Outlet />
-      </StyledWrapperDiv>
-    </WrapperDiv>
+      </StyledDiv>
+    </Stack>
   );
 };

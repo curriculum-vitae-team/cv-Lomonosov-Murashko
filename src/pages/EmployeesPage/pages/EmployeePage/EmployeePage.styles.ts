@@ -1,4 +1,4 @@
-import { styled, Typography } from "@mui/material";
+import { Stack, styled } from "@mui/material";
 
 export const StyledWrapperDiv = styled("div")({
   flex: "1 1",
@@ -27,13 +27,16 @@ export const StyledWrapperDiv = styled("div")({
   },
 });
 
-export const StyledTypography = styled(Typography)({
-  padding: "0.35rem 0.5rem 0.5rem 1rem",
-  fontWeight: "bold",
+export const StyledStack = styled(Stack)({
+  padding: "1.25rem",
+  background: "#fff",
 });
 
-export const WrapperDiv = styled("div")({
-  position: "relative",
-  display: "flex",
-  flexDirection: "column",
+export const StyledDiv = styled("div")({
+  margin: "24px",
+  marginBottom: "0",
+  width: "calc(100% - 48px)",
+  height: "100%",
+  background: "#fff",
+  padding: "24px",
 });
