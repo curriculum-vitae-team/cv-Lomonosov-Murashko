@@ -18,7 +18,6 @@ export const Breadcrumb = () => {
     const index = crumbs.findIndex((val) => val === path);
     const newPath = crumbs.slice(0, index + 1).join("/");
 
-    console.log("path:", path, "newPath:", newPath);
     navigate("/" + newPath);
   };
 
@@ -28,8 +27,6 @@ export const Breadcrumb = () => {
         const path = crumb[0]
           .toUpperCase()
           .concat(crumb.slice(1, crumb.length));
-
-        console.log(path);
 
         return isLast(index) ? (
           <Crumb key={index} path={path} />

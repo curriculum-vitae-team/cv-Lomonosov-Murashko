@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Table } from "../../components/Table";
 
@@ -21,4 +22,9 @@ export const StyledTable = styled(Table)({
   "& svg.active": {
     transform: "rotate(-180deg)",
   },
+});
+
+export const StyledTypography = styled(Typography)({
+  padding: "0.35rem 0.5rem 0.5rem 1rem",
+  fontWeight: "bold"
 });

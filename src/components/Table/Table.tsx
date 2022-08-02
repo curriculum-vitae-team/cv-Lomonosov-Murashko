@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
-import { StyledGrid } from "./Table.styles";
+import { StyledGrid, StyledDiv } from "./Table.styles";
 
 export function Table<T extends { [x: string]: any; id: string }>({
   items,
@@ -25,30 +25,32 @@ export function Table<T extends { [x: string]: any; id: string }>({
   }
 
   return (
-    <StyledGrid container>
-      <button className="addEmployee">Add Employee</button>
-      <TableHeadComponent
-        columns={head}
-        sortBy={sortBy}
-        sortAsc={sortAsc}
-        onSortByChange={(columnName) => {
-          if (columnName === sortBy) {
-            setSortAsc((prev) => !prev);
-          } else {
-            setSortBy(columnName);
-            setSortAsc(true);
-          }
-        }}
-      />
-      {[...items].sort(byColumn<T>(sortBy, sortAsc)).map((item) => (
-        <TableRowComponent
-          redirectButtonText={redirectButtonText}
-          deleteButtonText={deleteButtonText}
-          onDelete={onDelete}
-          item={item}
-          key={item.id}
+    <StyledDiv>
+      <StyledGrid container>
+        <button className="addEmployee">Add Employee</button>
+        <TableHeadComponent
+          columns={head}
+          sortBy={sortBy}
+          sortAsc={sortAsc}
+          onSortByChange={(columnName) => {
+            if (columnName === sortBy) {
+              setSortAsc((prev) => !prev);
+            } else {
+              setSortBy(columnName);
+              setSortAsc(true);
+            }
+          }}
         />
-      ))}
-    </StyledGrid>
+        {[...items].sort(byColumn<T>(sortBy, sortAsc)).map((item) => (
+          <TableRowComponent
+            redirectButtonText={redirectButtonText}
+            deleteButtonText={deleteButtonText}
+            onDelete={onDelete}
+            item={item}
+            key={item.id}
+          />
+        ))}
+      </StyledGrid>
+    </StyledDiv>
   );
 }

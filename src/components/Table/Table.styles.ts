@@ -4,11 +4,6 @@ import { styled } from "@mui/system";
 export const StyledGrid = styled(Grid)({
   zIndex: "1",
   justifyContent: "flex-end",
-  borderLeft: "20px solid #f9f9f9",
-  borderTop: "24px solid #f9f9f9",
-  borderRight: "20px solid #f9f9f9",
-  borderBottom: "24px solid #f9f9f9",
-  borderRadius: "5px",
   "& svg": {
     fontSize: "1em",
     transition: "transform 0.4s ease-in",
@@ -45,4 +40,13 @@ export const StyledGrid = styled(Grid)({
       color: "#1890FF",
     },
   },
+});
+
+export const StyledDiv = styled("div")({
+  height: "100%",
+  borderLeft: "20px solid #f9f9f9",
+  borderTop: "24px solid #f9f9f9",
+  borderRight: "20px solid #f9f9f9",
+  borderRadius: "5px",
+  marginBottom: "1rem"
 });

@@ -1,8 +1,8 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Breadcrumb } from "../../components/Breadcrumb";
-import { StyledTable } from "./EmployeesPage.styles";
+import { StyledTable, StyledTypography } from "./EmployeesPage.styles";
 
-const emp = [
+export const emp = [
   {
     id: "1",
     name: "Ilya",
@@ -35,6 +35,22 @@ const emp = [
     department: "JavaScript",
     specialization: "React",
   },
+  {
+    id: "5",
+    name: "Ilya",
+    lastName: "Murashko",
+    email: "murashko.ilya7399@gmail.com",
+    department: "JavaScript",
+    specialization: "React",
+  },
+  {
+    id: "6",
+    name: "Ilya",
+    lastName: "Murashko",
+    email: "murashko.ilya7399@gmail.com",
+    department: "JavaScript",
+    specialization: "React",
+  },
 ];
 
 const head = [
@@ -49,6 +65,12 @@ export const EmployeesPage = () => {
   return (
     <Stack>
       <Breadcrumb />
+      <StyledTypography variant="h5">
+        Employees
+      </StyledTypography>
+      <Typography padding="1rem" variant="body2">
+        Employees list
+      </Typography>
       <StyledTable
         onDelete={(id) => {
           console.log(id);

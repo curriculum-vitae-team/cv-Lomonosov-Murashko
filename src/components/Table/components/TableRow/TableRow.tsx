@@ -40,7 +40,7 @@ export function TableRow<T extends { id: string }>({
       </AccordionSummary>
       <AccordionDetails>
         <Button>
-          <Link to={item.id}>{redirectButtonText}</Link>
+          <Link to={`${item.id}/info`}>{redirectButtonText}</Link>
         </Button>
         <Button onClick={() => onDelete(item.id)}>{deleteButtonText}</Button>
       </AccordionDetails>
