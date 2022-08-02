@@ -1,13 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CvsPage } from "../../pages/CvsPage/CvsPage";
-import { EmployeesPage } from "../../pages/EmployeesPage/EmployeesPage";
-import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
-import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
-import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
-import { EmployeeInfoPage } from "../../pages/EmployeesPage/pages/EmployeeInfoPage";
-import { ROUTE } from "../../constants/route";
+import { CvsPage } from "@/pages/CvsPage";
+import { EmployeesPage } from "@/pages/EmployeesPage/";
+import { EntitiesPage } from "@/pages/EntitiesPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
+import { ProjectsPage } from "@/pages/ProjectsPage";
+import { RedirectPage } from "@/pages/RedirectPage";
 import { Layout } from "../Layout";
-import { RedirectPage } from "../../pages/RedirectPage";
+import { EmployeePage } from "@/pages/EmployeesPage/pages/EmployeePage";
+import { EmployeeCv } from "@/pages/EmployeesPage/pages/EmployeeCv";
+import { ROUTE } from "@/constants/route";
+import { EmployeeInfo } from "@/pages/EmployeesPage/pages/EmployeeInfo";
 
 export function Router() {
   return (
@@ -16,7 +18,18 @@ export function Router() {
         <Route path={ROUTE.EMPTY} element={<Layout />}>
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
-          <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeeInfoPage />} />
+          <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
+            <Route
+              index
+              element={<RedirectPage to={ROUTE.TARGET_EMPLOYEE_INFO} />}
+            />
+
+            <Route
+              path={ROUTE.TARGET_EMPLOYEE_INFO}
+              element={<EmployeeInfo />}
+            />
+            <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />} />
+          </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
           <Route path={ROUTE.TARGET_PROJECT} element={<NotFoundPage />} />
           <Route path={ROUTE.CVS} element={<CvsPage />} />

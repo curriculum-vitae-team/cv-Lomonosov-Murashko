@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Router } from "../Router";
-import { theme } from "../../theme";
+import { theme } from "@/theme";
 
 export function App() {
   return (

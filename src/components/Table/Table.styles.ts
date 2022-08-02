@@ -46,3 +46,12 @@ export const StyledGrid = styled(Grid)({
     },
   },
 });
+
+export const StyledDiv = styled("div")({
+  height: "100%",
+  borderLeft: "20px solid #f9f9f9",
+  borderTop: "24px solid #f9f9f9",
+  borderRight: "20px solid #f9f9f9",
+  borderRadius: "5px",
+  marginBottom: "1rem",
+});
