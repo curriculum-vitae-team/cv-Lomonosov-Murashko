@@ -7,6 +7,7 @@ import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
+import { ROUTE } from "@/constants/route";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -55,7 +56,7 @@ export const EmployeePage = () => {
             <Tab
               label="Info"
               component={Link}
-              to={pathnames.slice(0, pathnames.length - 1).join("/")}
+              to={ROUTE.EMPLOYEES + "/" + employeeId}
             />
             <Tab label="CV" component={Link} to="cv" />
           </Tabs>
