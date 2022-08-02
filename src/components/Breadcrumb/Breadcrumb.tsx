@@ -4,7 +4,7 @@ import { useLocation, Link, useParams } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 import { BreadcrumbProps } from "./Breadcrumbs.types";
 
-import { ROUTE_PARAM, ROUTE_SEGMENT } from "../../constants/route";
+import { ROUTE_PARAM, ROUTE_SEGMENT } from "@/constants/route";
 
 export const Breadcrumb = ({
   upperCasedParts,

@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CvsPage } from "../../pages/CvsPage/CvsPage";
-import { EmployeesPage } from "../../pages/EmployeesPage/EmployeesPage";
-import { EntitiesPage } from "../../pages/EntitiesPage/EntitiesPage";
-import { NotFoundPage } from "../../pages/NotFoundPage/NotFoundPage";
-import { ProjectsPage } from "../../pages/ProjectsPage/ProjectsPage";
-import { EmployeeInfoPage } from "../../pages/EmployeesPage/pages/EmployeeInfoPage";
-import { ROUTE } from "../../constants/route";
+import { CvsPage } from "@/pages/CvsPage";
+import { EmployeesPage } from "@/pages/EmployeesPage/";
+import { EntitiesPage } from "@/pages/EntitiesPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
+import { ProjectsPage } from "@/pages/ProjectsPage";
+import { EmployeeInfoPage } from "@/pages/EmployeesPage/pages/EmployeeInfoPage";
+import { RedirectPage } from "@/pages/RedirectPage";
+import { ROUTE } from "@/constants/route";
 import { Layout } from "../Layout";
-import { RedirectPage } from "../../pages/RedirectPage";
 
 export function Router() {
   return (

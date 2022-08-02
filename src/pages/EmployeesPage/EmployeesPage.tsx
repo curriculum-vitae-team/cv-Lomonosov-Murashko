@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
-import { Breadcrumb } from "../../components/Breadcrumb";
-import { ROUTE_SEGMENT } from "../../constants/route";
-import { TableEntry } from "../../constants/table";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ROUTE_SEGMENT } from "@/constants/route";
+import { TableEntry } from "@/constants/table";
 import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 export const emp = [

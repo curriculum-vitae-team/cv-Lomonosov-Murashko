@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
-import { Breadcrumb } from "../../../../components/Breadcrumb";
-import { EmployeeBreadcrumbSwitcher } from "../../../../components/Breadcrumb/helpers/EmployeeBreadcrumbSwitcher";
-import { ROUTE_PARAM, ROUTE_SEGMENT } from "../../../../constants/route";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { EmployeeBreadcrumbSwitcher } from "@/components/Breadcrumb/helpers/EmployeeBreadcrumbSwitcher";
+import { ROUTE_PARAM, ROUTE_SEGMENT } from "@/constants/route";
 import { emp } from "../../EmployeesPage";
 
 export const EmployeeInfoPage = () => {

@@ -1,4 +1,4 @@
-import { IEntryData } from "../../../interfaces/IEntryData";
+import { IEntryData } from "@/interfaces/IEntryData";
 
 export abstract class BreadcrumbSwitcher {
   protected abstract getReplacedValue(entryData: IEntryData): string;
