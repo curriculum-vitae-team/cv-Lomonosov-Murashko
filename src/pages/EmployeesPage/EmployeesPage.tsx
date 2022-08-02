@@ -48,14 +48,6 @@ export const emp = [
     department: "JavaScript",
     specialization: "React",
   },
-  {
-    id: "6",
-    name: "Ilya",
-    lastName: "Murashko",
-    email: "murashko.ilya7399@gmail.com",
-    department: "JavaScript",
-    specialization: "React",
-  },
 ];
 
 const head = [
