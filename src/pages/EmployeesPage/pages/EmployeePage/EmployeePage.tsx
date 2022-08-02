@@ -4,7 +4,7 @@ import { StyledStack, StyledDiv } from "./EmployeePage.styles";
 import { Typography, Box, Tabs, Tab, Stack } from "@mui/material";
 
 import { emp } from "../../EmployeesPage";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
 
@@ -18,6 +18,10 @@ export const EmployeePage = () => {
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+
+  const { pathname } = useLocation();
+
+  const pathnames = pathname.split("/");
 
   return (
     <Stack>
@@ -46,7 +50,11 @@ export const EmployeePage = () => {
             onChange={handleChange}
             aria-label="nav tabs example"
           >
-            <Tab label="Info" component={Link} to="info" />
+            <Tab
+              label="Info"
+              component={Link}
+              to={pathnames.slice(0, pathnames.length - 1).join("/")}
+            />
             <Tab label="CV" component={Link} to="cv" />
           </Tabs>
         </Box>

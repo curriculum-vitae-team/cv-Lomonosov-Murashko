@@ -19,15 +19,7 @@ export function Router() {
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
-            <Route
-              index
-              element={<RedirectPage to={ROUTE.TARGET_EMPLOYEE_INFO} />}
-            />
-
-            <Route
-              path={ROUTE.TARGET_EMPLOYEE_INFO}
-              element={<EmployeeInfo />}
-            />
+            <Route index element={<EmployeeInfo />} />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />} />
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
