@@ -2,6 +2,7 @@ import { useState } from "react";
 import { WrapperDiv } from "./EmployeeCv.styles";
 import { CvItem } from "./components/CvItem";
 import { ICV } from "@/interfaces/ICV";
+import { Outlet } from "react-router";
 
 export const cvs = [
   {
@@ -54,7 +55,7 @@ export const EmployeeCv = () => {
           );
         })}
       </div>
-      <div className="cvsContent">content</div>
+      <Outlet />
     </WrapperDiv>
   );
 };

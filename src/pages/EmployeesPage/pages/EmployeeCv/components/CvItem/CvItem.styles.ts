@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const StyledDiv = styled("div")({
   width: "13.5rem",
-  padding: "0.75em 0",
+  margin: "1em 0",
   "&.active": {
     borderBottom: "2px solid #1890FF",
     "& a": {

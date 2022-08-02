@@ -13,8 +13,6 @@ import { EmployeeInfo } from "@/pages/EmployeesPage/pages/EmployeeInfo";
 import { ProjectInfo } from "@/pages/ProjectsPage/pages/ProjectInfo";
 import { ProjectPage } from "@/pages/ProjectsPage/pages/ProjectPage";
 
-import { Footer } from "../Footer";
-
 export function Router() {
   return (
     <BrowserRouter>
@@ -26,7 +24,7 @@ export function Router() {
             <Route index element={<EmployeeInfo />} />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
               <Route index element={<RedirectPage to={ROUTE.TARGET_CV} />} />
-              <Route path={ROUTE.TARGET_CV} element={<Footer />} />
+              <Route path={ROUTE.TARGET_CV} element={<div>hello</div>} />
             </Route>
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
