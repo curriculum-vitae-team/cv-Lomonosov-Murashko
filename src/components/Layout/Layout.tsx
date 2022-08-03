@@ -4,7 +4,7 @@ import { Footer } from "../Footer";
 import { Header } from "../Header";
 import { SideBar } from "../SideBar";
 
-export const Layout = () => {
+export function Layout() {
   return (
     <>
       <Header />
@@ -15,4 +15,4 @@ export const Layout = () => {
       <Footer />
     </>
   );
-};
+}

@@ -1,12 +1,12 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Router } from "../Router";
-import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { theme } from "../../theme";
 
-export const App = () => {
+export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router />
     </ThemeProvider>
   );
-};
+}

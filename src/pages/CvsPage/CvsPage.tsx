@@ -1,5 +1,5 @@
 import React from "react";
 
-export const CvsPage = () => {
+export function CvsPage() {
   return <div>CvsPage</div>;
-};
+}
