@@ -12,7 +12,7 @@ import { Outlet, useParams } from "react-router";
 import { EmployeeCv } from "../EmployeeCv";
 import { Link } from "react-router-dom";
 import { EmployeeInfo } from "../EmployeeInfo/EmployeeInfo";
-import { ROUTE } from "@/constants/route";
+import { ROUTE } from "@constants/route";
 
 export const EmployeePage = () => {
   const [selectedTab, setSelectedTab] = useState<number>(0);

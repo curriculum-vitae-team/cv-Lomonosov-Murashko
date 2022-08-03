@@ -1,6 +1,6 @@
 import { StyledHeader, Img, StyledGrid } from "./Header.styles";
 import { UserProfile } from "./components/UserProfile/UserProfile";
-import logo from "@/assets/images/logo.svg";
+import logo from "@assets/images/logo.svg";
 
 export function Header() {
   return (

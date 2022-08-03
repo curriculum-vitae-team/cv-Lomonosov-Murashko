@@ -1,4 +1,4 @@
-import { TableEntry } from "@/constants/table";
+import { TableEntry } from "@constants/table";
 
 export type TableProps = {
   items: Item[];

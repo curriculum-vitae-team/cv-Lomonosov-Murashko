@@ -1,5 +1,5 @@
-import { Breadcrumb } from "@/components/Breadcrumb";
-import { ROUTE_SEGMENT } from "@/constants/route";
+import { Breadcrumb } from "@components/Breadcrumb";
+import { ROUTE_SEGMENT } from "@constants/route";
 
 export const proj = [
   { id: "1", name: "p1", startDate: "10.10.2012", endDate: "10.11.2052" },
