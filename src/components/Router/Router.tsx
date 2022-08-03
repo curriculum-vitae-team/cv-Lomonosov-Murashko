@@ -10,7 +10,7 @@ import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
-import { ProjectInfo } from "@pages/ProjectsPage/pages/ProjectInfo";
+import { ProjectInfo } from "@components/ProjectInfo";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
 
 export function Router() {

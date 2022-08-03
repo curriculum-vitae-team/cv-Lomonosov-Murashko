@@ -5,7 +5,6 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
 import { TableEntry } from "@constants/table";
-import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
 
 export const cvs = [
   { id: "1", name: "cv1", description: "aoaoao1" },
@@ -26,9 +25,7 @@ export const CvsPage = () => {
   return (
     <PageWrapper>
       <PageTop>
-        <BreadcrumbsConfig config={{ cvs: "CV list" }}>
-          <Breadcrumb />
-        </BreadcrumbsConfig>
+        <Breadcrumb config={{ cvs: "CV list" }} />
         <PageTopTypography title="CV list" caption="All employees CVs" />
       </PageTop>
       <PageBody>

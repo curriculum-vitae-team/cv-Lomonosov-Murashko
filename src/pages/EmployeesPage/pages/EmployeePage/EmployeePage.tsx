@@ -4,7 +4,6 @@ import { Box, Tabs, Tab, Stack } from "@mui/material";
 import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
 import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
@@ -28,11 +27,11 @@ export const EmployeePage = () => {
   const [selectedTab, setSelectedTab] = useState<number>(
     pathnames.includes("cv") ? 1 : 0,
   );
-  console.log(cvs[0].id, cvId);
+
   return (
     <Stack sx={{ width: "100%" }}>
       <PageTop>
-        <BreadcrumbsConfig
+        <Breadcrumb
           config={{
             info: "Info",
             cv: "CV",
@@ -41,9 +40,7 @@ export const EmployeePage = () => {
               ? employee.name + " " + employee.lastName
               : employeeId!,
           }}
-        >
-          <Breadcrumb />
-        </BreadcrumbsConfig>
+        />
         <PageTopTypography
           title="Employees"
           caption={employee.name + " " + employee.lastName + "`s profile"}

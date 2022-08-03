@@ -1,1 +1,0 @@
-export { BreadcrumbsConfig } from "./BreadcrumbsConfig";

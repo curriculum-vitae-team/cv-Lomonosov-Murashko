@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, FormLabel, TextField, Typography } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -11,15 +11,26 @@ import { useNavigate, useParams } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
+import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
+import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const EmployeeInfo = () => {
-  const { control, handleSubmit, reset } = useForm<IEmployee>();
-  const { errors } = useFormState({ control });
   const { employeeId } = useParams();
+  const employee = emp.find(({ id }) => id === employeeId)!;
+
+  const { control, handleSubmit, reset } = useForm<IEmployee>({
+    defaultValues: {
+      name: employee.name,
+      lastName: employee.lastName,
+      email: employee.email,
+      department: employee.department,
+      specialization: employee.specialization,
+    },
+  });
+
+  const { errors } = useFormState({ control });
 
   const navigate = useNavigate();
-
-  const employee = emp.find(({ id }) => id === employeeId)!;
 
   const onSubmit: SubmitHandler<IEmployee> = (data) => {
     // save employee info
@@ -30,107 +41,105 @@ export const EmployeeInfo = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InfoFormWrapper>
-          <div className="textfield-wrapper">
-            <Typography>First Name</Typography>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>First Name</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="name"
-              defaultValue={employee.name}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.name?.message}
+                  error={!!errors.name}
                   helperText={errors.name?.message || " "}
                   size="small"
                 />
               )}
             />
-          </div>
+          </StyledFieldsetWrapper>
 
-          <div className="textfield-wrapper">
-            <Typography>Last Name</Typography>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Last Name</FormLabel>
             <Controller
               control={control}
               rules={{
-                required: "Please, specify the correct pattern",
+                required: "Please, specify the field",
               }}
               name="lastName"
-              defaultValue={employee.lastName}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.lastName?.message}
+                  error={!!errors.lastName}
                   helperText={errors.lastName?.message || " "}
                   size="small"
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
-            <Typography>Email</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Email</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="email"
-              defaultValue={employee.email}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.email?.message}
+                  error={!!errors.email}
                   helperText={errors.email?.message || " "}
                   size="small"
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
-            <Typography>Department</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Department</FormLabel>
+
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="department"
-              defaultValue={employee.department}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.department?.message}
+                  error={!!errors.department}
                   helperText={errors.department?.message || " "}
                   size="small"
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
-            <Typography>Specialization</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Specialization</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
               name="specialization"
-              defaultValue={employee.specialization}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.specialization?.message}
+                  error={!!errors.specialization}
                   helperText={errors.specialization?.message || " "}
                   size="small"
                 />
               )}
             />
-          </div>
+          </StyledFieldsetWrapper>
         </InfoFormWrapper>
-        <div className="buttons">
-          <Button type="submit" value="Save">
+        <StyledFormActions>
+          <Button type="submit" value="Save" variant="contained">
             Save
           </Button>
           <Button
             onClick={() => navigate(ROUTE.EMPLOYEES)}
             type="reset"
             value="Cancel"
+            variant="outlined"
+            color="info"
           >
             Cancel
           </Button>
-        </div>
+        </StyledFormActions>
       </form>
     </>
   );

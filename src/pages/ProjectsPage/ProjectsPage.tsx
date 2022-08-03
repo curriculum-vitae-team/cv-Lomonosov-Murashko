@@ -5,7 +5,6 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
 import { TableEntry } from "@constants/table";
-import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
 
 export const proj = [
   { id: "1", name: "p1", startDate: "10.10.2012", endDate: "10.11.2052" },
@@ -27,9 +26,7 @@ export const ProjectsPage = () => {
   return (
     <PageWrapper>
       <PageTop>
-        <BreadcrumbsConfig config={{ projects: "Projects" }}>
-          <Breadcrumb />
-        </BreadcrumbsConfig>
+        <Breadcrumb config={{ projects: "Projects" }} />
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
