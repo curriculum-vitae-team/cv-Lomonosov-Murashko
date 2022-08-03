@@ -45,7 +45,6 @@ export const EmployeeInfo = () => {
 
   const onSubmit: SubmitHandler<IEmployee> = (data) => {
     // save employee info
-    console.log(data);
     reset();
   };
 

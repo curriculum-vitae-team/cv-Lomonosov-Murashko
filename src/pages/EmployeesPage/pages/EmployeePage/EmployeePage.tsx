@@ -43,8 +43,6 @@ export const EmployeePage = () => {
     setSelectedTab(newValue);
   };
 
-  console.log("REDNER");
-
   return (
     <WrapperDiv>
       <Breadcrumb />
