@@ -13,7 +13,7 @@ export const ProjectPage = () => {
   const project = proj.find(({ id }) => id === projectId)!;
 
   return (
-    <Stack>
+    <Stack sx={{ width: "100%" }}>
       <PageTop>
         <Breadcrumb
           config={{
