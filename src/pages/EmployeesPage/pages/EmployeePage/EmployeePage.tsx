@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Breadcrumb } from "../../../../components/Breadcrumb";
-import { Typography, Box, Tabs, Tab, Stack } from "@mui/material";
+import { Box, Tabs, Tab, Stack } from "@mui/material";
 
 import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
@@ -29,7 +29,7 @@ export const EmployeePage = () => {
   );
 
   return (
-    <Stack>
+    <Stack sx={{ width: "100%"}}>
       <PageTop>
         <BreadcrumbsConfig
           config={{

@@ -5,7 +5,6 @@ export const StyledTable = styled(Table)({
   display: "flex",
   marginTop: "1em",
   padding: "1em",
-
   borderRadius: "5px",
   "& svg": {
     fontSize: "1em",

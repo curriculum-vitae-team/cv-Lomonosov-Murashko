@@ -1,13 +1,12 @@
 import { styled } from "@mui/material";
 
-export const StyledDiv = styled("div")({
+export const WrapperDiv = styled("div")({
   display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  flexWrap: "wrap",
-  margin: "2em 1em",
-  "& .textfield-wrapper": {
-    marginBottom: "0.5em",
-    padding: "0.25em 3em 0 0",
+  width: "100%",
+  justifyContent: "space-between",
+  "& div.active > div > a": {
+    color: "#1890FF",
+    borderBottom: "2px solid #1890FF",
+    padding: "0 0.5em 0.5em 0.5em",
   },
 });
