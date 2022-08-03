@@ -2,7 +2,7 @@ import { StyledDiv, StyledLink } from "./CvItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { SyntheticEvent } from "react";
 
-import { cvs } from "@pages/EmployeesPage/pages/EmployeePage/EmployeePage";
+import { cvs } from "@pages/CvsPage/CvsPage";
 import { Typography } from "@mui/material";
 
 type CvItemProps = {

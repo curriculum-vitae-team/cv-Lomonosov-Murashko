@@ -10,33 +10,11 @@ import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
-
-export const cvs = [
-  {
-    id: "1",
-    name: "cv 1",
-    description: "sdc",
-  },
-  {
-    id: "2",
-    name: "cv 2",
-    description: "sdc",
-  },
-  {
-    id: "3",
-    name: "cv 3",
-    description: "sdc",
-  },
-
-  {
-    id: "4",
-    name: "cv 4",
-    description: "sdc",
-  },
-];
+import { cvs } from "@pages/CvsPage/CvsPage";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
+  const { cvId } = useParams();
 
   const employee = emp.find(({ id }) => id === employeeId)!;
 
@@ -51,7 +29,7 @@ export const EmployeePage = () => {
   const [selectedTab, setSelectedTab] = useState<number>(
     pathnames.includes("cv") ? 1 : 0,
   );
-
+  console.log(cvs[0].id, cvId);
   return (
     <Stack sx={{ width: "100%" }}>
       <PageTop>
@@ -82,9 +60,13 @@ export const EmployeePage = () => {
             <Tab
               label="Info"
               component={Link}
-              to={ROUTE.EMPLOYEES + "/" + employeeId + "/" + cvs[0]}
+              to={ROUTE.EMPLOYEES + "/" + employeeId}
             />
-            <Tab label="CV" component={Link} to="cv" />
+            <Tab
+              label="CV"
+              component={Link}
+              to={"cv" + "/" + (cvId ? cvId : cvs[0].id)}
+            />
           </Tabs>
         </Box>
         <Outlet />
