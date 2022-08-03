@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, FormLabel, TextField, Typography } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -14,6 +14,7 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { proj } from "../../pages/ProjectsPage/ProjectsPage";
 import { FormActions } from "@components/FormActions";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
+import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const ProjectInfo = () => {
   const { control, handleSubmit, reset } = useForm<IProject>();
@@ -30,74 +31,107 @@ export const ProjectInfo = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InfoFormWrapper>
-          <StyledFieldsetWrapper>
-            <Typography>Project name</Typography>
-            <Controller
-              control={control}
-              rules={{ required: "Please, specify the field" }}
-              name="name"
-              defaultValue={project.name}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  error={!!errors.name?.message}
-                  helperText={errors.name?.message || " "}
-                  size="small"
-                />
-              )}
-            />
-          </StyledFieldsetWrapper>
-          <StyledFieldsetWrapper>
-            <Typography>Start date</Typography>
-            <Controller
-              control={control}
-              rules={{ required: "Please, specify the field" }}
-              name="name"
-              defaultValue={project.name}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  error={!!errors.name?.message}
-                  helperText={errors.name?.message || " "}
-                  size="small"
-                />
-              )}
-            />
-          </StyledFieldsetWrapper>
-          <StyledFieldsetWrapper>
-            <Typography>End date</Typography>
-            <Controller
-              control={control}
-              rules={{ required: "Please, specify the field" }}
-              name="name"
-              defaultValue={project.name}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  error={!!errors.name?.message}
-                  helperText={errors.name?.message || " "}
-                  size="small"
-                />
-              )}
-            />
-          </StyledFieldsetWrapper>
-        </InfoFormWrapper>
-        <FormActions>
-          <Button type="submit" value="Save">
-            Save
-          </Button>
-          <Button
-            onClick={() => navigate(ROUTE.EMPLOYEES)}
-            type="reset"
-            value="Cancel"
-          >
-            Cancel
-          </Button>
-        </FormActions>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InfoFormWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>First Name</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="name"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.name}
+                helperText={errors.name?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>Last Name</FormLabel>
+          <Controller
+            control={control}
+            rules={{
+              required: "Please, specify the field",
+            }}
+            name="lastName"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.lastName}
+                helperText={errors.lastName?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>Email</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="email"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.email}
+                helperText={errors.email?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>Department</FormLabel>
+
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="department"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.department}
+                helperText={errors.department?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>Specialization</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="specialization"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.specialization}
+                helperText={errors.specialization?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+      </InfoFormWrapper>
+      <StyledFormActions>
+        <Button type="submit" value="Save" variant="contained">
+          Save
+        </Button>
+        <Button
+          onClick={() => navigate(ROUTE.EMPLOYEES)}
+          type="reset"
+          value="Cancel"
+          variant="outlined"
+          color="info"
+        >
+          Cancel
+        </Button>
+      </StyledFormActions>
+    </form>
   );
 };
