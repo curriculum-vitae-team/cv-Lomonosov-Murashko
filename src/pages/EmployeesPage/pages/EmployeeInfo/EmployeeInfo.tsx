@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, FormLabel, TextField, Typography } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { StyledLabel } from "@components/styled/StyledLabel";
+import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const EmployeeInfo = () => {
@@ -41,8 +41,8 @@ export const EmployeeInfo = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InfoFormWrapper>
-          <StyledLabel>
-            <Typography>First Name</Typography>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>First Name</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
@@ -56,10 +56,10 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </StyledLabel>
+          </StyledFieldsetWrapper>
 
-          <StyledLabel>
-            <Typography>Last Name</Typography>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Last Name</FormLabel>
             <Controller
               control={control}
               rules={{
@@ -75,9 +75,9 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </StyledLabel>
-          <StyledLabel>
-            <Typography>Email</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Email</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
@@ -91,9 +91,10 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </StyledLabel>
-          <StyledLabel>
-            <Typography>Department</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Department</FormLabel>
+
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
@@ -107,9 +108,9 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </StyledLabel>
-          <StyledLabel>
-            <Typography>Specialization</Typography>
+          </StyledFieldsetWrapper>
+          <StyledFieldsetWrapper>
+            <FormLabel required={true}>Specialization</FormLabel>
             <Controller
               control={control}
               rules={{ required: "Please, specify the field" }}
@@ -123,7 +124,7 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </StyledLabel>
+          </StyledFieldsetWrapper>
         </InfoFormWrapper>
         <StyledFormActions>
           <Button type="submit" value="Save" variant="contained">
