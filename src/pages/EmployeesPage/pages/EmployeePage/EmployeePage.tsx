@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Breadcrumb } from "../../../../components/Breadcrumb";
 import { Box, Tabs, Tab, Stack } from "@mui/material";
-
 import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
