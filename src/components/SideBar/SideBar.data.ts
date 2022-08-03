@@ -1,5 +1,5 @@
 import { ISideBarLink } from "./SideBar.types";
-import { ROUTE } from "../../route/route";
+import { ROUTE } from "@constants/route";
 
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -11,7 +11,7 @@ class SideBarLinkData implements ISideBarLink {
   constructor(
     public to: string,
     public name: string,
-    public Icon: React.ComponentType
+    public Icon: React.ComponentType,
   ) {}
 }
 
