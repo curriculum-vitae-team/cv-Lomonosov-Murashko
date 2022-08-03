@@ -5,11 +5,11 @@ import { Typography, Box, Tabs, Tab, Stack } from "@mui/material";
 import { emp } from "../../EmployeesPage";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
-import { ROUTE } from "@/constants/route";
-import { PageTop } from "@/components/styled/PageTop";
-import { PageTopTypography } from "@/components/PageTopTypography";
-import { PageBody } from "@/components/styled/PageBody";
+import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
+import { ROUTE } from "@constants/route";
+import { PageTop } from "@components/styled/PageTop";
+import { PageTopTypography } from "@components/PageTopTypography";
+import { PageBody } from "@components/styled/PageBody";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();

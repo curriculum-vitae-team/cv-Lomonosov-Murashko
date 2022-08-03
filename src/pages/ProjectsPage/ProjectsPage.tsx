@@ -1,11 +1,11 @@
-import { Breadcrumb } from "@/components/Breadcrumb";
-import { PageTopTypography } from "@/components/PageTopTypography";
-import { PageBody } from "@/components/styled/PageBody";
-import { PageTop } from "@/components/styled/PageTop";
-import { PageWrapper } from "@/components/styled/PageWrapper";
-import { StyledTable } from "@/components/styled/StyledTable";
-import { TableEntry } from "@/constants/table";
-import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
+import { Breadcrumb } from "@components/Breadcrumb";
+import { PageTopTypography } from "@components/PageTopTypography";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTop } from "@components/styled/PageTop";
+import { PageWrapper } from "@components/styled/PageWrapper";
+import { StyledTable } from "@components/styled/StyledTable";
+import { TableEntry } from "@constants/table";
+import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
 
 export const proj = [
   { id: "1", name: "p1", startDate: "10.10.2012", endDate: "10.11.2052" },

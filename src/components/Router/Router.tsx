@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CvsPage } from "@/pages/CvsPage";
-import { EmployeesPage } from "@/pages/EmployeesPage/";
-import { EntitiesPage } from "@/pages/EntitiesPage";
-import { NotFoundPage } from "@/pages/NotFoundPage";
-import { ProjectsPage } from "@/pages/ProjectsPage";
-import { RedirectPage } from "@/pages/RedirectPage";
+import { CvsPage } from "@pages/CvsPage";
+import { EmployeesPage } from "@pages/EmployeesPage/";
+import { EntitiesPage } from "@pages/EntitiesPage";
+import { NotFoundPage } from "@pages/NotFoundPage";
+import { ProjectsPage } from "@pages/ProjectsPage";
+import { RedirectPage } from "@pages/RedirectPage";
 import { Layout } from "../Layout";
-import { EmployeePage } from "@/pages/EmployeesPage/pages/EmployeePage";
-import { EmployeeCv } from "@/pages/EmployeesPage/pages/EmployeeCv";
-import { ROUTE } from "@/constants/route";
-import { EmployeeInfo } from "@/pages/EmployeesPage/pages/EmployeeInfo";
-import { ProjectInfo } from "@/pages/ProjectsPage/pages/ProjectInfo";
-import { ProjectPage } from "@/pages/ProjectsPage/pages/ProjectPage";
+import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
+import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
+import { ROUTE } from "@constants/route";
+import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
+import { ProjectInfo } from "@pages/ProjectsPage/pages/ProjectInfo";
+import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
 
 export function Router() {
   return (

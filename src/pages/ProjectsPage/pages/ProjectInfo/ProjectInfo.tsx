@@ -7,9 +7,9 @@ import {
 } from "react-hook-form";
 
 import { useNavigate, useParams } from "react-router";
-import { ROUTE } from "@/constants/route";
-import { IProject } from "@/interfaces/IProject";
-import { InfoFormWrapper } from "@/components/styled/InfoFormWrapper";
+import { ROUTE } from "@constants/route";
+import { IProject } from "@interfaces/IProject";
+import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 import { proj } from "../../ProjectsPage";
 

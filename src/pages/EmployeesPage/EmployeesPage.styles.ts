@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { styled } from "@mui/system";
-import { Table } from "@/components/Table";
+import { Table } from "@components/Table";
 
 export const StyledTable = styled(Table)({
   display: "flex",

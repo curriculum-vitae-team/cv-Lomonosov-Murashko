@@ -8,9 +8,9 @@ import {
 
 import { emp } from "../../EmployeesPage";
 import { useNavigate, useParams } from "react-router";
-import { ROUTE } from "@/constants/route";
-import { IEmployee } from "@/interfaces/IEmployee";
-import { InfoFormWrapper } from "@/components/styled/InfoFormWrapper";
+import { ROUTE } from "@constants/route";
+import { IEmployee } from "@interfaces/IEmployee";
+import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();

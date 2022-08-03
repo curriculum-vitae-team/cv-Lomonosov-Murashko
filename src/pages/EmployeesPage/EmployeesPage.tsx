@@ -1,8 +1,8 @@
-import { PageTopTypography } from "@/components/PageTopTypography";
-import { PageBody } from "@/components/styled/PageBody";
-import { PageTop } from "@/components/styled/PageTop";
-import { PageWrapper } from "@/components/styled/PageWrapper";
-import { StyledTable } from "@/components/styled/StyledTable";
+import { PageTopTypography } from "@components/PageTopTypography";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTop } from "@components/styled/PageTop";
+import { PageWrapper } from "@components/styled/PageWrapper";
+import { StyledTable } from "@components/styled/StyledTable";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { BreadcrumbsConfig } from "../../context/BreadcrumbsConfig";

@@ -1,8 +1,12 @@
-const path = require("path");
+const { CracoAliasPlugin } = require("react-app-alias");
+
+const options = {}; // default is empty for most cases
+
 module.exports = {
-  webpack: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
+  plugins: [
+    {
+      plugin: CracoAliasPlugin,
+      options: {},
     },
-  },
+  ],
 };

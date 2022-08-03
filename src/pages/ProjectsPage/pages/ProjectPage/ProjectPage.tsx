@@ -3,10 +3,10 @@ import { Typography, Stack } from "@mui/material";
 
 import { proj } from "../../ProjectsPage";
 import { Outlet, useParams } from "react-router";
-import { BreadcrumbsConfig } from "@/context/BreadcrumbsConfig";
-import { PageTop } from "@/components/styled/PageTop";
-import { PageBody } from "@/components/styled/PageBody";
-import { PageTopTypography } from "@/components/PageTopTypography";
+import { BreadcrumbsConfig } from "@context/BreadcrumbsConfig";
+import { PageTop } from "@components/styled/PageTop";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTopTypography } from "@components/PageTopTypography";
 
 export const ProjectPage = () => {
   const { projectId } = useParams();

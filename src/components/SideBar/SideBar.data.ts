@@ -1,5 +1,5 @@
 import { ISideBarLink } from "./SideBar.types";
-import { ROUTE } from "@/constants/route";
+import { ROUTE } from "@constants/route";
 
 import DnsIcon from "@mui/icons-material/Dns";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
