@@ -16,7 +16,7 @@ import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();
-  const { errors } = useFormState({ control });
+  const { errors, isValid } = useFormState({ control });
   const { employeeId } = useParams();
 
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export const EmployeeInfo = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.name?.message}
+                  error={!!errors.name}
                   helperText={errors.name?.message || " "}
                   size="small"
                 />
@@ -55,14 +55,14 @@ export const EmployeeInfo = () => {
             <Controller
               control={control}
               rules={{
-                required: "Please, specify the correct pattern",
+                required: "Please, specify the field",
               }}
               name="lastName"
               defaultValue={employee.lastName}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.lastName?.message}
+                  error={!!errors.lastName}
                   helperText={errors.lastName?.message || " "}
                   size="small"
                 />
@@ -79,7 +79,7 @@ export const EmployeeInfo = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.email?.message}
+                  error={!!errors.email}
                   helperText={errors.email?.message || " "}
                   size="small"
                 />
@@ -96,7 +96,7 @@ export const EmployeeInfo = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.department?.message}
+                  error={!!errors.department}
                   helperText={errors.department?.message || " "}
                   size="small"
                 />
@@ -113,7 +113,7 @@ export const EmployeeInfo = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  error={!!errors.specialization?.message}
+                  error={!!errors.specialization}
                   helperText={errors.specialization?.message || " "}
                   size="small"
                 />
