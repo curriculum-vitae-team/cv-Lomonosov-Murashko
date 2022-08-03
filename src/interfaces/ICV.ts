@@ -1,5 +1,6 @@
-export interface ICV {
-  id: string;
+import { IEntryData } from "./IEntryData";
+
+export interface ICV extends IEntryData {
   name: string;
   description: string;
 }

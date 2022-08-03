@@ -8,7 +8,7 @@ import { RedirectPage } from "@pages/RedirectPage";
 import { Layout } from "../Layout";
 import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
-import { ROUTE } from "@constants/route";
+import { ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
 import { ProjectInfo } from "@pages/ProjectsPage/pages/ProjectInfo";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
@@ -23,8 +23,7 @@ export function Router() {
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
             <Route index element={<EmployeeInfo />} />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-              <Route index element={<RedirectPage to={ROUTE.TARGET_CV} />} />
-              <Route path={ROUTE.TARGET_CV} element={<div>hello</div>} />
+              <Route path={ROUTE_PARAM.CV_ID} element={<div>hello</div>} />
             </Route>
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />

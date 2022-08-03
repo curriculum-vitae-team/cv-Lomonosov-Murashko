@@ -1,42 +1,22 @@
 import { useState } from "react";
 import { WrapperDiv } from "./EmployeeCv.styles";
 import { CvItem } from "./components/CvItem";
-import { ICV } from "@/interfaces/ICV";
-import { Outlet } from "react-router";
-
-export const cvs = [
-  {
-    id: "1",
-    name: "cv 1",
-    description: "sdc",
-  },
-  {
-    id: "2",
-    name: "cv 2",
-    description: "sdc",
-  },
-  {
-    id: "3",
-    name: "cv 3",
-    description: "sdc",
-  },
-
-  {
-    id: "4",
-    name: "cv 4",
-    description: "sdc",
-  },
-];
+import { ICV } from "@interfaces/ICV";
+import { Outlet, useParams } from "react-router";
+import { cvs } from "@pages/CvsPage/CvsPage";
 
 export const EmployeeCv = () => {
   // const [selectedTab, setSelectedTab] = useState<number>(0);
-  const [active, setActive] = useState<number>(-1);
+
+  const { cvId } = useParams();
+
+  const [active, setActive] = useState<string>(cvId || "-1");
 
   // const handleChange = (e: React.SyntheticEvent, val: number) => {
   //   setSelectedTab(val);
   // };
 
-  const handleActive = (activeId: number) => {
+  const handleActive = (activeId: string) => {
     setActive(activeId);
   };
 
@@ -46,9 +26,9 @@ export const EmployeeCv = () => {
         {cvs.map((cv: ICV, index: number) => {
           return (
             <div
-              className={active === Number(cv.id) - 1 ? "active" : ""}
+              className={active === cv.id ? "active" : ""}
               key={cv.id}
-              onClick={() => handleActive(index)}
+              onClick={() => handleActive(cv.id)}
             >
               <CvItem name={cv.name} id={cv.id} />
             </div>

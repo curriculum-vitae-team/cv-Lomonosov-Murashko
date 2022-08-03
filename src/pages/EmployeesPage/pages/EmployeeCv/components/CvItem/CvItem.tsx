@@ -2,7 +2,8 @@ import { StyledDiv, StyledLink } from "./CvItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { SyntheticEvent } from "react";
 
-import { cvs } from "../../EmployeeCv";
+import { cvs } from "@pages/EmployeesPage/pages/EmployeePage/EmployeePage";
+import { Typography } from "@mui/material";
 
 type CvItemProps = {
   id: string;
@@ -19,7 +20,7 @@ export const CvItem = ({ id, name }: CvItemProps) => {
   return (
     <StyledDiv>
       <StyledLink to={id}>
-        <span>{name}</span>
+        <Typography>{name}</Typography>
         <DeleteOutlineIcon onClick={(e) => onDeleteHandler(e, id)} />
       </StyledLink>
     </StyledDiv>

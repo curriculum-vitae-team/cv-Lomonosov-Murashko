@@ -11,6 +11,30 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 
+export const cvs = [
+  {
+    id: "1",
+    name: "cv 1",
+    description: "sdc",
+  },
+  {
+    id: "2",
+    name: "cv 2",
+    description: "sdc",
+  },
+  {
+    id: "3",
+    name: "cv 3",
+    description: "sdc",
+  },
+
+  {
+    id: "4",
+    name: "cv 4",
+    description: "sdc",
+  },
+];
+
 export const EmployeePage = () => {
   const { employeeId } = useParams();
 
@@ -25,11 +49,11 @@ export const EmployeePage = () => {
   const pathnames = pathname.split("/");
 
   const [selectedTab, setSelectedTab] = useState<number>(
-    pathnames[pathnames.length - 1].toLowerCase() === "cv" ? 1 : 0,
+    pathnames.includes("cv") ? 1 : 0,
   );
 
   return (
-    <Stack sx={{ width: "100%"}}>
+    <Stack sx={{ width: "100%" }}>
       <PageTop>
         <BreadcrumbsConfig
           config={{
@@ -58,7 +82,7 @@ export const EmployeePage = () => {
             <Tab
               label="Info"
               component={Link}
-              to={ROUTE.EMPLOYEES + "/" + employeeId}
+              to={ROUTE.EMPLOYEES + "/" + employeeId + "/" + cvs[0]}
             />
             <Tab label="CV" component={Link} to="cv" />
           </Tabs>
