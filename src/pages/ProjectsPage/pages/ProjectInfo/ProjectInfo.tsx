@@ -12,6 +12,8 @@ import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 import { proj } from "../../ProjectsPage";
+import { FormActions } from "@components/FormActions";
+import { StyledLabel } from "@components/styled/StyledLabel";
 
 export const ProjectInfo = () => {
   const { control, handleSubmit, reset } = useForm<IProject>();
@@ -31,7 +33,7 @@ export const ProjectInfo = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InfoFormWrapper>
-          <div className="textfield-wrapper">
+          <StyledLabel>
             <Typography>Project name</Typography>
             <Controller
               control={control}
@@ -47,8 +49,8 @@ export const ProjectInfo = () => {
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
+          </StyledLabel>
+          <StyledLabel>
             <Typography>Start date</Typography>
             <Controller
               control={control}
@@ -64,8 +66,8 @@ export const ProjectInfo = () => {
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
+          </StyledLabel>
+          <StyledLabel>
             <Typography>End date</Typography>
             <Controller
               control={control}
@@ -81,9 +83,9 @@ export const ProjectInfo = () => {
                 />
               )}
             />
-          </div>
+          </StyledLabel>
         </InfoFormWrapper>
-        <div className="buttons">
+        <FormActions>
           <Button type="submit" value="Save">
             Save
           </Button>
@@ -94,7 +96,7 @@ export const ProjectInfo = () => {
           >
             Cancel
           </Button>
-        </div>
+        </FormActions>
       </form>
     </>
   );

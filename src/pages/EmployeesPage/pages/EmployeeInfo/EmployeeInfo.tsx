@@ -12,6 +12,7 @@ import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { StyledLabel } from "@components/styled/StyledLabel";
+import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();
@@ -120,18 +121,20 @@ export const EmployeeInfo = () => {
             />
           </StyledLabel>
         </InfoFormWrapper>
-        <div>
-          <Button type="submit" value="Save">
+        <StyledFormActions>
+          <Button type="submit" value="Save" variant="contained">
             Save
           </Button>
           <Button
             onClick={() => navigate(ROUTE.EMPLOYEES)}
             type="reset"
             value="Cancel"
+            variant="outlined"
+            color="info"
           >
             Cancel
           </Button>
-        </div>
+        </StyledFormActions>
       </form>
     </>
   );
