@@ -1,7 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { BreadcrumbsConfig } from "../../context/BreadcrumbsConfig";
 import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
 
 export const emp = [
@@ -75,13 +74,12 @@ export const EmployeesPage = () => {
   return (
     <Stack>
       <StyledStack direction="column" spacing={2}>
-        <BreadcrumbsConfig
+        <Breadcrumb
           config={{
             employees: "Employees",
           }}
-        >
-          <Breadcrumb />
-        </BreadcrumbsConfig>
+        />
+
         <Typography variant="h6">Employees</Typography>
         <Typography variant="caption">Employees list</Typography>
       </StyledStack>

@@ -9,7 +9,6 @@ import { Layout } from "@components/Layout";
 import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ROUTE } from "@constants/route";
-import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
 
 export function Router() {
   return (
@@ -19,15 +18,12 @@ export function Router() {
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
+            {/*Will be rewritten in next PR */}
             <Route
               index
               element={<RedirectPage to={ROUTE.TARGET_EMPLOYEE_INFO} />}
             />
 
-            <Route
-              path={ROUTE.TARGET_EMPLOYEE_INFO}
-              element={<EmployeeInfo />}
-            />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />} />
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
