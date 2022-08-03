@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
+import { StyledLabel } from "@components/styled/StyledLabel";
 
 export const EmployeeInfo = () => {
   const { control, handleSubmit, reset } = useForm<IEmployee>();
@@ -30,7 +31,7 @@ export const EmployeeInfo = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InfoFormWrapper>
-          <div className="textfield-wrapper">
+          <StyledLabel>
             <Typography>First Name</Typography>
             <Controller
               control={control}
@@ -46,9 +47,9 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </div>
+          </StyledLabel>
 
-          <div className="textfield-wrapper">
+          <StyledLabel>
             <Typography>Last Name</Typography>
             <Controller
               control={control}
@@ -66,8 +67,8 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
+          </StyledLabel>
+          <StyledLabel>
             <Typography>Email</Typography>
             <Controller
               control={control}
@@ -83,8 +84,8 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
+          </StyledLabel>
+          <StyledLabel>
             <Typography>Department</Typography>
             <Controller
               control={control}
@@ -100,8 +101,8 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </div>
-          <div className="textfield-wrapper">
+          </StyledLabel>
+          <StyledLabel>
             <Typography>Specialization</Typography>
             <Controller
               control={control}
@@ -117,9 +118,9 @@ export const EmployeeInfo = () => {
                 />
               )}
             />
-          </div>
+          </StyledLabel>
         </InfoFormWrapper>
-        <div className="buttons">
+        <div>
           <Button type="submit" value="Save">
             Save
           </Button>
