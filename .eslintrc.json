@@ -4,22 +4,29 @@
     "es2021": true,
     "jest": true
   },
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "plugin:import/typescript",
-    "plugin:react-hooks/recommended"
-  ],
+  "extends": ["react-app", "react-app/jest", "plugin:react-hooks/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript"
+      ],
+
+      "parserOptions": {
+        "project": ["./tsconfig.json"] // Specify it only for TypeScript files
+      }
+    }
+  ],
   "rules": {
     "quotes": [
       "error",
