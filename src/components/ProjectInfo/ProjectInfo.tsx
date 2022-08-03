@@ -11,7 +11,7 @@ import { ROUTE } from "@constants/route";
 import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
-import { proj } from "../../ProjectsPage";
+import { proj } from "../../pages/ProjectsPage/ProjectsPage";
 import { FormActions } from "@components/FormActions";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 
