@@ -5,7 +5,6 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { BreadcrumbsConfig } from "../../context/BreadcrumbsConfig";
 
 export const emp = [
   {
@@ -70,13 +69,11 @@ export const EmployeesPage = () => {
   return (
     <PageWrapper>
       <PageTop>
-        <BreadcrumbsConfig
+        <Breadcrumb
           config={{
             employees: "Employees",
           }}
-        >
-          <Breadcrumb />
-        </BreadcrumbsConfig>
+        />
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>

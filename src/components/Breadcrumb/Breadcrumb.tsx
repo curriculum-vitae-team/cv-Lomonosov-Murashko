@@ -1,14 +1,12 @@
 import { useLocation, Link } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 
-import { useBreadcrumbsConfig } from "../../context/BreadcrumbsConfig/BreadcrumbsConfig";
+import { BreadcrumbProps } from "./Breadcrumb.types";
 
-export const Breadcrumb = () => {
+export const Breadcrumb = ({ config = {} }: BreadcrumbProps) => {
   const { pathname } = useLocation();
 
   const pathnames = pathname.split("/");
-
-  const config = useBreadcrumbsConfig();
 
   const isLast = (idx: number) => {
     return idx === pathnames.length - 1;
