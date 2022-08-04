@@ -14,7 +14,6 @@ export const CvItem = ({ id, name }: CvItemProps) => {
   // move outside
   const onDeleteHandler = (e: SyntheticEvent, id: string) => {
     e.preventDefault();
-    cvs.filter((cv: any) => cv.id !== id);
   };
 
   return (
