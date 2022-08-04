@@ -13,6 +13,7 @@ export const Fieldset = <T,>({
   control,
   rules,
   label,
+  render,
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
@@ -21,13 +22,17 @@ export const Fieldset = <T,>({
         control={control}
         rules={rules}
         name={name}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            error={isError}
-            helperText={helperText || " "}
-          />
-        )}
+        render={
+          render
+            ? render
+            : ({ field }) => (
+                <TextField
+                  {...field}
+                  error={isError}
+                  helperText={helperText || " "}
+                />
+              )
+        }
       ></Controller>
     </StyledFieldsetWrapper>
   );
