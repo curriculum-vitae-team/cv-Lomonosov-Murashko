@@ -5,6 +5,12 @@ export const WrapperDiv = styled("div")({
   display: "flex",
   width: "100%",
   justifyContent: "space-between",
+  "& .sidebar": {
+    marginRight: "0.5em",
+  },
+  "& .MuiPaper-elevation": {
+    margin: "0 0 0 1em",
+  },
   "& div.active > div > a": {
     color: "#1890FF",
     borderBottom: "2px solid #1890FF",
@@ -13,10 +19,7 @@ export const WrapperDiv = styled("div")({
 });
 
 export const StyledButtonWrapper = styled("div")({
-  position: "fixed",
-  bottom: "3.5em",
-  zIndex: "100",
-  width: "",
+  background: "#fff",
   display: "flex",
   justifyContent: "flex-end",
   "& button": {

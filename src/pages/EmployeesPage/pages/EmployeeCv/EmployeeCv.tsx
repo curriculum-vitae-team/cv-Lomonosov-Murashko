@@ -17,7 +17,7 @@ export const EmployeeCv = () => {
 
   return (
     <WrapperDiv>
-      <div className="cvsSidebar">
+      <div className="sidebar">
         {cvs.map((cv: ICV, index: number) => {
           return (
             <div

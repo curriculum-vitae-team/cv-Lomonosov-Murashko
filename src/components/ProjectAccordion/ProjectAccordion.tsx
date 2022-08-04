@@ -1,10 +1,10 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
-import { ProjectNameWrapper } from "./ProjectAccordion.styles";
+import { AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import { ProjectNameWrapper, StyledAccordion } from "./ProjectAccordion.styles";
 
 export const ProjectAccordion = () => {
   return (
-    <Accordion sx={{ width: "100%" }}>
+    <StyledAccordion>
       <AccordionSummary id="project" aria-controls="content">
         <ProjectNameWrapper>
           <Typography>Project name</Typography>
@@ -14,6 +14,6 @@ export const ProjectAccordion = () => {
       <AccordionDetails>
         <Typography>project info</Typography>
       </AccordionDetails>
-    </Accordion>
+    </StyledAccordion>
   );
 };

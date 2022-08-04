@@ -25,7 +25,7 @@ export function Router() {
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
             <Route index element={<EmployeeInfo />} />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-              <Route path={ROUTE_PARAM.CV_ID} element={<div>hello</div>} />
+              <Route path={ROUTE_PARAM.CV_ID} element={<CvInfo />} />
             </Route>
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
