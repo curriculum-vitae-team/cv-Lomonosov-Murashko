@@ -7,5 +7,8 @@ export const ProjectNameWrapper = styled("div")({
 });
 
 export const StyledAccordion = styled(Accordion)({
-  margin: "0 0 0 1em",
+  marginLeft: "1em",
+  "& .MuiPaper-elevation": {
+    marginRight: "1em",
+  },
 });
