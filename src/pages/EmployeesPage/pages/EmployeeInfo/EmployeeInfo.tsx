@@ -1,22 +1,19 @@
-import { Button, FormLabel, TextField } from "@mui/material";
+import { Button, DialogActions } from "@mui/material";
 import {
   useForm,
-  Controller,
   SubmitHandler,
   useFormState,
 } from "react-hook-form";
 
 import { emp } from "../../EmployeesPage";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
-import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 import { Fieldset } from "@components/Fieldset";
+import { EmployeeInfoProps } from "./EmployeeInfo.types";
 
-export const EmployeeInfo = () => {
-  const { employeeId } = useParams();
+export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const employee = emp.find(({ id }) => id === employeeId)!;
 
   const { control, handleSubmit, reset } = useForm<IEmployee>({
@@ -87,7 +84,7 @@ export const EmployeeInfo = () => {
           name="specialization"
         />
       </InfoFormWrapper>
-      <StyledFormActions>
+      <DialogActions>
         <Button type="submit" value="Save" variant="contained">
           Save
         </Button>
@@ -100,7 +97,7 @@ export const EmployeeInfo = () => {
         >
           Cancel
         </Button>
-      </StyledFormActions>
+      </DialogActions>
     </form>
   );
 };

@@ -1,6 +1,6 @@
 import { Breadcrumb } from "@components/Breadcrumb";
 import { PageTop } from "@components/styled/PageTop";
-import { CvInfo } from "../CvInfo";
+import { CvInfoPage } from "../CvInfoPage";
 
 export const CvPage = () => {
   return (
@@ -10,7 +10,7 @@ export const CvPage = () => {
           cvs: "Cvs",
         }}
       />
-      <CvInfo />
+      <CvInfoPage />
     </PageTop>
   );
 };

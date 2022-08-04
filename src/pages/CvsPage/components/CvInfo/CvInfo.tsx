@@ -1,23 +1,20 @@
-import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 import { ICV } from "@interfaces/ICV";
 import { ButtonWrapper } from "./CvInfo.styles";
-import { Button, FormLabel, TextField } from "@mui/material";
+import { Button, DialogActions } from "@mui/material";
 import {
-  Controller,
   SubmitHandler,
   useForm,
   useFormState,
 } from "react-hook-form";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { cvs } from "@pages/CvsPage/CvsPage";
 import { ROUTE } from "@constants/route";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
+import { CvInfoProps } from "./CvInfo.types";
 
-export const CvInfo = () => {
-  const { cvId } = useParams();
+export const CvInfo = ({ cvId }: CvInfoProps) => {
   const cv = cvs.find(({ id }) => id === cvId)!;
 
   const { control, handleSubmit, reset } = useForm<ICV>({
@@ -104,7 +101,7 @@ export const CvInfo = () => {
       {/* cvs.projects.map ...  */}
       <ProjectAccordion />
 
-      <StyledFormActions>
+      <DialogActions>
         <Button type="submit" value="Save" variant="contained">
           Save
         </Button>
@@ -117,7 +114,7 @@ export const CvInfo = () => {
         >
           Cancel
         </Button>
-      </StyledFormActions>
+      </DialogActions>
     </form>
   );
 };

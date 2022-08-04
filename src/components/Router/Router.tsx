@@ -9,11 +9,11 @@ import { Layout } from "../Layout";
 import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ROUTE, ROUTE_PARAM } from "@constants/route";
-import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
-import { ProjectInfo } from "@components/ProjectInfo";
+import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
-import { CvInfo } from "@pages/CvsPage/components/CvInfo";
 import { CvPage } from "@pages/CvsPage/components/CvPage";
+import { CvInfoPage } from "@pages/CvsPage/components/CvInfoPage";
+import { ProjectInfoPage } from "@components/ProjectInfoPage";
 
 export function Router() {
   return (
@@ -23,14 +23,14 @@ export function Router() {
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
           <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
-            <Route index element={<EmployeeInfo />} />
+            <Route index element={<EmployeeInfoPage />} />
             <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-              <Route path={ROUTE_PARAM.CV_ID} element={<CvInfo />} />
+              <Route path={ROUTE_PARAM.CV_ID} element={<CvInfoPage />} />
             </Route>
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
           <Route path={ROUTE.TARGET_PROJECT} element={<ProjectPage />}>
-            <Route index element={<ProjectInfo />} />
+            <Route index element={<ProjectInfoPage />} />
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvPage />} />
