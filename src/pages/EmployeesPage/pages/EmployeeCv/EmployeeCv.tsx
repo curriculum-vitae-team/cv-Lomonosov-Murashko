@@ -1,20 +1,15 @@
 import { useState } from "react";
-import { WrapperDiv } from "./EmployeeCv.styles";
+import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
 import { CvItem } from "./components/CvItem";
 import { ICV } from "@interfaces/ICV";
 import { Outlet, useParams } from "react-router";
 import { cvs } from "@pages/CvsPage/CvsPage";
+import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
 
 export const EmployeeCv = () => {
-  // const [selectedTab, setSelectedTab] = useState<number>(0);
-
   const { cvId } = useParams();
-
   const [active, setActive] = useState<string>(cvId || "-1");
-
-  // const handleChange = (e: React.SyntheticEvent, val: number) => {
-  //   setSelectedTab(val);
-  // };
 
   const handleActive = (activeId: string) => {
     setActive(activeId);
@@ -34,6 +29,11 @@ export const EmployeeCv = () => {
             </div>
           );
         })}
+        <StyledButtonWrapper>
+          <Button>
+            <AddIcon />
+          </Button>
+        </StyledButtonWrapper>
       </div>
       <Outlet />
     </WrapperDiv>

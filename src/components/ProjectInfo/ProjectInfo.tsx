@@ -1,4 +1,4 @@
-import { Button, FormLabel, TextField, Typography } from "@mui/material";
+import { Button, FormLabel, TextField } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -12,7 +12,6 @@ import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 import { proj } from "../../pages/ProjectsPage/ProjectsPage";
-import { FormActions } from "@components/FormActions";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 

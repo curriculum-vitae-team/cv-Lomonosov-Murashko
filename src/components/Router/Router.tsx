@@ -12,6 +12,8 @@ import { ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfo } from "@pages/EmployeesPage/pages/EmployeeInfo";
 import { ProjectInfo } from "@components/ProjectInfo";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
+import { CvInfo } from "@pages/CvsPage/components/CvInfo";
+import { CvPage } from "@pages/CvsPage/components/CvPage";
 
 export function Router() {
   return (
@@ -31,6 +33,7 @@ export function Router() {
             <Route index element={<ProjectInfo />} />
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
+          <Route path={ROUTE.TARGET_CV} element={<CvPage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
         </Route>
