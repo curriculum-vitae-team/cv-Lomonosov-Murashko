@@ -8,7 +8,7 @@ import { TableEntry } from "@constants/table";
 import { IProject } from "@interfaces/IProject";
 import format from "date-fns/format";
 
-export const proj: IProject[] = [
+export const projects: IProject[] = [
   {
     id: "1",
     internalName: "internal1",
@@ -77,7 +77,7 @@ export const ProjectsPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={proj.map((pr) => ({
+          items={projects.map((pr) => ({
             ...pr,
             startDate: format(pr.startDate, "PP"),
             endDate: format(pr.endDate, "PP"),

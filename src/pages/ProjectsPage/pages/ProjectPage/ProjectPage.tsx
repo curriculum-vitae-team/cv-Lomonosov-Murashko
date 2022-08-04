@@ -1,7 +1,7 @@
 import { Breadcrumb } from "../../../../components/Breadcrumb";
 import { Stack } from "@mui/material";
 
-import { proj } from "../../ProjectsPage";
+import { projects } from "../../ProjectsPage";
 import { Outlet, useParams } from "react-router";
 import { PageTop } from "@components/styled/PageTop";
 import { PageBody } from "@components/styled/PageBody";
@@ -10,7 +10,7 @@ import { PageTopTypography } from "@components/PageTopTypography";
 export const ProjectPage = () => {
   const { projectId } = useParams();
 
-  const project = proj.find(({ id }) => id === projectId)!;
+  const project = projects.find(({ id }) => id === projectId)!;
 
   return (
     <Stack sx={{ width: "100%" }}>
