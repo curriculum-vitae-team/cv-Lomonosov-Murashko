@@ -14,6 +14,7 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { proj } from "../../pages/ProjectsPage/ProjectsPage";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 import { StyledFormActions } from "@components/FormActions/FormActions.styles";
+import { DatePicker } from "@mui/x-date-pickers";
 
 export const ProjectInfo = () => {
   const { projectId } = useParams();
@@ -21,7 +22,14 @@ export const ProjectInfo = () => {
 
   const { control, handleSubmit, reset } = useForm<IProject>({
     defaultValues: {
+      internalName: project.internalName,
       name: project.name,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      teamSize: project.teamSize,
+      techStack: project.techStack,
+      domain: project.domain,
+      description: project.description,
     },
   });
 
@@ -36,6 +44,23 @@ export const ProjectInfo = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <InfoFormWrapper>
+        <StyledFieldsetWrapper isFullWidth={true} inputWidth="100%">
+          <FormLabel required={true}>Internal name</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="internalName"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.internalName}
+                helperText={errors.internalName?.message || " "}
+              />
+            )}
+          ></Controller>
+        </StyledFieldsetWrapper>
+      </InfoFormWrapper>
       <InfoFormWrapper>
         <StyledFieldsetWrapper>
           <FormLabel required={true}>Name</FormLabel>
@@ -53,7 +78,89 @@ export const ProjectInfo = () => {
             )}
           />
         </StyledFieldsetWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>Start date</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="startDate"
+            render={({ field }) => (
+              <DatePicker
+                label="Select date"
+                {...field}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label=""
+                    error={!!errors.startDate}
+                    helperText={errors.startDate?.message || " "}
+                  />
+                )}
+              />
+            )}
+          ></Controller>
+        </StyledFieldsetWrapper>
+        <StyledFieldsetWrapper>
+          <FormLabel required={true}>End date</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="endDate"
+            render={({ field }) => (
+              <DatePicker
+                label="Select date"
+                {...field}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label=""
+                    error={!!errors.endDate}
+                    helperText={errors.endDate?.message || " "}
+                  />
+                )}
+              />
+            )}
+          ></Controller>
+        </StyledFieldsetWrapper>
       </InfoFormWrapper>
+      <InfoFormWrapper>
+        <StyledFieldsetWrapper inputWidth="50%" isFullWidth={true}>
+          <FormLabel required={true}>Domain</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="domain"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.domain}
+                helperText={errors.domain?.message || " "}
+                size="small"
+              />
+            )}
+          />
+        </StyledFieldsetWrapper>
+      </InfoFormWrapper>
+      <InfoFormWrapper>
+        <StyledFieldsetWrapper isFullWidth={true} inputWidth="100%">
+          <FormLabel required={true}>Description</FormLabel>
+          <Controller
+            control={control}
+            rules={{ required: "Please, specify the field" }}
+            name="description"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.description}
+                helperText={errors.description?.message || " "}
+                multiline
+                rows={3}
+              />
+            )}
+          ></Controller>
+        </StyledFieldsetWrapper>
+      </InfoFormWrapper>
+
       <StyledFormActions>
         <Button type="submit" value="Save" variant="contained">
           Save

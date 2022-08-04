@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
-import { Item, TableProps } from "./Table.types";
+import { TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
 import { StyledGrid } from "./Table.styles";
 import { Button } from "@mui/material";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
+import { IEntryData } from "@interfaces/IEntryData";
 
 export function Table({
   items,
@@ -46,7 +47,7 @@ export function Table({
         onSortByChange={handleSortByChange}
         gridXS={12 / head.length}
       />
-      {[...items].sort(byColumn<Item>(sortBy, sortAsc)).map((item) => (
+      {[...items].sort(byColumn<IEntryData>(sortBy, sortAsc)).map((item) => (
         <TableRowComponent
           redirectButtonText={redirectButtonText}
           deleteButtonText={deleteButtonText}
