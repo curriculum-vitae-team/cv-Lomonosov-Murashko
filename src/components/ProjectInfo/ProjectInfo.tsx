@@ -12,8 +12,6 @@ import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 import { projects } from "../../pages/ProjectsPage/ProjectsPage";
-import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
-import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 

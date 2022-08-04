@@ -1,4 +1,4 @@
-import { Button, FormLabel, TextField } from "@mui/material";
+import { Button, DialogActions, FormLabel, TextField } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -12,7 +12,6 @@ import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
-import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 
 export const EmployeeInfo = () => {
   const { employeeId } = useParams();
@@ -125,7 +124,7 @@ export const EmployeeInfo = () => {
           />
         </StyledFieldsetWrapper>
       </InfoFormWrapper>
-      <StyledFormActions>
+      <DialogActions>
         <Button type="submit" value="Save" variant="contained">
           Save
         </Button>
@@ -138,7 +137,7 @@ export const EmployeeInfo = () => {
         >
           Cancel
         </Button>
-      </StyledFormActions>
+      </DialogActions>
     </form>
   );
 };

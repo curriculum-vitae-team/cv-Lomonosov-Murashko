@@ -1,9 +1,8 @@
-import { StyledFormActions } from "@components/FormActions/FormActions.styles";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { StyledFieldsetWrapper } from "@components/styled/StyledFieldsetWrapper";
 import { ICV } from "@interfaces/ICV";
 import { ButtonWrapper } from "./CvInfo.styles";
-import { Button, FormLabel, TextField } from "@mui/material";
+import { Button, DialogActions, FormLabel, TextField } from "@mui/material";
 import {
   Controller,
   SubmitHandler,
@@ -41,7 +40,7 @@ export const CvInfo = () => {
     reset();
   };
 
-  const addProjectClickHandler = () => {    
+  const addProjectClickHandler = () => {
     // show projects table
   };
 
@@ -142,7 +141,7 @@ export const CvInfo = () => {
       {/* cvs.projects.map ...  */}
       <ProjectAccordion />
 
-      <StyledFormActions>
+      <DialogActions>
         <Button type="submit" value="Save" variant="contained">
           Save
         </Button>
@@ -155,7 +154,7 @@ export const CvInfo = () => {
         >
           Cancel
         </Button>
-      </StyledFormActions>
+      </DialogActions>
     </form>
   );
 };
