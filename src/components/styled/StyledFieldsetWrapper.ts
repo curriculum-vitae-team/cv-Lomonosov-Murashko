@@ -1,4 +1,4 @@
-import { Stack, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 export const StyledFieldsetWrapper = styled("fieldset", {
   shouldForwardProp: (prop) => prop !== "isFullWidth" && prop !== "inputWidth",
