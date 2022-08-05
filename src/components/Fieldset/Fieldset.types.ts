@@ -7,7 +7,7 @@ export type FieldsetProps<T> = OwnProps &
 type OwnProps = {
   isFullWidth?: boolean;
   inputWidth?: string;
-  required: string;
+  required?: string;
   label: string;
 };
 

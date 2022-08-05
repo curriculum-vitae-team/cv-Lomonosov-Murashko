@@ -18,7 +18,7 @@ export const Fieldset = <T,>({
       <FormLabel required={!!required}>{label}</FormLabel>
       <Controller
         control={control}
-        rules={rules}
+        rules={{ required, ...rules }}
         name={name}
         render={
           render
