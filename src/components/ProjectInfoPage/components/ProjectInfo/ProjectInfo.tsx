@@ -42,33 +42,25 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
         <Fieldset
           isFullWidth={true}
           inputWidth="100%"
-          required={true}
+          required="Please, specify the field"
           label="Internal name"
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="internalName"
-          isError={!!errors.internalName}
-          helperText={errors.internalName?.message}
         />
       </InfoFormWrapper>
 
       <InfoFormWrapper>
         <Fieldset
-          required={true}
+          required="Please, specify the field"
           label="Name"
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="name"
-          isError={!!errors.name}
-          helperText={errors.name?.message}
         />
         <Fieldset
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="startDate"
           label="Select date"
-          isError={!!errors.startDate}
-          required={true}
+          required="Please, specify the field"
           render={({ field }) => (
             <DatePicker
               label="Select date"
@@ -77,8 +69,8 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
                 <TextField
                   {...params}
                   label=""
-                  error={!!errors.startDate}
                   helperText={errors.startDate?.message || " "}
+                  error={!field.value}
                 />
               )}
             />
@@ -86,11 +78,9 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
         />
         <Fieldset
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="endDate"
           label="Select date"
-          isError={!!errors.endDate}
-          required={true}
+          required="Please, specify the field"
           render={({ field }) => (
             <DatePicker
               label="Select date"
@@ -111,13 +101,10 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
         <Fieldset
           inputWidth="50%"
           isFullWidth={true}
-          required={true}
+          required="Please, specify the field"
           label="Domain"
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="domain"
-          isError={!!errors.domain}
-          helperText={errors.domain?.message}
         />
       </InfoFormWrapper>
 
@@ -125,13 +112,10 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
         <Fieldset
           inputWidth="50%"
           isFullWidth={true}
-          required={true}
+          required="Please, specify the field"
           label="Description"
           control={control}
-          rules={{ required: "Please, specify the field" }}
           name="description"
-          isError={!!errors.description}
-          helperText={errors.description?.message}
         />
       </InfoFormWrapper>
 

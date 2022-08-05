@@ -2,11 +2,7 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ICV } from "@interfaces/ICV";
 import { ButtonWrapper } from "./CvInfo.styles";
 import { Button, DialogActions } from "@mui/material";
-import {
-  SubmitHandler,
-  useForm,
-  useFormState,
-} from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { cvs } from "@pages/CvsPage/CvsPage";
 import { ROUTE } from "@constants/route";
@@ -30,8 +26,6 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     },
   });
 
-  const { errors } = useFormState({ control });
-
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ICV> = (data) => {
@@ -47,48 +41,33 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InfoFormWrapper>
         <Fieldset
-          isError={!!errors.email}
-          helperText={errors.email?.message || " "}
           control={control}
-          required={true}
+          required="Please, specify the field"
           label="Email"
-          rules={{ required: "Please, specify the field" }}
           name="email"
         />
         <Fieldset
-          isError={!!errors.lastName}
-          helperText={errors.lastName?.message || " "}
           control={control}
-          required={true}
+          required="Please, specify the field"
           label="Last Name"
-          rules={{ required: "Please, specify the field" }}
           name="lastName"
         />
         <Fieldset
-          isError={!!errors.skills}
-          helperText={errors.skills?.message || " "}
           control={control}
-          required={true}
+          required="Please, specify the field"
           label="Skills"
-          rules={{ required: "Please, specify the field" }}
           name="skills"
         />
         <Fieldset
-          isError={!!errors.specialization}
-          helperText={errors.specialization?.message || " "}
           control={control}
-          required={true}
+          required="Please, specify the field"
           label="Specialization"
-          rules={{ required: "Please, specify the field" }}
           name="specialization"
         />
         <Fieldset
-          isError={!!errors.department}
-          helperText={errors.department?.message || " "}
           control={control}
-          required={true}
+          required="Please, specify the field"
           label="Department"
-          rules={{ required: "Please, specify the field" }}
           name="department"
         />
       </InfoFormWrapper>
