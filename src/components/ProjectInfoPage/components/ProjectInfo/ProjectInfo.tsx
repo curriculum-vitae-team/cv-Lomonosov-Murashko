@@ -11,6 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
 import { useState } from "react";
+import { DatePickerFieldset } from "@components/DatePickerFieldset";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
   const project = projects.find(({ id }) => id === projectId)!;
@@ -27,8 +28,6 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
       description: project.description,
     },
   });
-
-  const { errors } = useFormState({ control });
 
   const navigate = useNavigate();
 
@@ -57,59 +56,29 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
           control={control}
           name="name"
         />
-        <Fieldset
+        <DatePickerFieldset
           control={control}
+          label="Start date"
           name="startDate"
-          label="Select date"
-          render={({ field, fieldState }) => (
-            <DatePicker
-              label="Select date"
-              minDate={new Date("1980-01-01")}
-              maxDate={new Date("2099-01-01")}
-              onError={() => {
-                setError("startDate", {
-                  type: "required",
-                  message: "Please, specify the correct date",
-                });
-              }}
-              {...field}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label=""
-                  helperText={errors.startDate?.message || " "}
-                  error={!!fieldState.error}
-                />
-              )}
-            />
-          )}
+          onError={() => {
+            setError("startDate", {
+              type: "required",
+              message: "Please, specify the correct date",
+            });
+          }}
+          required={"Please, specify the field"}
         />
-        <Fieldset
+        <DatePickerFieldset
           control={control}
+          label="End date"
           name="endDate"
-          label="Select date"
-          render={({ field, fieldState }) => (
-            <DatePicker
-              label="Select date"
-              minDate={new Date("1980-01-01")}
-              maxDate={new Date("2099-01-01")}
-              onError={() => {
-                setError("endDate", {
-                  type: "required",
-                  message: "Please, specify the correct date",
-                });
-              }}
-              {...field}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label=""
-                  helperText={errors.endDate?.message || " "}
-                  error={!!fieldState.error}
-                />
-              )}
-            />
-          )}
+          onError={() => {
+            setError("endDate", {
+              type: "required",
+              message: "Please, specify the correct date",
+            });
+          }}
+          required={"Please, specify the field"}
         />
       </InfoFormWrapper>
       <InfoFormWrapper>
