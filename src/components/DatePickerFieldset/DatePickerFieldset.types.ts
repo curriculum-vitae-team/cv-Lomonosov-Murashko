@@ -1,13 +1,11 @@
-import { Control, ControllerProps, UseControllerProps } from "react-hook-form";
+import { Control, Path, UseControllerProps } from "react-hook-form";
 
-export type DatePickerFieldsetProps<T> = OwnProps & OwnUseControllerProps<T>;
+import { TextFieldProps } from "@mui/material";
 
-type OwnProps = {
+export type DatePickerFieldsetProps<T> = {
+  name: Path<T>;
   label: string;
   onError: () => void;
   required: string;
-};
-
-type OwnUseControllerProps<T> = Pick<UseControllerProps<T>, "name"> & {
   control: Control<T, object>;
 };

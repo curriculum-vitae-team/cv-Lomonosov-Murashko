@@ -1,21 +1,17 @@
-import { Control, ControllerProps, UseControllerProps } from "react-hook-form";
+import {
+  Control,
+  ControllerProps,
+  Path,
+  UseControllerProps,
+} from "react-hook-form";
 
-export type FieldsetProps<T> = OwnProps &
-  OwnUseControllerProps<T> &
-  OwnControllerProps<T>;
-
-type OwnProps = {
+export type FieldsetProps<T> = {
   isFullWidth?: boolean;
   inputWidth?: string;
   required?: string;
   label: string;
-};
-
-type OwnUseControllerProps<T> = Pick<
-  UseControllerProps<T>,
-  "name" | "rules"
-> & {
   control: Control<T, object>;
+  name: Path<T>;
+  rules?: UseControllerProps<T>["rules"];
+  render?: ControllerProps<T>["render"];
 };
-
-type OwnControllerProps<T> = Partial<Pick<ControllerProps<T>, "render">>;
