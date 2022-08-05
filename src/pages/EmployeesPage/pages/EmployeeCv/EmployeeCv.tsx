@@ -3,7 +3,7 @@ import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
 import { CvItem } from "./components/CvItem";
 import { ICV } from "@interfaces/ICV";
 import { Outlet, useParams } from "react-router";
-import { cvs } from "@pages/CvsPage/CvsPage";
+import { cvs } from "@mock/cvs";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 

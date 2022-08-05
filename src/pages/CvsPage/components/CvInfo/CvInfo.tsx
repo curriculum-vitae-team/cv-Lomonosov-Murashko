@@ -4,7 +4,7 @@ import { ButtonWrapper } from "./CvInfo.styles";
 import { Button, DialogActions } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { cvs } from "@pages/CvsPage/CvsPage";
+import { cvs } from "@mock/cvs";
 import { ROUTE } from "@constants/route";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Breadcrumb } from "../../../../components/Breadcrumb";
+import { Breadcrumb } from "@components/Breadcrumb";
 import { Box, Tabs, Tab, Stack } from "@mui/material";
-import { emp } from "../../EmployeesPage";
+import { emp } from "@mock/emp";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
-import { cvs } from "@pages/CvsPage/CvsPage";
+import { cvs } from "@mock/cvs";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();

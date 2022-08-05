@@ -3,7 +3,7 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { Stack } from "@mui/material";
-import { projects } from "../../ProjectsPage";
+import { projects } from "../../../../mock/projects";
 import { Outlet, useParams } from "react-router";
 
 export const ProjectPage = () => {

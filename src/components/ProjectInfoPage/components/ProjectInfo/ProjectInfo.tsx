@@ -6,7 +6,7 @@ import { ROUTE } from "@constants/route";
 import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
-import { projects } from "@pages/ProjectsPage/ProjectsPage";
+import { projects } from "@mock/projects";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";

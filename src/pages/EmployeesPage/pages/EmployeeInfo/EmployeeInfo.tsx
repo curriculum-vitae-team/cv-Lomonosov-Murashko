@@ -1,6 +1,6 @@
 import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { emp } from "../../EmployeesPage";
+import { emp } from "@mock/emp";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
