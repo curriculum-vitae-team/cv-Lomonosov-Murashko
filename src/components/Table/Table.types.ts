@@ -16,6 +16,6 @@ export type TableHead = {
 }[];
 
 export type Item = {
-  [x: string]: string | number;
+  [key: string]: string | number;
   id: string;
 };
