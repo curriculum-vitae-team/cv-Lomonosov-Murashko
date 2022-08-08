@@ -1,4 +1,8 @@
 export interface IEntryData {
   id: string;
-  [key: string]: string | Date;
+  [key: string]: EntryValue;
 }
+
+export type EntryValue = string | number | Date | Array<unknown>;
+
+export type TableEntryValue = string | number;

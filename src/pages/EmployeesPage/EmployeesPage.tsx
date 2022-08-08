@@ -1,58 +1,11 @@
-import { Stack, Typography } from "@mui/material";
+import { PageTopTypography } from "@components/PageTopTypography";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTop } from "@components/styled/PageTop";
+import { PageWrapper } from "@components/styled/PageWrapper";
+import { StyledTable } from "@components/styled/StyledTable";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { StyledDiv, StyledStack, StyledTable } from "./EmployeesPage.styles";
-
-export const emp = [
-  {
-    id: "1",
-    name: "Ilya",
-    lastName: "Murashko",
-    email: "murashko.ilya7399@gmail.com",
-    department: "JavaScript",
-    specialization: "React",
-  },
-  {
-    id: "2",
-    name: "Iaan",
-    lastName: "Lamanosau",
-    email: "1dsdcs23@qwe.ru",
-    department: "JavaScript",
-    specialization: "Angular",
-  },
-  {
-    id: "3",
-    name: "Denis",
-    lastName: "Bogush",
-    email: "1cddfcdsdcs23@qwe.ru",
-    department: "TypesScript",
-    specialization: "React",
-  },
-  {
-    id: "4",
-    name: "Anna",
-    lastName: "qwe",
-    email: "dlkvndfv@qwe.com",
-    department: "JavaScript",
-    specialization: "React",
-  },
-  {
-    id: "5",
-    name: "Ilya",
-    lastName: "Murashko",
-    email: "murashko.ilya7399@gmail.com",
-    department: "JavaScript",
-    specialization: "React",
-  },
-  {
-    id: "6",
-    name: "Ilya",
-    lastName: "Murashko",
-    email: "murashko.ilya7399@gmail.com",
-    department: "JavaScript",
-    specialization: "React",
-  },
-];
+import { emp } from "../../mock/emp";
 
 const head = [
   { columnKey: "name", columnName: "First Name", isSortable: true },
@@ -72,18 +25,16 @@ export const EmployeesPage = () => {
   };
 
   return (
-    <Stack>
-      <StyledStack direction="column" spacing={2}>
+    <PageWrapper>
+      <PageTop>
         <Breadcrumb
           config={{
             employees: "Employees",
           }}
         />
-
-        <Typography variant="h6">Employees</Typography>
-        <Typography variant="caption">Employees list</Typography>
-      </StyledStack>
-      <StyledDiv>
+        <PageTopTypography title="Employees" caption="Employees list" />
+      </PageTop>
+      <PageBody>
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
@@ -92,7 +43,7 @@ export const EmployeesPage = () => {
           deleteButtonText="Delete"
           entryType={TableEntry.EMPLOYEE}
         />
-      </StyledDiv>
-    </Stack>
+      </PageBody>
+    </PageWrapper>
   );
 };
