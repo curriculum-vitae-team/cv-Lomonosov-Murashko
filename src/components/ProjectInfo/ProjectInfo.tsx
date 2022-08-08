@@ -1,20 +1,23 @@
-import { Button, DialogActions, TextField } from "@mui/material";
-import { useForm, SubmitHandler, useFormState } from "react-hook-form";
+import { Button, DialogActions } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
-import { projectsMock } from "@mock/projects";
-import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
-import { useState } from "react";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
-  const project = projectsMock.find(({ id }) => id === projectId)!;
+  const project = useSelector((state: RootState) =>
+    state.projects.find(({ id }) => id === projectId),
+  )!;
+
+  // TODO: Fetch projects data if there's nothing.
 
   const { control, handleSubmit, reset, setError } = useForm<IProject>({
     defaultValues: {

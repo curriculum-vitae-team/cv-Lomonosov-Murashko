@@ -5,8 +5,10 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
 import { TableEntry } from "@constants/table";
+import { removed } from "@features/projects/projectsSlice";
 import format from "date-fns/format";
-import { projectsMock } from "../../mock/projects";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -16,8 +18,11 @@ const head = [
 ];
 
 export const ProjectsPage = () => {
+  const projects = useSelector((state: RootState) => state.projects);
+  const dispatch = useDispatch();
+
   const handleItemDelete = (id: string) => {
-    // TODO:
+    dispatch(removed(id));
   };
 
   return (
@@ -30,7 +35,7 @@ export const ProjectsPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={projectsMock.map((pr) => ({
+          items={projects.map((pr) => ({
             ...pr,
             startDate: format(pr.startDate, "PP"),
             endDate: format(pr.endDate, "PP"),
