@@ -14,6 +14,8 @@ export const EmployeePage = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
 
+  // TODO: Fetch specific employee data with CVs, projects, etc.
+
   const employee = employeesMock.find(({ id }) => id === employeeId)!;
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
