@@ -1,8 +1,8 @@
-import { emp } from "@mock/emp";
+import { employeesMock } from "@mock/emp";
 import { createSlice } from "@reduxjs/toolkit";
 import { EmployeesActions, EmployeesState } from "./employeesSlice.types";
 
-const initialState: EmployeesState = [...emp];
+const initialState: EmployeesState = [...employeesMock];
 
 const employeesSlice = createSlice({
   name: "employees",
@@ -10,6 +10,8 @@ const employeesSlice = createSlice({
   reducers: {
     added: (state, action: EmployeesActions["added"]) => {
       state.push(action.payload);
+
+      return state;
     },
     updated: (state, action: EmployeesActions["updated"]) => {
       state = state.map((emp) => {
@@ -22,9 +24,12 @@ const employeesSlice = createSlice({
 
         return emp;
       });
+
+      return state;
     },
     removed: (state, action: EmployeesActions["removed"]) => {
       state = state.filter((emp) => emp.id !== action.payload);
+      return state;
     },
   },
 });

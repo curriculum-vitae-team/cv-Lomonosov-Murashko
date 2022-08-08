@@ -6,7 +6,7 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
 import { TableEntry } from "@constants/table";
 import format from "date-fns/format";
-import { projects } from "../../mock/projects";
+import { projectsMock } from "../../mock/projects";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -30,7 +30,7 @@ export const ProjectsPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={projects.map((pr) => ({
+          items={projectsMock.map((pr) => ({
             ...pr,
             startDate: format(pr.startDate, "PP"),
             endDate: format(pr.endDate, "PP"),

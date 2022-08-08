@@ -1,6 +1,6 @@
 // add projects array to each cv
 
-export const cvs = [
+export const cvsMock = [
   {
     id: "1",
     name: "cv1",

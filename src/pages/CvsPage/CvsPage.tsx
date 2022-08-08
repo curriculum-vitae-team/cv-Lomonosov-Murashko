@@ -7,7 +7,7 @@ import { StyledTable } from "@components/styled/StyledTable";
 import { Item } from "@components/Table/Table.types";
 import { TableEntry } from "@constants/table";
 import { useParams } from "react-router";
-import { cvs } from "../../mock/cvs";
+import { cvsMock } from "../../mock/cvs";
 
 const head = [
   { columnKey: "name", columnName: "Name", isSortable: true },
@@ -16,7 +16,7 @@ const head = [
 
 export const CvsPage = () => {
   const { cvId } = useParams();
-  const cv = cvs.find(({ id }) => id === cvId)!;
+  const cv = cvsMock.find(({ id }) => id === cvId)!;
 
   const handleItemDelete = (id: string) => {
     // TODO:
@@ -37,7 +37,7 @@ export const CvsPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={cvs}
+          items={cvsMock}
           redirectButtonText="CV details"
           deleteButtonText="Delete"
           entryType={TableEntry.CV}

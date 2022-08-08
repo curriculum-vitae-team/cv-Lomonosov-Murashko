@@ -1,6 +1,6 @@
 import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { emp } from "@mock/emp";
+import { employeesMock } from "@mock/emp";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { IEmployee } from "@interfaces/IEmployee";
@@ -9,7 +9,7 @@ import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
-  const employee = emp.find(({ id }) => id === employeeId)!;
+  const employee = employeesMock.find(({ id }) => id === employeeId)!;
 
   const { control, handleSubmit, reset } = useForm<IEmployee>({
     defaultValues: {

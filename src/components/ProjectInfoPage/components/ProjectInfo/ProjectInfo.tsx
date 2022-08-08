@@ -6,7 +6,7 @@ import { ROUTE } from "@constants/route";
 import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
-import { projects } from "@mock/projects";
+import { projectsMock } from "@mock/projects";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
@@ -14,7 +14,7 @@ import { useState } from "react";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
-  const project = projects.find(({ id }) => id === projectId)!;
+  const project = projectsMock.find(({ id }) => id === projectId)!;
 
   const { control, handleSubmit, reset, setError } = useForm<IProject>({
     defaultValues: {

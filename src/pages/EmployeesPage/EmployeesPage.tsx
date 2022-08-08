@@ -3,7 +3,8 @@ import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
-import { useSelector } from "react-redux";
+import { removed } from "@features/employees/empoloyeesSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
@@ -22,9 +23,10 @@ const head = [
 
 export const EmployeesPage = () => {
   const employees = useSelector((state: RootState) => state.employees);
+  const dispatch = useDispatch();
 
   const handleItemDelete = (id: string) => {
-    // TODO:
+    dispatch(removed(id));
   };
 
   return (

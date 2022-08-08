@@ -3,12 +3,12 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { Stack } from "@mui/material";
-import { projects } from "../../../../mock/projects";
+import { projectsMock } from "../../../../mock/projects";
 import { Outlet, useParams } from "react-router";
 
 export const ProjectPage = () => {
   const { projectId } = useParams();
-  const project = projects.find(({ id }) => id === projectId)!;
+  const project = projectsMock.find(({ id }) => id === projectId)!;
 
   return (
     <Stack sx={{ width: "100%" }}>
