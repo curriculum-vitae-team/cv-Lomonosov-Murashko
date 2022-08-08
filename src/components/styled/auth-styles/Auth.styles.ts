@@ -3,7 +3,8 @@ import { styled } from "@mui/material";
 export const AuthWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-start",
+  flexDirection: "column",
   height: "100vh",
   padding: "0 0.5em",
 });
@@ -16,6 +17,7 @@ export const AuthImg = styled("img")({
 
 export const AuthFlexContainer = styled("div")({
   display: "flex",
+  justifyContent: "center",
   flexDirection: "column",
   alignItems: "center",
   width: "22em",

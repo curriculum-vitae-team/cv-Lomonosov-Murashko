@@ -16,16 +16,16 @@ import { CvInfoPage } from "@pages/CvsPage/components/CvInfoPage";
 import { ProjectInfoPage } from "@components/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
-import { ResetPassword } from "@pages/ResetPassword";
+import { Auth } from "@pages/Auth";
 
 export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<RedirectPage to={ROUTE.SIGN_IN} />} />
-        <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
-        <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
-        <Route path={ROUTE.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route element={<Auth />}>
+          <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
+          <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
+        </Route>
         <Route path={ROUTE.EMPTY} element={<Layout />}>
           <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
           <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
