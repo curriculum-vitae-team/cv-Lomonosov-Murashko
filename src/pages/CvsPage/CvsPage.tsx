@@ -4,10 +4,10 @@ import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
-import { Item } from "@components/Table/Table.types";
 import { TableEntry } from "@constants/table";
-import { useParams } from "react-router";
-import { cvsMock } from "../../mock/cvs";
+import { removed } from "@features/cvs/cvsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 const head = [
   { columnKey: "name", columnName: "Name", isSortable: true },
@@ -15,11 +15,11 @@ const head = [
 ];
 
 export const CvsPage = () => {
-  const { cvId } = useParams();
-  const cv = cvsMock.find(({ id }) => id === cvId)!;
+  const cvs = useSelector((state: RootState) => state.cvs)!;
+  const dispatch = useDispatch();
 
   const handleItemDelete = (id: string) => {
-    // TODO:
+    dispatch(removed(id));
   };
 
   return (
@@ -28,7 +28,6 @@ export const CvsPage = () => {
         <Breadcrumb
           config={{
             cvs: "Cvs",
-            [cvId!]: cv ? cv.name : cvId!,
           }}
         />
         <PageTopTypography title="CVs" caption="Cvs list" />
@@ -37,7 +36,7 @@ export const CvsPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={cvsMock}
+          items={cvs}
           redirectButtonText="CV details"
           deleteButtonText="Delete"
           entryType={TableEntry.CV}

@@ -1,6 +1,6 @@
-import { IEntryData } from "./IEntryData";
-
-export interface ICV extends IEntryData {
+export interface ICV {
+  [key: string]: string;
+  id: string;
   name: string;
   description: string;
   email: string;
