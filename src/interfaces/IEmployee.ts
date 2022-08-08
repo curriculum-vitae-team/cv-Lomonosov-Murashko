@@ -1,3 +1,4 @@
+import { ICV } from "./ICV";
 import { IEntryData } from "./IEntryData";
 
 export interface IEmployee extends IEntryData {
@@ -6,4 +7,5 @@ export interface IEmployee extends IEntryData {
   email: string;
   department: string;
   specialization: string;
+  cvs: ICV[];
 }

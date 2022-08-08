@@ -1,5 +1,48 @@
-import React from "react";
+import { Breadcrumb } from "@components/Breadcrumb";
+import { PageTopTypography } from "@components/PageTopTypography";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTop } from "@components/styled/PageTop";
+import { PageWrapper } from "@components/styled/PageWrapper";
+import { StyledTable } from "@components/styled/StyledTable";
+import { Item } from "@components/Table/Table.types";
+import { TableEntry } from "@constants/table";
+import { useParams } from "react-router";
+import { cvs } from "../../mock/cvs";
 
-export function CvsPage() {
-  return <div>CvsPage</div>;
-}
+const head = [
+  { columnKey: "name", columnName: "Name", isSortable: true },
+  { columnKey: "description", columnName: "Description", isSortable: true },
+];
+
+export const CvsPage = () => {
+  const { cvId } = useParams();
+  const cv = cvs.find(({ id }) => id === cvId)!;
+
+  const handleItemDelete = (id: string) => {
+    // TODO:
+  };
+
+  return (
+    <PageWrapper>
+      <PageTop>
+        <Breadcrumb
+          config={{
+            cvs: "Cvs",
+            [cvId!]: cv ? cv.name : cvId!,
+          }}
+        />
+        <PageTopTypography title="CVs" caption="Cvs list" />
+      </PageTop>
+      <PageBody>
+        <StyledTable
+          onDelete={handleItemDelete}
+          head={head}
+          items={cvs}
+          redirectButtonText="CV details"
+          deleteButtonText="Delete"
+          entryType={TableEntry.CV}
+        />
+      </PageBody>
+    </PageWrapper>
+  );
+};
