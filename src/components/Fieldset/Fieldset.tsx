@@ -12,6 +12,7 @@ export const Fieldset = <T,>({
   rules,
   label,
   render,
+  type
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
@@ -25,6 +26,7 @@ export const Fieldset = <T,>({
             : ({ field }) => (
                 <TextField
                   {...field}
+                  type={type}
                   required={!!required}
                   label={label}
                   error={!field.value}

@@ -15,6 +15,8 @@ import {
   AuthAdditionalInfoWrapper,
 } from "@components/styled/auth-styles/Auth.styles";
 
+import { authMock } from "@mock/authMock";
+
 export const SignIn = () => {
   const [checked, setChecked] = useState(false);
   const { control, handleSubmit } = useForm<ISignIn>({
@@ -29,6 +31,10 @@ export const SignIn = () => {
   };
 
   const onSubmit: SubmitHandler<ISignIn> = (data) => {
+    // const currentEmployee = authMock.find(employee => {
+    //   return employee.email === data.email && employee.password === data.password;
+    // });
+    
     // TODO: checked === true ? remember user and sign in : sign in
     // navigate to employees
   };
@@ -56,6 +62,7 @@ export const SignIn = () => {
               label="Password"
               control={control}
               name="password"
+              type="password"
             />
           </InfoFormWrapper>
           <AuthAdditionalInfoWrapper>

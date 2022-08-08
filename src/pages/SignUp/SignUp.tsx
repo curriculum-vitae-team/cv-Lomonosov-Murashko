@@ -51,6 +51,7 @@ export const SignUp = () => {
               label="Password"
               control={control}
               name="password"
+              type="password"
             />
           </InfoFormWrapper>
           <InfoFormWrapper>
@@ -61,6 +62,7 @@ export const SignUp = () => {
               label="Password Confirmation"
               control={control}
               name="passwordConfirmation"
+              type="password"
             />
           </InfoFormWrapper>
           <Button type="submit" fullWidth variant="contained">
