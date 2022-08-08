@@ -3,9 +3,10 @@ import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { StyledTable } from "@components/styled/StyledTable";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { emp } from "../../mock/emp";
 
 const head = [
   { columnKey: "name", columnName: "First Name", isSortable: true },
@@ -20,6 +21,8 @@ const head = [
 ];
 
 export const EmployeesPage = () => {
+  const employees = useSelector((state: RootState) => state.employees);
+
   const handleItemDelete = (id: string) => {
     // TODO:
   };
@@ -38,7 +41,7 @@ export const EmployeesPage = () => {
         <StyledTable
           onDelete={handleItemDelete}
           head={head}
-          items={emp}
+          items={employees}
           redirectButtonText="Profile"
           deleteButtonText="Delete"
           entryType={TableEntry.EMPLOYEE}
