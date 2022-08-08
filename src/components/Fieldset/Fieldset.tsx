@@ -1,4 +1,4 @@
-import { FormLabel, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { StyledFieldsetWrapper } from "./Fieldset.styles";
 import { FieldsetProps } from "./Fieldset.types";
