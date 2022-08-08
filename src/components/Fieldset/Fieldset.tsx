@@ -15,7 +15,6 @@ export const Fieldset = <T,>({
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
-      <FormLabel required={!!required}>{label}</FormLabel>
       <Controller
         control={control}
         rules={{ required, ...rules }}
@@ -26,6 +25,8 @@ export const Fieldset = <T,>({
             : ({ field }) => (
                 <TextField
                   {...field}
+                  required={!!required}
+                  label={label}
                   error={!field.value}
                   helperText={!field.value ? required : " "}
                 />

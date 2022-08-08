@@ -5,5 +5,5 @@ export const InfoFormWrapper = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
   flexWrap: "wrap",
-  margin: "2em 1em",
+  marginInline: "0.5em",
 });

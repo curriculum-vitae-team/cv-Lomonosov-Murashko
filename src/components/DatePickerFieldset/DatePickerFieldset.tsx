@@ -25,7 +25,8 @@ export const DatePickerFieldset = <T,>({
           renderInput={(params) => (
             <TextField
               {...params}
-              label=""
+              label={label}
+              required={!!required}
               helperText={required || " "}
               error={!!fieldState.error}
             />
