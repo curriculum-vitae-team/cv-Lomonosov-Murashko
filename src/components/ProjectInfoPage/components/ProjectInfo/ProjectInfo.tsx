@@ -1,5 +1,5 @@
-import { Button, DialogActions, TextField } from "@mui/material";
-import { useForm, SubmitHandler, useFormState } from "react-hook-form";
+import { Button, DialogActions } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
@@ -7,10 +7,8 @@ import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
 import { projects } from "@mock/projects";
-import { DatePicker } from "@mui/x-date-pickers";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
-import { useState } from "react";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
