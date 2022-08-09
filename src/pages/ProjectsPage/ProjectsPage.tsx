@@ -3,9 +3,10 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { StyledTable } from "@components/styled/StyledTable";
+import { createStyledTable } from "@components/styled/StyledTable";
 import { TableEntry } from "@constants/table";
 import { removed } from "@features/projects/projectsSlice";
+import { IProjectTable } from "@interfaces/IProject";
 import format from "date-fns/format";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store";
@@ -16,6 +17,8 @@ const head = [
   { columnKey: "startDate", columnName: "Start date", isSortable: true },
   { columnKey: "endDate", columnName: "End date", isSortable: true },
 ];
+
+const StyledTable = createStyledTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const projects = useSelector((state: RootState) => state.projects);

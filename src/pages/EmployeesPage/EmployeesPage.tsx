@@ -2,8 +2,9 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { StyledTable } from "@components/styled/StyledTable";
+import { createStyledTable } from "@components/styled/StyledTable";
 import { removed } from "@features/employees/empoloyeesSlice";
+import { IEmployeeTable } from "@interfaces/IEmployee";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store";
 import { Breadcrumb } from "../../components/Breadcrumb";
@@ -20,6 +21,8 @@ const head = [
     isSortable: true,
   },
 ];
+
+const StyledTable = createStyledTable<IEmployeeTable>();
 
 export const EmployeesPage = () => {
   const employees = useSelector((state: RootState) => state.employees);

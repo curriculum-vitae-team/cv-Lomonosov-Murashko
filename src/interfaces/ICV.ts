@@ -1,5 +1,4 @@
 export interface ICV {
-  [key: string]: string;
   id: string;
   name: string;
   description: string;
@@ -9,3 +8,5 @@ export interface ICV {
   specialization: string;
   department: string;
 }
+
+export type ICVTable = ICV;

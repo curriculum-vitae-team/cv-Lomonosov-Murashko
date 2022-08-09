@@ -1,5 +1,4 @@
 export interface IEmployee {
-  [key: string]: string;
   id: string;
   name: string;
   lastName: string;
@@ -7,3 +6,5 @@ export interface IEmployee {
   department: string;
   specialization: string;
 }
+
+export type IEmployeeTable = IEmployee;

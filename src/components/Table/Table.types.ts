@@ -1,7 +1,7 @@
 import { TableEntry } from "@constants/table";
 
-export type TableProps = {
-  items: Item[];
+export type TableProps<T = Item> = {
+  items: T[];
   head: TableHead;
   redirectButtonText: string;
   deleteButtonText: string;
@@ -17,5 +17,8 @@ export type TableHead = {
 
 export type Item = {
   [key: string]: string | number;
+} & AbstractEntity;
+
+export type AbstractEntity = {
   id: string;
 };
