@@ -1,4 +1,4 @@
-import { FormLabel, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { StyledFieldsetWrapper } from "./Fieldset.styles";
 import { FieldsetProps } from "./Fieldset.types";
@@ -12,6 +12,7 @@ export const Fieldset = <T,>({
   rules,
   label,
   render,
+  type
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
@@ -25,6 +26,7 @@ export const Fieldset = <T,>({
             : ({ field }) => (
                 <TextField
                   {...field}
+                  type={type}
                   required={!!required}
                   label={label}
                   error={!field.value}
