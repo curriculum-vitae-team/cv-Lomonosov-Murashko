@@ -3,7 +3,7 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { createStyledTable } from "@components/styled/StyledTable";
+import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
 import { removed } from "@features/cvs/cvsSlice";
 import { ICVTable } from "@interfaces/ICV";
@@ -15,7 +15,7 @@ const head = [
   { columnKey: "description", columnName: "Description", isSortable: true },
 ];
 
-const StyledTable = createStyledTable<ICVTable>();
+const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const cvs = useSelector((state: RootState) => state.cvs)!;
@@ -36,7 +36,7 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        <StyledTable
+        <Table
           onDelete={handleItemDelete}
           head={head}
           items={cvs}

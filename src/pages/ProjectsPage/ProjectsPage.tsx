@@ -3,7 +3,7 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { createStyledTable } from "@components/styled/StyledTable";
+import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
 import { removed } from "@features/projects/projectsSlice";
 import { IProjectTable } from "@interfaces/IProject";
@@ -18,7 +18,7 @@ const head = [
   { columnKey: "endDate", columnName: "End date", isSortable: true },
 ];
 
-const StyledTable = createStyledTable<IProjectTable>();
+const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const projects = useSelector((state: RootState) => state.projects);
@@ -35,7 +35,7 @@ export const ProjectsPage = () => {
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        <StyledTable
+        <Table
           onDelete={handleItemDelete}
           head={head}
           items={projects.map((pr) => ({
