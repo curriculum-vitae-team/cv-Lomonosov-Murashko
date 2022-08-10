@@ -1,4 +1,4 @@
-export const emp = [
+export const employeesMock = [
   {
     id: "1",
     name: "Ilya",

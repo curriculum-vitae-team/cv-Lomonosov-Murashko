@@ -1,6 +1,6 @@
 import { IProject } from "@interfaces/IProject";
 
-export const projects: IProject[] = [
+export const projectsMock: IProject[] = [
   {
     id: "1",
     internalName: "internal1",

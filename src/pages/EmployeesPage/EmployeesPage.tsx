@@ -2,10 +2,13 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { StyledTable } from "@components/styled/StyledTable";
+import { createTable } from "@components/Table/Table";
+import { removed } from "@features/employees/empoloyeesSlice";
+import { IEmployeeTable } from "@interfaces/IEmployee";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/store";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
-import { emp } from "../../mock/emp";
 
 const head = [
   { columnKey: "name", columnName: "First Name", isSortable: true },
@@ -19,9 +22,14 @@ const head = [
   },
 ];
 
+const Table = createTable<IEmployeeTable>();
+
 export const EmployeesPage = () => {
+  const employees = useSelector((state: RootState) => state.employees);
+  const dispatch = useDispatch();
+
   const handleItemDelete = (id: string) => {
-    // TODO:
+    dispatch(removed(id));
   };
 
   return (
@@ -35,10 +43,10 @@ export const EmployeesPage = () => {
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>
-        <StyledTable
+        <Table
           onDelete={handleItemDelete}
           head={head}
-          items={emp}
+          items={employees}
           redirectButtonText="Profile"
           deleteButtonText="Delete"
           entryType={TableEntry.EMPLOYEE}

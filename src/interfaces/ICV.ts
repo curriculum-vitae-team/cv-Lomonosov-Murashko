@@ -1,6 +1,5 @@
-import { IEntryData } from "./IEntryData";
-
-export interface ICV extends IEntryData {
+export interface ICV {
+  id: string;
   name: string;
   description: string;
   email: string;
@@ -9,3 +8,5 @@ export interface ICV extends IEntryData {
   specialization: string;
   department: string;
 }
+
+export type ICVTable = ICV;

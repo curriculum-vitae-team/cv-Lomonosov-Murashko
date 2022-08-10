@@ -6,13 +6,18 @@ import { ROUTE } from "@constants/route";
 import { IProject } from "@interfaces/IProject";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 
-import { projects } from "@mock/projects";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
-  const project = projects.find(({ id }) => id === projectId)!;
+  const project = useSelector((state: RootState) =>
+    state.projects.find(({ id }) => id === projectId),
+  )!;
+
+  // TODO: Fetch projects data if there's nothing.
 
   const { control, handleSubmit, reset, setError } = useForm<IProject>({
     defaultValues: {

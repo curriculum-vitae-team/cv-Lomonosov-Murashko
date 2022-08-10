@@ -29,14 +29,14 @@
   ],
   "rules": {
     "quotes": [
-      "error",
+      0,
       "double",
       {
         "avoidEscape": true
       }
     ],
     "@typescript-eslint/quotes": [
-      "error",
+      0,
       "double",
       {
         "avoidEscape": true
@@ -46,6 +46,15 @@
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["warn"],
     "no-shadow": "off",
-    "import/prefer-default-export": ["off"]
+    "import/prefer-default-export": ["off"],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "{}": false
+        },
+        "extendDefaults": true
+      }
+    ]
   }
 }

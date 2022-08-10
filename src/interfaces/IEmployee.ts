@@ -1,11 +1,10 @@
-import { ICV } from "./ICV";
-import { IEntryData } from "./IEntryData";
-
-export interface IEmployee extends IEntryData {
+export interface IEmployee {
+  id: string;
   name: string;
   lastName: string;
   email: string;
   department: string;
   specialization: string;
-  cvs: ICV[];
 }
+
+export type IEmployeeTable = IEmployee;
