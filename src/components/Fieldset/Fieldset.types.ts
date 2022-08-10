@@ -10,6 +10,7 @@ export type FieldsetProps<T> = {
   inputWidth?: string;
   required?: string;
   label: string;
+  type?: string;
   control: Control<T, object>;
   name: Path<T>;
   rules?: UseControllerProps<T>["rules"];
