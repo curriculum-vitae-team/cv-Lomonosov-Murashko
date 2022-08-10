@@ -1,7 +1,7 @@
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ICV } from "@interfaces/ICV";
-import { ButtonWrapper } from "./CvInfo.styles";
-import { Button, DialogActions } from "@mui/material";
+import { ButtonWrapper, StyledDialogActions } from "./CvInfo.styles";
+import { Button } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { cvsMock } from "@mock/cvs";
@@ -36,6 +36,10 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
   const addProjectClickHandler = () => {
     // show projects table
   };
+
+  const previewHandler = () => {
+    // navigate to preview
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -76,11 +80,14 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
         <Button onClick={addProjectClickHandler} variant="contained">
           Add Project
         </Button>
+        <Button onClick={previewHandler} variant="outlined">
+          Preview
+        </Button>
       </ButtonWrapper>
       {/* cvs.projects.map ...  */}
       <ProjectAccordion />
 
-      <DialogActions>
+      <StyledDialogActions>
         <Button type="submit" value="Save" variant="contained">
           Save
         </Button>
@@ -93,7 +100,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
         >
           Cancel
         </Button>
-      </DialogActions>
+      </StyledDialogActions>
     </form>
   );
 };
