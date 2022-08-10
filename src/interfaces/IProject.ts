@@ -1,6 +1,5 @@
-import { IEntryData } from "./IEntryData";
-
-export interface IProjectCore extends IEntryData {
+export interface IProjectCore {
+  id: string;
   internalName: string;
   name: string;
   startDate: Date;
@@ -12,4 +11,12 @@ export interface IProject extends IProjectCore {
   techStack: string; // TODO: replace with entities
   domain: string;
   description: string;
+}
+
+export interface IProjectTable {
+  id: string;
+  internalName: string;
+  name: string;
+  startDate: string;
+  endDate: string;
 }

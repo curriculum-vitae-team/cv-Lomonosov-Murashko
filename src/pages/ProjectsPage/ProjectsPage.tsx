@@ -3,10 +3,13 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
-import { StyledTable } from "@components/styled/StyledTable";
+import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
+import { removed } from "@features/projects/projectsSlice";
+import { IProjectTable } from "@interfaces/IProject";
 import format from "date-fns/format";
-import { projects } from "../../mock/projects";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -15,9 +18,14 @@ const head = [
   { columnKey: "endDate", columnName: "End date", isSortable: true },
 ];
 
+const Table = createTable<IProjectTable>();
+
 export const ProjectsPage = () => {
+  const projects = useSelector((state: RootState) => state.projects);
+  const dispatch = useDispatch();
+
   const handleItemDelete = (id: string) => {
-    // TODO:
+    dispatch(removed(id));
   };
 
   return (
@@ -27,7 +35,7 @@ export const ProjectsPage = () => {
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        <StyledTable
+        <Table
           onDelete={handleItemDelete}
           head={head}
           items={projects.map((pr) => ({

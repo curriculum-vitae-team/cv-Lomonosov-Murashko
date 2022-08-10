@@ -13,7 +13,7 @@ import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
 import { CvPage } from "@pages/CvsPage/components/CvPage";
 import { CvInfoPage } from "@pages/CvsPage/components/CvInfoPage";
-import { ProjectInfoPage } from "@components/ProjectInfoPage";
+import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
 import { Auth } from "@pages/Auth";
