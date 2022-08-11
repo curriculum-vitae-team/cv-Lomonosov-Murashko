@@ -13,8 +13,18 @@ export interface User {
   };
 }
 
-export interface UsersData {
-  users: User[];
+export interface UserInfo {
+  id: string;
+  email: string;
+  profile: {
+    first_name: string;
+    last_name: string;
+    department: {
+      name: string;
+      id: string;
+    };
+    specialization: string;
+  };
 }
 
 export interface UserVars {
@@ -40,6 +50,30 @@ export interface UserDeleteData {
   affected: number;
 }
 
+export interface UsersData {
+  users: User[];
+}
+
+export type UserInfoData = {
+  user: UserInfo;
+};
+
+export interface UserInput {
+  id: string;
+  user: {
+    profile: ProfileInput;
+  };
+}
+
+interface ProfileInput {
+  first_name: string;
+  last_name: string;
+  departmentId: string;
+  specialization: string;
+  skills: string[];
+  languages: string[];
+}
+
 const USER_INFO = gql`
   fragment UserInfo on User {
     id
@@ -47,9 +81,6 @@ const USER_INFO = gql`
     profile {
       first_name
       last_name
-      department {
-        name
-      }
       specialization
     }
   }
@@ -60,6 +91,11 @@ export const GET_USERS = gql`
   query GetUsers {
     users {
       ...UserInfo
+      profile {
+        department {
+          name
+        }
+      }
     }
   }
 `;
@@ -69,6 +105,12 @@ export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
       ...UserInfo
+      profile {
+        department {
+          name
+          id
+        }
+      }
     }
   }
 `;
@@ -85,8 +127,8 @@ export const GET_USER_CVS = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $userInput: UserInput!) {
-    updateUser(id: $id, userInput: $userInput) {
+  mutation UpdateUser($id: ID!, $user: UserInput!) {
+    updateUser(id: $id, user: $user) {
       id
     }
   }
