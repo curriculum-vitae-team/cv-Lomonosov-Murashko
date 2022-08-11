@@ -10,7 +10,7 @@ import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
 import { useState } from "react";
-import { PdfWrapper } from "@components/PdfWrapper";
+import { PdfWrapperWithOverlay } from "@components/PdfWrapper";
 
 export const CvInfo = ({ cvId }: CvInfoProps) => {
   const [isPdfVisible, setIsPdfVisible] = useState(false);
@@ -110,7 +110,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
           </Button>
         </StyledDialogActions>
       </form>
-      {isPdfVisible && <PdfWrapper onClose={hidePreview} />}
+      {isPdfVisible && <PdfWrapperWithOverlay onClose={hidePreview} />}
     </>
   );
 };

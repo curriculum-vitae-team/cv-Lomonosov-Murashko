@@ -1,1 +1,1 @@
-export { PdfWrapper } from "./PdfWrapper";
+export { PdfWrapperWithOverlay } from "./PdfWrapper";
