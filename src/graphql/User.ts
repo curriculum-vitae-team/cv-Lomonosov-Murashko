@@ -1,5 +1,39 @@
 import { gql } from "@apollo/client";
 
+export interface User {
+  id: string;
+  email: string;
+  profile: {
+    first_name: string;
+    last_name: string;
+    department: string;
+    specialization: string;
+  };
+}
+
+export interface UserVars {
+  id: string;
+}
+
+export interface UserCvs {
+  user: {
+    cvs: [
+      {
+        id: string;
+        name: string;
+      },
+    ];
+  };
+}
+
+export interface UserUpdateResponse {
+  id: string;
+}
+
+export interface UserDeleteResponse {
+  affected: number;
+}
+
 const USER_INFO = gql`
   fragment UserInfo on User {
     id
@@ -43,13 +77,13 @@ export const GET_USER_CVS = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser(id: ID!, userInput: UserInput!) {
+  mutation updateUser($id: ID!, $userInput: UserInput!) {
     id
   }
 `;
 
 export const DELETE_USER = gql`
-  mutation deleteUser(id: ID!) {
+  mutation deleteUser($id: ID!) {
     affected
   }
 `;
