@@ -1,15 +1,18 @@
 import { PdfDownloadLink } from "./components/PdfDownloadLink";
 import { PdfViewer } from "./components/PdfViewer";
-import { StyledOverlayDiv, StyledDiv } from "./PdfWrapper.styles";
-import { PdfWrapperProps } from "./PdfWrapper.types";
+import { StyledDiv } from "./PdfWrapper.styles";
+import { PDFViewer } from "@react-pdf/renderer";
+import { withOverlay } from "@hoc/withOverlay";
 
-export const PdfWrapper = ({ onClose }: PdfWrapperProps) => {
+function PdfWrapper() {
   return (
-    <StyledOverlayDiv onClick={onClose}>
-      <StyledDiv>
+    <StyledDiv>
+      <PDFViewer>
         <PdfViewer />
-        {/* <PdfDownloadLink /> */}
-      </StyledDiv>
-    </StyledOverlayDiv>
+      </PDFViewer>
+      <PdfDownloadLink />
+    </StyledDiv>
   );
-};
+}
+
+export const PdfWrapperWithOverlay = withOverlay(PdfWrapper);

@@ -19,9 +19,7 @@ export const ProjectAccordion = () => {
         </ProjectNameWrapper>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
-          <ProjectInfo projectId={projectsMock[0].id} />
-        </Typography>
+        {/* <ProjectInfo projectId={projectsMock[0].id} /> */}
       </AccordionDetails>
     </Accordion>
   );
