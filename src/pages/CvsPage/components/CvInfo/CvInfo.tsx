@@ -9,8 +9,11 @@ import { ROUTE } from "@constants/route";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
+import { useState } from "react";
+import { PdfWrapper } from "@components/PdfWrapper";
 
 export const CvInfo = ({ cvId }: CvInfoProps) => {
+  const [isPdfVisible, setIsPdfVisible] = useState(false);
   const cv = cvsMock.find(({ id }) => id === cvId)!;
 
   const { control, handleSubmit, reset } = useForm<ICV>({
@@ -37,70 +40,77 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     // show projects table
   };
 
-  const previewHandler = () => {
-    // navigate to preview
-  }
+  const shopPreview = () => {
+    setIsPdfVisible(true);
+  };
+
+  const hidePreview = () => {
+    setIsPdfVisible(false);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoFormWrapper>
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Email"
-          name="email"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Last Name"
-          name="lastName"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Skills"
-          name="skills"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Specialization"
-          name="specialization"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Department"
-          name="department"
-        />
-      </InfoFormWrapper>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InfoFormWrapper>
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Email"
+            name="email"
+          />
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Last Name"
+            name="lastName"
+          />
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Skills"
+            name="skills"
+          />
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Specialization"
+            name="specialization"
+          />
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Department"
+            name="department"
+          />
+        </InfoFormWrapper>
 
-      <ButtonWrapper>
-        <Button onClick={addProjectClickHandler} variant="contained">
-          Add Project
-        </Button>
-        <Button onClick={previewHandler} variant="outlined">
-          Preview
-        </Button>
-      </ButtonWrapper>
-      {/* cvs.projects.map ...  */}
-      <ProjectAccordion />
+        <ButtonWrapper>
+          <Button onClick={addProjectClickHandler} variant="contained">
+            Add Project
+          </Button>
+        </ButtonWrapper>
+        {/* cvs.projects.map ...  */}
+        <ProjectAccordion />
 
-      <StyledDialogActions>
-        <Button type="submit" value="Save" variant="contained">
-          Save
-        </Button>
-        <Button
-          onClick={() => navigate(ROUTE.CVS)}
-          type="reset"
-          value="Cancel"
-          variant="outlined"
-          color="info"
-        >
-          Cancel
-        </Button>
-      </StyledDialogActions>
-    </form>
+        <StyledDialogActions>
+          <Button type="submit" value="Save" variant="contained">
+            Save
+          </Button>
+          <Button
+            onClick={() => navigate(ROUTE.CVS)}
+            type="reset"
+            value="Cancel"
+            variant="outlined"
+            color="info"
+          >
+            Cancel
+          </Button>
+          <Button onClick={shopPreview} variant="outlined">
+            Preview
+          </Button>
+        </StyledDialogActions>
+      </form>
+      {isPdfVisible && <PdfWrapper onClose={hidePreview} />}
+    </>
   );
 };
