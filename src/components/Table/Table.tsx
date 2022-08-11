@@ -21,6 +21,7 @@ export function Table({
   redirectButtonText,
   deleteButtonText,
   entryType,
+  showNewEntryButton,
 }: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
@@ -39,13 +40,16 @@ export function Table({
 
   return (
     <StyledGrid container>
-      <Button
-        onClick={() => {
-          // TODO: Navigate to creation
-        }}
-      >
-        Add {entryType}
-      </Button>
+      {showNewEntryButton && (
+        <Button
+          onClick={() => {
+            // TODO: Navigate to creation
+          }}
+        >
+          Add {entryType}
+        </Button>
+      )}
+
       <TableHeadComponent
         columns={head}
         sortBy={sortBy}
