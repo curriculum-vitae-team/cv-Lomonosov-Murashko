@@ -6,16 +6,22 @@ export interface User {
   profile: {
     first_name: string;
     last_name: string;
-    department: string;
+    department: {
+      name: string;
+    };
     specialization: string;
   };
+}
+
+export interface UsersData {
+  users: User[];
 }
 
 export interface UserVars {
   id: string;
 }
 
-export interface UserCvs {
+export interface UserCvsData {
   user: {
     cvs: [
       {
@@ -26,11 +32,11 @@ export interface UserCvs {
   };
 }
 
-export interface UserUpdateResponse {
+export interface UserUpdateData {
   id: string;
 }
 
-export interface UserDeleteResponse {
+export interface UserDeleteData {
   affected: number;
 }
 
@@ -41,7 +47,9 @@ const USER_INFO = gql`
     profile {
       first_name
       last_name
-      department
+      department {
+        name
+      }
       specialization
     }
   }
