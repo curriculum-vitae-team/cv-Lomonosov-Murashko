@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import {
   StyledTypography,
   StyledButton,
@@ -8,8 +9,9 @@ import {
 import { UserProfileCardProps } from "./UserProfileCard.types";
 
 export function UserProfileCard({ onClose }: UserProfileCardProps) {
+  const navigate = useNavigate();
   const handleSignOutClick = () => {
-    // log out
+    navigate("/signin");
   };
 
   const onUserProfileCardClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -18,7 +20,7 @@ export function UserProfileCard({ onClose }: UserProfileCardProps) {
 
   return (
     <StyledOverlayDiv onClick={onClose}>
-      <StyledDiv onClick={onUserProfileCardClick} sx={{}}>
+      <StyledDiv onClick={onUserProfileCardClick}>
         <StyledAccountCircleIcon />
         <StyledTypography>Murashko Ilya</StyledTypography>
         <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
