@@ -2,7 +2,6 @@ import { IEmployeeTable } from "@interfaces/IEmployee";
 import { User } from "@graphql/User";
 
 export function getEmployees(users: User[]): IEmployeeTable[] {
-  console.log(users);
   return users.map((user) => ({
     id: user.id,
     name: user.profile.first_name,
