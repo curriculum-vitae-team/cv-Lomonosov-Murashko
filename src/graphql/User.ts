@@ -77,13 +77,17 @@ export const GET_USER_CVS = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $userInput: UserInput!) {
-    id
+  mutation UpdateUser($id: ID!, $userInput: UserInput!) {
+    updateUser(id: $id, userInput: $userInput) {
+      id
+    }
   }
 `;
 
 export const DELETE_USER = gql`
-  mutation deleteUser($id: ID!) {
-    affected
+  mutation DeleteUser($id: ID!) {
+    deleteUser(id: $id) {
+      affected
+    }
   }
 `;
