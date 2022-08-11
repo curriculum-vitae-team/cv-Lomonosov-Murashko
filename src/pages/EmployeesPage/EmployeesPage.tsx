@@ -1,13 +1,18 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
-import { removed } from "@features/employees/empoloyeesSlice";
-import { GET_USERS, UsersData } from "@graphql/User";
+import {
+  DELETE_USER,
+  GET_USERS,
+  UserDeleteData,
+  UsersData,
+  UserVars,
+} from "@graphql/User";
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
@@ -27,11 +32,23 @@ const head = [
 const Table = createTable<IEmployeeTable>();
 
 export const EmployeesPage = () => {
-  const { data, loading, error } = useQuery<UsersData>(GET_USERS);
-  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const { data } = useQuery<UsersData>(GET_USERS, {
+    onCompleted: () => {
+      setLoading(false);
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+  const [deleteUser] = useMutation<UserDeleteData, UserVars>(DELETE_USER, {
+    refetchQueries: [{ query: GET_USERS }],
+  });
 
   const handleItemDelete = (id: string) => {
-    dispatch(removed(id));
+    deleteUser({ variables: { id } });
   };
 
   let pageContent: React.ReactNode;

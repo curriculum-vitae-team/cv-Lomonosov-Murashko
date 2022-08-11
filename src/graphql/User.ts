@@ -54,9 +54,19 @@ export interface UsersData {
   users: User[];
 }
 
-export type UserInfoData = {
+export interface UserInfoData {
   user: UserInfo;
-};
+}
+
+export interface UserFullnameData {
+  user: {
+    id: string;
+    profile: {
+      first_name: string;
+      last_name: string;
+    };
+  };
+}
 
 export interface UserInput {
   id: string;
@@ -82,6 +92,18 @@ const USER_INFO = gql`
       first_name
       last_name
       specialization
+    }
+  }
+`;
+
+export const GET_USER_FULLNAME = gql`
+  query GetUserFullname($id: ID!) {
+    user(id: $id) {
+      id
+      profile {
+        first_name
+        last_name
+      }
     }
   }
 `;

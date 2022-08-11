@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Breadcrumb } from "@components/Breadcrumb";
 import { Box, Tabs, Tab, Stack } from "@mui/material";
-import { employeesMock } from "@mock/emp";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ROUTE } from "@constants/route";
@@ -9,14 +8,24 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { cvsMock } from "@mock/cvs";
+import { useQuery } from "@apollo/client";
+import { GET_USER_FULLNAME, UserFullnameData } from "@graphql/User";
+import { PageWrapper } from "@components/styled/PageWrapper";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
 
-  // TODO: Fetch specific employee data with CVs, projects, etc.
+  const [loading, setLoading] = useState(true);
 
-  const employee = employeesMock.find(({ id }) => id === employeeId)!;
+  const { data } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
+    variables: {
+      id: employeeId,
+    },
+    onCompleted: () => {
+      setLoading(false);
+    },
+  });
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -30,22 +39,26 @@ export const EmployeePage = () => {
     pathnames.includes("cv") ? 1 : 0,
   );
 
+  const displayedName = data?.user
+    ? data.user.profile.first_name + " " + data.user.profile.last_name
+    : "";
+
+  if (loading) return <>loader</>;
+
   return (
-    <Stack sx={{ width: "100%" }}>
+    <PageWrapper>
       <PageTop>
         <Breadcrumb
           config={{
             info: "Info",
             cv: "CV",
             employees: "Employees",
-            [employeeId!]: employee
-              ? employee.name + " " + employee.lastName
-              : employeeId!,
+            [employeeId!]: displayedName,
           }}
         />
         <PageTopTypography
           title="Employees"
-          caption={employee.name + " " + employee.lastName + "`s profile"}
+          caption={displayedName + "'s profile"}
         />
       </PageTop>
       <PageBody>
@@ -69,6 +82,6 @@ export const EmployeePage = () => {
         </Box>
         <Outlet />
       </PageBody>
-    </Stack>
+    </PageWrapper>
   );
 };
