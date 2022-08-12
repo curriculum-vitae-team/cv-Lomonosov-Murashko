@@ -4,13 +4,14 @@ import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
-import { EmployeeInfoForm, EmployeeInfoProps } from "./EmployeeInfo.types";
+import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User";
 import {
   UserInfoData,
   UpdateUserInput,
   UpdateUserOutput,
+  UserInfo,
 } from "@graphql/User.interfaces";
 import { useState } from "react";
 
@@ -18,16 +19,22 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const { control, handleSubmit, reset, getValues } = useForm<EmployeeInfoForm>(
-    {
-      defaultValues: {
+  const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
+    defaultValues: {
+      id: "",
+      profile: {
         first_name: "",
         last_name: "",
-        departmentId: "",
+        department: {
+          id: "",
+          name: "",
+        },
         specialization: "",
+        skills: [],
+        languages: [],
       },
     },
-  );
+  });
 
   const { data } = useQuery<UserInfoData>(GET_USER_INFO, {
     variables: {
@@ -36,14 +43,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     onCompleted: (data) => {
       setLoading(false);
 
-      const {
-        first_name,
-        last_name,
-        department: { id: departmentId },
-        specialization,
-      } = data.user.profile;
-
-      reset({ first_name, last_name, departmentId, specialization });
+      reset(data.user);
     },
     onError: (error) => {
       setError(error.message);
@@ -64,10 +64,17 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<EmployeeInfoForm> = (data) => {
+  const onSubmit: SubmitHandler<UserInfo> = (data) => {
     setLoading(true);
 
-    const { first_name, last_name, departmentId, specialization } = data;
+    const {
+      first_name,
+      last_name,
+      department: { id: departmentId },
+      specialization,
+      languages,
+      skills,
+    } = data.profile;
 
     saveUser({
       variables: {
@@ -78,8 +85,8 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
             last_name,
             departmentId,
             specialization,
-            languages: [], // TODO: Replace with entities input
-            skills: [], // TODO: Replace with entities input
+            languages, // TODO: Replace with entities input
+            skills, // TODO: Replace with entities input
           },
         },
       },
@@ -99,13 +106,13 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
               control={control}
               required="Please, specify the field"
               label="First Name"
-              name="first_name"
+              name="profile.first_name"
             />
             <Fieldset
               control={control}
               required="Please, specify the field"
               label="Last Name"
-              name="last_name"
+              name="profile.last_name"
             />
             {/* <Fieldset
           control={control}
@@ -117,13 +124,13 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
               control={control}
               required="Please, specify the field"
               label="Department ID"
-              name="departmentId"
+              name="profile.department.id"
             />
             <Fieldset
               control={control}
               required="Please, specify the field"
               label="Specialization"
-              name="specialization"
+              name="profile.specialization"
             />
           </InfoFormWrapper>
           <DialogActions>

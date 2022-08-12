@@ -68,6 +68,8 @@ interface Profile {
   last_name: string;
   department: Department;
   specialization: string;
+  skills: [];
+  languages: [];
 }
 
 interface ProfileInput {
