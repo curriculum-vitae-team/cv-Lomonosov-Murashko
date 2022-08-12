@@ -43,11 +43,6 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     onError: (error) => {
       setError(error.message);
     },
-    refetchQueries: [
-      {
-        query: GET_USERS,
-      },
-    ],
   });
 
   const employee = useMemo(() => {
@@ -89,10 +84,6 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
             languages: [], // TODO: Replace with entities input
             skills: [], // TODO: Replace with entities input
           },
-          // TODO: remove once graphql rules update
-          // eslint-disable-next-line
-          // @ts-ignore
-          cvsIds: [],
         },
       },
     });

@@ -43,12 +43,27 @@ export const EmployeesPage = () => {
       setError(error.message);
     },
   });
-  const [deleteUser] = useMutation<UserDeleteData, UserVars>(DELETE_USER, {
-    refetchQueries: [{ query: GET_USERS }],
-  });
+
+  const [deleteUser] = useMutation<UserDeleteData, UserVars>(DELETE_USER);
 
   const handleItemDelete = (id: string) => {
-    deleteUser({ variables: { id } });
+    deleteUser({
+      variables: { id },
+      update(cache, { data }) {
+        const existingUsers = cache.readQuery<UsersData>({ query: GET_USERS });
+
+        if (existingUsers && data?.deleteUser.affected) {
+          cache.writeQuery({
+            query: GET_USERS,
+            data: {
+              users: existingUsers.users.filter((user) => user.id !== id),
+            },
+          });
+
+          cache.evict({ id });
+        }
+      },
+    });
   };
 
   let pageContent: React.ReactNode;
