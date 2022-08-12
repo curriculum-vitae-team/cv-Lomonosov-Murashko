@@ -44,9 +44,9 @@ export const EmployeePage = () => {
     ? data.user.profile.first_name + " " + data.user.profile.last_name
     : "";
 
-  if (loading) return <>loader</>;
-
-  return (
+  return loading ? (
+    <>loader</>
+  ) : (
     <PageWrapper>
       <PageTop>
         <Breadcrumb

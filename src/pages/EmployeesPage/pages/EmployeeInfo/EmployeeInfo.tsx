@@ -88,60 +88,62 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     });
   };
 
-  if (error) {
-    return <>{error}</>;
-  } else if (Object.values(getValues()).every((key) => !!key) && !loading) {
-    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InfoFormWrapper>
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="First Name"
-            name="name"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Last Name"
-            name="lastName"
-          />
-          {/* <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Email"
-            name="email"
-          /> */}
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Department ID"
-            name="departmentId"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Specialization"
-            name="specialization"
-          />
-        </InfoFormWrapper>
-        <DialogActions>
-          <Button type="submit" value="Save" variant="contained">
-            Save
-          </Button>
-          <Button
-            onClick={() => navigate(ROUTE.EMPLOYEES)}
-            type="reset"
-            value="Cancel"
-            variant="outlined"
-            color="info"
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </form>
-    );
-  } else {
-    return <>loader</>;
-  }
+  return loading ? (
+    <>loader</>
+  ) : error ? (
+    <>error</>
+  ) : (
+    <>
+      {Object.values(getValues()).every((key) => !!key) && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InfoFormWrapper>
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="First Name"
+              name="name"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Last Name"
+              name="lastName"
+            />
+            {/* <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Email"
+          name="email"
+        /> */}
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Department ID"
+              name="departmentId"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Specialization"
+              name="specialization"
+            />
+          </InfoFormWrapper>
+          <DialogActions>
+            <Button type="submit" value="Save" variant="contained">
+              Save
+            </Button>
+            <Button
+              onClick={() => navigate(ROUTE.EMPLOYEES)}
+              type="reset"
+              value="Cancel"
+              variant="outlined"
+              color="info"
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </form>
+      )}
+    </>
+  );
 };

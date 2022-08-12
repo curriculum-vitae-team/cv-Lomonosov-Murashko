@@ -67,25 +67,6 @@ export const EmployeesPage = () => {
     });
   };
 
-  let pageContent: React.ReactNode;
-
-  if (loading) {
-    pageContent = "loader";
-  } else if (error) {
-    pageContent = "error";
-  } else if (data?.users) {
-    pageContent = (
-      <Table
-        onDelete={handleItemDelete}
-        head={head}
-        items={getEmployees(data.users)}
-        redirectButtonText="Profile"
-        deleteButtonText="Delete"
-        entryType={TableEntry.EMPLOYEE}
-      />
-    );
-  }
-
   return (
     <PageWrapper>
       <PageTop>
@@ -96,7 +77,22 @@ export const EmployeesPage = () => {
         />
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
-      <PageBody>{pageContent}</PageBody>
+      <PageBody>
+        {loading
+          ? "loader"
+          : error
+          ? "error"
+          : data?.users && (
+              <Table
+                onDelete={handleItemDelete}
+                head={head}
+                items={getEmployees(data.users)}
+                redirectButtonText="Profile"
+                deleteButtonText="Delete"
+                entryType={TableEntry.EMPLOYEE}
+              />
+            )}
+      </PageBody>
     </PageWrapper>
   );
 };
