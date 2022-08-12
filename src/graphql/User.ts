@@ -64,6 +64,15 @@ export const UPDATE_USER = gql`
     updateUser(id: $id, user: $user) {
       id
       email
+      profile {
+        first_name
+        last_name
+        specialization
+        department {
+          name
+          id
+        }
+      }
     }
   }
 `;

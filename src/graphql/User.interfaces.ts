@@ -44,10 +44,7 @@ export interface UpdateUserInput {
 }
 
 export interface UpdateUserOutput {
-  updateUser: {
-    id: string;
-    email: string;
-  };
+  updateUser: User;
 }
 /* Parts */
 
@@ -65,12 +62,14 @@ export interface UserInfo {
   email: string;
   profile: Profile;
 }
+
 interface Profile {
   first_name: string;
   last_name: string;
   department: Department;
   specialization: string;
 }
+
 interface ProfileInput {
   first_name: string;
   last_name: string;
@@ -79,10 +78,12 @@ interface ProfileInput {
   skills: string[];
   languages: string[];
 }
+
 interface Department {
   name: string;
   id: string;
 }
+
 interface CVEntry {
   id: string;
   name: string;
