@@ -2,7 +2,6 @@ import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { IEmployeeInfo } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoForm, EmployeeInfoProps } from "./EmployeeInfo.types";
@@ -13,8 +12,6 @@ import {
   UpdateUserInput,
   UpdateUserOutput,
 } from "@graphql/User.interfaces";
-import { getEmployeeInfo } from "./helpers";
-import { useEffect } from "react";
 import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
