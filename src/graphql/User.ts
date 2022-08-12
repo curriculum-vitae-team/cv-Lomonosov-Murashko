@@ -1,17 +1,5 @@
 import { gql } from "@apollo/client";
 
-const USER_INFO = gql`
-  fragment UserInfo on User {
-    id
-    email
-    profile {
-      first_name
-      last_name
-      specialization
-    }
-  }
-`;
-
 export const GET_USER_FULLNAME = gql`
   query GetUserFullname($id: ID!) {
     user(id: $id) {
@@ -25,11 +13,14 @@ export const GET_USER_FULLNAME = gql`
 `;
 
 export const GET_USERS = gql`
-  ${USER_INFO}
   query GetUsers {
     users {
-      ...UserInfo
+      id
+      email
       profile {
+        first_name
+        last_name
+        specialization
         department {
           name
           id
@@ -40,11 +31,14 @@ export const GET_USERS = gql`
 `;
 
 export const GET_USER_INFO = gql`
-  ${USER_INFO}
   query GetUser($id: ID!) {
     user(id: $id) {
-      ...UserInfo
+      id
+      email
       profile {
+        first_name
+        last_name
+        specialization
         department {
           name
           id
