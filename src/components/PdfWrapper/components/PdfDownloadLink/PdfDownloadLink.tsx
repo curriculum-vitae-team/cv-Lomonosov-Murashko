@@ -5,8 +5,17 @@ export const PdfDownloadLink = () => {
   return (
     <div>
       <BlobProvider document={<PdfViewer />}>
-        {({ url }) => {
-          return url && <a href={url} download="CV.pdf">Download</a>;
+        {({ blob }) => {
+          const downloadURL = URL.createObjectURL(
+            new Blob([blob || ""], { type: "text/plain" }),
+          );
+          return (
+            blob && (
+              <a href={downloadURL} download="CV.pdf">
+                Download
+              </a>
+            )
+          );
         }}
       </BlobProvider>
     </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ICV } from "@interfaces/ICV";
 import { ButtonWrapper, StyledDialogActions } from "./CvInfo.styles";
@@ -9,11 +10,10 @@ import { ROUTE } from "@constants/route";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
-import { useState } from "react";
-import { PdfWrapperWithOverlay } from "@components/PdfWrapper";
+import { CvPatternsWithOverlay } from "@components/CvPatterns";
 
 export const CvInfo = ({ cvId }: CvInfoProps) => {
-  const [isPdfVisible, setIsPdfVisible] = useState(false);
+  const [isPatternsVisible, setIsPatternsVisible] = useState(false);
   const cv = cvsMock.find(({ id }) => id === cvId)!;
 
   const { control, handleSubmit, reset } = useForm<ICV>({
@@ -40,12 +40,12 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     // show projects table
   };
 
-  const shopPreview = () => {
-    setIsPdfVisible(true);
+  const showPreview = () => {
+    setIsPatternsVisible(true);
   };
 
   const hidePreview = () => {
-    setIsPdfVisible(false);
+    setIsPatternsVisible(false);
   };
 
   return (
@@ -105,12 +105,12 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
           >
             Cancel
           </Button>
-          <Button onClick={shopPreview} variant="outlined">
+          <Button onClick={showPreview} variant="outlined">
             Preview
           </Button>
         </StyledDialogActions>
       </form>
-      {isPdfVisible && <PdfWrapperWithOverlay onClose={hidePreview} />}
+      {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
     </>
   );
 };
