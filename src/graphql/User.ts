@@ -47,7 +47,9 @@ export interface UserUpdateData {
 }
 
 export interface UserDeleteData {
-  affected: number;
+  deleteUser: {
+    affected: number;
+  };
 }
 
 export interface UsersData {
@@ -149,9 +151,19 @@ export const GET_USER_CVS = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $user: UserInput!) {
+  mutation UpdateUser($id: ID!, $user: UpdateUserInput!) {
     updateUser(id: $id, user: $user) {
       id
+      email
+      profile {
+        first_name
+        last_name
+        specialization
+        department {
+          name
+          id
+        }
+      }
     }
   }
 `;
