@@ -4,7 +4,7 @@ import { StyledDiv } from "./PdfWrapper.styles";
 import { PDFViewer } from "@react-pdf/renderer";
 import { withOverlay } from "@hoc/withOverlay";
 
-function PdfWrapper() {
+export function PdfWrapper() {
   return (
     <StyledDiv>
       <PDFViewer>
