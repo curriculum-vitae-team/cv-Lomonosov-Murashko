@@ -7,13 +7,12 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
+import { GET_USER_INFO, UPDATE_USER } from "@graphql/User";
 import {
-  GET_USER_INFO,
-  UPDATE_USER,
   UserInfoData,
-  UserInput,
-  UserUpdateData,
-} from "@graphql/User";
+  UpdateUserInput,
+  UpdateUserOutput,
+} from "@graphql/User.interfaces";
 import { getEmployeeInfo } from "./helpers";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -35,14 +34,17 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     fetchPolicy: "no-cache",
   });
 
-  const [saveUser] = useMutation<UserUpdateData, UserInput>(UPDATE_USER, {
-    onCompleted: () => {
-      navigate("/employees");
+  const [saveUser] = useMutation<UpdateUserOutput, UpdateUserInput>(
+    UPDATE_USER,
+    {
+      onCompleted: (data) => {
+        navigate("/employees");
+      },
+      onError: (error) => {
+        setError(error.message);
+      },
     },
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
+  );
 
   const { control, handleSubmit, reset, getValues } = useForm<IEmployeeInfo>({
     defaultValues: {

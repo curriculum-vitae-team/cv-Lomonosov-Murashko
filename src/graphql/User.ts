@@ -1,91 +1,5 @@
 import { gql } from "@apollo/client";
 
-export interface User {
-  id: string;
-  email: string;
-  profile: {
-    first_name: string;
-    last_name: string;
-    department: {
-      name: string;
-    };
-    specialization: string;
-  };
-}
-
-export interface UserInfo {
-  id: string;
-  email: string;
-  profile: {
-    first_name: string;
-    last_name: string;
-    department: {
-      name: string;
-      id: string;
-    };
-    specialization: string;
-  };
-}
-
-export interface UserVars {
-  id: string;
-}
-
-export interface UserCvsData {
-  user: {
-    cvs: [
-      {
-        id: string;
-        name: string;
-      },
-    ];
-  };
-}
-
-export interface UserUpdateData {
-  id: string;
-}
-
-export interface UserDeleteData {
-  deleteUser: {
-    affected: number;
-  };
-}
-
-export interface UsersData {
-  users: User[];
-}
-
-export interface UserInfoData {
-  user: UserInfo;
-}
-
-export interface UserFullnameData {
-  user: {
-    id: string;
-    profile: {
-      first_name: string;
-      last_name: string;
-    };
-  };
-}
-
-export interface UserInput {
-  id: string;
-  user: {
-    profile: ProfileInput;
-  };
-}
-
-interface ProfileInput {
-  first_name: string;
-  last_name: string;
-  departmentId: string;
-  specialization: string;
-  skills: string[];
-  languages: string[];
-}
-
 const USER_INFO = gql`
   fragment UserInfo on User {
     id
@@ -118,6 +32,7 @@ export const GET_USERS = gql`
       profile {
         department {
           name
+          id
         }
       }
     }
@@ -155,15 +70,6 @@ export const UPDATE_USER = gql`
     updateUser(id: $id, user: $user) {
       id
       email
-      profile {
-        first_name
-        last_name
-        specialization
-        department {
-          name
-          id
-        }
-      }
     }
   }
 `;

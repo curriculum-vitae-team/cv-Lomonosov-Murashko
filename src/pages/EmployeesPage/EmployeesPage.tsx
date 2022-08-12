@@ -4,13 +4,12 @@ import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
+import { DELETE_USER, GET_USERS } from "@graphql/User";
 import {
-  DELETE_USER,
-  GET_USERS,
-  UserDeleteData,
+  DeleteUserOutput,
   UsersData,
-  UserVars,
-} from "@graphql/User";
+  DeleteUserInput,
+} from "@graphql/User.interfaces";
 import { IEmployeeTable } from "@interfaces/IEmployee";
 import { useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
@@ -44,7 +43,9 @@ export const EmployeesPage = () => {
     },
   });
 
-  const [deleteUser] = useMutation<UserDeleteData, UserVars>(DELETE_USER);
+  const [deleteUser] = useMutation<DeleteUserOutput, DeleteUserInput>(
+    DELETE_USER,
+  );
 
   const handleItemDelete = (id: string) => {
     deleteUser({
