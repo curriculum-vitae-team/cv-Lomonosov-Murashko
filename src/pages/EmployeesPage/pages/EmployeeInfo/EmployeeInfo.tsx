@@ -5,7 +5,7 @@ import { ROUTE } from "@constants/route";
 import { IEmployeeInfo } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
-import { EmployeeInfoProps } from "./EmployeeInfo.types";
+import { EmployeeInfoForm, EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User";
 import {
@@ -25,8 +25,17 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     variables: {
       id: employeeId,
     },
-    onCompleted: () => {
+    onCompleted: (data) => {
       setLoading(false);
+
+      const {
+        first_name,
+        last_name,
+        department: { id: departmentId },
+        specialization,
+      } = data.user.profile;
+
+      reset({ first_name, last_name, departmentId, specialization });
     },
     onError: (error) => {
       setError(error.message);
@@ -46,40 +55,33 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   );
 
-  const { control, handleSubmit, reset, getValues } = useForm<IEmployeeInfo>({
-    defaultValues: {
-      name: "",
-      lastName: "",
-      email: "",
-      specialization: "",
-      departmentId: "",
+  const { control, handleSubmit, reset, getValues } = useForm<EmployeeInfoForm>(
+    {
+      defaultValues: {
+        first_name: "",
+        last_name: "",
+        departmentId: "",
+        specialization: "",
+      },
     },
-  });
-
-  useEffect(() => {
-    if (userQueryData?.user) {
-      const employee = getEmployeeInfo(userQueryData.user);
-
-      const { name, lastName, email, specialization, departmentId } = employee;
-
-      reset({ name, lastName, email, specialization, departmentId });
-    }
-  }, [userQueryData, reset]);
+  );
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<IEmployeeInfo> = (data) => {
+  const onSubmit: SubmitHandler<EmployeeInfoForm> = (data) => {
     setLoading(true);
+
+    const { first_name, last_name, departmentId, specialization } = data;
 
     saveUser({
       variables: {
         id: employeeId,
         user: {
           profile: {
-            first_name: data.name,
-            last_name: data.lastName,
-            departmentId: data.departmentId,
-            specialization: data.specialization,
+            first_name,
+            last_name,
+            departmentId,
+            specialization,
             languages: [], // TODO: Replace with entities input
             skills: [], // TODO: Replace with entities input
           },
@@ -101,13 +103,13 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
               control={control}
               required="Please, specify the field"
               label="First Name"
-              name="name"
+              name="first_name"
             />
             <Fieldset
               control={control}
               required="Please, specify the field"
               label="Last Name"
-              name="lastName"
+              name="last_name"
             />
             {/* <Fieldset
           control={control}
