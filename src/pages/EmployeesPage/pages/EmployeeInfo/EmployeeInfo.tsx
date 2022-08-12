@@ -18,7 +18,18 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const { data: userQueryData } = useQuery<UserInfoData>(GET_USER_INFO, {
+  const { control, handleSubmit, reset, getValues } = useForm<EmployeeInfoForm>(
+    {
+      defaultValues: {
+        first_name: "",
+        last_name: "",
+        departmentId: "",
+        specialization: "",
+      },
+    },
+  );
+
+  const { data } = useQuery<UserInfoData>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
@@ -37,7 +48,6 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     onError: (error) => {
       setError(error.message);
     },
-    fetchPolicy: "no-cache",
   });
 
   const [saveUser] = useMutation<UpdateUserOutput, UpdateUserInput>(
@@ -48,17 +58,6 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
       },
       onError: (error) => {
         setError(error.message);
-      },
-    },
-  );
-
-  const { control, handleSubmit, reset, getValues } = useForm<EmployeeInfoForm>(
-    {
-      defaultValues: {
-        first_name: "",
-        last_name: "",
-        departmentId: "",
-        specialization: "",
       },
     },
   );
