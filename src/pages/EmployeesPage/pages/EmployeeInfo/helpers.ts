@@ -1,9 +1,9 @@
 import { UserInfo } from "@graphql/User";
 import { IEmployeeInfo } from "@interfaces/IEmployee";
 
-export function getEmployeeInfo(
-  user: UserInfo | undefined,
-): IEmployeeInfo | undefined {
+export function getEmployeeInfo<T extends UserInfo>(
+  user: T,
+): T extends undefined ? IEmployeeInfo | undefined : IEmployeeInfo {
   if (!user) return user;
 
   return {

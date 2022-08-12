@@ -2,13 +2,12 @@ import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { IEmployee, IEmployeeInfo } from "@interfaces/IEmployee";
+import { IEmployeeInfo } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import {
-  GET_USERS,
   GET_USER_INFO,
   UPDATE_USER,
   UserInfoData,
@@ -16,7 +15,7 @@ import {
   UserUpdateData,
 } from "@graphql/User";
 import { getEmployeeInfo } from "./helpers";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
@@ -45,10 +44,6 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const employee = useMemo(() => {
-    return getEmployeeInfo(userQueryData?.user);
-  }, [userQueryData?.user]);
-
   const { control, handleSubmit, reset, getValues } = useForm<IEmployeeInfo>({
     defaultValues: {
       name: "",
@@ -60,12 +55,14 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   });
 
   useEffect(() => {
-    if (employee) {
+    if (userQueryData?.user) {
+      const employee = getEmployeeInfo(userQueryData.user);
+
       const { name, lastName, email, specialization, departmentId } = employee;
 
       reset({ name, lastName, email, specialization, departmentId });
     }
-  }, [employee, reset]);
+  }, [userQueryData, reset]);
 
   const navigate = useNavigate();
 
