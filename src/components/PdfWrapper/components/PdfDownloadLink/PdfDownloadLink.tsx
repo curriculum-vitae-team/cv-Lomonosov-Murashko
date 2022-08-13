@@ -1,5 +1,6 @@
 import { BlobProvider } from "@react-pdf/renderer";
 import { PdfViewer } from "../PdfViewer";
+import { StyledLink } from "./PdfDownloadLink.styles"; 
 
 export const PdfDownloadLink = () => {
   return (
@@ -11,9 +12,9 @@ export const PdfDownloadLink = () => {
           );
           return (
             blob && (
-              <a href={downloadURL} download="CV.pdf">
+              <StyledLink href={downloadURL} download="CV.pdf">
                 Download
-              </a>
+              </StyledLink>
             )
           );
         }}
