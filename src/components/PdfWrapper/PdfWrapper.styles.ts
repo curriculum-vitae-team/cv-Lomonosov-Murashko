@@ -19,11 +19,5 @@ export const StyledDiv = styled("div")({
   borderRadius: "10px",
   "& > div": {
     marginTop: "0.5rem",
-    "& > a": {
-      backgroundColor: "#fff",
-      padding: "0.5em",
-      borderRadius: "5px",
-      color: "#000",
-    },
   },
 });
