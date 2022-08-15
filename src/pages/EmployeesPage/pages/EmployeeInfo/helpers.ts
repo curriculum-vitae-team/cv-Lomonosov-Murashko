@@ -1,4 +1,4 @@
-import { UserInfo } from "@graphql/User/User.interfaces";
+import { UserInfo } from "@graphql/User/User.interface";
 import { IEmployeeInfo } from "@interfaces/IEmployee";
 
 export function getEmployeeInfo<T extends UserInfo>(

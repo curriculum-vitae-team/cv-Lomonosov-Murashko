@@ -12,7 +12,7 @@ import {
   UpdateUserInput,
   UpdateUserOutput,
   UserInfo,
-} from "@graphql/User/User.interfaces";
+} from "@graphql/User/User.interface";
 import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {

@@ -1,5 +1,5 @@
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { User } from "@graphql/User/User.interfaces";
+import { User } from "@graphql/User/User.interface";
 
 export function getEmployees(users: User[]): IEmployeeTable[] {
   return users.map((user) => ({

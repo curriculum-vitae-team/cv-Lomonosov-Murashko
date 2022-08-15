@@ -10,7 +10,7 @@ import { PageBody } from "@components/styled/PageBody";
 import { cvsMock } from "@mock/cvs";
 import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
-import { UserFullnameData } from "@graphql/User/User.interfaces";
+import { UserFullnameData } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
 
 export const EmployeePage = () => {

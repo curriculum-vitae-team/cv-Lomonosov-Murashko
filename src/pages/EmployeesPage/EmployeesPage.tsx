@@ -9,7 +9,7 @@ import {
   DeleteUserOutput,
   UsersData,
   DeleteUserInput,
-} from "@graphql/User/User.interfaces";
+} from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
 import { useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";

@@ -1,5 +1,7 @@
 /* Queries */
 
+import { ProfileInput, Profile } from "../Profile/Profile.interface";
+
 export interface UsersData {
   users: User[];
 }
@@ -61,29 +63,6 @@ export interface UserInfo {
   id: string;
   email: string;
   profile: Profile;
-}
-
-interface Profile {
-  first_name: string;
-  last_name: string;
-  department: Department;
-  specialization: string;
-  skills: [];
-  languages: [];
-}
-
-interface ProfileInput {
-  first_name: string;
-  last_name: string;
-  departmentId: string;
-  specialization: string;
-  skills: string[];
-  languages: string[];
-}
-
-interface Department {
-  name: string;
-  id: string;
 }
 
 interface CVEntry {

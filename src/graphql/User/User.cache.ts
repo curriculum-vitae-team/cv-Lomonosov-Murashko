@@ -1,5 +1,5 @@
 import { ApolloCache } from "@apollo/client";
-import { DeleteUserOutput, UsersData } from "./User.interfaces";
+import { DeleteUserOutput, UsersData } from "./User.interface";
 import { GET_USERS } from "./User.queries";
 
 export const deleteUserCacheUpdate =
