@@ -6,9 +6,19 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
 import { removed } from "@features/cvs/cvsSlice";
+import { DELETE_CV, GET_ALL_CVS } from "@graphql/Cv/Cv.queries";
+import {
+  CvsData,
+  DeleteCvInput,
+  DeleteCvOutput,
+} from "@graphql/Cv/Cv.interface";
 import { ICVTable } from "@interfaces/ICV";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store";
+import { useMutation, useQuery } from "@apollo/client";
+import { DELETE_USER } from "@graphql/User/User.queries";
+import { useState } from "react";
+import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 
 const head = [
   { columnKey: "name", columnName: "Name", isSortable: true },
@@ -18,11 +28,25 @@ const head = [
 const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
-  const cvs = useSelector((state: RootState) => state.cvs)!;
-  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const { data } = useQuery<CvsData>(GET_ALL_CVS, {
+    onCompleted: () => {
+      setLoading(false);
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const [deleteCv] = useMutation<DeleteCvOutput, DeleteCvInput>(DELETE_CV);
 
   const handleItemDelete = (id: string) => {
-    dispatch(removed(id));
+    deleteCv({
+      variables: { id },
+      update: deleteCvCacheUpdate(id),
+    });
   };
 
   return (
@@ -36,15 +60,21 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        <Table
-          onDelete={handleItemDelete}
-          head={head}
-          items={cvs}
-          redirectButtonText="CV details"
-          deleteButtonText="Delete"
-          entryType={TableEntry.CV}
-          showNewEntryButton={true}
-        />
+        {loading
+          ? "loader"
+          : error
+          ? "error"
+          : data?.cvs && (
+              <Table
+                onDelete={handleItemDelete}
+                head={head}
+                items={data.cvs}
+                redirectButtonText="CV details"
+                deleteButtonText="Delete"
+                entryType={TableEntry.CV}
+                showNewEntryButton={true}
+              />
+            )}
       </PageBody>
     </PageWrapper>
   );
