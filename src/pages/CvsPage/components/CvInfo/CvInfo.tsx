@@ -49,7 +49,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
         <Fieldset
           control={control}
           required="Please, specify the field"
-          label="Last Name"
+          label="CV Name"
           name="lastName"
         />
         <Fieldset

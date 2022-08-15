@@ -46,6 +46,7 @@ export const ProjectsPage = () => {
           redirectButtonText="Project details"
           deleteButtonText="Delete"
           entryType={TableEntry.PROJECT}
+          showNewEntryButton={true}
         />
       </PageBody>
     </PageWrapper>

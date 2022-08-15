@@ -1,81 +1,154 @@
 import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { employeesMock } from "@mock/emp";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { IEmployee } from "@interfaces/IEmployee";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
+import {
+  UserInfoData,
+  UpdateUserInput,
+  UpdateUserOutput,
+  UserInfo,
+} from "@graphql/User/User.interface";
+import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
-  const employee = employeesMock.find(({ id }) => id === employeeId)!;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const { control, handleSubmit, reset } = useForm<IEmployee>({
+  const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
     defaultValues: {
-      name: employee.name,
-      lastName: employee.lastName,
-      email: employee.email,
-      department: employee.department,
-      specialization: employee.specialization,
+      id: "",
+      profile: {
+        first_name: "",
+        last_name: "",
+        department: {
+          id: "",
+          name: "",
+        },
+        specialization: "",
+        skills: [],
+        languages: [],
+      },
     },
   });
 
+  const { data } = useQuery<UserInfoData>(GET_USER_INFO, {
+    variables: {
+      id: employeeId,
+    },
+    onCompleted: (data) => {
+      setLoading(false);
+
+      reset(data.user);
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const [saveUser] = useMutation<UpdateUserOutput, UpdateUserInput>(
+    UPDATE_USER,
+    {
+      onCompleted: (data) => {
+        navigate("/employees");
+      },
+      onError: (error) => {
+        setError(error.message);
+      },
+    },
+  );
+
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<IEmployee> = (data) => {
-    // save employee info
-    reset();
+  const onSubmit: SubmitHandler<UserInfo> = (data) => {
+    setLoading(true);
+
+    const {
+      first_name,
+      last_name,
+      department: { id: departmentId },
+      specialization,
+      languages,
+      skills,
+    } = data.profile;
+
+    saveUser({
+      variables: {
+        id: employeeId,
+        user: {
+          profile: {
+            first_name,
+            last_name,
+            departmentId,
+            specialization,
+            languages, // TODO: Replace with entities input
+            skills, // TODO: Replace with entities input
+          },
+        },
+      },
+    });
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoFormWrapper>
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="First Name"
-          name="name"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Last Name"
-          name="lastName"
-        />
-        <Fieldset
+  return loading ? (
+    <>loader</>
+  ) : error ? (
+    <>error</>
+  ) : (
+    <>
+      {Object.values(getValues()).every((key) => !!key) && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InfoFormWrapper>
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="First Name"
+              name="profile.first_name"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Last Name"
+              name="profile.last_name"
+            />
+            {/* <Fieldset
           control={control}
           required="Please, specify the field"
           label="Email"
           name="email"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Department"
-          name="department"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Specialization"
-          name="specialization"
-        />
-      </InfoFormWrapper>
-      <DialogActions>
-        <Button type="submit" value="Save" variant="contained">
-          Save
-        </Button>
-        <Button
-          onClick={() => navigate(ROUTE.EMPLOYEES)}
-          type="reset"
-          value="Cancel"
-          variant="outlined"
-          color="info"
-        >
-          Cancel
-        </Button>
-      </DialogActions>
-    </form>
+        /> */}
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Department ID"
+              name="profile.department.id"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Specialization"
+              name="profile.specialization"
+            />
+          </InfoFormWrapper>
+          <DialogActions>
+            <Button type="submit" value="Save" variant="contained">
+              Save
+            </Button>
+            <Button
+              onClick={() => navigate(ROUTE.EMPLOYEES)}
+              type="reset"
+              value="Cancel"
+              variant="outlined"
+              color="info"
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </form>
+      )}
+    </>
   );
 };
