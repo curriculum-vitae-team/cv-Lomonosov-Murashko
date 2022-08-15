@@ -4,17 +4,18 @@ import { PageBody } from "@components/styled/PageBody";
 import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
-import { DELETE_USER, GET_USERS } from "@graphql/User";
+import { DELETE_USER, GET_USERS } from "@graphql/User/User.queries";
 import {
   DeleteUserOutput,
   UsersData,
   DeleteUserInput,
-} from "@graphql/User.interfaces";
+} from "@graphql/User/User.interfaces";
 import { IEmployeeTable } from "@interfaces/IEmployee";
 import { useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
+import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 
 const head = [
   { columnKey: "name", columnName: "First Name", isSortable: true },
@@ -50,20 +51,7 @@ export const EmployeesPage = () => {
   const handleItemDelete = (id: string) => {
     deleteUser({
       variables: { id },
-      update(cache, { data }) {
-        const existingUsers = cache.readQuery<UsersData>({ query: GET_USERS });
-
-        if (existingUsers && data?.deleteUser.affected) {
-          cache.writeQuery({
-            query: GET_USERS,
-            data: {
-              users: existingUsers.users.filter((user) => user.id !== id),
-            },
-          });
-
-          cache.evict({ id });
-        }
-      },
+      update: deleteUserCacheUpdate(id),
     });
   };
 

@@ -6,13 +6,13 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_USER_INFO, UPDATE_USER } from "@graphql/User";
+import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
 import {
   UserInfoData,
   UpdateUserInput,
   UpdateUserOutput,
   UserInfo,
-} from "@graphql/User.interfaces";
+} from "@graphql/User/User.interfaces";
 import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
