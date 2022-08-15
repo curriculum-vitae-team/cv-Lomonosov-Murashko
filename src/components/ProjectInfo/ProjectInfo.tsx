@@ -9,13 +9,10 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
-import { useSelector } from "react-redux";
-import { RootState } from "src/store";
+import { projectsMock } from "@mock/projects";
 
 export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
-  const project = useSelector((state: RootState) =>
-    state.projects.find(({ id }) => id === projectId),
-  )!;
+  const project = projectsMock.find((project) => project.id === projectId)!;
 
   // TODO: Fetch projects data if there's nothing.
 
@@ -35,7 +32,7 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IProject> = (data) => {
-    // save employee info
+    // save project info
     reset();
   };
 
