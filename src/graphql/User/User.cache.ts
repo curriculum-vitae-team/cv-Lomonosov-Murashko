@@ -1,13 +1,10 @@
-import { ApolloCache } from "@apollo/client";
-import { DeleteUserOutput, UsersData } from "./User.interface";
+import { CacheUpdaterFunction } from "src/types";
+import { DeleteUserInput, DeleteUserOutput, UsersData } from "./User.interface";
 import { GET_USERS } from "./User.queries";
 
 export const deleteUserCacheUpdate =
-  (id: string) =>
-  (
-    cache: ApolloCache<unknown>,
-    { data }: { data?: DeleteUserOutput | null },
-  ) => {
+  (id: string): CacheUpdaterFunction<DeleteUserOutput, DeleteUserInput> =>
+  (cache, { data }) => {
     const existingUsers = cache.readQuery<UsersData>({ query: GET_USERS });
 
     if (existingUsers && data?.deleteUser.affected) {
