@@ -6,6 +6,7 @@ export type TableProps<T = Item> = {
   redirectButtonText: string;
   deleteButtonText: string;
   entryType: TableEntry;
+  showNewEntryButton?: boolean;
   onDelete: (id: string) => void;
 };
 
