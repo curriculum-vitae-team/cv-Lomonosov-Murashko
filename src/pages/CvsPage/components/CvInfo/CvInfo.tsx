@@ -1,6 +1,6 @@
 import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
@@ -20,6 +20,8 @@ import { GET_CV_INFO, UPDATE_CV } from "@graphql/Cv/Cv.queries";
 export const CvInfo = ({ cvId }: CvInfoProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const { pathname } = useLocation();
 
   const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
     defaultValues: {
@@ -51,7 +53,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
 
   const [saveCv] = useMutation<UpdateCvOutput, UpdateCvInput>(UPDATE_CV, {
     onCompleted: (data) => {
-      navigate("/cvs");
+      navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
     },
     onError: (error) => {
       setError(error.message);
@@ -64,8 +66,6 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     setLoading(true);
 
     const { name, description, projectsIds } = data;
-
-    console.log(data);
 
     saveCv({
       variables: {

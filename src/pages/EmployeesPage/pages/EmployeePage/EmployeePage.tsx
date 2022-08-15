@@ -15,7 +15,6 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
-  const { cvId } = useParams();
 
   const [loading, setLoading] = useState(true);
 
@@ -74,11 +73,7 @@ export const EmployeePage = () => {
               component={Link}
               to={ROUTE.EMPLOYEES + "/" + employeeId}
             />
-            <Tab
-              label="CV"
-              component={Link}
-              to={"cv" + "/" + (cvId ? cvId : cvsMock[0].id)}
-            />
+            <Tab label="CV" component={Link} to={"cv"} />
           </Tabs>
         </Box>
         <Outlet />
