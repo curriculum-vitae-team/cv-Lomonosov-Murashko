@@ -3,8 +3,14 @@ export interface IEmployee {
   name: string;
   lastName: string;
   email: string;
+}
+
+export interface IEmployeeTable extends IEmployee {
   department: string;
   specialization: string;
 }
 
-export type IEmployeeTable = IEmployee;
+export interface IEmployeeInfo extends IEmployee {
+  departmentId: string;
+  specialization: string;
+}

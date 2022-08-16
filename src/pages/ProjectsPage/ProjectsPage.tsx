@@ -5,11 +5,9 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
-import { removed } from "@features/projects/projectsSlice";
 import { IProjectTable } from "@interfaces/IProject";
+import { projectsMock } from "@mock/projects";
 import format from "date-fns/format";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/store";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -21,11 +19,10 @@ const head = [
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
-  const projects = useSelector((state: RootState) => state.projects);
-  const dispatch = useDispatch();
+  const projects = projectsMock;
 
   const handleItemDelete = (id: string) => {
-    dispatch(removed(id));
+    // TODO: Remove
   };
 
   return (
@@ -46,6 +43,7 @@ export const ProjectsPage = () => {
           redirectButtonText="Project details"
           deleteButtonText="Delete"
           entryType={TableEntry.PROJECT}
+          showNewEntryButton={true}
         />
       </PageBody>
     </PageWrapper>

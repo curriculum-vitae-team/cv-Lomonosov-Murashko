@@ -61,7 +61,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
           <Fieldset
             control={control}
             required="Please, specify the field"
-            label="Last Name"
+            label="CV Name"
             name="lastName"
           />
           <Fieldset
@@ -84,32 +84,32 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
           />
         </InfoFormWrapper>
 
-        <ButtonWrapper>
-          <Button onClick={addProjectClickHandler} variant="contained">
-            Add Project
-          </Button>
-        </ButtonWrapper>
-        {/* cvs.projects.map ...  */}
-        <ProjectAccordion />
+          <ButtonWrapper>
+            <Button onClick={addProjectClickHandler} variant="contained">
+              Add Project
+            </Button>
+          </ButtonWrapper>
+          {/* cvs.projects.map ...  */}
+          <ProjectAccordion />
 
-        <StyledDialogActions>
-          <Button type="submit" value="Save" variant="contained">
-            Save
-          </Button>
-          <Button
-            onClick={() => navigate(ROUTE.CVS)}
-            type="reset"
-            value="Cancel"
-            variant="outlined"
-            color="info"
-          >
-            Cancel
-          </Button>
-          <Button onClick={showPreview} variant="outlined">
-            Preview
-          </Button>
-        </StyledDialogActions>
-      </form>
+          <StyledDialogActions>
+            <Button type="submit" value="Save" variant="contained">
+              Save
+            </Button>
+            <Button
+              onClick={() => navigate(ROUTE.CVS)}
+              type="reset"
+              value="Cancel"
+              variant="outlined"
+              color="info"
+            >
+              Cancel
+            </Button>
+            <Button onClick={showPreview} variant="outlined">
+              Preview
+            </Button>
+          </StyledDialogActions>
+        </form>
       {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
     </>
   );

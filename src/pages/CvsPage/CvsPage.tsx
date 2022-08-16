@@ -43,6 +43,7 @@ export const CvsPage = () => {
           redirectButtonText="CV details"
           deleteButtonText="Delete"
           entryType={TableEntry.CV}
+          showNewEntryButton={true}
         />
       </PageBody>
     </PageWrapper>
