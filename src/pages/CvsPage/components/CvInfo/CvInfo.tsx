@@ -6,7 +6,7 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CvInfoData,
   CvInput,
@@ -31,6 +31,10 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     },
   });
 
+  useEffect(() => {
+    setLoading(true);
+  }, [cvId]);
+
   const { data } = useQuery<CvInfoData>(GET_CV_INFO, {
     variables: {
       id: cvId,
@@ -49,6 +53,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
     onError: (error) => {
       setError(error.message);
     },
+    fetchPolicy: "network-only",
   });
 
   const [saveCv] = useMutation<UpdateCvOutput, UpdateCvInput>(UPDATE_CV, {

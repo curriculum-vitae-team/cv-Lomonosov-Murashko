@@ -56,3 +56,11 @@ export const DELETE_CV = gql`
     }
   }
 `;
+
+export const UNBIND_CV = gql`
+  mutation UnbindCv($id: ID!) {
+    unbindCv(id: $id) {
+      id
+    }
+  }
+`;

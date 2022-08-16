@@ -40,6 +40,16 @@ export interface DeleteCvOutput {
   };
 }
 
+export interface UnbindCvInput {
+  id: string;
+}
+
+export interface UnbindCvOutput {
+  unbindCv: {
+    id: string;
+  };
+}
+
 /* Parts */
 
 // for table
