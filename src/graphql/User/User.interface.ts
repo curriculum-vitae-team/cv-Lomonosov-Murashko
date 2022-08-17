@@ -12,7 +12,7 @@ export interface UserInfoData {
 
 export interface UserCvsData {
   user: {
-    cvs: CVEntry[];
+    cvs: UserCVEntry[];
   };
 }
 
@@ -65,7 +65,7 @@ export interface UserInfo {
   profile: Profile;
 }
 
-interface CVEntry {
+export interface UserCVEntry {
   id: string;
   name: string;
 }

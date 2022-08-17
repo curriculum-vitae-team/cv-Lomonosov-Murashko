@@ -1,20 +1,23 @@
 import { StyledDiv, StyledLink } from "./CvItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Typography } from "@mui/material";
 import { CvItemProps } from "./CvItem.types";
 
-export const CvItem = ({ id, name }: CvItemProps) => {
+export const CvItem = ({ id, name, onDelete }: CvItemProps) => {
   // move outside
-  const onDeleteHandler = (e: SyntheticEvent, id: string) => {
+
+  const handleDelete: React.MouseEventHandler = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    onDelete(id);
   };
 
   return (
     <StyledDiv>
       <StyledLink to={id}>
         <Typography>{name}</Typography>
-        <DeleteOutlineIcon onClick={(e) => onDeleteHandler(e, id)} />
+        <DeleteOutlineIcon onClick={handleDelete} />
       </StyledLink>
     </StyledDiv>
   );

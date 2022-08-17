@@ -1,41 +1,35 @@
-import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { ICV } from "@interfaces/ICV";
-import { ButtonWrapper } from "./CvInfo.styles";
 import { Button, DialogActions } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { cvsMock } from "@mock/cvs";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { ProjectAccordion } from "@components/ProjectAccordion";
+import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { CvInput } from "@graphql/Cv/Cv.interface";
+import { ButtonWrapper } from "./CvInfo.styles";
+import { ProjectAccordion } from "@components/ProjectAccordion";
 
-export const CvInfo = ({ cvId }: CvInfoProps) => {
-  const cv = cvsMock.find(({ id }) => id === cvId)!;
-
-  const { control, handleSubmit, reset } = useForm<ICV>({
+export const CvInfo = ({
+  cv,
+  onSubmit,
+  onAddProject,
+  onCancel,
+}: CvInfoProps) => {
+  const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
     defaultValues: {
-      id: cv.id,
       name: cv.name,
       description: cv.description,
-      email: cv.email,
-      lastName: cv.lastName,
-      skills: cv.skills,
-      specialization: cv.specialization,
-      department: cv.department,
+      projectsIds: cv.projectsIds,
     },
   });
 
-  const navigate = useNavigate();
+  useLayoutEffect(() => {
+    const { name, description, projectsIds } = cv;
 
-  const onSubmit: SubmitHandler<ICV> = (data) => {
-    // save cv info
-    reset();
-  };
-
-  const addProjectClickHandler = () => {
-    // show projects table
-  };
+    reset({ name, description, projectsIds });
+  }, [cv, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,41 +37,23 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
         <Fieldset
           control={control}
           required="Please, specify the field"
-          label="Email"
-          name="email"
+          label="Name"
+          name="name"
         />
         <Fieldset
           control={control}
           required="Please, specify the field"
-          label="CV Name"
-          name="lastName"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Skills"
-          name="skills"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Specialization"
-          name="specialization"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Department"
-          name="department"
+          label="Description"
+          name="description"
         />
       </InfoFormWrapper>
 
       <ButtonWrapper>
-        <Button onClick={addProjectClickHandler} variant="contained">
+        <Button onClick={onAddProject} variant="contained">
           Add Project
         </Button>
       </ButtonWrapper>
-      {/* cvs.projects.map ...  */}
+      {/* cv.projects.map ...  */}
       <ProjectAccordion />
 
       <DialogActions>
@@ -85,7 +61,7 @@ export const CvInfo = ({ cvId }: CvInfoProps) => {
           Save
         </Button>
         <Button
-          onClick={() => navigate(ROUTE.CVS)}
+          onClick={onCancel}
           type="reset"
           value="Cancel"
           variant="outlined"

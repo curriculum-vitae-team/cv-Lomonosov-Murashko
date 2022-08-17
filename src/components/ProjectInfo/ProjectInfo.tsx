@@ -36,6 +36,10 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
     reset();
   };
 
+  const onCancel: React.MouseEventHandler = (e) => {
+    navigate(ROUTE.EMPLOYEES);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InfoFormWrapper>
@@ -108,11 +112,11 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
           Save
         </Button>
         <Button
-          onClick={() => navigate(ROUTE.EMPLOYEES)}
           type="reset"
           value="Cancel"
           variant="outlined"
           color="info"
+          onClick={onCancel}
         >
           Cancel
         </Button>
