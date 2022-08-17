@@ -5,7 +5,6 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
-import { removed } from "@features/cvs/cvsSlice";
 import { DELETE_CV, GET_ALL_CVS } from "@graphql/Cv/Cv.queries";
 import {
   CvsData,
@@ -13,10 +12,7 @@ import {
   DeleteCvOutput,
 } from "@graphql/Cv/Cv.interface";
 import { ICVTable } from "@interfaces/ICV";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/store";
 import { useMutation, useQuery } from "@apollo/client";
-import { DELETE_USER } from "@graphql/User/User.queries";
 import { useState } from "react";
 import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 
