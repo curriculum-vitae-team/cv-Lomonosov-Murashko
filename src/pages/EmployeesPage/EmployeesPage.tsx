@@ -46,6 +46,13 @@ export const EmployeesPage = () => {
 
   const [deleteUser] = useMutation<DeleteUserOutput, DeleteUserInput>(
     DELETE_USER,
+    {
+      optimisticResponse: {
+        deleteUser: {
+          affected: 1,
+        },
+      },
+    },
   );
 
   const handleItemDelete = (id: string) => {

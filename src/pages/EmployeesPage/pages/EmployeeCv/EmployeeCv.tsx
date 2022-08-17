@@ -74,26 +74,20 @@ export const EmployeeCv = () => {
   };
 
   const handleCvDelete = (id: string) => {
-    console.log(active, id);
     if (active === id) {
       navigate(`${ROUTE.EMPLOYEES}/${employeeId}/cv/`);
     } else {
       navigate(`${ROUTE.EMPLOYEES}/${employeeId}/cv?opencv=${active}`);
     }
-    unbindCv({ variables: { id } });
+    unbindCv({
+      variables: { id },
+      optimisticResponse: {
+        unbindCv: {
+          id,
+        },
+      },
+    });
   };
-
-  // useEffect(() => {
-  //   if (!userData) return;
-
-  //   setActive((prev) => {
-  //     if (!userData.user.cvs.find((cv) => cv.id === prev)) {
-  //       return userData.user.cvs[0]?.id || "-1";
-  //     }
-
-  //     return prev;
-  //   });
-  // }, [userData]);
 
   return (
     <WrapperDiv>

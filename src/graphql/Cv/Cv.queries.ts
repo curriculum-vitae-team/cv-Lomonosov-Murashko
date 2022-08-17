@@ -22,6 +22,9 @@ export const GET_CV_INFO = gql`
         name
         internal_name
       }
+      user {
+        id
+      }
     }
   }
 `;

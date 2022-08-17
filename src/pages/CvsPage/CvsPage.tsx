@@ -42,6 +42,11 @@ export const CvsPage = () => {
     deleteCv({
       variables: { id },
       update: deleteCvCacheUpdate(id),
+      optimisticResponse: {
+        deleteCv: {
+          affected: 1,
+        },
+      },
     });
   };
 

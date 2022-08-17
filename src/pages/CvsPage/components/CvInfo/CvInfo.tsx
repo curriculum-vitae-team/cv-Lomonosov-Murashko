@@ -6,136 +6,70 @@ import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
-import {
-  CvInfoData,
-  CvInput,
-  UpdateCvInput,
-  UpdateCvOutput,
-} from "@graphql/Cv/Cv.interface";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { CvInput } from "@graphql/Cv/Cv.interface";
 import { ButtonWrapper } from "./CvInfo.styles";
 import { ProjectAccordion } from "@components/ProjectAccordion";
-import { GET_CV_INFO, UPDATE_CV } from "@graphql/Cv/Cv.queries";
 
-export const CvInfo = ({ cvId }: CvInfoProps) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const { pathname } = useLocation();
-
+export const CvInfo = ({
+  cv,
+  onSubmit,
+  onAddProject,
+  onCancel,
+}: CvInfoProps) => {
   const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
     defaultValues: {
-      name: "",
-      description: "",
-      projectsIds: [],
+      name: cv.name,
+      description: cv.description,
+      projectsIds: cv.projectsIds,
     },
   });
 
-  useEffect(() => {
-    setLoading(true);
-  }, [cvId]);
+  useLayoutEffect(() => {
+    const { name, description, projectsIds } = cv;
 
-  const { data } = useQuery<CvInfoData>(GET_CV_INFO, {
-    variables: {
-      id: cvId,
-    },
-    onCompleted: (data) => {
-      setLoading(false);
+    reset({ name, description, projectsIds });
+  }, [cv, reset]);
 
-      const { name, description, projects } = data.cv;
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InfoFormWrapper>
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Name"
+          name="name"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Description"
+          name="description"
+        />
+      </InfoFormWrapper>
 
-      reset({
-        name,
-        description,
-        projectsIds: projects.map((proj) => proj.id),
-      });
-    },
-    onError: (error) => {
-      setError(error.message);
-    },
-    fetchPolicy: "network-only",
-  });
+      <ButtonWrapper>
+        <Button onClick={onAddProject} variant="contained">
+          Add Project
+        </Button>
+      </ButtonWrapper>
+      {/* cv.projects.map ...  */}
+      <ProjectAccordion />
 
-  const [saveCv] = useMutation<UpdateCvOutput, UpdateCvInput>(UPDATE_CV, {
-    onCompleted: (data) => {
-      navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
-    },
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<CvInput> = (data) => {
-    setLoading(true);
-
-    const { name, description, projectsIds } = data;
-
-    saveCv({
-      variables: {
-        id: cvId,
-        cv: {
-          name,
-          description,
-          projectsIds,
-        },
-      },
-    });
-  };
-
-  const onAddProject: React.MouseEventHandler = (e) => {
-    // TODO: Fetch projects. Show projects select component.
-    // Not a table.
-  };
-
-  return loading ? (
-    <>loader</>
-  ) : error ? (
-    <>error</>
-  ) : (
-    <>
-      {Object.values(getValues()).every((key) => !!key) && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InfoFormWrapper>
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Name"
-              name="name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Description"
-              name="description"
-            />
-          </InfoFormWrapper>
-
-          <ButtonWrapper>
-            <Button onClick={onAddProject} variant="contained">
-              Add Project
-            </Button>
-          </ButtonWrapper>
-          {/* cv.projects.map ...  */}
-          <ProjectAccordion />
-
-          <DialogActions>
-            <Button type="submit" value="Save" variant="contained">
-              Save
-            </Button>
-            <Button
-              onClick={() => navigate(ROUTE.CVS)}
-              type="reset"
-              value="Cancel"
-              variant="outlined"
-              color="info"
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </form>
-      )}
-    </>
+      <DialogActions>
+        <Button type="submit" value="Save" variant="contained">
+          Save
+        </Button>
+        <Button
+          onClick={onCancel}
+          type="reset"
+          value="Cancel"
+          variant="outlined"
+          color="info"
+        >
+          Cancel
+        </Button>
+      </DialogActions>
+    </form>
   );
 };

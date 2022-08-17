@@ -71,6 +71,9 @@ export interface CvInfo {
   name: string;
   description: string;
   projects: ProjectPart[];
+  user: null | {
+    id: string;
+  };
 }
 
 interface ProjectPart {
