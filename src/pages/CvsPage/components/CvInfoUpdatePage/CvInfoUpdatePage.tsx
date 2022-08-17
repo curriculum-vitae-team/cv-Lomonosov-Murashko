@@ -14,7 +14,7 @@ import { CvInfo } from "../CvInfo/CvInfo";
 export const CvInfoUpdatePage = () => {
   const { cvId } = useParams();
 
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { pathname } = useLocation();
@@ -26,7 +26,7 @@ export const CvInfoUpdatePage = () => {
       id: cvId,
     },
     onCompleted: (data) => {
-      setLoading(false);
+      setIsLoading(false);
     },
     onError: (error) => {
       setError(error.message);
@@ -35,7 +35,7 @@ export const CvInfoUpdatePage = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     // refetch({ variables: { id: cvId } });
   }, [cvId]);
 
@@ -64,7 +64,7 @@ export const CvInfoUpdatePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<CvInput> = (data) => {
-    setLoading(true);
+    setIsLoading(true);
 
     const { name, description, projectsIds } = data;
 
@@ -94,7 +94,7 @@ export const CvInfoUpdatePage = () => {
     // Not a table.
   };
 
-  return loading ? (
+  return isLoading ? (
     <>loader</>
   ) : error ? (
     <>{error}</>

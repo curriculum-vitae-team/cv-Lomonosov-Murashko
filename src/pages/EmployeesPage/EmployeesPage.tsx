@@ -33,11 +33,11 @@ const Table = createTable<IEmployeeTable>();
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data } = useQuery<UsersData>(GET_USERS, {
     onCompleted: () => {
-      setLoading(false);
+      setIsLoading(false);
     },
     onError: (error) => {
       setError(error.message);
@@ -73,7 +73,7 @@ export const EmployeesPage = () => {
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>
-        {loading
+        {isLoading
           ? "loader"
           : error
           ? "error"

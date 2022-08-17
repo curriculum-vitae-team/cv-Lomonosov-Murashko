@@ -18,7 +18,7 @@ export const EmployeeCv = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
 
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState("");
 
@@ -37,7 +37,7 @@ export const EmployeeCv = () => {
         setActive(cvId || "-1");
       }
 
-      setLoading(false);
+      setIsLoading(false);
     },
     onError: (err) => {
       setError(err.message);
@@ -91,7 +91,7 @@ export const EmployeeCv = () => {
 
   return (
     <WrapperDiv>
-      {loading ? (
+      {isLoading ? (
         <>loader</>
       ) : error ? (
         <>{error}</>

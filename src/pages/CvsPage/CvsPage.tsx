@@ -25,11 +25,11 @@ const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data } = useQuery<CvsData>(GET_ALL_CVS, {
     onCompleted: () => {
-      setLoading(false);
+      setIsLoading(false);
     },
     onError: (error) => {
       setError(error.message);
@@ -61,7 +61,7 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        {loading
+        {isLoading
           ? "loader"
           : error
           ? "error"
