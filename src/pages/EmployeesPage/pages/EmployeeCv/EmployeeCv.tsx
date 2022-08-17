@@ -29,7 +29,7 @@ export const EmployeeCv = () => {
     onCompleted: (data) => {
       const firstCv = data.user.cvs[0];
 
-      if ((firstCv && firstCv.id === cvId) || (firstCv && !cvId)) {
+      if (firstCv && (firstCv.id === cvId || !cvId)) {
         const cvToOpen = searchParams.get("opencv") || firstCv.id;
         setActive(cvToOpen);
         navigate(cvToOpen);
