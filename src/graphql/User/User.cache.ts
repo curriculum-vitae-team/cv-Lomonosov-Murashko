@@ -21,7 +21,5 @@ export const deleteUserCacheUpdate =
           users: existingUsers.users.filter((user) => user.id !== id),
         },
       });
-
-      cache.evict({ id });
     }
   };
