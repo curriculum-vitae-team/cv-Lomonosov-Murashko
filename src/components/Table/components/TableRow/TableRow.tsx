@@ -16,6 +16,10 @@ export function TableRow({
   children,
   id,
 }: TableRowProps) {
+  const handleDelete: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    onDelete(id);
+  };
+
   return (
     <Accordion sx={{ width: "100%" }}>
       <AccordionSummary
@@ -29,7 +33,7 @@ export function TableRow({
         <Button>
           <Link to={id}>{redirectButtonText}</Link>
         </Button>
-        <Button onClick={() => onDelete(id)}>{deleteButtonText}</Button>
+        <Button onClick={handleDelete}>{deleteButtonText}</Button>
       </AccordionDetails>
     </Accordion>
   );

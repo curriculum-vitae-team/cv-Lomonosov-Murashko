@@ -89,6 +89,10 @@ export const CvInfoUpdatePage = () => {
     });
   };
 
+  const handleCancel: React.MouseEventHandler = (e) => {
+    navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
+  };
+
   const handleAddProject: React.MouseEventHandler = (e) => {
     // TODO: Fetch projects. Show projects select component.
     // Not a table.
@@ -103,9 +107,7 @@ export const CvInfoUpdatePage = () => {
       <CvInfo
         cv={cvInput}
         onSubmit={handleSubmit}
-        onCancel={() => {
-          navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
-        }}
+        onCancel={handleCancel}
         onAddProject={handleAddProject}
       />
     )

@@ -93,7 +93,11 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     });
   };
 
-  return loading ? (
+  const onCancel: React.MouseEventHandler = (e) => {
+    navigate(ROUTE.EMPLOYEES);
+  };
+
+  return isLoading ? (
     <>loader</>
   ) : error ? (
     <>error</>
@@ -138,7 +142,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
               Save
             </Button>
             <Button
-              onClick={() => navigate(ROUTE.EMPLOYEES)}
+              onClick={onCancel}
               type="reset"
               value="Cancel"
               variant="outlined"

@@ -6,5 +6,5 @@ export type CvInfoProps = {
   cv: CvInput;
   onSubmit: SubmitHandler<CvInput>;
   onAddProject: React.MouseEventHandler;
-  onCancel: () => void;
+  onCancel: React.MouseEventHandler;
 };
