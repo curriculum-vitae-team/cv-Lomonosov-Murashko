@@ -11,7 +11,7 @@ import { IEntryData } from "@interfaces/IEntryData";
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
   TableProps<T>
 > {
-  return Table;
+  return Table
 }
 
 export function Table({

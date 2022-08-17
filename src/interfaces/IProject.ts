@@ -2,13 +2,13 @@ export interface IProjectCore {
   id: string;
   internalName: string;
   name: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate: Date | string;
 }
 
 export interface IProject extends IProjectCore {
-  teamSize: number;
-  techStack: string; // TODO: replace with entities
+  // teamSize: number;
+  // techStack: string; // TODO: replace with entities
   domain: string;
   description: string;
 }

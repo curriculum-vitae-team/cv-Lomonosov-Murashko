@@ -11,7 +11,7 @@ export const deleteProjectCacheUpdate =
       cache.writeQuery({
         query: GET_PROJECTS,
         data: {
-          users: existingProjects.projects.filter((project) => project.id !== id),
+          projects: existingProjects.projects.filter((project) => project.id !== id),
         },
       });
 
