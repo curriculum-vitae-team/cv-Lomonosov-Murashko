@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
@@ -41,7 +41,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
       id: employeeId,
     },
     onCompleted: (data) => {
-      setLoading(false);
+      setIsLoading(false);
 
       reset(data.user);
     },
@@ -65,7 +65,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    setLoading(true);
+    setIsLoading(true);
 
     const {
       first_name,
@@ -93,7 +93,11 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     });
   };
 
-  return loading ? (
+  const onCancel: React.MouseEventHandler = (e) => {
+    navigate(ROUTE.EMPLOYEES);
+  };
+
+  return isLoading ? (
     <>loader</>
   ) : error ? (
     <>error</>
@@ -138,7 +142,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
               Save
             </Button>
             <Button
-              onClick={() => navigate(ROUTE.EMPLOYEES)}
+              onClick={onCancel}
               type="reset"
               value="Cancel"
               variant="outlined"
