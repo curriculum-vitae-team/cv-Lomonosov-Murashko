@@ -1,16 +1,21 @@
 import { Breadcrumb } from "@components/Breadcrumb";
+import { PageTopTypography } from "@components/PageTopTypography";
 import { PageTop } from "@components/styled/PageTop";
 import { CvInfoUpdatePage } from "../CvInfoUpdatePage";
+import { Container } from "./CvPage.styles";
 
 export const CvPage = () => {
   return (
-    <PageTop>
-      <Breadcrumb
-        config={{
-          cvs: "Cvs",
-        }}
-      />
+    <Container>
+      <PageTop>
+        <Breadcrumb
+          config={{
+            cvs: "Cvs",
+          }}
+        />
+        <PageTopTypography title="CV" caption="Cv name" />
+      </PageTop>
       <CvInfoUpdatePage />
-    </PageTop>
+    </Container>
   );
 };

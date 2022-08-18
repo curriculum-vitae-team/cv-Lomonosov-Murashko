@@ -1,17 +1,17 @@
-import { Stack } from "@mui/material";
 import { Outlet } from "react-router";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
 import { SideBar } from "../SideBar";
+import { Content } from "./Layout.styles";
 
 export function Layout() {
   return (
     <>
       <Header />
-      <Stack direction="row">
+      <Content>
         <SideBar />
         <Outlet />
-      </Stack>
+      </Content>
       <Footer />
     </>
   );
