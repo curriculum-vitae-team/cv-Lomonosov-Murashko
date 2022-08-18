@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
+import { PageBody } from "@components/styled/PageBody";
 import {
   CvInfoData,
   CvInput,
@@ -104,12 +105,14 @@ export const CvInfoUpdatePage = () => {
     <>{error}</>
   ) : (
     cvInput && (
-      <CvInfo
-        cv={cvInput}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-        onAddProject={handleAddProject}
-      />
+      <PageBody>
+        <CvInfo
+          cv={cvInput}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          onAddProject={handleAddProject}
+        />
+      </PageBody>
     )
   );
 };
