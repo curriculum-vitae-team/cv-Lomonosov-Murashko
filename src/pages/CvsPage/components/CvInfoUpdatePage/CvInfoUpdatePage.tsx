@@ -105,7 +105,7 @@ export const CvInfoUpdatePage = () => {
   ) : (
     cvInput && (
       <CvInfo
-        cv={cvInput}
+        cvId={cvInput}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         onAddProject={handleAddProject}
