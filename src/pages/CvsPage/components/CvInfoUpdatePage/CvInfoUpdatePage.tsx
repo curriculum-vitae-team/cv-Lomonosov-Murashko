@@ -1,4 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
+import { ErrorToast } from "@components/ErrorToast";
+import { InlineError } from "@components/InlineError";
+import { Loader } from "@components/Loader";
 import {
   CvInfoData,
   CvInput,
@@ -16,6 +19,7 @@ export const CvInfoUpdatePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const { pathname } = useLocation();
 
@@ -27,9 +31,10 @@ export const CvInfoUpdatePage = () => {
     },
     onCompleted: (data) => {
       setIsLoading(false);
+      setServerError("");
     },
     onError: (error) => {
-      setError(error.message);
+      setServerError(error.message);
     },
     fetchPolicy: "network-only",
   });
@@ -98,18 +103,26 @@ export const CvInfoUpdatePage = () => {
     // Not a table.
   };
 
-  return isLoading ? (
-    <>loader</>
+  return isLoading && !serverError ? (
+    <Loader />
   ) : error ? (
-    <>{error}</>
+    <InlineError
+      message="Something went wrong when trying to fetch form data"
+      tryAgainFn={() => {
+        refetch();
+      }}
+    />
   ) : (
     cvInput && (
-      <CvInfo
-        cv={cvInput}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-        onAddProject={handleAddProject}
-      />
+      <>
+        {serverError && <ErrorToast message={serverError} />}
+        <CvInfo
+          cv={cvInput}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          onAddProject={handleAddProject}
+        />
+      </>
     )
   );
 };

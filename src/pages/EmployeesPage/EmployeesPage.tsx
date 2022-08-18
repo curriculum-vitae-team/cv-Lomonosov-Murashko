@@ -16,6 +16,8 @@ import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
 import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
 
 const head = [
   { columnKey: "name", columnName: "First Name", isSortable: true },
@@ -35,7 +37,7 @@ export const EmployeesPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const { data } = useQuery<UsersData>(GET_USERS, {
+  const { data, refetch } = useQuery<UsersData>(GET_USERS, {
     onCompleted: () => {
       setIsLoading(false);
     },
@@ -73,20 +75,27 @@ export const EmployeesPage = () => {
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? "loader"
-          : error
-          ? "error"
-          : data?.users && (
-              <Table
-                onDelete={handleItemDelete}
-                head={head}
-                items={getEmployees(data.users)}
-                redirectButtonText="Profile"
-                deleteButtonText="Delete"
-                entryType={TableEntry.EMPLOYEE}
-              />
-            )}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <InlineError
+            message="Something went wrong when trying to fetch employees data"
+            tryAgainFn={() => {
+              refetch();
+            }}
+          />
+        ) : (
+          data?.users && (
+            <Table
+              onDelete={handleItemDelete}
+              head={head}
+              items={getEmployees(data.users)}
+              redirectButtonText="Profile"
+              deleteButtonText="Delete"
+              entryType={TableEntry.EMPLOYEE}
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

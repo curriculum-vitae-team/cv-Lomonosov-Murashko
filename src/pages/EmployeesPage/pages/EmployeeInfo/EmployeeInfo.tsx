@@ -14,10 +14,15 @@ import {
   UserInfo,
 } from "@graphql/User/User.interface";
 import { useState } from "react";
+import { InlineError } from "@components/InlineError";
+import { Loader } from "@components/Loader";
+import { ErrorToast } from "@components/ErrorToast";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [serverError, setServerError] = useState("");
 
   const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
     defaultValues: {
@@ -36,17 +41,18 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const { data } = useQuery<UserInfoData>(GET_USER_INFO, {
+  const { data, refetch } = useQuery<UserInfoData>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
     onCompleted: (data) => {
       setIsLoading(false);
+      setServerError("");
 
       reset(data.user);
     },
     onError: (error) => {
-      setError(error.message);
+      setServerError(error.message);
     },
   });
 
@@ -97,12 +103,18 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     navigate(ROUTE.EMPLOYEES);
   };
 
-  return isLoading ? (
-    <>loader</>
+  return isLoading && !serverError ? (
+    <Loader />
   ) : error ? (
-    <>error</>
+    <InlineError
+      message="Something went wrong when trying to fetch employee data"
+      tryAgainFn={() => {
+        refetch();
+      }}
+    />
   ) : (
     <>
+      {serverError && <ErrorToast message={serverError} />}
       {Object.values(getValues()).every((key) => !!key) && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <InfoFormWrapper>
