@@ -4,6 +4,10 @@ export interface ProjectsData {
   projects: ProjectInfo[];
 }
 
+export interface ProjectInfoData {
+  project: ProjectInfo;
+}
+
 /* Mutations */
 
 export interface CreateProjectInput {

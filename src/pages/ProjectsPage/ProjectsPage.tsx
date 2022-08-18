@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { Breadcrumb } from "@components/Breadcrumb";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
@@ -5,9 +6,16 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { TableEntry } from "@constants/table";
+import {
+  DeleteProjectInput,
+  DeleteProjectOutput,
+  ProjectsData,
+} from "@graphql/Project/Project.interface";
+import { deleteProjectCacheUpdate } from "@graphql/Project/Project.cache";
+import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
-import { projectsMock } from "@mock/projects";
-import format from "date-fns/format";
+import { useState } from "react";
+import { getProjects } from "./helpers";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -19,10 +27,27 @@ const head = [
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
-  const projects = projectsMock;
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
+    onCompleted: () => {
+      setIsLoading(false);
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const [deleteProject] = useMutation<DeleteProjectOutput, DeleteProjectInput>(
+    DELETE_PROJECT,
+  );
 
   const handleItemDelete = (id: string) => {
-    // TODO: Remove
+    deleteProject({
+      variables: { id },
+      update: deleteProjectCacheUpdate(id),
+    });
   };
 
   return (
@@ -32,19 +57,21 @@ export const ProjectsPage = () => {
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        <Table
-          onDelete={handleItemDelete}
-          head={head}
-          items={projects.map((pr) => ({
-            ...pr,
-            startDate: format(pr.startDate, "PP"),
-            endDate: format(pr.endDate, "PP"),
-          }))}
-          redirectButtonText="Project details"
-          deleteButtonText="Delete"
-          entryType={TableEntry.PROJECT}
-          showNewEntryButton={true}
-        />
+        {isLoading
+          ? "loader"
+          : error
+          ? "error"
+          : data?.projects && (
+              <Table
+                onDelete={handleItemDelete}
+                head={head}
+                items={getProjects(data.projects)}
+                redirectButtonText="Project details"
+                deleteButtonText="Delete"
+                entryType={TableEntry.PROJECT}
+                showNewEntryButton={true}
+              />
+            )}
       </PageBody>
     </PageWrapper>
   );
