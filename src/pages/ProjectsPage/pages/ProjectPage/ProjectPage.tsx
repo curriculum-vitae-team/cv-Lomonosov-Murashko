@@ -7,7 +7,6 @@ import { Outlet, useParams } from "react-router";
 
 export const ProjectPage = () => {
   const { projectId } = useParams();
-  // const project = projectsMock.find(({ id }) => id === projectId)!;
 
   return (
     <Stack sx={{ width: "100%" }}>
@@ -17,7 +16,6 @@ export const ProjectPage = () => {
             info: "Info",
             cv: "CV",
             projects: "Projects",
-            // [projectId!]: project ? project.name : projectId!,
           }}
         />
 
