@@ -70,6 +70,10 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
     });
   };
 
+  const onCancel: React.MouseEventHandler = (e) => {
+    navigate(ROUTE.EMPLOYEES);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -148,11 +152,11 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
               Save
             </Button>
             <Button
-              onClick={() => navigate(ROUTE.EMPLOYEES)}
               type="reset"
               value="Cancel"
               variant="outlined"
               color="info"
+              onClick={onCancel}
             >
               Cancel
             </Button>

@@ -9,4 +9,8 @@ export interface ICV {
   department: string;
 }
 
-export type ICVTable = ICV;
+export type ICVTable = {
+  name: string;
+  description: string;
+  id: string;
+};

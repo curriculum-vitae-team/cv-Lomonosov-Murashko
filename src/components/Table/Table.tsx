@@ -38,16 +38,14 @@ export function Table({
     [sortBy],
   );
 
+  const handleNew: React.MouseEventHandler = (e) => {
+    // TODO: Navigate to creation
+  };
+
   return (
     <StyledGrid container>
       {showNewEntryButton && (
-        <Button
-          onClick={() => {
-            // TODO: Navigate to creation
-          }}
-        >
-          Add {entryType}
-        </Button>
+        <Button onClick={handleNew}>Add {entryType}</Button>
       )}
 
       <TableHeadComponent

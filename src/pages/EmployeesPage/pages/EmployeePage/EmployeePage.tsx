@@ -15,16 +15,15 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
-  const { cvId } = useParams();
 
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
     variables: {
       id: employeeId,
     },
     onCompleted: () => {
-      setLoading(false);
+      setIsLoading(false);
     },
   });
 
@@ -44,7 +43,7 @@ export const EmployeePage = () => {
     ? data.user.profile.first_name + " " + data.user.profile.last_name
     : "";
 
-  return loading ? (
+  return isLoading ? (
     <>loader</>
   ) : (
     <PageWrapper>
@@ -74,11 +73,7 @@ export const EmployeePage = () => {
               component={Link}
               to={ROUTE.EMPLOYEES + "/" + employeeId}
             />
-            <Tab
-              label="CV"
-              component={Link}
-              to={"cv" + "/" + (cvId ? cvId : cvsMock[0].id)}
-            />
+            <Tab label="CV" component={Link} to={"cv"} />
           </Tabs>
         </Box>
         <Outlet />
