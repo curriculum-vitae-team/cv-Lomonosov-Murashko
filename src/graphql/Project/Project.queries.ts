@@ -28,6 +28,14 @@ export const GET_PROJECT_INFO = gql`
   }
 `;
 
+export const GET_PROJECT_NAME = gql`
+  query GetProjectName($id: ID!) {
+    project(id: $id) {
+      name
+    }
+  }
+`
+
 export const DELETE_PROJECT = gql`
   mutation DeleteProject($id: ID!) {
     deleteProject(id: $id) {

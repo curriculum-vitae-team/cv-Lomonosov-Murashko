@@ -8,6 +8,12 @@ export interface ProjectInfoData {
   project: ProjectInfo;
 }
 
+export interface ProjectName {
+  project: {
+    name: string;
+  }
+}
+
 /* Mutations */
 
 export interface CreateProjectInput {
