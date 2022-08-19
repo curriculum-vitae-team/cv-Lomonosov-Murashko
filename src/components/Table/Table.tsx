@@ -7,7 +7,6 @@ import { Button } from "@mui/material";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
 import { IEntryData } from "@interfaces/IEntryData";
-import { useNavigate } from "react-router";
 
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
   TableProps<T>

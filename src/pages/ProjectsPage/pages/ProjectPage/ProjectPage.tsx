@@ -3,10 +3,9 @@ import { PageTop } from "@components/styled/PageTop";
 import { PageBody } from "@components/styled/PageBody";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { Stack } from "@mui/material";
-import { Outlet, useParams } from "react-router";
+import { Outlet } from "react-router";
 
 export const ProjectPage = () => {
-  const { projectId } = useParams();
 
   return (
     <Stack sx={{ width: "100%" }}>
