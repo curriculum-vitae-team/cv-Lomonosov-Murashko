@@ -1,13 +1,10 @@
-import { StyledLoader, StyledLoaderWrapper } from "./Loader.styles";
+import { CircularProgress } from "@mui/material";
+import { StyledLoaderWrapper } from "./Loader.styles";
 
 export const Loader = () => {
   return (
     <StyledLoaderWrapper>
-      <StyledLoader />
+      <CircularProgress />
     </StyledLoaderWrapper>
   );
-};
-
-export const LoaderComponent = () => {
-  return <StyledLoader />;
 };
