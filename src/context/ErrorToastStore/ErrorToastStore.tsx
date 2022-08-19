@@ -14,10 +14,10 @@ export const useErrorToast = () => {
 };
 
 export const ErrorToastStore = ({ children }: ErrorToastStoreProps) => {
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<string[]>([]);
 
   const handleSetError = (message: string) => {
-    setError(message);
+    setErrors((prev) => [...prev, message]);
   };
 
   return (
@@ -26,7 +26,9 @@ export const ErrorToastStore = ({ children }: ErrorToastStoreProps) => {
         setToastError: handleSetError,
       }}
     >
-      {error && <ErrorToast message={error} />}
+      {errors.map((error) => (
+        <ErrorToast message={error} />
+      ))}
       {children}
     </ErrorToastContext.Provider>
   );
