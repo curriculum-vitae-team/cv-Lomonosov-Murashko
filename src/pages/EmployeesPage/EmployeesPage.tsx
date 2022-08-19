@@ -18,18 +18,7 @@ import { getEmployees } from "./helpers";
 import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
-
-const head = [
-  { columnKey: "name", columnName: "First Name", isSortable: true },
-  { columnKey: "lastName", columnName: "Last Name", isSortable: true },
-  { columnKey: "email", columnName: "Email", isSortable: false },
-  { columnKey: "department", columnName: "Department", isSortable: false },
-  {
-    columnKey: "specialization",
-    columnName: "Specialization",
-    isSortable: true,
-  },
-];
+import { tableHead } from "./tableHead";
 
 const Table = createTable<IEmployeeTable>();
 
@@ -90,7 +79,7 @@ export const EmployeesPage = () => {
           data?.users && (
             <Table
               onDelete={handleItemDelete}
-              head={head}
+              head={tableHead}
               items={getEmployees(data.users)}
               redirectButtonText="Profile"
               deleteButtonText="Delete"

@@ -18,11 +18,7 @@ import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
-
-const head = [
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "description", columnName: "Description", isSortable: true },
-];
+import { tableHead } from "./tableHead";
 
 const Table = createTable<ICVTable>();
 
@@ -85,7 +81,7 @@ export const CvsPage = () => {
           data?.cvs && (
             <Table
               onDelete={handleItemDelete}
-              head={head}
+              head={tableHead}
               items={data.cvs}
               redirectButtonText="CV details"
               deleteButtonText="Delete"
