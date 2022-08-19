@@ -17,6 +17,7 @@ import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
 import { Auth } from "@pages/Auth";
+import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
 
 export function Router() {
   return (
@@ -36,6 +37,7 @@ export function Router() {
             </Route>
           </Route>
           <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
+          <Route path={ROUTE.ADD_PROJECT} element={<ProjectInfoCreate />} />
           <Route path={ROUTE.TARGET_PROJECT} element={<ProjectPage />}>
             <Route index element={<ProjectInfoPage />} />
           </Route>

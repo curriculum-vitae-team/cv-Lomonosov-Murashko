@@ -16,6 +16,8 @@ import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
 import { useState } from "react";
 import { getProjects } from "./helpers";
+import { useNavigate } from "react-router";
+import { ROUTE } from "@constants/route";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -29,6 +31,7 @@ const Table = createTable<IProjectTable>();
 export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
     onCompleted: () => {
@@ -50,6 +53,10 @@ export const ProjectsPage = () => {
     });
   };
 
+  const handleCreate = () => {
+    navigate(ROUTE.ADD_PROJECT);
+  }
+
   return (
     <PageWrapper>
       <PageTop>
@@ -64,6 +71,7 @@ export const ProjectsPage = () => {
           : data?.projects && (
               <Table
                 onDelete={handleItemDelete}
+                onCreate={handleCreate}
                 head={head}
                 items={getProjects(data.projects)}
                 redirectButtonText="Project details"
