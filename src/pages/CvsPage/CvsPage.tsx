@@ -24,12 +24,8 @@ const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { data, refetch } = useQuery<CvsData>(GET_ALL_CVS, {
-    onCompleted: () => {
-      setIsLoading(false);
-    },
+  const { data, refetch, loading } = useQuery<CvsData>(GET_ALL_CVS, {
     onError: (error) => {
       setError(error.message);
     },
@@ -70,7 +66,7 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : error ? (
           <InlineError

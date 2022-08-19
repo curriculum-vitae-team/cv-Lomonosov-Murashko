@@ -19,7 +19,6 @@ import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { setToastError } = useErrorToast();
@@ -41,13 +40,15 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const { data, refetch } = useQuery<UserInfoData>(GET_USER_INFO, {
+  const {
+    data,
+    refetch,
+    loading: getUserInfoLoading,
+  } = useQuery<UserInfoData>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
     onCompleted: (data) => {
-      setIsLoading(false);
-
       reset(data.user);
     },
     onError: (error) => {
@@ -55,23 +56,21 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const [saveUser] = useMutation<UpdateUserOutput, UpdateUserInput>(
-    UPDATE_USER,
-    {
-      onCompleted: (data) => {
-        navigate("/employees");
-      },
-      onError: (error) => {
-        setError(error.message);
-      },
+  const [saveUser, { loading: saveUserLoading }] = useMutation<
+    UpdateUserOutput,
+    UpdateUserInput
+  >(UPDATE_USER, {
+    onCompleted: (data) => {
+      navigate("/employees");
     },
-  );
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
 
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    setIsLoading(true);
-
     const {
       first_name,
       last_name,
@@ -106,7 +105,7 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     refetch();
   };
 
-  return isLoading ? (
+  return getUserInfoLoading || saveUserLoading ? (
     <Loader />
   ) : error ? (
     <InlineError

@@ -24,12 +24,8 @@ const Table = createTable<IEmployeeTable>();
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { data, refetch } = useQuery<UsersData>(GET_USERS, {
-    onCompleted: () => {
-      setIsLoading(false);
-    },
+  const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
     onError: (error) => {
       setError(error.message);
     },
@@ -68,7 +64,7 @@ export const EmployeesPage = () => {
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : error ? (
           <InlineError

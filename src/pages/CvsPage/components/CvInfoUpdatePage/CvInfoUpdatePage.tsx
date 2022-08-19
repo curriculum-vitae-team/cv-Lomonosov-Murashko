@@ -21,7 +21,6 @@ import { CvInfo } from "../CvInfo/CvInfo";
 export const CvInfoUpdatePage = () => {
   const { cvId } = useParams();
 
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { pathname } = useLocation();
@@ -30,22 +29,20 @@ export const CvInfoUpdatePage = () => {
 
   const { setToastError } = useErrorToast();
 
-  const { data: cvInfoData, refetch } = useQuery<CvInfoData>(GET_CV_INFO, {
+  const {
+    data: cvInfoData,
+    refetch,
+    loading: getCvInfoLoading,
+  } = useQuery<CvInfoData>(GET_CV_INFO, {
     variables: {
       id: cvId,
     },
-    onCompleted: (data) => {
-      setIsLoading(false);
-    },
+
     onError: (error) => {
       setError(error.message);
     },
     fetchPolicy: "network-only",
   });
-
-  useEffect(() => {
-    setIsLoading(true);
-  }, [cvId]);
 
   useLayoutEffect(() => {
     if (cvInfoData) {
@@ -60,7 +57,10 @@ export const CvInfoUpdatePage = () => {
     }
   }, [cvInfoData]);
 
-  const [saveCv] = useMutation<UpdateCvOutput, UpdateCvInput>(UPDATE_CV, {
+  const [saveCv, { loading: saveCvLoading }] = useMutation<
+    UpdateCvOutput,
+    UpdateCvInput
+  >(UPDATE_CV, {
     onCompleted: (data) => {
       navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
     },
@@ -72,8 +72,6 @@ export const CvInfoUpdatePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<CvInput> = (data) => {
-    setIsLoading(true);
-
     const { name, description, projectsIds } = data;
 
     saveCv({
@@ -120,7 +118,7 @@ export const CvInfoUpdatePage = () => {
         />
       </PageTop>
       <PageBody>
-        {isLoading ? (
+        {getCvInfoLoading || saveCvLoading ? (
           <Loader />
         ) : error ? (
           <InlineError
