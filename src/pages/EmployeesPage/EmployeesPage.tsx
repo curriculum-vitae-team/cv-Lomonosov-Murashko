@@ -64,6 +64,10 @@ export const EmployeesPage = () => {
     });
   };
 
+  const handleTryAgain = () => {
+    refetch();
+  };
+
   return (
     <PageWrapper>
       <PageTop>
@@ -80,9 +84,7 @@ export const EmployeesPage = () => {
         ) : error ? (
           <InlineError
             message="Something went wrong when trying to fetch employees data"
-            tryAgainFn={() => {
-              refetch();
-            }}
+            tryAgainFn={handleTryAgain}
           />
         ) : (
           data?.users && (

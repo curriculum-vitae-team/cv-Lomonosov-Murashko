@@ -1,7 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ErrorToast } from "@components/ErrorToast";
+import { Breadcrumb } from "@components/Breadcrumb";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
+import { PageBody } from "@components/styled/PageBody";
+import { PageTop } from "@components/styled/PageTop";
+import { PageWrapper } from "@components/styled/PageWrapper";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import {
   CvInfoData,
   CvInput,
@@ -19,29 +23,29 @@ export const CvInfoUpdatePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [serverError, setServerError] = useState("");
 
   const { pathname } = useLocation();
 
   const [cvInput, setCvInput] = useState<CvInput | null>(null);
+
+  const { setToastError } = useErrorToast();
 
   const { data: cvInfoData, refetch } = useQuery<CvInfoData>(GET_CV_INFO, {
     variables: {
       id: cvId,
     },
     onCompleted: (data) => {
-      setIsLoading(false);
-      setServerError("");
+      // setIsLoading(false);
+      setToastError("error.message");
     },
     onError: (error) => {
-      setServerError(error.message);
+      setToastError(error.message);
     },
     fetchPolicy: "network-only",
   });
 
   useEffect(() => {
     setIsLoading(true);
-    // refetch({ variables: { id: cvId } });
   }, [cvId]);
 
   useLayoutEffect(() => {
@@ -103,26 +107,40 @@ export const CvInfoUpdatePage = () => {
     // Not a table.
   };
 
-  return isLoading && !serverError ? (
-    <Loader />
-  ) : error ? (
-    <InlineError
-      message="Something went wrong when trying to fetch form data"
-      tryAgainFn={() => {
-        refetch();
-      }}
-    />
-  ) : (
-    cvInput && (
-      <>
-        {serverError && <ErrorToast message={serverError} />}
-        <CvInfo
-          cv={cvInput}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-          onAddProject={handleAddProject}
+  const handleTryAgain = () => {
+    refetch();
+  };
+
+  return (
+    <PageWrapper>
+      <PageTop>
+        <Breadcrumb
+          config={{
+            cvs: "Cvs",
+          }}
         />
-      </>
-    )
+      </PageTop>
+      <PageBody>
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <InlineError
+            message="Something went wrong when trying to fetch form data"
+            tryAgainFn={handleTryAgain}
+          />
+        ) : (
+          cvInput && (
+            <>
+              <CvInfo
+                cv={cvInput}
+                onSubmit={handleSubmit}
+                onCancel={handleCancel}
+                onAddProject={handleAddProject}
+              />
+            </>
+          )
+        )}
+      </PageBody>
+    </PageWrapper>
   );
 };

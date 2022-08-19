@@ -15,6 +15,9 @@ import { ICVTable } from "@interfaces/ICV";
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 const head = [
   { columnKey: "name", columnName: "Name", isSortable: true },
@@ -27,7 +30,7 @@ export const CvsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const { data } = useQuery<CvsData>(GET_ALL_CVS, {
+  const { data, refetch } = useQuery<CvsData>(GET_ALL_CVS, {
     onCompleted: () => {
       setIsLoading(false);
     },
@@ -36,7 +39,13 @@ export const CvsPage = () => {
     },
   });
 
-  const [deleteCv] = useMutation<DeleteCvOutput, DeleteCvInput>(DELETE_CV);
+  const { setToastError } = useErrorToast();
+
+  const [deleteCv] = useMutation<DeleteCvOutput, DeleteCvInput>(DELETE_CV, {
+    onError: (error) => {
+      setToastError(error.message);
+    },
+  });
 
   const handleItemDelete = (id: string) => {
     deleteCv({
@@ -50,6 +59,10 @@ export const CvsPage = () => {
     });
   };
 
+  const handleTryAgain = () => {
+    refetch();
+  };
+
   return (
     <PageWrapper>
       <PageTop>
@@ -61,21 +74,26 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? "loader"
-          : error
-          ? "error"
-          : data?.cvs && (
-              <Table
-                onDelete={handleItemDelete}
-                head={head}
-                items={data.cvs}
-                redirectButtonText="CV details"
-                deleteButtonText="Delete"
-                entryType={TableEntry.CV}
-                showNewEntryButton={true}
-              />
-            )}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <InlineError
+            message="Something went wrong when trying to fetch cvs data"
+            tryAgainFn={handleTryAgain}
+          />
+        ) : (
+          data?.cvs && (
+            <Table
+              onDelete={handleItemDelete}
+              head={head}
+              items={data.cvs}
+              redirectButtonText="CV details"
+              deleteButtonText="Delete"
+              entryType={TableEntry.CV}
+              showNewEntryButton={true}
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

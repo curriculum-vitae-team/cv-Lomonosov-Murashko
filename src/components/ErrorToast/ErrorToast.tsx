@@ -29,8 +29,7 @@ export const ErrorToast = ({ message }: ErrorToastProps) => {
       action={action}
     >
       <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-        {message.at(0)?.toUpperCase() + message.slice(1)}is is a success
-        message!
+        {message.at(0)?.toUpperCase() + message.slice(1)}
       </Alert>
     </Snackbar>
   );

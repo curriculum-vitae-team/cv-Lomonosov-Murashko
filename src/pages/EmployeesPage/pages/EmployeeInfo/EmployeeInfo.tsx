@@ -16,13 +16,13 @@ import {
 import { useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
-import { ErrorToast } from "@components/ErrorToast";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [serverError, setServerError] = useState("");
+  const { setToastError } = useErrorToast();
 
   const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
     defaultValues: {
@@ -47,12 +47,11 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
     onCompleted: (data) => {
       setIsLoading(false);
-      setServerError("");
 
       reset(data.user);
     },
     onError: (error) => {
-      setServerError(error.message);
+      setToastError(error.message);
     },
   });
 
@@ -103,18 +102,19 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     navigate(ROUTE.EMPLOYEES);
   };
 
-  return isLoading && !serverError ? (
+  const handleTryAgain = () => {
+    refetch();
+  };
+
+  return isLoading ? (
     <Loader />
   ) : error ? (
     <InlineError
       message="Something went wrong when trying to fetch employee data"
-      tryAgainFn={() => {
-        refetch();
-      }}
+      tryAgainFn={handleTryAgain}
     />
   ) : (
     <>
-      {serverError && <ErrorToast message={serverError} />}
       {Object.values(getValues()).every((key) => !!key) && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <InfoFormWrapper>
