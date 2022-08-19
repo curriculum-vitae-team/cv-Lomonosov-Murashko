@@ -27,8 +27,8 @@ export const DatePickerFieldset = <T,>({
               {...params}
               label={label}
               required={!!required}
-              helperText={required || " "}
-              error={!!fieldState.error}
+              helperText={!field.value ? required : " "}
+              error={fieldState.isTouched && !!fieldState.error}
             />
           )}
         />

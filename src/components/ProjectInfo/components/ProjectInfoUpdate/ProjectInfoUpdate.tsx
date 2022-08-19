@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { IProject } from "@interfaces/IProject";
-import { ProjectInfoProps } from "../../ProjectInfo.types";
+import { ProjectInfoUpdateProps } from "./ProjectInfoUpdate.types";
 import {
   GET_PROJECT_INFO,
   UPDATE_PROJECT,
@@ -17,7 +17,7 @@ import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
 
-export const ProjectInfoUpdate = ({ projectId }: ProjectInfoProps) => {
+export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
   const navigate = useNavigate();

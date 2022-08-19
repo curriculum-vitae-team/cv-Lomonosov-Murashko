@@ -7,17 +7,13 @@ import { useForm } from "react-hook-form";
 import { IProject } from "@interfaces/IProject";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
-import { ProjectInfoData } from "@graphql/Project/Project.interface";
 import { resetProject } from "../../helpers";
-
-type ProjectInfoFormProps = {
-  onSubmit: any;
-  data?: ProjectInfoData;
-};
+import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
 
 export const ProjectInfoForm = ({ onSubmit, data }: ProjectInfoFormProps) => {
   const navigate = useNavigate();
   const { control, handleSubmit, reset, setError } = useForm<IProject>({
+    mode: "onTouched",
     defaultValues: {
       name: "",
       internalName: "",
@@ -28,7 +24,6 @@ export const ProjectInfoForm = ({ onSubmit, data }: ProjectInfoFormProps) => {
     },
   });
 
-  // TODO: move resetProject method to another helper 
   useEffect(() => {
     data && reset(resetProject(data.project));
   }, [data, reset]);

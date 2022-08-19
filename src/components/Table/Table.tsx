@@ -27,7 +27,6 @@ export function Table({
 }: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [sortAsc, setSortAsc] = useState(true);
-  const navigate = useNavigate();
 
   const handleSortByChange = useCallback(
     (columnName: string) => {
