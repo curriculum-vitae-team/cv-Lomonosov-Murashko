@@ -35,11 +35,10 @@ export const CvInfoUpdatePage = () => {
       id: cvId,
     },
     onCompleted: (data) => {
-      // setIsLoading(false);
-      setToastError("error.message");
+      setIsLoading(false);
     },
     onError: (error) => {
-      setToastError(error.message);
+      setError(error.message);
     },
     fetchPolicy: "network-only",
   });
@@ -66,7 +65,7 @@ export const CvInfoUpdatePage = () => {
       navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
     },
     onError: (error) => {
-      setError(error.message);
+      setToastError(error.message);
     },
   });
 
