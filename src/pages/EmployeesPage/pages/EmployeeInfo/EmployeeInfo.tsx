@@ -13,12 +13,12 @@ import {
   UpdateUserOutput,
   UserInfo,
 } from "@graphql/User/User.interface";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
-export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
+export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
 
   const { setToastError } = useErrorToast();
@@ -166,4 +166,4 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
       )}
     </>
   );
-};
+});

@@ -13,12 +13,12 @@ import {
   UpdateCvOutput,
 } from "@graphql/Cv/Cv.interface";
 import { GET_CV_INFO, UPDATE_CV } from "@graphql/Cv/Cv.queries";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { CvInfo } from "../CvInfo/CvInfo";
 
-export const CvInfoUpdatePage = () => {
+export const CvInfoUpdatePage = memo(() => {
   const { cvId } = useParams();
 
   const [error, setError] = useState("");
@@ -71,29 +71,32 @@ export const CvInfoUpdatePage = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit: SubmitHandler<CvInput> = (data) => {
-    const { name, description, projectsIds } = data;
+  const handleSubmit: SubmitHandler<CvInput> = useCallback(
+    (data) => {
+      const { name, description, projectsIds } = data;
 
-    saveCv({
-      variables: {
-        id: cvId!,
-        cv: {
-          name,
-          description,
-          projectsIds,
-        },
-      },
-      optimisticResponse: {
-        updateCv: {
-          name,
-          description,
+      saveCv({
+        variables: {
           id: cvId!,
-          projects: [],
-          user: cvInfoData?.cv.user || null,
+          cv: {
+            name,
+            description,
+            projectsIds,
+          },
         },
-      },
-    });
-  };
+        optimisticResponse: {
+          updateCv: {
+            name,
+            description,
+            id: cvId!,
+            projects: [],
+            user: cvInfoData?.cv.user || null,
+          },
+        },
+      });
+    },
+    [cvId, cvInfoData?.cv.user, saveCv],
+  );
 
   const handleCancel: React.MouseEventHandler = (e) => {
     navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
@@ -140,4 +143,4 @@ export const CvInfoUpdatePage = () => {
       </PageBody>
     </PageWrapper>
   );
-};
+});
