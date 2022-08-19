@@ -10,6 +10,7 @@ import {
 import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
+import { useCallback } from "react";
 
 export const ProjectInfoCreate = () => {
   const navigate = useNavigate();
@@ -23,20 +24,23 @@ export const ProjectInfoCreate = () => {
     },
   );
 
-  const onSubmit: SubmitHandler<IProject> = (data) => {
-    createProject({
-      variables: {
-        project: {
-          name: data.name,
-          internal_name: data.internalName,
-          description: data.description,
-          domain: data.domain,
-          start_date: format(Number(data.startDate), "yyyy-MM-dd"),
-          end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+  const onSubmit: SubmitHandler<IProject> = useCallback(
+    (data) => {
+      createProject({
+        variables: {
+          project: {
+            name: data.name,
+            internal_name: data.internalName,
+            description: data.description,
+            domain: data.domain,
+            start_date: format(Number(data.startDate), "yyyy-MM-dd"),
+            end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [createProject],
+  );
 
   return <ProjectInfoForm onSubmit={onSubmit} />;
 };

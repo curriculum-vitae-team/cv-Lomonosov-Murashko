@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { IProject } from "@interfaces/IProject";
@@ -47,22 +47,25 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
     },
   );
 
-  const onSubmit: SubmitHandler<IProject> = (data) => {
-    setIsLoading(true);
-    updateProject({
-      variables: {
-        id: projectId,
-        project: {
-          name: data.name,
-          internal_name: data.internalName,
-          description: data.description,
-          domain: data.domain,
-          start_date: format(Number(data.startDate), "yyyy-MM-dd"),
-          end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+  const onSubmit: SubmitHandler<IProject> = useCallback(
+    (data) => {
+      setIsLoading(true);
+      updateProject({
+        variables: {
+          id: projectId,
+          project: {
+            name: data.name,
+            internal_name: data.internalName,
+            description: data.description,
+            domain: data.domain,
+            start_date: format(Number(data.startDate), "yyyy-MM-dd"),
+            end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [projectId, updateProject],
+  );
 
   return (
     <>
