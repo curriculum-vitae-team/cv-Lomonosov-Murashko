@@ -11,7 +11,7 @@ export interface ProjectInfoData {
 export interface ProjectName {
   project: {
     name: string;
-  }
+  };
 }
 
 /* Mutations */
@@ -24,6 +24,7 @@ export interface CreateProjectOutput {
   createProject: {
     id: string;
     project: ProjectInput;
+    affected: number;
   };
 }
 

@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
 import { useCallback } from "react";
+import { createProjectCacheUpdate } from "@graphql/Project/Project.cache";
 
 export const ProjectInfoCreate = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export const ProjectInfoCreate = () => {
             end_date: format(Number(data.endDate), "yyyy-MM-dd"),
           },
         },
+        update: createProjectCacheUpdate(),
       });
     },
     [createProject],

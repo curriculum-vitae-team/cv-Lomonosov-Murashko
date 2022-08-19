@@ -1,5 +1,7 @@
 import { CacheUpdaterFunction } from "src/types";
 import {
+  CreateProjectInput,
+  CreateProjectOutput,
   DeleteProjectInput,
   DeleteProjectOutput,
   ProjectsData,
@@ -25,4 +27,19 @@ export const deleteProjectCacheUpdate =
     }
   };
 
-// TODO: add createProjectCacheUpdate method 
+export const createProjectCacheUpdate =
+  (): CacheUpdaterFunction<CreateProjectOutput, CreateProjectInput> =>
+  (cache, { data }) => {
+    const existingProjects = cache.readQuery<ProjectsData>({
+      query: GET_PROJECTS,
+    });
+
+    if (existingProjects) {
+      cache.writeQuery({
+        query: GET_PROJECTS,
+        data: {
+          projects: [data?.createProject, ...existingProjects.projects],
+        },
+      });
+    }
+  };
