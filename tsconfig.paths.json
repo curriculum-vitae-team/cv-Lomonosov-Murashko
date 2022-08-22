@@ -10,7 +10,8 @@
       "@assets/*": ["src/assets/*"],
       "@mock/*": ["src/mock/*"],
       "@features/*": ["src/features/*"],
-      "@graphql/*": ["src/graphql/*"]
+      "@graphql/*": ["src/graphql/*"],
+      "@hoc/*": ["src/hoc/*"]
     }
   }
 }
