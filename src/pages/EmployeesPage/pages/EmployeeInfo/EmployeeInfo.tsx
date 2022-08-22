@@ -13,11 +13,15 @@ import {
   UpdateUserOutput,
   UserInfo,
 } from "@graphql/User/User.interface";
-import { useState } from "react";
+import { memo, useState } from "react";
+import { InlineError } from "@components/InlineError";
+import { Loader } from "@components/Loader";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
-export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
-  const [isLoading, setIsLoading] = useState(true);
+export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
+
+  const { setToastError } = useErrorToast();
 
   const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
     defaultValues: {
@@ -36,37 +40,37 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const { data } = useQuery<UserInfoData>(GET_USER_INFO, {
+  const {
+    data,
+    refetch,
+    loading: getUserInfoLoading,
+  } = useQuery<UserInfoData>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
     onCompleted: (data) => {
-      setIsLoading(false);
-
       reset(data.user);
+    },
+    onError: (error) => {
+      setToastError(error.message);
+    },
+  });
+
+  const [saveUser, { loading: saveUserLoading }] = useMutation<
+    UpdateUserOutput,
+    UpdateUserInput
+  >(UPDATE_USER, {
+    onCompleted: (data) => {
+      navigate("/employees");
     },
     onError: (error) => {
       setError(error.message);
     },
   });
 
-  const [saveUser] = useMutation<UpdateUserOutput, UpdateUserInput>(
-    UPDATE_USER,
-    {
-      onCompleted: (data) => {
-        navigate("/employees");
-      },
-      onError: (error) => {
-        setError(error.message);
-      },
-    },
-  );
-
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    setIsLoading(true);
-
     const {
       first_name,
       last_name,
@@ -97,10 +101,17 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
     navigate(ROUTE.EMPLOYEES);
   };
 
-  return isLoading ? (
-    <>loader</>
+  const handleTryAgain = () => {
+    refetch();
+  };
+
+  return getUserInfoLoading || saveUserLoading ? (
+    <Loader />
   ) : error ? (
-    <>error</>
+    <InlineError
+      message="Something went wrong when trying to fetch employee data"
+      tryAgainFn={handleTryAgain}
+    />
   ) : (
     <>
       {Object.values(getValues()).every((key) => !!key) && (
@@ -155,4 +166,4 @@ export const EmployeeInfo = ({ employeeId }: EmployeeInfoProps) => {
       )}
     </>
   );
-};
+});

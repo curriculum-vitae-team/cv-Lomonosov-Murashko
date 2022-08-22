@@ -8,22 +8,17 @@ import { TableEntry } from "@constants/table";
 import { IProjectTable } from "@interfaces/IProject";
 import { projectsMock } from "@mock/projects";
 import format from "date-fns/format";
-
-const head = [
-  { columnKey: "internalName", columnName: "Internal name", isSortable: true },
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "startDate", columnName: "Start date", isSortable: true },
-  { columnKey: "endDate", columnName: "End date", isSortable: true },
-];
+import { useCallback } from "react";
+import { tableHead } from "./tableHead";
 
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const projects = projectsMock;
 
-  const handleItemDelete = (id: string) => {
+  const handleItemDelete = useCallback((id: string) => {
     // TODO: Remove
-  };
+  }, []);
 
   return (
     <PageWrapper>
@@ -34,7 +29,7 @@ export const ProjectsPage = () => {
       <PageBody>
         <Table
           onDelete={handleItemDelete}
-          head={head}
+          head={tableHead}
           items={projects.map((pr) => ({
             ...pr,
             startDate: format(pr.startDate, "PP"),
