@@ -1,5 +1,5 @@
 import { ErrorToast } from "@components/ErrorToast";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   ErrorToastContextType,
   ErrorToastStoreProps,
@@ -16,9 +16,9 @@ export const useErrorToast = () => {
 export const ErrorToastStore = ({ children }: ErrorToastStoreProps) => {
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSetError = (message: string) => {
+  const handleSetError = useCallback((message: string) => {
     setErrors((prev) => [...prev, message]);
-  };
+  }, []);
 
   return (
     <ErrorToastContext.Provider
@@ -27,7 +27,7 @@ export const ErrorToastStore = ({ children }: ErrorToastStoreProps) => {
       }}
     >
       {errors.map((error) => (
-        <ErrorToast message={error} />
+        <ErrorToast message={error} key={error} />
       ))}
       {children}
     </ErrorToastContext.Provider>
