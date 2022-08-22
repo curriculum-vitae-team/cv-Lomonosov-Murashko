@@ -13,7 +13,7 @@ import {
 } from "@graphql/Cv/Cv.interface";
 import { ICVTable } from "@interfaces/ICV";
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
@@ -39,17 +39,20 @@ export const CvsPage = () => {
     },
   });
 
-  const handleItemDelete = (id: string) => {
-    deleteCv({
-      variables: { id },
-      update: deleteCvCacheUpdate(id),
-      optimisticResponse: {
-        deleteCv: {
-          affected: 1,
+  const handleItemDelete = useCallback(
+    (id: string) => {
+      deleteCv({
+        variables: { id },
+        update: deleteCvCacheUpdate(id),
+        optimisticResponse: {
+          deleteCv: {
+            affected: 1,
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [deleteCv],
+  );
 
   const handleTryAgain = () => {
     refetch();

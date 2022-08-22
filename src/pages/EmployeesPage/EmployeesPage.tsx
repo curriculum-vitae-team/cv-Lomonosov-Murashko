@@ -11,7 +11,7 @@ import {
   DeleteUserInput,
 } from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
@@ -20,7 +20,7 @@ import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { tableHead } from "./tableHead";
 
-const Table = createTable<IEmployeeTable>();
+const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
@@ -42,12 +42,15 @@ export const EmployeesPage = () => {
     },
   );
 
-  const handleItemDelete = (id: string) => {
-    deleteUser({
-      variables: { id },
-      update: deleteUserCacheUpdate(id),
-    });
-  };
+  const handleItemDelete = useCallback(
+    (id: string) => {
+      deleteUser({
+        variables: { id },
+        update: deleteUserCacheUpdate(id),
+      });
+    },
+    [deleteUser],
+  );
 
   const handleTryAgain = () => {
     refetch();
