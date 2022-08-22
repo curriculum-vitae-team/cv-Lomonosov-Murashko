@@ -16,13 +16,11 @@ export const EmployeeCv = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const [error, setError] = useState("");
 
   const [searchParams] = useSearchParams();
 
-  const { data: userData } = useQuery<UserCvsData>(GET_USER_CVS, {
+  const { data: userData, loading } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
     onCompleted: (data) => {
       const firstCv = data.user.cvs[0];
@@ -34,8 +32,6 @@ export const EmployeeCv = () => {
       } else {
         setActive(cvId || "-1");
       }
-
-      setIsLoading(false);
     },
     onError: (err) => {
       setError(err.message);
@@ -89,7 +85,7 @@ export const EmployeeCv = () => {
 
   return (
     <WrapperDiv>
-      {isLoading ? (
+      {loading ? (
         <>loader</>
       ) : error ? (
         <>{error}</>

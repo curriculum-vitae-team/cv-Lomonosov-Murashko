@@ -13,41 +13,49 @@ import {
 } from "@graphql/Cv/Cv.interface";
 import { ICVTable } from "@interfaces/ICV";
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { deleteCvCacheUpdate } from "@graphql/Cv/Cv.cache";
-
-const head = [
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "description", columnName: "Description", isSortable: true },
-];
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
+import { tableHead } from "./tableHead";
 
 const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { data } = useQuery<CvsData>(GET_ALL_CVS, {
-    onCompleted: () => {
-      setIsLoading(false);
-    },
+  const { data, refetch, loading } = useQuery<CvsData>(GET_ALL_CVS, {
     onError: (error) => {
       setError(error.message);
     },
   });
 
-  const [deleteCv] = useMutation<DeleteCvOutput, DeleteCvInput>(DELETE_CV);
+  const { setToastError } = useErrorToast();
 
-  const handleItemDelete = (id: string) => {
-    deleteCv({
-      variables: { id },
-      update: deleteCvCacheUpdate(id),
-      optimisticResponse: {
-        deleteCv: {
-          affected: 1,
+  const [deleteCv] = useMutation<DeleteCvOutput, DeleteCvInput>(DELETE_CV, {
+    onError: (error) => {
+      setToastError(error.message);
+    },
+  });
+
+  const handleItemDelete = useCallback(
+    (id: string) => {
+      deleteCv({
+        variables: { id },
+        update: deleteCvCacheUpdate(id),
+        optimisticResponse: {
+          deleteCv: {
+            affected: 1,
+          },
         },
-      },
-    });
+      });
+    },
+    [deleteCv],
+  );
+
+  const handleTryAgain = () => {
+    refetch();
   };
 
   return (
@@ -61,21 +69,26 @@ export const CvsPage = () => {
         <PageTopTypography title="CVs" caption="Cvs list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? "loader"
-          : error
-          ? "error"
-          : data?.cvs && (
-              <Table
-                onDelete={handleItemDelete}
-                head={head}
-                items={data.cvs}
-                redirectButtonText="CV details"
-                deleteButtonText="Delete"
-                entryType={TableEntry.CV}
-                showNewEntryButton={true}
-              />
-            )}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <InlineError
+            message="Something went wrong when trying to fetch cvs data"
+            tryAgainFn={handleTryAgain}
+          />
+        ) : (
+          data?.cvs && (
+            <Table
+              onDelete={handleItemDelete}
+              head={tableHead}
+              items={data.cvs}
+              redirectButtonText="CV details"
+              deleteButtonText="Delete"
+              entryType={TableEntry.CV}
+              showNewEntryButton={true}
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

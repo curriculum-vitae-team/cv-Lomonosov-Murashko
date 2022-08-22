@@ -13,6 +13,7 @@ import {
   AuthStyledForm,
   AuthAdditionalInfoWrapper,
 } from "@components/styled/auth-styles/Auth.styles";
+import { useCallback } from "react";
 
 export const ResetPassword = () => {
   const { control, handleSubmit } = useForm<IResetPassword>({
@@ -21,10 +22,10 @@ export const ResetPassword = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<IResetPassword> = (data) => {
+  const onSubmit: SubmitHandler<IResetPassword> = useCallback((data) => {
     // TODO: checked === true ? remember user and sign in : sign in
     // navigate to employees
-  };
+  }, []);
 
   return (
     <AuthWrapper>

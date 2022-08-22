@@ -10,8 +10,9 @@ import { Fieldset } from "@components/Fieldset";
 import { ProjectInfoProps } from "./ProjectInfo.types";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
 import { projectsMock } from "@mock/projects";
+import { memo } from "react";
 
-export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
+export const ProjectInfo = memo(({ projectId }: ProjectInfoProps) => {
   const project = projectsMock.find((project) => project.id === projectId)!;
 
   // TODO: Fetch projects data if there's nothing.
@@ -123,4 +124,4 @@ export const ProjectInfo = ({ projectId }: ProjectInfoProps) => {
       </DialogActions>
     </form>
   );
-};
+});
