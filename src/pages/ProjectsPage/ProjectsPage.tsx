@@ -14,7 +14,7 @@ import {
 import { deleteProjectCacheUpdate } from "@graphql/Project/Project.cache";
 import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
@@ -46,16 +46,19 @@ export const ProjectsPage = () => {
     DELETE_PROJECT,
   );
 
-  const handleItemDelete = (id: string) => {
-    deleteProject({
-      variables: { id },
-      update: deleteProjectCacheUpdate(id),
-    });
-  };
+  const handleItemDelete = useCallback(
+    (id: string) => {
+      deleteProject({
+        variables: { id },
+        update: deleteProjectCacheUpdate(id),
+      });
+    },
+    [deleteProject]
+  );
 
-  const handleCreate = () => {
+  const handleCreate = useCallback(() => {
     navigate(ROUTE.ADD_PROJECT);
-  }
+  }, [navigate]);
 
   return (
     <PageWrapper>

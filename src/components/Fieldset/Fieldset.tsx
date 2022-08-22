@@ -27,10 +27,9 @@ export const Fieldset = <T,>({
                 <TextField
                   {...field}
                   type={type}
-                  required={!!required}
                   label={label}
-                  error={fieldState.isTouched && !field.value}
-                  helperText={!field.value ? required : " "}
+                  helperText={fieldState.error?.message || " "}
+                  error={!!fieldState.error}
                 />
               )
         }

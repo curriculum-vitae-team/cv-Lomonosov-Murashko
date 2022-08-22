@@ -13,8 +13,8 @@ import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
 export const ProjectInfoForm = memo(
   ({ onSubmit, data }: ProjectInfoFormProps) => {
     const navigate = useNavigate();
-    const { control, handleSubmit, reset, setError } = useForm<IProject>({
-      mode: "onTouched",
+    const { control, handleSubmit, reset } = useForm<IProject>({
+      mode: "all",
       defaultValues: {
         name: "",
         internalName: "",
@@ -29,7 +29,7 @@ export const ProjectInfoForm = memo(
       data && reset(resetProject(data.project));
     }, [data, reset]);
 
-    const onCancel: React.MouseEventHandler = (e) => {
+    const onCancel: React.MouseEventHandler = () => {
       navigate(ROUTE.PROJECTS);
     };
 
@@ -57,25 +57,13 @@ export const ProjectInfoForm = memo(
             control={control}
             label="Start date"
             name="startDate"
-            onError={() => {
-              setError("startDate", {
-                type: "required",
-                message: "Please, specify the correct date",
-              });
-            }}
-            required={"Please, specify the field"}
+            required={"Please, specify the correct date"}
           />
           <DatePickerFieldset
             control={control}
             label="End date"
             name="endDate"
-            onError={() => {
-              setError("endDate", {
-                type: "required",
-                message: "Please, specify the correct date",
-              });
-            }}
-            required={"Please, specify the field"}
+            required={"Please, specify the correct date"}
           />
         </InfoFormWrapper>
         <InfoFormWrapper>
