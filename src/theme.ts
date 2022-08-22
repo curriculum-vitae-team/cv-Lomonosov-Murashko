@@ -11,6 +11,12 @@ export const theme = createTheme({
         a: {
           textDecoration: "none",
         },
+        iframe: {
+          width: "100%",
+          height: "100%",
+          border: "none",
+          borderRadius: "10px",
+        },
       },
     },
     MuiInputLabel: {
