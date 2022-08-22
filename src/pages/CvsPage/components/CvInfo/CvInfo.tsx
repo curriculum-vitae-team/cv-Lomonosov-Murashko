@@ -10,107 +10,86 @@ import { ROUTE } from "@constants/route";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
+import { useMutation, useQuery } from "@apollo/client";
+import { memo, useEffect, useLayoutEffect } from "react";
+import { CvInput } from "@graphql/Cv/Cv.interface";
 import { CvPatternsWithOverlay } from "@components/CvPatterns";
 
-export const CvInfo = ({ cvId }: CvInfoProps) => {
-  const [isPatternsVisible, setIsPatternsVisible] = useState(false);
-  const cv = cvsMock.find(({ id }) => id === cvId)!;
+export const CvInfo = memo(
+  ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
+    const [isPatternsVisible, setIsPatternsVisible] = useState(false);
 
-  const { control, handleSubmit, reset } = useForm<ICV>({
-    defaultValues: {
-      id: cv.id,
-      name: cv.name,
-      description: cv.description,
-      email: cv.email,
-      lastName: cv.lastName,
-      skills: cv.skills,
-      specialization: cv.specialization,
-      department: cv.department,
-    },
-  });
+    const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
+      defaultValues: {
+        name: cv.name,
+        description: cv.description,
+        projectsIds: cv.projectsIds,
+      },
+    });
 
-  const navigate = useNavigate();
+    useLayoutEffect(() => {
+      const { name, description, projectsIds } = cv;
 
-  const onSubmit: SubmitHandler<ICV> = (data) => {
-    // save cv info
-    reset();
-  };
+      reset({ name, description, projectsIds });
+    }, [cv, reset]);
 
-  const addProjectClickHandler = () => {
-    // show projects table
-  };
+    const addProjectClickHandler = () => {
+      // show projects select component
+    };
 
-  const showPreview = () => {
-    setIsPatternsVisible(true);
-  };
+    const showPreview = () => {
+      setIsPatternsVisible(true);
+    };
+    const hidePreview = () => {
+      setIsPatternsVisible(false);
+    };
 
-  const hidePreview = () => {
-    setIsPatternsVisible(false);
-  };
+    return (
+      <>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InfoFormWrapper>
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Name"
+              name="name"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Description"
+              name="description"
+            />
+          </InfoFormWrapper>
 
-  return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InfoFormWrapper>
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Email"
-            name="email"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="CV Name"
-            name="lastName"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Skills"
-            name="skills"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Specialization"
-            name="specialization"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="Department"
-            name="department"
-          />
-        </InfoFormWrapper>
+          <ButtonWrapper>
+            <Button onClick={onAddProject} variant="contained">
+              Add Project
+            </Button>
+          </ButtonWrapper>
+          {/* cv.projects.map ...  */}
+          <ProjectAccordion />
 
-        <ButtonWrapper>
-          <Button onClick={addProjectClickHandler} variant="contained">
-            Add Project
-          </Button>
-        </ButtonWrapper>
-        {/* cvs.projects.map ...  */}
-        <ProjectAccordion />
-
-        <StyledDialogActions>
-          <Button type="submit" value="Save" variant="contained">
-            Save
-          </Button>
-          <Button
-            onClick={() => navigate(ROUTE.CVS)}
-            type="reset"
-            value="Cancel"
-            variant="outlined"
-            color="info"
-          >
-            Cancel
-          </Button>
-          <Button onClick={showPreview} variant="outlined">
-            Preview
-          </Button>
-        </StyledDialogActions>
-      </form>
-      {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
-    </>
-  );
-};
+          <StyledDialogActions>
+            <Button type="submit" value="Save" variant="contained">
+              Save
+            </Button>
+            <Button
+              onClick={onCancel}
+              type="reset"
+              value="Cancel"
+              variant="outlined"
+              color="info"
+            >
+              Cancel
+            </Button>
+            <Button onClick={showPreview} variant="outlined">
+              Preview
+            </Button>
+          </StyledDialogActions>
+        </form>
+        {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
+      </>
+    );
+  },
+);

@@ -11,7 +11,6 @@ import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
-import { CvPage } from "@pages/CvsPage/components/CvPage";
 import { CvInfoUpdatePage } from "@pages/CvsPage/components/CvInfoUpdatePage";
 import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
@@ -40,7 +39,7 @@ export function Router() {
             <Route index element={<ProjectInfoPage />} />
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
-          <Route path={ROUTE.TARGET_CV} element={<CvPage />} />
+          <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
         </Route>

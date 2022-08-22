@@ -11,34 +11,21 @@ import {
   DeleteUserInput,
 } from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
 import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
+import { tableHead } from "./tableHead";
 
-const head = [
-  { columnKey: "name", columnName: "First Name", isSortable: true },
-  { columnKey: "lastName", columnName: "Last Name", isSortable: true },
-  { columnKey: "email", columnName: "Email", isSortable: false },
-  { columnKey: "department", columnName: "Department", isSortable: false },
-  {
-    columnKey: "specialization",
-    columnName: "Specialization",
-    isSortable: true,
-  },
-];
-
-const Table = createTable<IEmployeeTable>();
+const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { data } = useQuery<UsersData>(GET_USERS, {
-    onCompleted: () => {
-      setIsLoading(false);
-    },
+  const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
     onError: (error) => {
       setError(error.message);
     },
@@ -55,11 +42,18 @@ export const EmployeesPage = () => {
     },
   );
 
-  const handleItemDelete = (id: string) => {
-    deleteUser({
-      variables: { id },
-      update: deleteUserCacheUpdate(id),
-    });
+  const handleItemDelete = useCallback(
+    (id: string) => {
+      deleteUser({
+        variables: { id },
+        update: deleteUserCacheUpdate(id),
+      });
+    },
+    [deleteUser],
+  );
+
+  const handleTryAgain = () => {
+    refetch();
   };
 
   return (
@@ -73,20 +67,25 @@ export const EmployeesPage = () => {
         <PageTopTypography title="Employees" caption="Employees list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? "loader"
-          : error
-          ? "error"
-          : data?.users && (
-              <Table
-                onDelete={handleItemDelete}
-                head={head}
-                items={getEmployees(data.users)}
-                redirectButtonText="Profile"
-                deleteButtonText="Delete"
-                entryType={TableEntry.EMPLOYEE}
-              />
-            )}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <InlineError
+            message="Something went wrong when trying to fetch employees data"
+            tryAgainFn={handleTryAgain}
+          />
+        ) : (
+          data?.users && (
+            <Table
+              onDelete={handleItemDelete}
+              head={tableHead}
+              items={getEmployees(data.users)}
+              redirectButtonText="Profile"
+              deleteButtonText="Delete"
+              entryType={TableEntry.EMPLOYEE}
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

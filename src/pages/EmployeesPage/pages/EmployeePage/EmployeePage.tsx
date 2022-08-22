@@ -16,14 +16,9 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 export const EmployeePage = () => {
   const { employeeId } = useParams();
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { data } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
+  const { data, loading } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
     variables: {
       id: employeeId,
-    },
-    onCompleted: () => {
-      setIsLoading(false);
     },
   });
 
@@ -43,7 +38,7 @@ export const EmployeePage = () => {
     ? data.user.profile.first_name + " " + data.user.profile.last_name
     : "";
 
-  return isLoading ? (
+  return loading ? (
     <>loader</>
   ) : (
     <PageWrapper>
