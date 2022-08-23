@@ -8,11 +8,7 @@ export const CvPage = () => {
   return (
     <Container>
       <PageTop>
-        <Breadcrumb
-          config={{
-            cvs: "Cvs",
-          }}
-        />
+        <Breadcrumb />
         <PageTopTypography title="CV" caption="Cv name" />
       </PageTop>
       <CvInfoUpdatePage />
