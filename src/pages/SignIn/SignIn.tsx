@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Fieldset } from "@components/Fieldset";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ISignIn } from "@interfaces/IAuth";
@@ -24,13 +24,13 @@ export const SignIn = () => {
     setChecked(e.target.checked);
   };
 
-  const onSubmit: SubmitHandler<ISignIn> = (data) => {
+  const onSubmit: SubmitHandler<ISignIn> = useCallback((data) => {
     // const currentEmployee = authMock.find(employee => {
     //   return employee.email === data.email && employee.password === data.password;
     // });
     // TODO: checked === true ? remember user and sign in : sign in
     // navigate to employees
-  };
+  }, []);
 
   return (
     <>

@@ -16,6 +16,7 @@ export enum ROUTE {
   EMPTY = "/",
   SIGN_IN = "/signin",
   SIGN_UP = "/signup",
+  PDF_PATTERNS = "/pdf-patterns",
   RESET_PASSWORD = "/reset-password",
   EMPLOYEES = "/employees",
   TARGET_EMPLOYEE = "/employees/:employeeId",

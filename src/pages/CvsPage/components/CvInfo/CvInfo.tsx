@@ -1,75 +1,95 @@
-import { Button, DialogActions } from "@mui/material";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router";
-import { ROUTE } from "@constants/route";
+import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
+import { ICV } from "@interfaces/ICV";
+import { ButtonWrapper, StyledDialogActions } from "./CvInfo.styles";
+import { Button } from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { cvsMock } from "@mock/cvs";
+import { ROUTE } from "@constants/route";
+import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { memo, useEffect, useLayoutEffect } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
-import { ButtonWrapper } from "./CvInfo.styles";
-import { ProjectAccordion } from "@components/ProjectAccordion";
+import { CvPatternsWithOverlay } from "@components/CvPatterns";
 
-export const CvInfo = ({
-  cv,
-  onSubmit,
-  onAddProject,
-  onCancel,
-}: CvInfoProps) => {
-  const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
-    defaultValues: {
-      name: cv.name,
-      description: cv.description,
-      projectsIds: cv.projectsIds,
-    },
-  });
+export const CvInfo = memo(
+  ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
+    const [isPatternsVisible, setIsPatternsVisible] = useState(false);
 
-  useLayoutEffect(() => {
-    const { name, description, projectsIds } = cv;
+    const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
+      defaultValues: {
+        name: cv.name,
+        description: cv.description,
+        projectsIds: cv.projectsIds,
+      },
+    });
 
-    reset({ name, description, projectsIds });
-  }, [cv, reset]);
+    useLayoutEffect(() => {
+      const { name, description, projectsIds } = cv;
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoFormWrapper>
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Name"
-          name="name"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Description"
-          name="description"
-        />
-      </InfoFormWrapper>
+      reset({ name, description, projectsIds });
+    }, [cv, reset]);
 
-      <ButtonWrapper>
-        <Button onClick={onAddProject} variant="contained">
-          Add Project
-        </Button>
-      </ButtonWrapper>
-      {/* cv.projects.map ...  */}
-      <ProjectAccordion />
+    const addProjectClickHandler = () => {
+      // show projects select component
+    };
 
-      <DialogActions>
-        <Button type="submit" value="Save" variant="contained">
-          Save
-        </Button>
-        <Button
-          onClick={onCancel}
-          type="reset"
-          value="Cancel"
-          variant="outlined"
-          color="info"
-        >
-          Cancel
-        </Button>
-      </DialogActions>
-    </form>
-  );
-};
+    const showPreview = () => {
+      setIsPatternsVisible(true);
+    };
+    const hidePreview = () => {
+      setIsPatternsVisible(false);
+    };
+
+    return (
+      <>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InfoFormWrapper>
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Name"
+              name="name"
+            />
+            <Fieldset
+              control={control}
+              required="Please, specify the field"
+              label="Description"
+              name="description"
+            />
+          </InfoFormWrapper>
+
+          <ButtonWrapper>
+            <Button onClick={onAddProject} variant="contained">
+              Add Project
+            </Button>
+          </ButtonWrapper>
+          {/* cv.projects.map ...  */}
+          <ProjectAccordion />
+
+          <StyledDialogActions>
+            <Button type="submit" value="Save" variant="contained">
+              Save
+            </Button>
+            <Button
+              onClick={onCancel}
+              type="reset"
+              value="Cancel"
+              variant="outlined"
+              color="info"
+            >
+              Cancel
+            </Button>
+            <Button onClick={showPreview} variant="outlined">
+              Preview
+            </Button>
+          </StyledDialogActions>
+        </form>
+        {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
+      </>
+    );
+  },
+);

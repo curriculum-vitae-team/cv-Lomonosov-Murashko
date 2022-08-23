@@ -1,15 +1,16 @@
+import { withOverlay } from "@hoc/withOverlay";
+import { useNavigate } from "react-router";
 import {
   StyledTypography,
   StyledButton,
-  StyledOverlayDiv,
   StyledDiv,
   StyledAccountCircleIcon,
 } from "./UserProfileCard.styles";
-import { UserProfileCardProps } from "./UserProfileCard.types";
 
-export function UserProfileCard({ onClose }: UserProfileCardProps) {
+function UserProfileCard() {
+  const navigate = useNavigate();
   const handleSignOutClick = () => {
-    // log out
+    navigate("/signin");
   };
 
   const onUserProfileCardClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -17,12 +18,12 @@ export function UserProfileCard({ onClose }: UserProfileCardProps) {
   };
 
   return (
-    <StyledOverlayDiv onClick={onClose}>
-      <StyledDiv onClick={onUserProfileCardClick} sx={{}}>
-        <StyledAccountCircleIcon />
-        <StyledTypography>Murashko Ilya</StyledTypography>
-        <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
-      </StyledDiv>
-    </StyledOverlayDiv>
+    <StyledDiv onClick={onUserProfileCardClick}>
+      <StyledAccountCircleIcon />
+      <StyledTypography>Murashko Ilya</StyledTypography>
+      <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
+    </StyledDiv>
   );
 }
+
+export const UserProfileCardWithOverlay = withOverlay(UserProfileCard);

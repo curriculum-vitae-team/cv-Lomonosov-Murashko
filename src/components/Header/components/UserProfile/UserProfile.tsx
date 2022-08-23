@@ -6,7 +6,7 @@ import {
   StyledBox,
   StyledTranslateIcon,
 } from "./UserProfile.styles";
-import { UserProfileCard } from "../UserProfileCard";
+import { UserProfileCardWithOverlay } from "../UserProfileCard";
 
 export function UserProfile() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
@@ -27,7 +27,9 @@ export function UserProfile() {
         <StyledTypography>Murashko Ilya</StyledTypography>
       </StyledBox>
       <StyledTranslateIcon />
-      {isProfileOpen && <UserProfileCard onClose={handleProfileCardClose} />}
+      {isProfileOpen && (
+        <UserProfileCardWithOverlay onClose={handleProfileCardClose} />
+      )}
     </StyledGrid>
   );
 }

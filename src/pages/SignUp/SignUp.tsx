@@ -8,6 +8,7 @@ import {
   AuthImg,
   AuthStyledForm,
 } from "@components/styled/auth-styles/Auth.styles";
+import { useCallback } from "react";
 
 export const SignUp = () => {
   const { control, handleSubmit } = useForm<ISignUp>({
@@ -18,10 +19,10 @@ export const SignUp = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<ISignUp> = (data) => {
+  const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
     // TODO: verify passwords equasions
     // navigate to employees
-  };
+  }, []);
 
   return (
     <>

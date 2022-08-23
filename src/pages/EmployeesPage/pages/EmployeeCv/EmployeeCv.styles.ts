@@ -8,9 +8,6 @@ export const WrapperDiv = styled("div")({
   "& .sidebar": {
     marginRight: "0.5em",
   },
-  "& .MuiPaper-elevation": {
-    margin: "0 0 0 1em",
-  },
   "& div.active > div > a": {
     color: "#1890FF",
     borderBottom: "2px solid #1890FF",
