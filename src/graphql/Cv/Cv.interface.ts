@@ -8,6 +8,12 @@ export interface CvInfoData {
   cv: CvInfo;
 }
 
+export interface CvNameData {
+  cv: {
+    name: string;
+  };
+}
+
 /* Mutations */
 
 export interface CreateCvInput {

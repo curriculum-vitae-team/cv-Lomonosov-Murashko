@@ -57,7 +57,12 @@ export const EmployeePage = () => {
         />
       </PageTop>
       <PageBody>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
+        >
           <Tabs
             value={selectedTab}
             onChange={handleChange}

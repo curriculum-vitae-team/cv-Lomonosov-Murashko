@@ -13,6 +13,8 @@ import { Cv, UnbindCvInput, UnbindCvOutput } from "@graphql/Cv/Cv.interface";
 import { GET_CV_INFO, UNBIND_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
 
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
@@ -22,7 +24,11 @@ export const EmployeeCv = () => {
 
   const [searchParams] = useSearchParams();
 
-  const { data: userData, loading } = useQuery<UserCvsData>(GET_USER_CVS, {
+  const {
+    data: userData,
+    loading,
+    refetch,
+  } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
     onCompleted: (data) => {
       const firstCv = data.user.cvs[0];
@@ -69,6 +75,10 @@ export const EmployeeCv = () => {
     setActive(activeId);
   };
 
+  const handleTryAgain = () => {
+    refetch();
+  };
+
   const handleCvDelete = (id: string) => {
     if (active === id) {
       navigate(`${ROUTE.EMPLOYEES}/${employeeId}/cv/`);
@@ -88,9 +98,9 @@ export const EmployeeCv = () => {
   return (
     <WrapperDiv>
       {loading ? (
-        <>loader</>
+        <Loader />
       ) : error ? (
-        <>{error}</>
+        <InlineError message={error} tryAgainFn={handleTryAgain}></InlineError>
       ) : (
         userData?.user.cvs && (
           <>
