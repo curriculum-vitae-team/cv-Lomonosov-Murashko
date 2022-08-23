@@ -1,4 +1,7 @@
+import { ROUTE } from "@constants/route";
+import { AuthContext } from "@context/authContext/authContext";
 import { withOverlay } from "@hoc/withOverlay";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import {
   StyledTypography,
@@ -9,8 +12,10 @@ import {
 
 function UserProfileCard() {
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
   const handleSignOutClick = () => {
-    navigate("/signin");
+    logout();
+    navigate(ROUTE.SIGN_IN);
   };
 
   const onUserProfileCardClick = (e: React.MouseEvent<HTMLElement>) => {
