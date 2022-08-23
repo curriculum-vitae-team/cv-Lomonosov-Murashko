@@ -29,3 +29,8 @@ export enum ROUTE {
   TARGET_EMPLOYEE_INFO = "info",
   TARGET_EMPLOYEE_CV = "cv",
 }
+
+export enum ENTITY {
+  LANGUAGES = "languages",
+  SKILLS = "skills",
+}

@@ -27,7 +27,7 @@ export const List = ({ items }: ListProps) => {
       <SearchBox onQuery={handleFilter} queryValue={filter} />
       <MuiList>
         {items.filter(filterFn).map((item) => (
-          <ListItem key={item.id} disablePadding>
+          <ListItem key={item.name} disablePadding>
             {item.link ? (
               <ListItemButton component={Link} to={item.link}>
                 <ListItemText primary={item.name} />

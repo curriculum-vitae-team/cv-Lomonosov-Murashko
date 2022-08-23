@@ -5,5 +5,4 @@ export type ListProps = {
 export type ListItemType = {
   name: string;
   link?: string;
-  id: string;
 };
