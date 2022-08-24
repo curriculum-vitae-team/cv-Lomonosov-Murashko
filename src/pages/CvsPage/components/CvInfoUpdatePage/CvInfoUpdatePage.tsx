@@ -13,7 +13,7 @@ import {
   UpdateCvOutput,
 } from "@graphql/Cv/Cv.interface";
 import { GET_CV_INFO, UPDATE_CV } from "@graphql/Cv/Cv.queries";
-import { memo, useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { memo, useCallback, useLayoutEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { CvInfo } from "../CvInfo/CvInfo";

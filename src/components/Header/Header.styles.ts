@@ -1,6 +1,9 @@
-import { styled, Box, Grid } from "@mui/material";
+import { styled, Grid } from "@mui/material";
 
-export const StyledHeader = styled(Box)({
+export const StyledHeader = styled("header")({
+  position: "fixed",
+  zIndex: "100",
+  width: "100vw",
   backgroundColor: "#001529",
   height: "3em",
 });
