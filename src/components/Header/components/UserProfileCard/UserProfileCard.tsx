@@ -12,7 +12,7 @@ import {
 
 function UserProfileCard() {
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const handleSignOutClick = () => {
     logout();
     navigate(ROUTE.SIGN_IN);
@@ -25,7 +25,7 @@ function UserProfileCard() {
   return (
     <StyledDiv onClick={onUserProfileCardClick}>
       <StyledAccountCircleIcon />
-      <StyledTypography>Murashko Ilya</StyledTypography>
+      <StyledTypography>{user.email}</StyledTypography>
       <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
     </StyledDiv>
   );

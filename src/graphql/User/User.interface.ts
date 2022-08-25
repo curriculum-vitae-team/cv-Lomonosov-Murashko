@@ -48,6 +48,29 @@ export interface UpdateUserInput {
 export interface UpdateUserOutput {
   updateUser: User;
 }
+
+export interface CreateUserInput {
+  user: {
+    auth: {
+      email: string;
+      password: string;
+    };
+    profile: {
+      first_name: string;
+      last_name: string;
+      departmentId: string;
+      specialization: string;
+      skills: string[];
+      languages: string[];
+    },
+    cvsId: string[];
+  };
+}
+
+export interface CreateUserOutput {
+  id: string;
+  email: string;
+}
 /* Parts */
 
 // For table

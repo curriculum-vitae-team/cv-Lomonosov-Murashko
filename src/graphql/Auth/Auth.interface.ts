@@ -4,8 +4,12 @@ export interface AuthInputData {
   auth: AuthInput;
 }
 
-export interface AuthOutputData {
+export interface AuthSignupOutputData {
   signup: AuthUserInfo;
+}
+
+export interface AuthSigninOutputData {
+  login: AuthUserInfo;
 }
 
 export interface AuthInput {

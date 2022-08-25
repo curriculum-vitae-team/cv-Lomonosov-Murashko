@@ -11,3 +11,15 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const SIGNIN = gql`
+  query SignIn($auth: AuthInput!) {
+    login(auth: $auth) {
+      user {
+        id
+        email
+      }
+      access_token
+    }
+  }
+`;

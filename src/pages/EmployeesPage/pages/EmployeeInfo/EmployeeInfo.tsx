@@ -61,7 +61,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     UpdateUserInput
   >(UPDATE_USER, {
     onCompleted: (data) => {
-      navigate("/employees");
+      navigate(ROUTE.EMPLOYEES);
     },
     onError: (error) => {
       setError(error.message);
@@ -71,13 +71,14 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
+    // TODO: delete `= []` constructions later
     const {
       first_name,
       last_name,
       department: { id: departmentId },
       specialization,
-      languages,
-      skills,
+      languages = [],
+      skills = [],
     } = data.profile;
 
     saveUser({
@@ -129,12 +130,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
               label="Last Name"
               name="profile.last_name"
             />
-            {/* <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Email"
-          name="email"
-        /> */}
             <Fieldset
               control={control}
               required="Please, specify the field"
