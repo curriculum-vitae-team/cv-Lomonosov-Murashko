@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
-import { CvItem } from "./components/CvItem";
+import { InfoItem as CvItem } from "../../../../components/InfoItem";
 import { ICV } from "@interfaces/ICV";
 import { Outlet, useNavigate, useParams } from "react-router";
 import { cvsMock } from "@mock/cvs";

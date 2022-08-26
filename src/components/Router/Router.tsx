@@ -8,7 +8,7 @@ import { RedirectPage } from "@pages/RedirectPage";
 import { Layout } from "../Layout";
 import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
-import { ROUTE, ROUTE_PARAM } from "@constants/route";
+import { ENTITY, ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
 import { CvInfoUpdate } from "@components/CvInfoUpdate";
@@ -17,6 +17,9 @@ import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
 import { Auth } from "@pages/Auth";
 import { CvInfoUpdatePage } from "@pages/CvInfoUpdatePage";
+import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
+import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
+import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
 
 export function Router() {
   return (
@@ -41,7 +44,11 @@ export function Router() {
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
-          <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
+          <Route path={ROUTE.ENTITIES} element={<EntitiesPage />}>
+            <Route index element={<EntitiesList />} />
+            <Route path={ENTITY.LANGUAGES} element={<LanguagesPage />} />
+            <Route path={ENTITY.SKILLS} element={<SkillsPage />} />
+          </Route>
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
         </Route>
       </Routes>

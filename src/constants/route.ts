@@ -25,6 +25,7 @@ export enum ROUTE {
   CVS = "/cvs",
   TARGET_CV = "/cvs/:cvId",
   ENTITIES = "/entities",
+  TARGET_ENTITY_ENTRY = ":entryId",
   ANY_OTHER = "*",
   TARGET_EMPLOYEE_INFO = "info",
   TARGET_EMPLOYEE_CV = "cv",
