@@ -18,6 +18,7 @@ export function Table({
   items,
   head,
   onDelete,
+  onCreate,
   redirectButtonText,
   deleteButtonText,
   entryType,
@@ -39,7 +40,7 @@ export function Table({
   );
 
   const handleNew: React.MouseEventHandler = (e) => {
-    // TODO: Navigate to creation
+    onCreate && onCreate();
   };
 
   return (

@@ -8,6 +8,7 @@ export type TableProps<T = Item> = {
   entryType: TableEntry;
   showNewEntryButton?: boolean;
   onDelete: (id: string) => void;
+  onCreate?: () => void;
 };
 
 export type TableHead = {

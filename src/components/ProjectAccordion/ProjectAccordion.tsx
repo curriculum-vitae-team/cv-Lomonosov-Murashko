@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import { ProjectNameWrapper } from "./ProjectAccordion.styles";
 import { projectsMock } from "@mock/projects";
-import { ProjectInfo } from "@components/ProjectInfo";
 
 export const ProjectAccordion = () => {
   return (
