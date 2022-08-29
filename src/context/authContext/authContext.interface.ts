@@ -11,10 +11,3 @@ export interface IContext {
   login: (userData: AuthUserInfo, isMemorized: boolean) => void;
   logout: () => void;
 }
-
-export interface IDecodedToken {
-  exp: number;
-  iat: number;
-  sub: number;
-  email: string;
-}

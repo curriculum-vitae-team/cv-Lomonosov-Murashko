@@ -1,24 +1,20 @@
-import React, { useReducer, createContext } from "react";
-import jwtDecode from "jwt-decode";
+import React, { useReducer, createContext, useEffect } from "react";
 import { AuthUserInfo } from "@graphql/Auth/Auth.interface";
 import { IUserInfo } from "@interfaces/IAuth";
-import { IAction, IContext, IDecodedToken } from "./authContext.interface";
+import { IAction, IContext } from "./authContext.interface";
 import { ACTIONS } from "@constants/actions";
+import {
+  deleteUserInfoFromLocalStorage,
+  getUserInfoFromLocalStorage,
+  isUserExists,
+  setUserInfoToLocalStorage,
+} from "@helpers/localStorage";
+import { ROUTE } from "@src/constants/route";
+import { browserHistory } from "@src/browserHistory";
 
 const initialState = {
   user: {},
 };
-
-if (localStorage.getItem("user")) {
-  const { user, access_token, isMemorized } = JSON.parse(
-    localStorage.getItem("user") || "",
-  );
-  const decodedToken: IDecodedToken = jwtDecode(access_token);
-  initialState.user = { ...user };
-
-  if (Date.now() > decodedToken.exp * 1000 || !isMemorized)
-    localStorage.removeItem("user");
-}
 
 const AuthContext = createContext({} as IContext);
 
@@ -51,16 +47,33 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
       type: ACTIONS.LOGIN,
       payload: user,
     });
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ user, access_token, isMemorized }),
-    );
+    setUserInfoToLocalStorage({ user, access_token, isMemorized });
   };
 
   const logout = () => {
     dispatch({ type: ACTIONS.LOGOUT });
-    localStorage.removeItem("user");
+    deleteUserInfoFromLocalStorage();
   };
+
+  useEffect(() => {
+    const restoreUser = () => {
+      if (isUserExists()) {
+        const { user, isMemorized } = getUserInfoFromLocalStorage();
+
+        if (isMemorized) {
+          dispatch({
+            type: ACTIONS.LOGIN,
+            payload: user,
+          });
+        } else {
+          deleteUserInfoFromLocalStorage();
+          browserHistory.push(ROUTE.SIGN_IN);
+        }
+      }
+    };
+
+    restoreUser();
+  }, []);
 
   return (
     <AuthContext.Provider

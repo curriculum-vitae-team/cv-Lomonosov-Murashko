@@ -21,3 +21,7 @@ export interface AuthUserInfo {
   user: User;
   access_token: string;
 }
+
+export interface AuthUserInfoWithMemorizedValue extends AuthUserInfo {
+  isMemorized: boolean;
+}

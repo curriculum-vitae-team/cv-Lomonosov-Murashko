@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { CvsPage } from "@pages/CvsPage";
 import { EmployeesPage } from "@pages/EmployeesPage/";
 import { EntitiesPage } from "@pages/EntitiesPage";
@@ -16,10 +17,11 @@ import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
 import { Auth } from "@pages/Auth";
+import { browserHistory } from "@src/browserHistory";
 
 export function Router() {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route element={<Auth />}>
           <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
@@ -44,6 +46,6 @@ export function Router() {
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
