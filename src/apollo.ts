@@ -1,12 +1,16 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  createHttpLink,
+  from,
+  InMemoryCache,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import { browserHistory } from "./browserHistory";
-import { ROUTE } from "./constants/route";
 import {
   deleteUserInfoFromLocalStorage,
   getUserInfoFromLocalStorage,
 } from "@helpers/localStorage";
+import { logoutObserver } from "./helpers/observer";
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_BACKEND,
@@ -27,19 +31,19 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message }) => {
       if (message === "Unauthorized") {
         deleteUserInfoFromLocalStorage();
-        browserHistory.push(ROUTE.SIGN_IN);
+        logoutObserver.notify();
       }
     });
   }
   if (networkError) {
     if ("statusCode" in networkError && networkError.statusCode === 401) {
       deleteUserInfoFromLocalStorage();
-      browserHistory.push(ROUTE.SIGN_IN);
+      logoutObserver.notify();
     }
   }
 });
 
 export const client = new ApolloClient({
-  link: authLink.concat(errorLink.concat(httpLink)),
+  link: from([authLink, errorLink, httpLink]),
   cache: new InMemoryCache(),
 });

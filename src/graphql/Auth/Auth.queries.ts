@@ -6,6 +6,7 @@ export const SIGNUP = gql`
       user {
         id
         email
+        role
       }
       access_token
     }
@@ -18,6 +19,7 @@ export const SIGNIN = gql`
       user {
         id
         email
+        role
       }
       access_token
     }

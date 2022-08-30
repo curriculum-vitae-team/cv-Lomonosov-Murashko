@@ -55,7 +55,7 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
     deleteUserInfoFromLocalStorage();
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     const restoreUser = () => {
       if (isUserExists()) {
         const { user, isMemorized } = getUserInfoFromLocalStorage();
@@ -74,7 +74,7 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 
     restoreUser();
   }, []);
-
+  
   return (
     <AuthContext.Provider
       value={{ user: state.user, login, logout }}

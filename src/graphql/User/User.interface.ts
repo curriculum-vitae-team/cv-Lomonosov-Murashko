@@ -62,7 +62,7 @@ export interface CreateUserInput {
       specialization: string;
       skills: string[];
       languages: string[];
-    },
+    };
     cvsId: string[];
   };
 }
@@ -78,6 +78,7 @@ export interface CreateUserOutput {
 export interface User {
   id: string;
   email: string;
+  role: string;
   profile: Profile;
 }
 // For detailed user info (may contain additional properties in the future)
@@ -85,6 +86,7 @@ export interface User {
 export interface UserInfo {
   id: string;
   email: string;
+  role: string;
   profile: Profile;
 }
 
