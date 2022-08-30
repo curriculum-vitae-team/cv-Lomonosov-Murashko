@@ -46,8 +46,18 @@ export function Router() {
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route path={ROUTE.ENTITIES} element={<EntitiesPage />}>
             <Route index element={<EntitiesList />} />
-            <Route path={ENTITY.LANGUAGES} element={<LanguagesPage />} />
-            <Route path={ENTITY.SKILLS} element={<SkillsPage />} />
+            <Route path={ENTITY.LANGUAGES} element={<LanguagesPage />}>
+              <Route
+                path={ROUTE.TARGET_ENTITY_ENTRY}
+                element={<LanguagesPage />}
+              />
+            </Route>
+            <Route path={ENTITY.SKILLS} element={<SkillsPage />}>
+              <Route
+                path={ROUTE.TARGET_ENTITY_ENTRY}
+                element={<SkillsPage />}
+              />
+            </Route>
           </Route>
           <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
         </Route>

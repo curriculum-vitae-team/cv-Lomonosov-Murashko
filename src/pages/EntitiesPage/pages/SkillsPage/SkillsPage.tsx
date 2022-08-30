@@ -12,16 +12,6 @@ import { InfoForm } from "./components/InfoForm";
 import { SkillInput } from "./components/InfoForm/InfoForm.types";
 
 export const SkillsPage = () => {
-  const navigate = useNavigate();
-
-  const handleCancel = () => {
-    navigate(ROUTE.ENTITIES);
-  };
-
-  const handleSubmit: SubmitHandler<SkillInput> = (data) => {
-    console.log(data);
-  };
-
   return (
     <EntityInfo
       GET_ALL_QUERY={GET_SKILLS}
@@ -29,7 +19,10 @@ export const SkillsPage = () => {
       UPDATE_MUTATION={UPDATE_SKILL}
       queryName="GetSkills"
       deleteOperation="deleteSkill"
+      updateOperation="updateSkill"
+      updateVariablesInput={["name", "id"]}
       entityName="skills"
+      entityNameSingular="skill"
       queryOperation="skills"
       FormComponent={InfoForm}
     />

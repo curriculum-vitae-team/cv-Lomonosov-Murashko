@@ -19,7 +19,7 @@ export const DELETE_LANGUAGE = gql`
 `;
 
 export const UPDATE_LANGUAGE = gql`
-  mutation UpdateLanguage($id: ID, $language: LanguageInput!) {
+  mutation UpdateLanguage($id: ID!, $language: LanguageInput!) {
     updateLanguage(id: $id, language: $language) {
       iso2
       name
@@ -46,7 +46,7 @@ export const DELETE_SKILL = gql`
 `;
 
 export const UPDATE_SKILL = gql`
-  mutation UpdateSkill($id: ID, $skill: SkillInput!) {
+  mutation UpdateSkill($id: ID!, $skill: SkillInput!) {
     updateSkill(id: $id, skill: $skill) {
       name
       id

@@ -4,7 +4,7 @@ import { InfoItem } from "@components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
-import { useMutation, useQuery } from "@apollo/client";
+import { FetchResult, useMutation, useQuery } from "@apollo/client";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
 import { Loader } from "@components/Loader";
@@ -22,7 +22,10 @@ export const EntityInfo = ({
   queryName,
   queryOperation,
   deleteOperation,
+  updateOperation,
+  updateVariablesInput,
   entityName,
+  entityNameSingular,
   FormComponent,
 }: EntityInfoProps) => {
   const { entryId } = useParams();
@@ -77,31 +80,36 @@ export const EntityInfo = ({
   });
 
   const [updateEntry] = useMutation<unknown, { id: string }>(UPDATE_MUTATION, {
-    variables: {
-      id: entryId!,
-    },
     onError: (err) => {
       setError(err.message);
     },
     updateQueries: {
-      [queryName]: (prevResult, options) => {
-        if (options.mutationResult.data) {
-          return {
-            [queryOperation]: prevResult[queryOperation].map((entry: Entry) => {
-              if (
-                entry.id === entryId &&
-                typeof options.mutationResult.data === "object" &&
-                queryOperation in options.mutationResult.data
-              ) {
-                return {
-                  ...prevResult[queryOperation],
-                  ...options.mutationResult.data[queryOperation],
-                };
-              }
-            }),
-          };
-        }
-        return prevResult;
+      [queryName]: (
+        prevResult: {
+          [key: typeof queryOperation]: Entry[];
+        },
+        {
+          mutationResult,
+        }: {
+          mutationResult: FetchResult<
+            any,
+            Record<string, any>,
+            Record<string, any>
+          >;
+        },
+      ) => {
+        return {
+          [queryOperation]: prevResult[queryOperation].map((entry: Entry) => {
+            if (entry.id === entryId) {
+              return {
+                entry,
+                ...mutationResult.data[updateOperation],
+              };
+            }
+
+            return entry;
+          }),
+        };
       },
     },
   });
@@ -137,8 +145,37 @@ export const EntityInfo = ({
   };
 
   const handleInfoFormSubmit = (data: Entry) => {
-    // call update mutation
-    // update cache of all queried entities
+    const variables = {
+      id: entryId!,
+      [entityNameSingular]: {} as Entry,
+    };
+
+    const target = variables[entityNameSingular];
+
+    updateVariablesInput.forEach((variable) => {
+      if (variable in data && isEntry(target) && isKeyOfEntry(data, variable)) {
+        target[variable] = data[variable];
+      }
+    });
+
+    updateEntry({ variables });
+
+    function isEntry(input: string | Entry): input is Entry {
+      if (typeof variables[entityNameSingular] === "object") return true;
+
+      return false;
+    }
+
+    function isKeyOfEntry(
+      data: Entry,
+      input: string | number | symbol,
+    ): input is keyof Entry {
+      return input in data ? true : false;
+    }
+  };
+
+  const handleCancel = () => {
+    navigate(ROUTE.ENTITIES);
   };
 
   return (
@@ -175,7 +212,12 @@ export const EntityInfo = ({
           </div>
           {active !== "-1" && data && (
             <FormComponent
-              input={data[queryOperation].find(({ id }) => id === active) || {}}
+              input={
+                data[queryOperation].find(({ id }) => id === active) ||
+                ({} as Entry)
+              }
+              onSubmit={handleInfoFormSubmit}
+              onCancel={handleCancel}
             />
           )}
         </>

@@ -1,12 +1,13 @@
 import { SubmitHandler } from "react-hook-form";
 
 export type InfoFormProps = {
-  onSubmit: SubmitHandler<SkillInput>;
+  onSubmit: SubmitHandler<LanguageInput>;
   onCancel: () => void;
-  input: SkillInput;
+  input: LanguageInput;
 };
 
-export type SkillInput = {
+export type LanguageInput = {
   id: string;
   name: string;
+  iso2: string;
 };
