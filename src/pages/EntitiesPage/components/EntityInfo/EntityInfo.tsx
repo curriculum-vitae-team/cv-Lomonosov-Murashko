@@ -14,6 +14,7 @@ import {
   EntityInfoProps,
   EntityQueryResponse,
 } from "./EntityInfo.types";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 export const EntityInfo = ({
   GET_ALL_QUERY,
@@ -37,6 +38,8 @@ export const EntityInfo = ({
   const [error, setError] = useState("");
 
   const [searchParams] = useSearchParams();
+
+  const { setToastError } = useErrorToast();
 
   const { data, loading, refetch } = useQuery<EntityQueryResponse>(
     GET_ALL_QUERY,
@@ -63,7 +66,15 @@ export const EntityInfo = ({
       id: entryId!,
     },
     onError: (err) => {
-      setError(err.message);
+      const response = err.graphQLErrors[0].extensions.response as {
+        message?: string[];
+      };
+
+      if (response && typeof response === "object" && "message" in response) {
+        setToastError(
+          (response.message && response.message[0]) || "Something went wrong",
+        );
+      }
     },
     updateQueries: {
       [queryName]: (prevResult, options) => {
@@ -81,7 +92,15 @@ export const EntityInfo = ({
 
   const [updateEntry] = useMutation<unknown, { id: string }>(UPDATE_MUTATION, {
     onError: (err) => {
-      setError(err.message);
+      const response = err.graphQLErrors[0].extensions.response as {
+        message?: string[];
+      };
+
+      if (response && typeof response === "object" && "message" in response) {
+        setToastError(
+          (response.message && response.message[0]) || "Something went wrong",
+        );
+      }
     },
     updateQueries: {
       [queryName]: (
