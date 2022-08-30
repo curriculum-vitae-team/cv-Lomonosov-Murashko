@@ -19,6 +19,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "@context/authContext/authContext";
 import { Loader } from "@components/Loader";
 import { createUserCacheUpdate } from "@graphql/Auth/Auth.cache";
+import { ERRORS } from "@constants/errors";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -38,7 +39,11 @@ export const SignUp = () => {
     },
     onError: (error) => {
       reset();
-      setError(error.message);
+      if (error.message.includes("duplicate key")) {
+        setError(ERRORS.EMAIL_TAKEN)
+      } else {
+        setError(error.message);
+      }
     },
   });
 
