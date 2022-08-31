@@ -35,7 +35,7 @@ export const ProjectInfoCreate = () => {
             description: data.description,
             domain: data.domain,
             start_date: format(Number(data.startDate), "yyyy-MM-dd"),
-            end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+            end_date: data.endDate ? format(Number(data.endDate), "yyyy-MM-dd") : null,
           },
         },
         update: createProjectCacheUpdate(),

@@ -63,7 +63,6 @@ export const ProjectInfoForm = memo(
             control={control}
             label="End date"
             name="endDate"
-            required={"Please, specify the correct date"}
           />
         </InfoFormWrapper>
         <InfoFormWrapper>
