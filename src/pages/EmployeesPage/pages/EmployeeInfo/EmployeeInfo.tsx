@@ -17,6 +17,7 @@ import { memo, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
+import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -144,9 +145,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
             />
           </InfoFormWrapper>
           <DialogActions>
-            <Button type="submit" value="Save" variant="contained">
-              Save
-            </Button>
+            <SaveButtonWithAdminAccess />
             <Button
               onClick={onCancel}
               type="reset"

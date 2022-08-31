@@ -12,7 +12,7 @@ export const ProtectedRoute = ({
   guards,
   fallback,
 }: ProtectedRouteProps) => {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);  
 
   return (
     <>{guards.every((guard) => guard(user)) ? <Outlet /> : fallback()}</>

@@ -19,5 +19,10 @@ export const sideBarLinks: ISideBarLink[] = [
   new SideBarLinkData(ROUTE.EMPLOYEES, "Employees", EmojiPeopleIcon),
   new SideBarLinkData(ROUTE.PROJECTS, "Projects", DnsIcon),
   new SideBarLinkData(ROUTE.CVS, "CVs", AutoStoriesIcon),
-  new SideBarLinkData(ROUTE.ENTITIES, "Entities", FolderIcon),
 ];
+
+export const sideBarEntityLink: ISideBarLink = new SideBarLinkData(
+  ROUTE.ENTITIES,
+  "Entities",
+  FolderIcon,
+);

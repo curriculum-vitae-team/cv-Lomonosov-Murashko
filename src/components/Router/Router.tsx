@@ -60,7 +60,16 @@ export function Router() {
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
-          <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
+          <Route
+            element={
+              <ProtectedRoute
+                guards={[roleGuard([ROLES.ADMIN])]}
+                fallback={() => <RedirectPage to={ROUTE.ANY_OTHER} />}
+              />
+            }
+          >
+            <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
+          </Route>
         </Route>
         <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
       </Routes>

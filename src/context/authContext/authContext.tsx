@@ -57,7 +57,7 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 
   useEffect(() => {    
     const restoreUser = () => {
-      if (isUserExists()) {
+      if (isUserExists()) {        
         const { user, isMemorized } = getUserInfoFromLocalStorage();
 
         if (isMemorized) {

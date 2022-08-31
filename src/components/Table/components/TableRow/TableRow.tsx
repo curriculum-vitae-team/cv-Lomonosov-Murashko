@@ -7,6 +7,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { DeleteWithAdminAccessButton } from "../TableDeleteItemButton";
 import { TableRowProps } from "./TableRow.types";
 
 export function TableRow({
@@ -33,7 +34,10 @@ export function TableRow({
         <Button>
           <Link to={id}>{redirectButtonText}</Link>
         </Button>
-        <Button onClick={handleDelete}>{deleteButtonText}</Button>
+        <DeleteWithAdminAccessButton
+          handleDelete={handleDelete}
+          deleteButtonText={deleteButtonText}
+        />
       </AccordionDetails>
     </Accordion>
   );
