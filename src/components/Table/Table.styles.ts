@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const StyledGrid = styled(Grid)({
@@ -72,4 +72,8 @@ export const StyledDiv = styled("div")({
   borderRight: "20px solid #f9f9f9",
   borderRadius: "5px",
   marginBottom: "1rem",
+});
+
+export const StyledNewEntryButton = styled(Button)({
+  margin: "1rem !important",
 });
