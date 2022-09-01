@@ -48,6 +48,29 @@ export interface UpdateUserInput {
 export interface UpdateUserOutput {
   updateUser: User;
 }
+
+export interface CreateUserInput {
+  user: {
+    auth: {
+      email: string;
+      password: string;
+    };
+    profile: {
+      first_name: string;
+      last_name: string;
+      departmentId: string;
+      specialization: string;
+      skills: string[];
+      languages: string[];
+    };
+    cvsId: string[];
+  };
+}
+
+export interface CreateUserOutput {
+  id: string;
+  email: string;
+}
 /* Parts */
 
 // For table
@@ -55,6 +78,7 @@ export interface UpdateUserOutput {
 export interface User {
   id: string;
   email: string;
+  role: string;
   profile: Profile;
 }
 // For detailed user info (may contain additional properties in the future)
@@ -62,6 +86,7 @@ export interface User {
 export interface UserInfo {
   id: string;
   email: string;
+  role: string;
   profile: Profile;
 }
 

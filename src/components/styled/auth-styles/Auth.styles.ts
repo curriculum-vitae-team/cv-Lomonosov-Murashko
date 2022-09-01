@@ -40,3 +40,11 @@ export const AuthAdditionalInfoWrapper = styled("div")({
   justifyContent: "space-between",
   paddingBottom: "0.7em",
 });
+
+export const AuthLoaderWrapper = styled("div")({
+  paddingTop: "50%",
+});
+
+export const InvalidInputError = styled("div")({
+  color: "red"
+})

@@ -1,3 +1,5 @@
+import { User } from "@graphql/User/User.interface";
+
 export interface IResetPassword {
   email: string;
 }
@@ -8,4 +10,13 @@ export interface ISignIn extends IResetPassword {
 
 export interface ISignUp extends ISignIn {
   passwordConfirmation: string;
+}
+
+export interface IAuth {
+  email: string;
+  password: string;
+}
+
+export interface IUserInfo {
+  user: User;
 }
