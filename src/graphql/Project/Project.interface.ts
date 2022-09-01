@@ -55,7 +55,7 @@ export interface ProjectInput {
   description: string;
   domain: string;
   start_date: string;
-  end_date: string;
+  end_date: string | null;
 }
 
 export interface ProjectInfo {
