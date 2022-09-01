@@ -25,17 +25,17 @@ export function Table({
   showNewEntryButton,
 }: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [isSortAsc, setIsSortAsc] = useState(true);
 
   const [filter, setFilter] = useState("");
 
   const handleSortByChange = useCallback(
     (columnName: string) => {
       if (columnName === sortBy) {
-        setSortAsc((prev) => !prev);
+        setIsSortAsc((prev) => !prev);
       } else {
         setSortBy(columnName);
-        setSortAsc(true);
+        setIsSortAsc(true);
       }
     },
     [sortBy],
@@ -62,12 +62,12 @@ export function Table({
       <TableHeadComponent
         columns={head}
         sortBy={sortBy}
-        sortAsc={sortAsc}
+        sortAsc={isSortAsc}
         onSortByChange={handleSortByChange}
         gridXS={12 / head.length}
       />
       {[...items]
-        .sort(byColumn<IEntryData>(sortBy, sortAsc))
+        .sort(byColumn<IEntryData>(sortBy, isSortAsc))
         .filter(
           filter
             ? (item) =>
