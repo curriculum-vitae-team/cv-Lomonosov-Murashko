@@ -1,11 +1,18 @@
 /* Queries */
 
+import { UserFullInfo } from "../User/User.interface";
+
 export interface CvsData {
   cvs: Cv[];
 }
 
 export interface CvInfoData {
   cv: CvInfo;
+}
+
+export interface CvFullInfo {
+  name: string;
+  user: UserFullInfo;
 }
 
 /* Mutations */

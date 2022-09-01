@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Breadcrumb } from "@components/Breadcrumb";
-import { Box, Tabs, Tab, Stack } from "@mui/material";
+import { Box, Tabs, Tab } from "@mui/material";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
-import { cvsMock } from "@mock/cvs";
 import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
 import { UserFullnameData } from "@graphql/User/User.interface";

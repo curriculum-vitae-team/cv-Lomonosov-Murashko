@@ -94,3 +94,20 @@ export interface UserCVEntry {
   id: string;
   name: string;
 }
+
+export interface UserProfile {
+  full_name: string;
+  skills: {
+    skill_name: string;
+    mastery: string;
+  };
+  languages: {
+      language_name: string;
+      proficiency: string;
+    };
+}
+
+export interface UserFullInfo {
+  email: string;
+  profile: UserProfile;
+}

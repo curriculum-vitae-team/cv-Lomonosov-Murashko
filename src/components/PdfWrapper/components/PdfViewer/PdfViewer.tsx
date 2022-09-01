@@ -1,7 +1,8 @@
 import { Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./PdfViewer.styles";
+import { PdfViewerProps } from "./PdfViewer.types";
 
-export const PdfViewer = () => {
+export const PdfViewer = ({ data }: PdfViewerProps) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
