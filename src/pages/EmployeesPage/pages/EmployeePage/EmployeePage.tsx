@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Breadcrumb } from "@components/Breadcrumb";
-import { Box, Tabs, Tab, Stack } from "@mui/material";
+import { Box, Tabs, Tab } from "@mui/material";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
-import { cvsMock } from "@mock/cvs";
 import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
 import { UserFullnameData } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
+import { validateUserFullName } from "../../helpers";
+import { Loader } from "@components/Loader";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -34,12 +35,10 @@ export const EmployeePage = () => {
     pathnames.includes("cv") ? 1 : 0,
   );
 
-  const displayedName = data?.user
-    ? data.user.profile.first_name + " " + data.user.profile.last_name
-    : "";
+  const displayedName = data ? validateUserFullName(data) : "";
 
   return loading ? (
-    <>loader</>
+    <Loader />
   ) : (
     <PageWrapper>
       <PageTop>
