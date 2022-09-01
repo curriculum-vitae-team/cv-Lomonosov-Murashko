@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   StyledTypography,
@@ -7,9 +7,11 @@ import {
   StyledTranslateIcon,
 } from "./UserProfile.styles";
 import { UserProfileCardWithOverlay } from "../UserProfileCard";
+import { AuthContext } from "@context/authContext/authContext";
 
 export function UserProfile() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
 
   const handleProfileCardClose = () => {
     setIsProfileOpen(false);
@@ -21,10 +23,9 @@ export function UserProfile() {
 
   return (
     <StyledGrid>
-      {/* TODO: if user has icon -> display their avatar, otherwise fake icon */}
       <StyledBox onClick={handleProfileCardOpen}>
         <AccountCircleIcon />
-        <StyledTypography>Murashko Ilya</StyledTypography>
+        <StyledTypography>{user.email}</StyledTypography>
       </StyledBox>
       <StyledTranslateIcon />
       {isProfileOpen && (

@@ -1,6 +1,5 @@
 import { StyledDiv, StyledLink } from "./CvItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { SyntheticEvent, useState } from "react";
 import { Typography } from "@mui/material";
 import { CvItemProps } from "./CvItem.types";
 

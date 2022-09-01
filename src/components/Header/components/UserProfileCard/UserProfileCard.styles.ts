@@ -9,7 +9,7 @@ export const StyledDiv = styled("div")({
   alignItems: "center",
   top: "4em",
   right: "1.5em",
-  width: "15em",
+  width: "24em",
   height: "15em",
   color: "#000",
   borderRadius: "10px",
@@ -18,7 +18,7 @@ export const StyledDiv = styled("div")({
 });
 
 export const StyledTypography = styled(Typography)({
-  marginBottom: "3em",
+  marginBottom: "1em",
 });
 
 export const StyledButton = styled(Button)({

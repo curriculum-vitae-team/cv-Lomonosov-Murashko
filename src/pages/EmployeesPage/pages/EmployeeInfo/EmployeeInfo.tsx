@@ -17,6 +17,7 @@ import { memo, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
+import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -61,7 +62,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     UpdateUserInput
   >(UPDATE_USER, {
     onCompleted: (data) => {
-      navigate("/employees");
+      navigate(ROUTE.EMPLOYEES);
     },
     onError: (error) => {
       setError(error.message);
@@ -71,13 +72,14 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
+    // TODO: delete `= []` constructions later
     const {
       first_name,
       last_name,
       department: { id: departmentId },
       specialization,
-      languages,
-      skills,
+      languages = [],
+      skills = [],
     } = data.profile;
 
     saveUser({
@@ -129,12 +131,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
               label="Last Name"
               name="profile.last_name"
             />
-            {/* <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Email"
-          name="email"
-        /> */}
             <Fieldset
               control={control}
               required="Please, specify the field"
@@ -149,9 +145,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
             />
           </InfoFormWrapper>
           <DialogActions>
-            <Button type="submit" value="Save" variant="contained">
-              Save
-            </Button>
+            <SaveButtonWithAdminAccess />
             <Button
               onClick={onCancel}
               type="reset"

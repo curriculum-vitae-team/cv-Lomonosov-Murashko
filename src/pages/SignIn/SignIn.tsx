@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Fieldset } from "@components/Fieldset";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { ISignIn } from "@interfaces/IAuth";
+import { IAuth, ISignIn } from "@interfaces/IAuth";
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import logoBlack from "@assets/images/logoBlack.svg";
@@ -9,11 +9,26 @@ import {
   AuthImg,
   AuthStyledForm,
   AuthAdditionalInfoWrapper,
+  AuthLoaderWrapper,
+  InvalidInputError,
 } from "@components/styled/auth-styles/Auth.styles";
+import { useNavigate } from "react-router";
+import { ROUTE } from "@constants/route";
+import { AuthContext } from "@context/authContext/authContext";
+import { useLazyQuery } from "@apollo/client";
+import {
+  AuthInputData,
+  AuthSigninOutputData,
+} from "@graphql/Auth/Auth.interface";
+import { SIGNIN } from "@graphql/Auth/Auth.queries";
+import { Loader } from "@components/Loader";
 
 export const SignIn = () => {
-  const [checked, setChecked] = useState(false);
-  const { control, handleSubmit } = useForm<ISignIn>({
+  const [isMemorized, setIsMemorized] = useState(false);
+  const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { control, handleSubmit, reset } = useForm<ISignIn>({
     defaultValues: {
       email: "",
       password: "",
@@ -21,58 +36,87 @@ export const SignIn = () => {
   });
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
+    setIsMemorized(e.target.checked);
   };
 
-  const onSubmit: SubmitHandler<ISignIn> = useCallback((data) => {
-    // const currentEmployee = authMock.find(employee => {
-    //   return employee.email === data.email && employee.password === data.password;
-    // });
-    // TODO: checked === true ? remember user and sign in : sign in
-    // navigate to employees
-  }, []);
+  const [signin, { loading }] = useLazyQuery<
+    AuthSigninOutputData,
+    AuthInputData
+  >(SIGNIN, {
+    onCompleted: (data) => {
+      login(data.login, isMemorized);
+      navigate(ROUTE.EMPLOYEES);
+    },
+    onError: (error) => {
+      reset();
+      setError(error.message);
+    },
+  });
+
+  const onSubmit: SubmitHandler<IAuth> = useCallback(
+    ({ email, password }) => {
+      signin({
+        variables: {
+          auth: {
+            email,
+            password,
+          },
+        },
+      });
+    },
+    [signin],
+  );
 
   return (
     <>
-      <AuthImg src={logoBlack} alt="logo" />
-      <AuthStyledForm onSubmit={handleSubmit(onSubmit)}>
-        <InfoFormWrapper>
-          <Fieldset
-            isFullWidth={true}
-            inputWidth="100%"
-            required="Please, specify the field"
-            label="Email"
-            control={control}
-            name="email"
-          />
-        </InfoFormWrapper>
-        <InfoFormWrapper>
-          <Fieldset
-            isFullWidth={true}
-            inputWidth="100%"
-            required="Please, specify the field"
-            label="Password"
-            control={control}
-            name="password"
-            type="password"
-          />
-        </InfoFormWrapper>
-        <AuthAdditionalInfoWrapper>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={handleCheckboxChange}
-                inputProps={{ "aria-label": "controlled" }}
+      {loading ? (
+        <AuthLoaderWrapper>
+          <Loader />
+        </AuthLoaderWrapper>
+      ) : (
+        <>
+          <AuthImg src={logoBlack} alt="logo" />
+          <AuthStyledForm onSubmit={handleSubmit(onSubmit)}>
+            <InfoFormWrapper>
+              <Fieldset
+                isFullWidth={true}
+                inputWidth="100%"
+                required="Please, specify the field"
+                label="Email"
+                control={control}
+                name="email"
               />
-            }
-            label="Remember me"
-          />
-        </AuthAdditionalInfoWrapper>
-        <Button type="submit" fullWidth variant="contained">
-          Login
-        </Button>
-      </AuthStyledForm>
+            </InfoFormWrapper>
+            <InfoFormWrapper>
+              <Fieldset
+                isFullWidth={true}
+                inputWidth="100%"
+                required="Please, specify the field"
+                label="Password"
+                control={control}
+                name="password"
+                type="password"
+              />
+            </InfoFormWrapper>
+            {error && <InvalidInputError>{error}</InvalidInputError>}
+            <AuthAdditionalInfoWrapper>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isMemorized}
+                    onChange={handleCheckboxChange}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label="Remember me"
+              />
+            </AuthAdditionalInfoWrapper>
+            <Button type="submit" fullWidth variant="contained">
+              Login
+            </Button>
+          </AuthStyledForm>
+        </>
+      )}
     </>
   );
 };

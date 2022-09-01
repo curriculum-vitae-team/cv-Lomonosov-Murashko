@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@src/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@context/*": ["src/context/*"],
@@ -11,7 +12,8 @@
       "@mock/*": ["src/mock/*"],
       "@features/*": ["src/features/*"],
       "@graphql/*": ["src/graphql/*"],
-      "@hoc/*": ["src/hoc/*"]
+      "@hoc/*": ["src/hoc/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   }
 }
