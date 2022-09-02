@@ -72,7 +72,7 @@ export const CvInfoUpdatePage = memo(() => {
   const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<CvInput> = useCallback(
-    (data) => {
+    (data) => {      
       const { name, description, projectsIds } = data;
 
       saveCv({

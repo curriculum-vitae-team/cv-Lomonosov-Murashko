@@ -1,5 +1,6 @@
 /* Queries */
 
+import { Skills } from "../Cv/Cv.interface";
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
 
 export interface UsersData {
@@ -97,17 +98,16 @@ export interface UserCVEntry {
 
 export interface UserProfile {
   full_name: string;
-  skills: {
-    skill_name: string;
-    mastery: string;
-  };
-  languages: {
-      language_name: string;
-      proficiency: string;
-    };
+  skills: Skills[];
+  languages: UserLanguages[];
 }
 
 export interface UserFullInfo {
   email: string;
   profile: UserProfile;
+}
+
+export interface UserLanguages {
+  language_name: string;
+  proficiency: string;
 }

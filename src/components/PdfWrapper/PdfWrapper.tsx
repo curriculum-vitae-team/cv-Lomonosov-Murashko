@@ -9,8 +9,9 @@ import { useParams } from "react-router";
 import { CvFullInfo } from "@graphql/Cv/Cv.interface";
 import { useState } from "react";
 import { ErrorToast } from "../ErrorToast";
+import { PdfWrapperProps } from "./PdfWrapper.types";
 
-export function PdfWrapper() {
+export function PdfWrapper({ variant }: PdfWrapperProps) {
   const { cvId } = useParams();
   const [error, setError] = useState("");
   const { data, refetch } = useQuery<CvFullInfo>(GET_FULL_CV_INFO, {
@@ -20,19 +21,21 @@ export function PdfWrapper() {
     onError: (error) => {
       setError(error.message);
     },
-  });
+  });  
 
   return (
     <>
       {error ? (
         <ErrorToast message={error} />
       ) : (
-        <StyledDiv>
-          <PDFViewer>
-            <PdfViewer data={data} />
-          </PDFViewer>
-          <PdfDownloadLink />
-        </StyledDiv>
+        data && (
+          <StyledDiv>
+            <PDFViewer>
+              <PdfViewer variant={variant} data={data.cv} />
+            </PDFViewer>
+            <PdfDownloadLink variant={variant} data={data.cv} />
+          </StyledDiv>
+        )
       )}
     </>
   );

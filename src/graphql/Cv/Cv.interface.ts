@@ -11,6 +11,16 @@ export interface CvInfoData {
 }
 
 export interface CvFullInfo {
+  cv: {
+    name: string;
+    projects: ProjectFullInfo[];
+    skills: Skills[];
+    languages: CvLanguagesInfo[];
+    user: UserFullInfo;
+  };
+}
+
+export interface CvFullInfoData {
   name: string;
   user: UserFullInfo;
 }
@@ -87,4 +97,22 @@ interface ProjectPart {
   id: string;
   name: string;
   internal_name: string;
+}
+
+export interface ProjectFullInfo {
+  start_date: string;
+  end_date: string;
+  name: string;
+  internal_name: string;
+  description: string;
+}
+
+export interface CvLanguagesInfo {
+  language_name: string;
+  proficiency: string;
+}
+
+export interface Skills {
+  skill_name: string;
+  mastery: string;
 }
