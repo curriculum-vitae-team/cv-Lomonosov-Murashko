@@ -18,7 +18,6 @@ import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { logoutObserver } from "@src/helpers/observer";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -38,7 +37,7 @@ export const ProjectsPage = () => {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {
+    onError: (error) => {      
       setError(error.message);
     },
   });

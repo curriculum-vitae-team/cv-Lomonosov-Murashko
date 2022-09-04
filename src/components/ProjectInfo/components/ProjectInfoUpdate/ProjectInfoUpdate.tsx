@@ -60,6 +60,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
             domain: data.domain,
             start_date: format(Number(data.startDate), "yyyy-MM-dd"),
             end_date: format(Number(data.endDate), "yyyy-MM-dd"),
+            tech_stack: data.techStack,
           },
         },
       });

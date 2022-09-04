@@ -10,6 +10,10 @@ export const GET_PROJECTS = gql`
       domain
       start_date
       end_date
+      tech_stack {
+        id
+        name
+      }
     }
   }
 `;
@@ -24,6 +28,10 @@ export const GET_PROJECT_INFO = gql`
       domain
       start_date
       end_date
+      tech_stack {
+        id
+        name
+      }
     }
   }
 `;
@@ -54,6 +62,10 @@ export const UPDATE_PROJECT = gql`
       domain
       start_date
       end_date
+      tech_stack {
+        id
+        name
+      }
     }
   }
 `;
@@ -68,6 +80,10 @@ export const CREATE_PROJECT = gql`
       domain
       start_date
       end_date
+      tech_stack {
+        id
+        name
+      }
     }
   }
 `;

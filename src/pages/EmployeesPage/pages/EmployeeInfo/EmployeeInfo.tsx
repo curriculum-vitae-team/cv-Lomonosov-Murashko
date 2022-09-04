@@ -34,7 +34,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           id: "",
           name: "",
         },
-        specialization: "",
+        position: { id: "" },
         skills: [],
         languages: [],
       },
@@ -72,12 +72,12 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    // TODO: delete `= []` constructions later
+    // TODO: delete `= []` constructions later    
     const {
       first_name,
       last_name,
       department: { id: departmentId },
-      specialization,
+      position: { id: positionId },
       languages = [],
       skills = [],
     } = data.profile;
@@ -90,7 +90,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
             first_name,
             last_name,
             departmentId,
-            specialization,
+            positionId,
             languages, // TODO: Replace with entities input
             skills, // TODO: Replace with entities input
           },
@@ -115,49 +115,45 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       tryAgainFn={handleTryAgain}
     />
   ) : (
-    <>
-      {Object.values(getValues()).every((key) => !!key) && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InfoFormWrapper>
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="First Name"
-              name="profile.first_name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Last Name"
-              name="profile.last_name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Department ID"
-              name="profile.department.id"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Specialization"
-              name="profile.specialization"
-            />
-          </InfoFormWrapper>
-          <DialogActions>
-            <SaveButtonWithAdminAccess />
-            <Button
-              onClick={onCancel}
-              type="reset"
-              value="Cancel"
-              variant="outlined"
-              color="info"
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </form>
-      )}
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InfoFormWrapper>
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="First Name"
+          name="profile.first_name"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Last Name"
+          name="profile.last_name"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Department ID"
+          name="profile.department.id"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Position"
+          name="profile.position_name"
+        />
+      </InfoFormWrapper>
+      <DialogActions>
+        <SaveButtonWithAdminAccess />
+        <Button
+          onClick={onCancel}
+          type="reset"
+          value="Cancel"
+          variant="outlined"
+          color="info"
+        >
+          Cancel
+        </Button>
+      </DialogActions>
+    </form>
   );
 });

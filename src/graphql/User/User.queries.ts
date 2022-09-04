@@ -20,7 +20,7 @@ export const GET_USERS = gql`
       profile {
         first_name
         last_name
-        specialization
+        position_name
         department {
           name
           id
@@ -38,7 +38,7 @@ export const GET_USER_INFO = gql`
       profile {
         first_name
         last_name
-        specialization
+        position_name
         department {
           name
           id
@@ -67,7 +67,7 @@ export const UPDATE_USER = gql`
       profile {
         first_name
         last_name
-        specialization
+        position_name
         department {
           name
           id

@@ -1,18 +1,22 @@
+import { SkillMastery } from "../Cv/Cv.interface";
 import { Department } from "../Department/Department.interface";
+import { Position } from "../Skills/Skills.interface";
+import { UserLanguages } from "../User/User.interface";
 
 export interface Profile {
   first_name: string;
   last_name: string;
   department: Department;
-  specialization: string;
-  skills: [];
-  languages: [];
+  position_name: string;
+  position: Position;
+  skills: SkillMastery[];
+  languages: UserLanguages[];
 }
 export interface ProfileInput {
   first_name: string;
   last_name: string;
   departmentId: string;
-  specialization: string;
-  skills: string[];
-  languages: string[];
+  positionId: string;
+  skills: SkillMastery[];
+  languages: UserLanguages[];
 }

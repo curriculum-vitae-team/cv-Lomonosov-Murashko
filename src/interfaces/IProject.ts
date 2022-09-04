@@ -1,3 +1,5 @@
+import { Skills } from "@graphql/Skills/Skills.interface";
+
 export interface IProjectCore {
   id: string;
   internalName: string;
@@ -8,7 +10,7 @@ export interface IProjectCore {
 
 export interface IProject extends IProjectCore {
   teamSize: number;
-  techStack: string; // TODO: replace with entities
+  techStack: Skills[]; // TODO: replace with entities
   domain: string;
   description: string;
 }

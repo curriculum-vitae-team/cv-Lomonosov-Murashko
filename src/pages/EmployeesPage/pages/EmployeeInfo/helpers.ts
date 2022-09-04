@@ -11,7 +11,7 @@ export function getEmployeeInfo<T extends UserInfo>(
     lastName: user.profile.last_name,
     email: user.email,
     departmentId: user.profile.department?.id || "Unknown",
-    specialization: user.profile.specialization || "Unknown",
+    specialization: user.profile.position_name || "Unknown",
     id: user.id,
   };
 }

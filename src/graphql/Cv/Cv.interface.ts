@@ -14,7 +14,7 @@ export interface CvFullInfo {
   cv: {
     name: string;
     projects: ProjectFullInfo[];
-    skills: Skills[];
+    skills: SkillMastery[];
     languages: CvLanguagesInfo[];
     user: UserFullInfo;
   };
@@ -112,7 +112,7 @@ export interface CvLanguagesInfo {
   proficiency: string;
 }
 
-export interface Skills {
+export interface SkillMastery {
   skill_name: string;
   mastery: string;
 }

@@ -1,7 +1,7 @@
 import {
   CvLanguagesInfo,
   ProjectFullInfo,
-  Skills,
+  SkillMastery,
 } from "@graphql/Cv/Cv.interface";
 import { UserFullInfo } from "@graphql/User/User.interface";
 
@@ -10,7 +10,7 @@ export type PdfViewerProps = {
     name: string;
     languages: CvLanguagesInfo[];
     projects: ProjectFullInfo[];
-    skills: Skills[];
+    skills: SkillMastery[];
     user: UserFullInfo;
   };
   variant?: number;
