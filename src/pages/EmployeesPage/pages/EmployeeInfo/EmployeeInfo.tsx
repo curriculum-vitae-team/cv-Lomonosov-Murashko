@@ -18,13 +18,15 @@ import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
+import { resetEmployee } from "./helpers";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
+  const { control, handleSubmit, reset } = useForm<UserInfo>({
     defaultValues: {
       id: "",
       profile: {
@@ -34,9 +36,23 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           id: "",
           name: "",
         },
-        position: { id: "" },
+        position: { id: "", name: "" },
         skills: [],
         languages: [],
+      },
+      cvs: {
+        id: "",
+        name: "",
+        description: "",
+        projects: {
+          id: "",
+          name: "",
+          internal_name: "",
+          domain: "",
+          start_date: "",
+          end_date: "",
+          tech_stack: [],
+        },
       },
     },
   });
@@ -50,7 +66,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       id: employeeId,
     },
     onCompleted: (data) => {
-      reset(data.user);
+      reset(resetEmployee(data.user));
     },
     onError: (error) => {
       setToastError(error.message);
@@ -69,10 +85,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    // TODO: delete `= []` constructions later    
+    // TODO: delete `= []` constructions later
     const {
       first_name,
       last_name,
@@ -94,10 +108,13 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
             languages, // TODO: Replace with entities input
             skills, // TODO: Replace with entities input
           },
+          cvsIds: [],
         },
       },
     });
   };
+
+  console.log(data);
 
   const onCancel: React.MouseEventHandler = (e) => {
     navigate(ROUTE.EMPLOYEES);
@@ -138,8 +155,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         <Fieldset
           control={control}
           required="Please, specify the field"
-          label="Position"
-          name="profile.position_name"
+          label="Position ID"
+          name="profile.position.id"
         />
       </InfoFormWrapper>
       <DialogActions>

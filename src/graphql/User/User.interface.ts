@@ -2,6 +2,8 @@
 
 import { SkillMastery } from "../Cv/Cv.interface";
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
+import { ProjectInfo } from "../Project/Project.interface";
+import { Skills } from "../Skills/Skills.interface";
 
 export interface UsersData {
   users: User[];
@@ -64,7 +66,7 @@ export interface CreateUserInput {
       skills: string[];
       languages: string[];
     };
-    cvsId: string[];
+    cvsIds: string[];
   };
 }
 
@@ -88,6 +90,7 @@ export interface UserInfo {
   id: string;
   email: string;
   role: string;
+  cvs: UserCvs;
   profile: Profile;
 }
 
@@ -110,4 +113,13 @@ export interface UserFullInfo {
 export interface UserLanguages {
   language_name: string;
   proficiency: string;
+}
+
+export interface UserCvs {
+  id: string;
+  name: string;
+  description: string;
+  projects: ProjectInfo;
+  skills: Skills;
+  languages: UserLanguages;
 }

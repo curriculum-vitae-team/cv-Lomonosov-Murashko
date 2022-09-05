@@ -15,9 +15,8 @@ import { useSearchParams } from "react-router-dom";
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
-
   const [error, setError] = useState("");
-
+  const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
 
   const { data: userData, loading } = useQuery<UserCvsData>(GET_USER_CVS, {
@@ -59,7 +58,6 @@ export const EmployeeCv = () => {
     },
   });
 
-  const [active, setActive] = useState("-1");
 
   const navigate = useNavigate();
 
