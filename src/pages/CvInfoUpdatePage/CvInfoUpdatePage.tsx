@@ -21,11 +21,15 @@ export const CvInfoUpdatePage = () => {
     refetch();
   };
 
-  return loading ? (
-    <Loader />
-  ) : error ? (
-    <InlineError message={error.message} tryAgainFn={handleTryAgain} />
-  ) : (
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <InlineError message={error.message} tryAgainFn={handleTryAgain} />;
+  }
+
+  return (
     data.cv && (
       <PageWrapper>
         <PageTop>
