@@ -111,27 +111,23 @@ export const CvInfoUpdate = memo(() => {
     refetch();
   };
 
-  return (
-    <>
-      {getCvInfoLoading || saveCvLoading ? (
-        <Loader />
-      ) : error ? (
-        <InlineError
-          message="Something went wrong when trying to fetch form data"
-          tryAgainFn={handleTryAgain}
+  return getCvInfoLoading || saveCvLoading ? (
+    <Loader />
+  ) : error ? (
+    <InlineError
+      message="Something went wrong when trying to fetch form data"
+      tryAgainFn={handleTryAgain}
+    />
+  ) : (
+    cvInput && (
+      <>
+        <CvInfo
+          cv={cvInput}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          onAddProject={handleAddProject}
         />
-      ) : (
-        cvInput && (
-          <>
-            <CvInfo
-              cv={cvInput}
-              onSubmit={handleSubmit}
-              onCancel={handleCancel}
-              onAddProject={handleAddProject}
-            />
-          </>
-        )
-      )}
-    </>
+      </>
+    )
   );
 });
