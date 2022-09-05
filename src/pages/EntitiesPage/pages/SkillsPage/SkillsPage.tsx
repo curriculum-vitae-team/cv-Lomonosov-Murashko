@@ -82,11 +82,9 @@ export const SkillsPage = () => {
         message?: string[];
       };
 
-      if (response && typeof response === "object" && "message" in response) {
-        setToastError(
-          (response.message && response.message[0]) || "Something went wrong",
-        );
-      }
+      setToastError(
+        (response?.message && response.message[0]) || "Something went wrong",
+      );
     },
   });
 
