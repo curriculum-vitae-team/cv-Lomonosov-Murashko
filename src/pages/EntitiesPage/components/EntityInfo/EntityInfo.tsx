@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { WrapperDiv, StyledButtonWrapper } from "./EntityInfo.styles";
+import { WrapperDiv, StyledButtonWrapper } from "../../EntitiesPage.styles";
 import { InfoItem } from "@components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
