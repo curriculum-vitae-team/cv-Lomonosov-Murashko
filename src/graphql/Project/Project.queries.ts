@@ -32,6 +32,7 @@ export const GET_PROJECT_INFO = gql`
         id
         name
       }
+      team_size
     }
   }
 `;
@@ -42,7 +43,7 @@ export const GET_PROJECT_NAME = gql`
       name
     }
   }
-`
+`;
 
 export const DELETE_PROJECT = gql`
   mutation DeleteProject($id: ID!) {
@@ -50,7 +51,7 @@ export const DELETE_PROJECT = gql`
       affected
     }
   }
-`
+`;
 
 export const UPDATE_PROJECT = gql`
   mutation UpdateProject($id: ID!, $project: ProjectInput!) {
@@ -62,6 +63,7 @@ export const UPDATE_PROJECT = gql`
       domain
       start_date
       end_date
+      team_size
       tech_stack {
         id
         name
@@ -80,6 +82,7 @@ export const CREATE_PROJECT = gql`
       domain
       start_date
       end_date
+      team_size
       tech_stack {
         id
         name

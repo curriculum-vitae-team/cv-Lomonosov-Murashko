@@ -20,13 +20,9 @@ import { CvInfo } from "../CvInfo/CvInfo";
 
 export const CvInfoUpdatePage = memo(() => {
   const { cvId } = useParams();
-
   const [error, setError] = useState("");
-
   const { pathname } = useLocation();
-
   const [cvInput, setCvInput] = useState<CvInput | null>(null);
-
   const { setToastError } = useErrorToast();
 
   const {
@@ -53,6 +49,9 @@ export const CvInfoUpdatePage = memo(() => {
         description,
         userId: user?.id,
         projectsIds: projects.map((p) => p.id),
+        skills: [],
+        languages: [],
+        is_template: false,
       });
     }
   }, [cvInfoData]);
@@ -72,7 +71,7 @@ export const CvInfoUpdatePage = memo(() => {
   const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<CvInput> = useCallback(
-    (data) => {      
+    (data) => {
       const { name, description, projectsIds } = data;
 
       saveCv({
@@ -82,6 +81,9 @@ export const CvInfoUpdatePage = memo(() => {
             name,
             description,
             projectsIds,
+            skills: [],
+            languages: [],
+            is_template: false,
           },
         },
         optimisticResponse: {
@@ -91,6 +93,9 @@ export const CvInfoUpdatePage = memo(() => {
             id: cvId!,
             projects: [],
             user: cvInfoData?.cv.user || null,
+            skills: [],
+            languages: [],
+            is_template: false,
           },
         },
       });

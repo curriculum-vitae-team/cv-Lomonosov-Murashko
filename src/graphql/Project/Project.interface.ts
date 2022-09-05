@@ -58,10 +58,12 @@ export interface ProjectInput {
   domain: string;
   start_date: string;
   end_date: string | null;
-  tech_stack: Skills[];
+  team_size: number;
+  skillsIds: string[];
 }
 
 export interface ProjectInfo {
+  id: string;
   name: string;
   internal_name: string;
   description: string;
@@ -69,7 +71,7 @@ export interface ProjectInfo {
   start_date: string;
   end_date: string;
   tech_stack: Skills[] | null;
-  id: string;
+  team_size: number;
 }
 
 /* For table */

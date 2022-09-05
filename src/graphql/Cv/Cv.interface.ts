@@ -1,6 +1,5 @@
 /* Queries */
-
-import { UserFullInfo } from "../User/User.interface";
+import { UserFullInfo, UserLanguages } from "../User/User.interface";
 
 export interface CvsData {
   cvs: Cv[];
@@ -81,6 +80,9 @@ export interface CvInput {
   description: string;
   userId?: string;
   projectsIds: string[];
+  skills: SkillMastery[];
+  languages: UserLanguages[];
+  is_template: boolean;
 }
 
 export interface CvInfo {
@@ -91,6 +93,9 @@ export interface CvInfo {
   user: null | {
     id: string;
   };
+  skills: SkillMastery[];
+  languages: UserLanguages[];
+  is_template: boolean;
 }
 
 interface ProjectPart {

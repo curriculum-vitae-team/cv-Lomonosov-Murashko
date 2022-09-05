@@ -14,7 +14,7 @@ import {
   UpdateProjectOutput,
 } from "@graphql/Project/Project.interface";
 import { format } from "date-fns";
-import { ProjectInfoForm } from "../../components/ProjectInfoForm/ProjectInfoForm";
+import { ProjectInfoForm } from "../../components/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
 
 export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
@@ -22,7 +22,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   const [fetchError, setFetchError] = useState("");
   const navigate = useNavigate();
 
-  const { data } = useQuery<ProjectInfoData>(GET_PROJECT_INFO, {
+  const { data: projectData } = useQuery<ProjectInfoData>(GET_PROJECT_INFO, {
     variables: {
       id: projectId,
     },
@@ -58,9 +58,12 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
             internal_name: data.internalName,
             description: data.description,
             domain: data.domain,
-            start_date: format(Number(data.startDate), "yyyy-MM-dd"),
-            end_date: format(Number(data.endDate), "yyyy-MM-dd"),
-            tech_stack: data.techStack,
+            start_date: format(new Date(data.startDate), "yyyy-MM-dd"),
+            end_date: data.endDate
+              ? format(new Date(data.endDate), "yyyy-MM-dd")
+              : null,
+            team_size: data.teamSize,
+            skillsIds: [], // TODO: replace with entities
           },
         },
       });
@@ -75,7 +78,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
       ) : fetchError ? (
         fetchError
       ) : (
-        <ProjectInfoForm data={data} onSubmit={onSubmit} />
+        <ProjectInfoForm data={projectData} onSubmit={onSubmit} />
       )}
     </>
   );

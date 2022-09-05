@@ -114,8 +114,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     });
   };
 
-  console.log(data);
-
   const onCancel: React.MouseEventHandler = (e) => {
     navigate(ROUTE.EMPLOYEES);
   };

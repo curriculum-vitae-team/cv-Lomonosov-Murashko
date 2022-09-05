@@ -23,6 +23,7 @@ export const ProjectInfoForm = memo(
         endDate: "",
         domain: "",
         description: "",
+        teamSize: 0,
       },
     });
 
@@ -86,6 +87,13 @@ export const ProjectInfoForm = memo(
             control={control}
             name="description"
           />
+          <Fieldset
+            required="Please, specify the field"
+            label="Team size"
+            control={control}
+            name="teamSize"
+          />
+          {/* TODO: add skills here */}
         </InfoFormWrapper>
 
         <DialogActions>
