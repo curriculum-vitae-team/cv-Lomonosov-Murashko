@@ -13,11 +13,6 @@ import { Link } from "react-router-dom";
 export const List = ({ items }: ListProps) => {
   const [filter, setFilter] = useState("");
 
-  const filterFn = useCallback(
-    (item: ListItemType) => item.name.startsWith(filter),
-    [filter],
-  );
-
   const handleFilter = useCallback((query: string) => {
     setFilter(query);
   }, []);
@@ -26,17 +21,19 @@ export const List = ({ items }: ListProps) => {
     <Stack>
       <SearchBox onQuery={handleFilter} queryValue={filter} />
       <MuiList>
-        {items.filter(filterFn).map((item) => (
-          <ListItem key={item.name} disablePadding>
-            {item.link ? (
-              <ListItemButton component={Link} to={item.link}>
+        {items
+          .filter((item: ListItemType) => item.name.startsWith(filter))
+          .map((item) => (
+            <ListItem key={item.name} disablePadding>
+              {item.link ? (
+                <ListItemButton component={Link} to={item.link}>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              ) : (
                 <ListItemText primary={item.name} />
-              </ListItemButton>
-            ) : (
-              <ListItemText primary={item.name} />
-            )}
-          </ListItem>
-        ))}
+              )}
+            </ListItem>
+          ))}
       </MuiList>
     </Stack>
   );
