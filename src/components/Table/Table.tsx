@@ -66,8 +66,7 @@ export function Table({
         onSortByChange={handleSortByChange}
         gridXS={12 / head.length}
       />
-      {[...items]
-        .sort(byColumn<IEntryData>(sortBy, isSortAsc))
+      {items
         .filter(
           filter
             ? (item) =>
@@ -76,6 +75,7 @@ export function Table({
                 )
             : (item) => item,
         )
+        .sort(byColumn<IEntryData>(sortBy, isSortAsc))
         .map((item) => (
           <TableRowComponent
             redirectButtonText={redirectButtonText}
