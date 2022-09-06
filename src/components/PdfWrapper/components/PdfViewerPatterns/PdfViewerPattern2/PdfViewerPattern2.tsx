@@ -24,14 +24,11 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
           <Image style={styles.redLineCenter} src={redLine}></Image>
           <Text style={styles.contacts}>{"Email: " + user?.email}</Text>2
           <Text style={styles.subtitle}>Programming Technologies</Text>
-          {/* {user?.profile?.skills.map((skill) => (
+          {user?.profile?.skills.map((skill) => (
             <Text key={skill.skill_name} style={styles.text}>
               {skill?.skill_name + "  ~  " + skill?.mastery}
             </Text>
-          ))} */}
-          <Text style={styles.text}>React - Advanced</Text>
-          <Text style={styles.text}>React - Advanced</Text>
-          <Text style={styles.text}>React - Advanced</Text>
+          ))}
           <div>
             <Text style={styles.subtitle}>Language proficiency</Text>
             {user?.profile?.languages.map((language) => (
