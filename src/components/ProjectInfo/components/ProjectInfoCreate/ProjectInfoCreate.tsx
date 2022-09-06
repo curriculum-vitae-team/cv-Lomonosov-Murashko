@@ -34,11 +34,11 @@ export const ProjectInfoCreate = () => {
             internal_name: data.internalName,
             description: data.description,
             domain: data.domain,
-            start_date: format(Number(data.startDate), "yyyy-MM-dd"),
+            start_date: format(new Date(data.startDate), "yyyy-MM-dd"),
             end_date: data.endDate
-              ? format(Number(data.endDate), "yyyy-MM-dd")
+              ? format(new Date(data.endDate), "yyyy-MM-dd")
               : null,
-            team_size: data.teamSize,
+            team_size: Number(data.teamSize),
             skillsIds: [], //TODO: replace with entities
           },
         },

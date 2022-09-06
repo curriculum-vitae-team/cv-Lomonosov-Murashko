@@ -130,3 +130,31 @@ export const DELETE_USER = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+  mutation CreateUser($user: CreateUserInput!) {
+    createUser(user: $user) {
+      id
+      email
+      profile {
+        first_name
+        last_name
+        position_name
+        position {
+          name
+          id
+        }
+        department {
+          name
+          id
+        }
+        languages {
+          language_name
+        }
+        skills {
+          skill_name
+        }
+      }
+    }
+  }
+`;

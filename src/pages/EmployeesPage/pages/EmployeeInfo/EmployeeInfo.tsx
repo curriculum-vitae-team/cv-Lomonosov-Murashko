@@ -23,7 +23,6 @@ import { resetEmployee } from "./helpers";
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const { setToastError } = useErrorToast();
 
   const { control, handleSubmit, reset } = useForm<UserInfo>({

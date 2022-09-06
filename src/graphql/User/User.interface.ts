@@ -62,17 +62,16 @@ export interface CreateUserInput {
       first_name: string;
       last_name: string;
       departmentId: string;
-      position_name: string;
-      skills: string[];
-      languages: string[];
+      positionId: string;
+      skills: SkillMastery[];
+      languages: UserLanguages[];
     };
     cvsIds: string[];
   };
 }
 
 export interface CreateUserOutput {
-  id: string;
-  email: string;
+  user: UserInfo;
 }
 /* Parts */
 

@@ -19,6 +19,7 @@ export enum ROUTE {
   PDF_PATTERNS = "/pdf-patterns",
   RESET_PASSWORD = "/reset-password",
   EMPLOYEES = "/employees",
+  ADD_EMPLOYEE = "/employees/create-employee",
   TARGET_EMPLOYEE = "/employees/:employeeId",
   PROJECTS = "/projects",
   ADD_PROJECT = "/projects/create-project",
