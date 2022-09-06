@@ -18,13 +18,14 @@ import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
+import { resetEmployee } from "./helpers";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset, getValues } = useForm<UserInfo>({
+  const { control, handleSubmit, reset } = useForm<UserInfo>({
     defaultValues: {
       id: "",
       profile: {
@@ -49,8 +50,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     variables: {
       id: employeeId,
     },
-    onCompleted: (data) => {
-      reset(data.user);
+    onCompleted: (data) => {      
+      reset(resetEmployee(data.user));
     },
     onError: (error) => {
       setToastError(error.message);
@@ -69,7 +70,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
     // TODO: delete `= []` constructions later
@@ -115,49 +115,45 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       tryAgainFn={handleTryAgain}
     />
   ) : (
-    <>
-      {Object.values(getValues()).every((key) => !!key) && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InfoFormWrapper>
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="First Name"
-              name="profile.first_name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Last Name"
-              name="profile.last_name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Department ID"
-              name="profile.department.id"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Specialization"
-              name="profile.specialization"
-            />
-          </InfoFormWrapper>
-          <DialogActions>
-            <SaveButtonWithAdminAccess />
-            <Button
-              onClick={onCancel}
-              type="reset"
-              value="Cancel"
-              variant="outlined"
-              color="info"
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </form>
-      )}
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InfoFormWrapper>
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="First Name"
+          name="profile.first_name"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Last Name"
+          name="profile.last_name"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Department ID"
+          name="profile.department.id"
+        />
+        <Fieldset
+          control={control}
+          required="Please, specify the field"
+          label="Specialization"
+          name="profile.specialization"
+        />
+      </InfoFormWrapper>
+      <DialogActions>
+        <SaveButtonWithAdminAccess />
+        <Button
+          onClick={onCancel}
+          type="reset"
+          value="Cancel"
+          variant="outlined"
+          color="info"
+        >
+          Cancel
+        </Button>
+      </DialogActions>
+    </form>
   );
 });

@@ -8,6 +8,7 @@ export interface Profile {
   skills: [];
   languages: [];
 }
+
 export interface ProfileInput {
   first_name: string;
   last_name: string;
