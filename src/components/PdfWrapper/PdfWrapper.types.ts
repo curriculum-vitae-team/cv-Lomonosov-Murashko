@@ -1,4 +1,4 @@
 export type PdfWrapperProps = {
   onClose?: () => void;
-  variant?: number;
+  variant?: string;
 };

@@ -18,6 +18,7 @@ export const EmployeeCv = () => {
   const [error, setError] = useState("");
   const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const { data: userData, loading } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
@@ -27,7 +28,6 @@ export const EmployeeCv = () => {
       if (firstCv && (firstCv.id === cvId || !cvId)) {
         const cvToOpen = searchParams.get("opencv") || firstCv.id;
         setActive(cvToOpen);
-        navigate(cvToOpen);
       } else {
         setActive(cvId || "-1");
       }
@@ -59,7 +59,6 @@ export const EmployeeCv = () => {
   });
 
 
-  const navigate = useNavigate();
 
   const handleActive = (activeId: string) => {
     setActive(activeId);

@@ -48,4 +48,10 @@ export const styles = StyleSheet.create({
   project: {
     margin: "10px 0",
   },
+  flex: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+  },
 });

@@ -14,7 +14,7 @@ import { PdfWrapperProps } from "./PdfWrapper.types";
 export function PdfWrapper({ variant }: PdfWrapperProps) {
   const { cvId } = useParams();
   const [error, setError] = useState("");
-  const { data, refetch } = useQuery<CvFullInfo>(GET_FULL_CV_INFO, {
+  const { data } = useQuery<CvFullInfo>(GET_FULL_CV_INFO, {
     variables: {
       id: cvId,
     },

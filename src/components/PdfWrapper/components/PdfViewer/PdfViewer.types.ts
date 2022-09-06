@@ -13,5 +13,5 @@ export type PdfViewerProps = {
     skills: SkillMastery[];
     user: UserFullInfo;
   };
-  variant?: number;
+  variant?: string;
 };

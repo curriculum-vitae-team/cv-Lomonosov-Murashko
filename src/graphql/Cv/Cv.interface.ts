@@ -1,4 +1,5 @@
 /* Queries */
+import { Skills } from "../Skills/Skills.interface";
 import { UserFullInfo, UserLanguages } from "../User/User.interface";
 
 export interface CvsData {
@@ -107,6 +108,8 @@ interface ProjectPart {
 export interface ProjectFullInfo {
   start_date: string;
   end_date: string;
+  team_size: number;
+  tech_stack: Skills[];
   name: string;
   internal_name: string;
   description: string;

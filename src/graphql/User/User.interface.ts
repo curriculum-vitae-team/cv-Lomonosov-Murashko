@@ -103,6 +103,7 @@ export interface UserProfile {
   full_name: string;
   skills: SkillMastery[];
   languages: UserLanguages[];
+  position_name: string;
 }
 
 export interface UserFullInfo {
