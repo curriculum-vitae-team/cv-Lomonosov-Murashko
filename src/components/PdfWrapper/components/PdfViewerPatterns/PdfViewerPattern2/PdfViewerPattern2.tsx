@@ -5,7 +5,7 @@ import innoLogo from "@assets/images/innoLogo.png";
 import redLine from "@assets/images/redLine.png";
 
 export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
-  const { name, user, projects, languages, skills } = data;
+  const { user, projects, languages, skills } = data;
 
   return (
     <Page size="A4" style={styles.page}>
@@ -28,7 +28,12 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
             <Text key={skill.skill_name} style={styles.text}>
               {skill?.skill_name + "  ~  " + skill?.mastery}
             </Text>
-          ))}
+          )) ||
+            skills.map((skill) => (
+              <Text key={skill.skill_name} style={styles.text}>
+                {skill?.skill_name + "  ~  " + skill?.mastery}
+              </Text>
+            ))}
           <div>
             <Text style={styles.subtitle}>Language proficiency</Text>
             {user?.profile?.languages.map((language) => (
@@ -37,7 +42,14 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
                   "  ~  " +
                   language?.proficiency.toUpperCase()}
               </Text>
-            ))}
+            )) ||
+              languages.map((language) => (
+                <Text key={language.language_name} style={styles.text}>
+                  {language?.language_name +
+                    "  ~  " +
+                    language?.proficiency.toUpperCase()}
+                </Text>
+              ))}
           </div>
           <Image style={styles.redLineRight} src={redLine}></Image>
         </View>
@@ -53,6 +65,7 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
               <Text style={styles.text}>
                 {project?.start_date + " ~ " + project?.end_date}
               </Text>
+              <Text style={styles.text}>Team Size ~ {project?.team_size}</Text>
               <Text style={styles.subtitle}>Project Stack</Text>
               {project?.tech_stack?.map((tech) => (
                 <Text style={styles.text}>{tech?.name}</Text>

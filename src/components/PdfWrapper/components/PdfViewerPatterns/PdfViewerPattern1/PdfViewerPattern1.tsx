@@ -5,8 +5,8 @@ import redLine from "@assets/images/redLine.png";
 import { PdfViewerProps } from "../../PdfViewer/PdfViewer.types";
 
 export const PdfViewerPattern1 = ({ data }: PdfViewerProps) => {
-  const { name, user, projects, languages, skills } = data;
-  
+  const { user, projects, languages, skills } = data;
+
   return (
     <Page size="A4" style={styles.page}>
       <View style={styles.sectionLeft}>
@@ -67,6 +67,10 @@ export const PdfViewerPattern1 = ({ data }: PdfViewerProps) => {
                 {"Team size: " + project.team_size}
               </Text>
             </div>
+            <Text style={styles.text}>Tech Stack</Text>
+            {project?.tech_stack?.map((tech) => (
+              <Text style={styles.text}>{tech?.name}</Text>
+            ))}
             <Text style={styles.text}>{project.description}</Text>
             <Text style={styles.subtitle}>
               {project?.tech_stack?.map((tech) => (

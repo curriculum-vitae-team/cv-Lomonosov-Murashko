@@ -44,6 +44,8 @@ export const CvInfoUpdatePage = memo(() => {
     if (cvInfoData) {
       const { name, description, user, projects } = cvInfoData.cv;
 
+      console.log("user id", user?.id);
+
       setCvInput({
         name,
         description,
@@ -92,7 +94,7 @@ export const CvInfoUpdatePage = memo(() => {
             description,
             id: cvId!,
             projects: [],
-            user: cvInfoData?.cv.user || null,
+            user: null, // TODO: user can assign cv to himself only, admin to everyone
             skills: [],
             languages: [],
             is_template: false,
