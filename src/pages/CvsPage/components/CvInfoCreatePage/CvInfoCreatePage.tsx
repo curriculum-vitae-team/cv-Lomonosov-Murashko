@@ -27,16 +27,18 @@ export const CvInfoCreatePage = () => {
 
   const onSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
+      console.log(data);
+      
       createCv({
         variables: {
           cv: {
-            name: "",
-            description: "",
-            userId: "",
+            name: data.name,
+            description: data.description,
+            userId: data.userId,
             projectsIds: [],
             skills: [],
             languages: [],
-            is_template: false,
+            is_template: data.is_template,
           },
         },
         update: createCvCacheUpdate(),

@@ -1,13 +1,12 @@
-import { useState } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { ROUTE } from "@constants/route";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { CvCreateInfoFormProps } from "./CvCreateInfoForm.types";
 import { ErrorToast } from "@components/ErrorToast";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
-import { Button, Checkbox, DialogActions, FormControlLabel } from "@mui/material";
+import { Button, Checkbox, DialogActions } from "@mui/material";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { FormContolLabelWrapper } from "./CvCreateInfoForm.styles";
 
@@ -16,11 +15,6 @@ export const CvCreateInfoForm = ({
   error,
 }: CvCreateInfoFormProps) => {
   const navigate = useNavigate();
-  const [isTemplate, setIsTemplate] = useState(false);
-
-  const handleTemplateFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsTemplate(e.target.checked);
-  };
 
   const { control, handleSubmit } = useForm<CvInput>({
     defaultValues: {
@@ -62,15 +56,15 @@ export const CvCreateInfoForm = ({
           name="userId"
         />
         <FormContolLabelWrapper>
-          <FormControlLabel
-            control={
+          <Controller
+            name="is_template"
+            control={control}
+            render={({ field }) => (
               <Checkbox
-                checked={isTemplate}
-                onChange={handleTemplateFieldChange}
-                inputProps={{ "aria-label": "controlled" }}
+                onChange={(e) => field.onChange(e.target.checked)}
+                checked={field.value}
               />
-            }
-            label="Use as a template"
+            )}
           />
         </FormContolLabelWrapper>
 
