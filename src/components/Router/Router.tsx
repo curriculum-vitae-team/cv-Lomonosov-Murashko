@@ -23,6 +23,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
 import { EmployeeInfoCreate } from "@pages/EmployeesPage/pages/EmployeeInfo/components/EmployeeInfoCreate";
+import { CvInfoCreatePage } from "@pages/CvsPage/components/CvInfoCreatePage";
 
 export function Router() {
   return (
@@ -61,6 +62,7 @@ export function Router() {
             </Route>
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
+          <Route path={ROUTE.ADD_CV} element={<CvInfoCreatePage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route
             element={

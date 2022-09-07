@@ -25,6 +25,7 @@ export enum ROUTE {
   ADD_PROJECT = "/projects/create-project",
   TARGET_PROJECT = "/projects/:projectId",
   CVS = "/cvs",
+  ADD_CV = "/cvs/create-cv",
   TARGET_CV = "/cvs/:cvId",
   ENTITIES = "/entities",
   ANY_OTHER = "*",

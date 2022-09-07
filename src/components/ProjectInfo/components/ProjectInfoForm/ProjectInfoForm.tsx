@@ -36,7 +36,7 @@ export const ProjectInfoForm = memo(
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
         <InfoFormWrapper>
           <Fieldset
             isFullWidth={true}

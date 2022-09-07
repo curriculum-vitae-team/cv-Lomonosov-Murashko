@@ -1,23 +1,21 @@
-import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { Button, DialogActions } from "@mui/material";
 import { Fieldset } from "@components/Fieldset";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ROUTE } from "@constants/route";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoFormProps } from "./EmployeeCreateInfoForm.types";
 import { IEmployeeCore } from "@interfaces/IEmployee";
+import { ErrorToast } from "@components/ErrorToast";
 
 export const EmployeeCreateInfoForm = ({
   onSubmit,
+  error,
 }: EmployeeCreateInfoFormProps) => {
-  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset } = useForm<IEmployeeCore>({
+  const { control, handleSubmit } = useForm<IEmployeeCore>({
     defaultValues: {
       auth: {
         email: "",
@@ -39,7 +37,9 @@ export const EmployeeCreateInfoForm = ({
     navigate(ROUTE.EMPLOYEES);
   };
 
-  return (
+  return error ? (
+    <ErrorToast message={error} />
+  ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InfoFormWrapper>
         <Fieldset

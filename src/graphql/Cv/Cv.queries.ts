@@ -72,6 +72,8 @@ export const GET_FULL_CV_INFO = gql`
 export const CREATE_CV = gql`
   mutation CreateCv($cv: CvInput!) {
     createCv {
+      name
+      description
       id
     }
   }

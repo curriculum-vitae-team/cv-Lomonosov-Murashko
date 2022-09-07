@@ -7,28 +7,30 @@ import {
 import { CREATE_USER } from "@graphql/User/User.queries";
 import { IEmployeeCore } from "@interfaces/IEmployee";
 import { createUserCacheUpdate } from "@graphql/User/User.cache";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoForm } from "../EmployeeCreateInfoForm";
+import { Loader } from "@src/components/Loader";
 
 export const EmployeeInfoCreate = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-  const [createUser] = useMutation<CreateUserOutput, CreateUserInput>(
-    CREATE_USER,
-    {
-      onCompleted: () => {
-        navigate(ROUTE.EMPLOYEES);
-      },
-      onError: (error) => {
-        console.log(error.message);
-      }
+  const [createUser, { loading: createCvLoading }] = useMutation<
+    CreateUserOutput,
+    CreateUserInput
+  >(CREATE_USER, {
+    onCompleted: () => {
+      navigate(ROUTE.EMPLOYEES);
     },
-  );
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
 
   const onSubmit: SubmitHandler<IEmployeeCore> = useCallback(
-    (data) => {            
+    (data) => {
       createUser({
         variables: {
           user: {
@@ -53,5 +55,9 @@ export const EmployeeInfoCreate = () => {
     [createUser],
   );
 
-  return <EmployeeCreateInfoForm onSubmit={onSubmit} />;
+  return createCvLoading ? (
+    <Loader />
+  ) : (
+    <EmployeeCreateInfoForm error={error} onSubmit={onSubmit} />
+  );
 };
