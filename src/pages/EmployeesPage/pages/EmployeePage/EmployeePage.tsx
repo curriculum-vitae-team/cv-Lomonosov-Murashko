@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Breadcrumb } from "@components/Breadcrumb";
 import { Box, Tabs, Tab } from "@mui/material";
 import { Outlet, useLocation, useParams } from "react-router";
@@ -11,9 +11,14 @@ import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
 import { UserFullnameData } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
+import { validateUserFullName } from "../../helpers";
+import { Loader } from "@components/Loader";
+import { LoaderWrapper } from "./EmployeePage.styles";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
+  const { pathname } = useLocation();
+  const pathnames = pathname.split("/");
 
   const { data, loading } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
     variables: {
@@ -25,20 +30,20 @@ export const EmployeePage = () => {
     setSelectedTab(newValue);
   };
 
-  const { pathname } = useLocation();
-
-  const pathnames = pathname.split("/");
-
   const [selectedTab, setSelectedTab] = useState<number>(
     pathnames.includes("cv") ? 1 : 0,
   );
 
-  const displayedName = data?.user
-    ? data.user.profile.first_name + " " + data.user.profile.last_name
-    : "";
+  const displayedName = data ? validateUserFullName(data) : "";
+
+  useEffect(() => {
+    !pathnames.includes("cv") && setSelectedTab(0);
+  }, [pathnames]);
 
   return loading ? (
-    <>loader</>
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
   ) : (
     <PageWrapper>
       <PageTop>

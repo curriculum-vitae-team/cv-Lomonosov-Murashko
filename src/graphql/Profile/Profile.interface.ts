@@ -12,6 +12,7 @@ export interface Profile {
   skills: SkillMastery[];
   languages: UserLanguages[];
 }
+
 export interface ProfileInput {
   first_name: string;
   last_name: string;
