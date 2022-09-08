@@ -75,10 +75,6 @@ export const EmployeeCv = () => {
     setActive(activeId);
   };
 
-  const handleTryAgain = () => {
-    refetch();
-  };
-
   const handleCvDelete = (id: string) => {
     if (active === id) {
       navigate(`${ROUTE.EMPLOYEES}/${employeeId}/cv/`);
@@ -100,7 +96,12 @@ export const EmployeeCv = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <InlineError message={error} tryAgainFn={handleTryAgain}></InlineError>
+        <InlineError
+          message={error}
+          tryAgainFn={() => {
+            refetch();
+          }}
+        ></InlineError>
       ) : (
         userData?.user.cvs && (
           <>
