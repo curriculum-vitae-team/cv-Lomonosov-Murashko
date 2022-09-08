@@ -34,6 +34,17 @@ export const GET_USERS = gql`
   }
 `;
 
+export const GET_USERS_NAMES_IDS = gql`
+  query GetUsersNamesIds {
+    users {
+      id
+      profile {
+        full_name
+      }
+    }
+  }
+`
+
 export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {

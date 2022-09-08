@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
@@ -11,11 +11,22 @@ import { useCallback, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { createCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 import { CvCreateInfoForm } from "../CvCreateInfoForm";
+import { GET_USERS_NAMES_IDS } from "@graphql/User/User.queries";
+import { UsersNamesIdsData } from "@graphql/User/User.interface";
 
 export const CvInfoCreatePage = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
+  const { data: users, loading } = useQuery<UsersNamesIdsData>(
+    GET_USERS_NAMES_IDS,
+    {
+      onError: (error) => {
+        setError(error.message);
+      },
+    },
+  );
+  
   const [createCv] = useMutation<CreateCvOutput, CreateCvInput>(CREATE_CV, {
     onCompleted: () => {
       navigate(ROUTE.CVS);
@@ -28,7 +39,6 @@ export const CvInfoCreatePage = () => {
   const onSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
       console.log(data);
-      
       createCv({
         variables: {
           cv: {
@@ -47,5 +57,5 @@ export const CvInfoCreatePage = () => {
     [createCv],
   );
 
-  return <CvCreateInfoForm error={error} onSubmit={onSubmit} />;
+  return <CvCreateInfoForm users={users} error={error} onSubmit={onSubmit} />;
 };

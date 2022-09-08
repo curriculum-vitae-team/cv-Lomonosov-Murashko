@@ -1,3 +1,4 @@
+import React from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { ROUTE } from "@constants/route";
 import { Controller, useForm } from "react-hook-form";
@@ -6,13 +7,24 @@ import { CvCreateInfoFormProps } from "./CvCreateInfoForm.types";
 import { ErrorToast } from "@components/ErrorToast";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
-import { Button, Checkbox, DialogActions } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  DialogActions,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
-import { FormContolLabelWrapper } from "./CvCreateInfoForm.styles";
+import {
+  FormContolLabelWrapper,
+  FormContolSelectLabelWrapper,
+} from "./CvCreateInfoForm.styles";
 
 export const CvCreateInfoForm = ({
   onSubmit,
   error,
+  users,
 }: CvCreateInfoFormProps) => {
   const navigate = useNavigate();
 
@@ -49,12 +61,24 @@ export const CvCreateInfoForm = ({
           label="Description"
           name="description"
         />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="User ID"
-          name="userId"
-        />
+        <FormContolSelectLabelWrapper>
+          <Typography sx={{ opacity: "0.7", marginRight: "1em" }}>
+            User
+          </Typography>
+          <Controller
+            name="userId"
+            control={control}
+            render={({ field }) => (
+              <Select {...field}>
+                {users?.users.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user?.profile?.full_name || "Unknown"}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+        </FormContolSelectLabelWrapper>
         <FormContolLabelWrapper>
           <Controller
             name="is_template"
@@ -66,6 +90,7 @@ export const CvCreateInfoForm = ({
               />
             )}
           />
+          <Typography sx={{ opacity: "0.7" }}>Use as a template</Typography>
         </FormContolLabelWrapper>
 
         {/* TODO: Add skills, projectsIds and languages here */}

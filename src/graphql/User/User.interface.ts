@@ -19,6 +19,10 @@ export interface UserCvsData {
   };
 }
 
+export interface UsersNamesIdsData {
+  users: UserNameIds[];
+}
+
 export interface UserFullnameData {
   user: {
     id: string;
@@ -122,4 +126,11 @@ export interface UserCvs {
   projects: ProjectInfo;
   skills: Skills;
   languages: UserLanguages;
+}
+
+export interface UserNameIds {
+  id: string;
+  profile: {
+    full_name: string;
+  };
 }
