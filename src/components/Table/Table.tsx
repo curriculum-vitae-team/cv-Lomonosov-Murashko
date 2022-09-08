@@ -71,7 +71,9 @@ export function Table({
           filter
             ? (item) =>
                 Object.values(item).some(
-                  (key) => typeof key === "string" && key.startsWith(filter),
+                  (key) =>
+                    typeof key === "string" &&
+                    key.toLowerCase().includes(filter.toLowerCase()),
                 )
             : (item) => item,
         )
