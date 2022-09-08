@@ -9,14 +9,18 @@ import { RedirectPage } from "@pages/RedirectPage";
 import { Layout } from "../Layout";
 import { EmployeePage } from "@pages/EmployeesPage/pages/EmployeePage";
 import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
-import { ROUTE, ROUTE_PARAM } from "@constants/route";
+import { ENTITY, ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
-import { CvInfoUpdatePage } from "@pages/CvsPage/components/CvInfoUpdatePage";
+import { CvInfoUpdate } from "@components/CvInfoUpdate";
 import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
 import { Auth } from "@pages/Auth";
+import { CvInfoUpdatePage } from "@pages/CvInfoUpdatePage";
+import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
+import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
+import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
 import { browserHistory } from "@src/browserHistory";
 import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -68,7 +72,21 @@ export function Router() {
               />
             }
           >
-            <Route path={ROUTE.ENTITIES} element={<EntitiesPage />} />
+            <Route path={ROUTE.ENTITIES} element={<EntitiesPage />}>
+              <Route index element={<EntitiesList />} />
+              <Route path={ENTITY.LANGUAGES} element={<LanguagesPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<LanguagesPage />}
+                />
+              </Route>
+              <Route path={ENTITY.SKILLS} element={<SkillsPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<SkillsPage />}
+                />
+              </Route>
+            </Route>
           </Route>
         </Route>
         <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />

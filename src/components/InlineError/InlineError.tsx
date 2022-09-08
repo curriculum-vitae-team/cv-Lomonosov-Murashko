@@ -25,6 +25,7 @@ export const InlineError = ({ message, tryAgainFn }: InlineErrorProps) => {
         sx={{
           border: "2px solid #fafafa",
           padding: "30px",
+          width: "100%",
         }}
       >
         <Typography variant="body1" component="span" textAlign="center">

@@ -1,1 +1,0 @@
-export { CvItem } from "./CvItem";

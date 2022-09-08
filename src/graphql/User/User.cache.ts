@@ -1,9 +1,5 @@
 import { CacheUpdaterFunction } from "src/types";
-import {
-  DeleteUserInput,
-  DeleteUserOutput,
-  UsersData,
-} from "./User.interface";
+import { DeleteUserInput, DeleteUserOutput, UsersData } from "./User.interface";
 import { GET_USERS } from "./User.queries";
 
 export const deleteUserCacheUpdate =
