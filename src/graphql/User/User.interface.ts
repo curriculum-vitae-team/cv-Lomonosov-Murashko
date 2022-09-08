@@ -71,6 +71,7 @@ export interface CreateUserInput {
       languages: UserLanguages[];
     };
     cvsIds: string[];
+    role: string;
   };
 }
 

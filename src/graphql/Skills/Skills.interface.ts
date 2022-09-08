@@ -3,9 +3,3 @@ export interface Skills {
   created_at: string;
   name: string;
 }
-
-export interface Position {
-  id: string;
-  name: string;
-  created_at: string;
-}

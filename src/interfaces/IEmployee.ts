@@ -32,4 +32,5 @@ export interface IEmployeeCore {
     languages: UserLanguages[];
   };
   cvsIds: string[];
+  role: string;
 }

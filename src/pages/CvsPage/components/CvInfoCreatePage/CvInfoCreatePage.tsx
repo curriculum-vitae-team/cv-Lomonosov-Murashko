@@ -26,7 +26,7 @@ export const CvInfoCreatePage = () => {
       },
     },
   );
-  
+
   const [createCv] = useMutation<CreateCvOutput, CreateCvInput>(CREATE_CV, {
     onCompleted: () => {
       navigate(ROUTE.CVS);

@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ROUTE } from "@constants/route";
 import {
   CreateUserInput,
@@ -11,11 +11,30 @@ import { useCallback, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoForm } from "../EmployeeCreateInfoForm";
-import { Loader } from "@src/components/Loader";
+import { Loader } from "@components/Loader";
+import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
+import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
+import { DepartmentsData } from "@graphql/Department/Department.interface";
 
 export const EmployeeInfoCreate = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+
+  const { data: departments } = useQuery<DepartmentsData>(GET_DEPARTMENTS, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const { data: positions } = useQuery<PositionsNamesIdsData>(
+    GET_POSITIONS_NAMES_IDS,
+    {
+      onError: (error) => {
+        setError(error.message);
+      },
+    },
+  );
 
   const [createUser, { loading: createCvLoading }] = useMutation<
     CreateUserOutput,
@@ -30,7 +49,7 @@ export const EmployeeInfoCreate = () => {
   });
 
   const onSubmit: SubmitHandler<IEmployeeCore> = useCallback(
-    (data) => {
+    (data) => {      
       createUser({
         variables: {
           user: {
@@ -47,6 +66,7 @@ export const EmployeeInfoCreate = () => {
               languages: [],
             },
             cvsIds: [],
+            role: data.role
           },
         },
         update: createUserCacheUpdate(),
@@ -58,6 +78,11 @@ export const EmployeeInfoCreate = () => {
   return createCvLoading ? (
     <Loader />
   ) : (
-    <EmployeeCreateInfoForm error={error} onSubmit={onSubmit} />
+    <EmployeeCreateInfoForm
+      positions={positions?.positions}
+      departments={departments?.departments}
+      error={error}
+      onSubmit={onSubmit}
+    />
   );
 };

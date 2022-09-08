@@ -1,17 +1,27 @@
-import { Button, DialogActions } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { Fieldset } from "@components/Fieldset";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ROUTE } from "@constants/route";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoFormProps } from "./EmployeeCreateInfoForm.types";
 import { IEmployeeCore } from "@interfaces/IEmployee";
 import { ErrorToast } from "@components/ErrorToast";
+import { SelectLabelWrapper } from "./EmployeeCreateInfoForm.styles";
+import { ROLES } from "@constants/roles";
 
 export const EmployeeCreateInfoForm = ({
   onSubmit,
   error,
+  positions,
+  departments,
 }: EmployeeCreateInfoFormProps) => {
   const navigate = useNavigate();
 
@@ -30,6 +40,7 @@ export const EmployeeCreateInfoForm = ({
         languages: [],
       },
       cvsIds: [],
+      role: "",
     },
   });
 
@@ -68,18 +79,51 @@ export const EmployeeCreateInfoForm = ({
           label="Last Name"
           name="profile.last_name"
         />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Department ID"
-          name="profile.departmentId"
-        />
-        <Fieldset
-          control={control}
-          required="Please, specify the field"
-          label="Position ID"
-          name="profile.positionId"
-        />
+        <SelectLabelWrapper>
+          <Typography sx={{ opacity: "0.7" }}>Role</Typography>
+          <Controller
+            name="role"
+            control={control}
+            render={({ field }) => (
+              <Select sx={{ minWidth: "12em" }} {...field}>
+                <MenuItem value={ROLES.ADMIN}>{ROLES.ADMIN}</MenuItem>
+                <MenuItem value={ROLES.EMPLOYEE}>{ROLES.EMPLOYEE}</MenuItem>
+              </Select>
+            )}
+          />
+        </SelectLabelWrapper>
+        <SelectLabelWrapper>
+          <Typography sx={{ opacity: "0.7" }}>Departments</Typography>
+          <Controller
+            name="profile.departmentId"
+            control={control}
+            render={({ field }) => (
+              <Select sx={{ minWidth: "12em" }} {...field}>
+                {departments?.map((dep) => (
+                  <MenuItem key={dep.id} value={dep.id}>
+                    {dep.name || "Unknown"}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+        </SelectLabelWrapper>
+        <SelectLabelWrapper>
+          <Typography sx={{ opacity: "0.7" }}>Position</Typography>
+          <Controller
+            name="profile.positionId"
+            control={control}
+            render={({ field }) => (
+              <Select sx={{ minWidth: "12em" }} {...field}>
+                {positions?.map((pos) => (
+                  <MenuItem key={pos.id} value={pos.id}>
+                    {pos.name || "Unknown"}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+        </SelectLabelWrapper>
         {/* TODO: Add skills and languages here */}
       </InfoFormWrapper>
       <DialogActions>

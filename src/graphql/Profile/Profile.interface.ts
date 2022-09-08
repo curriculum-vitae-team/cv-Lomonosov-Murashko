@@ -1,6 +1,6 @@
 import { SkillMastery } from "../Cv/Cv.interface";
 import { Department } from "../Department/Department.interface";
-import { Position } from "../Skills/Skills.interface";
+import { Position } from "../Position/Position.interface";
 import { UserLanguages } from "../User/User.interface";
 
 export interface Profile {
