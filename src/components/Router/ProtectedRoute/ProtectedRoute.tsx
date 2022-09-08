@@ -8,13 +8,12 @@ export type ProtectedRouteProps = RouteProps & {
   guards: GuardFunction[];
 };
 
-export const ProtectedRoute = ({
-  guards,
-  fallback,
-}: ProtectedRouteProps) => {
-  const { user } = useContext(AuthContext);  
+export const ProtectedRoute = ({ guards, fallback }: ProtectedRouteProps) => {
+  const { user } = useContext(AuthContext);
 
-  return (
-    <>{guards.every((guard) => guard(user)) ? <Outlet /> : fallback()}</>
-  );
+  if (user && Object.keys(user).length === 0) {
+    return null;
+  }
+
+  return <>{guards.every((guard) => guard(user)) ? <Outlet /> : fallback()}</>;
 };

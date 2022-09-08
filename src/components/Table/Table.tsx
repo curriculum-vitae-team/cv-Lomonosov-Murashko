@@ -6,6 +6,7 @@ import { StyledGrid } from "./Table.styles";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
 import { IEntryData } from "@interfaces/IEntryData";
+import { SearchBox } from "@components/SearchBox";
 import { ButtonWithAdminAccess } from "./components/TableEntryTypeButton";
 
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
@@ -23,17 +24,20 @@ export function Table({
   deleteButtonText,
   entryType,
   showNewEntryButton,
+  searchBy,
 }: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [isSortAsc, setIsSortAsc] = useState(true);
+
+  const [filter, setFilter] = useState("");
 
   const handleSortByChange = useCallback(
     (columnName: string) => {
       if (columnName === sortBy) {
-        setSortAsc((prev) => !prev);
+        setIsSortAsc((prev) => !prev);
       } else {
         setSortBy(columnName);
-        setSortAsc(true);
+        setIsSortAsc(true);
       }
     },
     [sortBy],
@@ -43,36 +47,53 @@ export function Table({
     onCreate && onCreate();
   };
 
+  const handleQuery = (query: string) => {
+    setFilter(query);
+  };
+
   return (
     <StyledGrid container>
       {showNewEntryButton && (
         <ButtonWithAdminAccess handleNew={handleNew} entryType={entryType} />
       )}
 
+      <SearchBox queryValue={filter} onQuery={handleQuery} />
+
       <TableHeadComponent
         columns={head}
         sortBy={sortBy}
-        sortAsc={sortAsc}
+        sortAsc={isSortAsc}
         onSortByChange={handleSortByChange}
         gridXS={12 / head.length}
       />
-      {[...items].sort(byColumn<IEntryData>(sortBy, sortAsc)).map((item) => (
-        <TableRowComponent
-          redirectButtonText={redirectButtonText}
-          deleteButtonText={deleteButtonText}
-          onDelete={onDelete}
-          key={item.id}
-          id={item.id}
-        >
-          {head.map(({ columnKey }) => (
-            <TableRowItem
-              key={columnKey}
-              value={item[columnKey]}
-              gridXS={12 / head.length}
-            />
-          ))}
-        </TableRowComponent>
-      ))}
+      {items
+        .filter(
+          filter
+            ? (item) =>
+                item[searchBy]
+                  .toString()
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())
+            : (item) => item,
+        )
+        .sort(byColumn<IEntryData>(sortBy, isSortAsc))
+        .map((item) => (
+          <TableRowComponent
+            redirectButtonText={redirectButtonText}
+            deleteButtonText={deleteButtonText}
+            onDelete={onDelete}
+            key={item.id}
+            id={item.id}
+          >
+            {head.map(({ columnKey }) => (
+              <TableRowItem
+                key={columnKey}
+                value={item[columnKey]}
+                gridXS={12 / head.length}
+              />
+            ))}
+          </TableRowComponent>
+        ))}
     </StyledGrid>
   );
 }

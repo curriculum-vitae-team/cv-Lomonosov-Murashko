@@ -72,6 +72,7 @@ export function Router() {
               />
             }
           >
+            <Route index element={<RedirectPage to={ROUTE.ENTITIES} />} />
             <Route path={ROUTE.ENTITIES} element={<EntitiesPage />}>
               <Route index element={<EntitiesList />} />
               <Route path={ENTITY.LANGUAGES} element={<LanguagesPage />}>

@@ -54,7 +54,7 @@ export const ProjectsPage = () => {
         update: deleteProjectCacheUpdate(id),
       });
     },
-    [deleteProject]
+    [deleteProject],
   );
 
   const handleCreate = useCallback(() => {
@@ -82,6 +82,7 @@ export const ProjectsPage = () => {
                 deleteButtonText="Delete"
                 entryType={TableEntry.PROJECT}
                 showNewEntryButton={true}
+                searchBy="name"
               />
             )}
       </PageBody>

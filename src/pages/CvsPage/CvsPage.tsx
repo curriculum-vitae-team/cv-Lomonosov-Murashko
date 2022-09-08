@@ -86,6 +86,7 @@ export const CvsPage = () => {
               deleteButtonText="Delete"
               entryType={TableEntry.CV}
               showNewEntryButton={true}
+              searchBy="name"
             />
           )
         )}
