@@ -146,23 +146,21 @@ export const LanguagesPage = () => {
       ) : (
         <>
           <div className="sidebar">
-            {data &&
-              data.languages &&
-              data.languages.map((entry: Language, index: number) => {
-                return (
-                  <div
-                    className={active === entry.id ? "active" : ""}
-                    key={entry.id}
-                    onClick={() => handleActive(entry.id)}
-                  >
-                    <InfoItem
-                      name={entry.name}
-                      id={entry.id}
-                      onDelete={handleEntryDelete}
-                    />
-                  </div>
-                );
-              })}
+            {data?.languages?.map((entry: Language, index: number) => {
+              return (
+                <div
+                  className={active === entry.id ? "active" : ""}
+                  key={entry.id}
+                  onClick={() => handleActive(entry.id)}
+                >
+                  <InfoItem
+                    name={entry.name}
+                    id={entry.id}
+                    onDelete={handleEntryDelete}
+                  />
+                </div>
+              );
+            })}
             <StyledButtonWrapper>
               <Button>
                 <AddIcon />

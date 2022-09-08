@@ -141,23 +141,21 @@ export const SkillsPage = () => {
       ) : (
         <>
           <div className="sidebar">
-            {data &&
-              data.skills &&
-              data.skills.map((entry: Skill, index: number) => {
-                return (
-                  <div
-                    className={active === entry.id ? "active" : ""}
-                    key={entry.id}
-                    onClick={() => handleActive(entry.id)}
-                  >
-                    <InfoItem
-                      name={entry.name}
-                      id={entry.id}
-                      onDelete={handleEntryDelete}
-                    />
-                  </div>
-                );
-              })}
+            {data?.skills?.map((entry: Skill, index: number) => {
+              return (
+                <div
+                  className={active === entry.id ? "active" : ""}
+                  key={entry.id}
+                  onClick={() => handleActive(entry.id)}
+                >
+                  <InfoItem
+                    name={entry.name}
+                    id={entry.id}
+                    onDelete={handleEntryDelete}
+                  />
+                </div>
+              );
+            })}
             <StyledButtonWrapper>
               <Button>
                 <AddIcon />
