@@ -6,7 +6,7 @@ export const StyledDiv = styled("div")({
   margin: "1em 0",
   "&.active": {
     borderBottom: "2px solid #1890FF",
-    "& a": {
+    "& a, & div": {
       color: "#1890FF",
     },
   },
@@ -18,4 +18,13 @@ export const StyledLink = styled(Link)({
   alignItems: "center",
   color: "#000",
   padding: "0 0.5em",
+});
+
+export const StyledEntry = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  color: "#000",
+  padding: "0 0.5em",
+  cursor: "pointer",
 });

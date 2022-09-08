@@ -9,7 +9,7 @@ export const WrapperDiv = styled("div")({
   "& .sidebar": {
     marginRight: "0.5em",
   },
-  "& div.active > div > a": {
+  "& div.active a": {
     color: "#1890FF",
     borderBottom: "2px solid #1890FF",
     padding: "0 0.5em 0.5em 0.5em",

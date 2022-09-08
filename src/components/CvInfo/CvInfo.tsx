@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { ButtonWrapper, StyledDialogActions } from "./CvInfo.styles";
+import { ICV } from "@interfaces/ICV";
+import { ButtonWrapper } from "./CvInfo.styles";
+import { StyledDialogActions } from "../styled/StyledDialogActions";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { ProjectAccordion } from "@components/ProjectAccordion";
