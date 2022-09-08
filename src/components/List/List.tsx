@@ -22,7 +22,9 @@ export const List = ({ items }: ListProps) => {
       <SearchBox onQuery={handleFilter} queryValue={filter} />
       <MuiList>
         {items
-          .filter((item: ListItemType) => item.name.startsWith(filter))
+          .filter((item: ListItemType) =>
+            item.name.toLowerCase().includes(filter.toLowerCase()),
+          )
           .map((item) => (
             <ListItem key={item.name} disablePadding>
               {item.link ? (
