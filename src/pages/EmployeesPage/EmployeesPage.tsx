@@ -83,6 +83,7 @@ export const EmployeesPage = () => {
               redirectButtonText="Profile"
               deleteButtonText="Delete"
               entryType={TableEntry.EMPLOYEE}
+              searchBy="name"
             />
           )
         )}

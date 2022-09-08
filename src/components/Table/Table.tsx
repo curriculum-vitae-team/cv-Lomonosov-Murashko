@@ -23,6 +23,7 @@ export function Table({
   deleteButtonText,
   entryType,
   showNewEntryButton,
+  searchBy,
 }: TableProps) {
   const [sortBy, setSortBy] = useState(head[0].columnKey);
   const [isSortAsc, setIsSortAsc] = useState(true);
@@ -70,11 +71,10 @@ export function Table({
         .filter(
           filter
             ? (item) =>
-                Object.values(item).some(
-                  (key) =>
-                    typeof key === "string" &&
-                    key.toLowerCase().includes(filter.toLowerCase()),
-                )
+                item[searchBy]
+                  .toString()
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())
             : (item) => item,
         )
         .sort(byColumn<IEntryData>(sortBy, isSortAsc))
