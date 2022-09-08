@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
-import { InfoItem as CvItem } from "../../../../components/InfoItem";
-import { ICV } from "@interfaces/ICV";
+import { InfoItem as CvItem } from "@src/components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";

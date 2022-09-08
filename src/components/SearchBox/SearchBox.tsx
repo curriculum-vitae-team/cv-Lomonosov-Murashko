@@ -1,7 +1,6 @@
-import { Search as SearchIcon } from "@mui/icons-material";
-import { IconButton, InputAdornment } from "@mui/material";
-import { memo, useState } from "react";
-import { StyledTextField } from "./SearchBox.styles";
+import { InputAdornment } from "@mui/material";
+import { memo } from "react";
+import { StyledSearchIcon, StyledTextField } from "./SearchBox.styles";
 import { SearchBoxProps } from "./SearchBox.types";
 
 export const SearchBox = memo(({ onQuery, queryValue }: SearchBoxProps) => {
@@ -17,7 +16,7 @@ export const SearchBox = memo(({ onQuery, queryValue }: SearchBoxProps) => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <SearchIcon />
+            <StyledSearchIcon />
           </InputAdornment>
         ),
       }}
