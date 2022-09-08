@@ -77,7 +77,7 @@ function AuthProvider({ children }: IAuthContextProps) {
 
   return (
     <AuthContext.Provider value={{ user: state.user, login, logout }}>
-      {state.user.role && children}
+      {children}
     </AuthContext.Provider>
   );
 }
