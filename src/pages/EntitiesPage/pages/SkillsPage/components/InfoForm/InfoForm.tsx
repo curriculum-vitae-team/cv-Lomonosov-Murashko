@@ -13,6 +13,12 @@ export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
     },
   });
 
+  useEffect(() => {
+    const { name } = input;
+
+    reset({ name });
+  }, [input, reset]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

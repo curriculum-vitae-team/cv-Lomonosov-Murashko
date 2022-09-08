@@ -1,6 +1,5 @@
 import { StyledDiv, StyledEntry, StyledLink } from "./InfoItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { SyntheticEvent, useState } from "react";
 import { Typography } from "@mui/material";
 import { InfoItemProps } from "./InfoItem.types";
 

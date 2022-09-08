@@ -2,8 +2,8 @@ export interface IProjectCore {
   id: string;
   internalName: string;
   name: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate: Date | string | null;
 }
 
 export interface IProject extends IProjectCore {

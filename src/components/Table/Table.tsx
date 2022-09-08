@@ -3,10 +3,10 @@ import { AbstractEntity, TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
 import { StyledGrid } from "./Table.styles";
-import { Button } from "@mui/material";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
 import { IEntryData } from "@interfaces/IEntryData";
+import { ButtonWithAdminAccess } from "./components/TableEntryTypeButton";
 
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
   TableProps<T>
@@ -18,6 +18,7 @@ export function Table({
   items,
   head,
   onDelete,
+  onCreate,
   redirectButtonText,
   deleteButtonText,
   entryType,
@@ -39,13 +40,13 @@ export function Table({
   );
 
   const handleNew: React.MouseEventHandler = (e) => {
-    // TODO: Navigate to creation
+    onCreate && onCreate();
   };
 
   return (
     <StyledGrid container>
       {showNewEntryButton && (
-        <Button onClick={handleNew}>Add {entryType}</Button>
+        <ButtonWithAdminAccess handleNew={handleNew} entryType={entryType} />
       )}
 
       <TableHeadComponent

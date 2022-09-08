@@ -7,7 +7,6 @@ export const DatePickerFieldset = <T,>({
   control,
   name,
   label,
-  onError,
   required,
 }: DatePickerFieldsetProps<T>) => {
   return (
@@ -15,19 +14,21 @@ export const DatePickerFieldset = <T,>({
       control={control}
       name={name}
       label={label}
+      rules={{
+        required,
+        pattern: /^\d{2}\/\d{2}\/\d{4}$/g,
+      }}
       render={({ field, fieldState }) => (
         <DatePicker
+          {...field}
           label={label}
           minDate={new Date("1980-01-01")}
           maxDate={new Date("2099-01-01")}
-          onError={onError}
-          {...field}
           renderInput={(params) => (
             <TextField
               {...params}
               label={label}
-              required={!!required}
-              helperText={required || " "}
+              helperText={fieldState.error?.message || " "}
               error={!!fieldState.error}
             />
           )}

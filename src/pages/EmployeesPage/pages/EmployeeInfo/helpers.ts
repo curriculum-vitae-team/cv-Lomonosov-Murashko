@@ -15,3 +15,18 @@ export function getEmployeeInfo<T extends UserInfo>(
     id: user.id,
   };
 }
+
+export const resetEmployee = (user: UserInfo) => {
+  return {
+    id: user.id,
+    profile: {
+      first_name: user.profile.first_name || "",
+      last_name: user.profile.last_name || "",
+      department: {
+        id: user.profile.department?.id || "",
+        name: user.profile.department?.name || "",
+      },
+      specialization: user.profile.specialization || "",
+    },
+  };
+};

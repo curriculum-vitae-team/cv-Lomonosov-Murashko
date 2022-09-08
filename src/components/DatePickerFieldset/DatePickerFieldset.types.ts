@@ -1,11 +1,8 @@
-import { Control, Path, UseControllerProps } from "react-hook-form";
-
-import { TextFieldProps } from "@mui/material";
+import { Control, Path } from "react-hook-form";
 
 export type DatePickerFieldsetProps<T> = {
   name: Path<T>;
   label: string;
-  onError: () => void;
-  required: string;
+  required?: string;
   control: Control<T, object>;
 };
