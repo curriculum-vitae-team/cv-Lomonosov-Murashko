@@ -2,11 +2,12 @@ import React, { useCallback, useState } from "react";
 import { AbstractEntity, TableProps } from "./Table.types";
 import { TableHead as TableHeadComponent } from "./components/TableHead";
 import { TableRow as TableRowComponent } from "./components/TableRow";
-import { StyledGrid, StyledNewEntryButton } from "./Table.styles";
+import { StyledGrid } from "./Table.styles";
 import { byColumn } from "./helpers/byColumn";
 import { TableRowItem } from "./components/TableRowItem";
 import { IEntryData } from "@interfaces/IEntryData";
 import { SearchBox } from "@components/SearchBox";
+import { ButtonWithAdminAccess } from "./components/TableEntryTypeButton";
 
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
   TableProps<T>
@@ -53,9 +54,7 @@ export function Table({
   return (
     <StyledGrid container>
       {showNewEntryButton && (
-        <StyledNewEntryButton onClick={handleNew}>
-          Add {entryType}
-        </StyledNewEntryButton>
+        <ButtonWithAdminAccess handleNew={handleNew} entryType={entryType} />
       )}
 
       <SearchBox queryValue={filter} onQuery={handleQuery} />

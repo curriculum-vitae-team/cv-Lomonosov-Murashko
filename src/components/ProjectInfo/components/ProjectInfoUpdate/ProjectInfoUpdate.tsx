@@ -16,6 +16,7 @@ import {
 import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
+import { Loader } from "@components/Loader";
 
 export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -70,7 +71,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   return (
     <>
       {isLoading ? (
-        "loading"
+        <Loader />
       ) : fetchError ? (
         fetchError
       ) : (

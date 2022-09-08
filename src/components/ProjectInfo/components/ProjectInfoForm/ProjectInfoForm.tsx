@@ -9,6 +9,7 @@ import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
 import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
+import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
 
 export const ProjectInfoForm = memo(
   ({ onSubmit, data }: ProjectInfoFormProps) => {
@@ -63,7 +64,6 @@ export const ProjectInfoForm = memo(
             control={control}
             label="End date"
             name="endDate"
-            required={"Please, specify the correct date"}
           />
         </InfoFormWrapper>
         <InfoFormWrapper>
@@ -89,9 +89,7 @@ export const ProjectInfoForm = memo(
         </InfoFormWrapper>
 
         <DialogActions>
-          <Button type="submit" value="Save" variant="contained">
-            Save
-          </Button>
+          <SaveButtonWithAdminAccess />
           <Button
             type="reset"
             value="Cancel"

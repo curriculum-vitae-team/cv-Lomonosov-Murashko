@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { ICV } from "@interfaces/ICV";
-import { ButtonWrapper, StyledDialogActions } from "./CvInfo.styles";
+import { ButtonWrapper } from "./CvInfo.styles";
+import { StyledDialogActions } from "../styled/StyledDialogActions";
 import { Button } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { cvsMock } from "@mock/cvs";
-import { ROUTE } from "@constants/route";
+import { useForm } from "react-hook-form";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
-import { useMutation, useQuery } from "@apollo/client";
-import { memo, useEffect, useLayoutEffect } from "react";
+import { memo, useLayoutEffect } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { CvPatternsWithOverlay } from "@components/CvPatterns";
+import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 
 export const CvInfo = memo(
   ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
@@ -67,13 +65,10 @@ export const CvInfo = memo(
               Add Project
             </Button>
           </ButtonWrapper>
-          {/* cv.projects.map ...  */}
           <ProjectAccordion />
 
           <StyledDialogActions>
-            <Button type="submit" value="Save" variant="contained">
-              Save
-            </Button>
+            <SaveButtonWithAdminAccess />
             <Button
               onClick={onCancel}
               type="reset"

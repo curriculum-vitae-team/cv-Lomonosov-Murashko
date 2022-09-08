@@ -18,6 +18,7 @@ import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
+import { Loader } from "@components/Loader";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -59,7 +60,7 @@ export const ProjectsPage = () => {
   const handleCreate = useCallback(() => {
     navigate(ROUTE.ADD_PROJECT);
   }, [navigate]);
-
+  
   return (
     <PageWrapper>
       <PageTop>
@@ -68,7 +69,7 @@ export const ProjectsPage = () => {
       </PageTop>
       <PageBody>
         {isLoading
-          ? "loader"
+          ? <Loader />
           : error
           ? "error"
           : data?.projects && (

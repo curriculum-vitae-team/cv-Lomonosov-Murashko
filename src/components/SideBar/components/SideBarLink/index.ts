@@ -1,1 +1,1 @@
-export { SideBarLink } from "./SideBarLink";
+export { SideBarLink, SideBarLinkWithAdminAccess } from "./SideBarLink";

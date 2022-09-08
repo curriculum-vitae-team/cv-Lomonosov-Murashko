@@ -3,7 +3,7 @@ export interface IProjectCore {
   internalName: string;
   name: string;
   startDate: Date | string;
-  endDate: Date | string;
+  endDate: Date | string | null;
 }
 
 export interface IProject extends IProjectCore {

@@ -42,7 +42,7 @@ export const StyledGrid = styled(Grid)({
   "& .MuiButton-root ": {
     backgroundColor: "#1890FF",
     border: "none",
-    margin: "1rem 1rem 0 0",
+    margin: "0 0 1rem 1rem",
 
     borderRadius: "2px",
     color: "#fff",
@@ -72,8 +72,4 @@ export const StyledDiv = styled("div")({
   borderRight: "20px solid #f9f9f9",
   borderRadius: "5px",
   marginBottom: "1rem",
-});
-
-export const StyledNewEntryButton = styled(Button)({
-  margin: "1rem !important",
 });

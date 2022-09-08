@@ -7,6 +7,6 @@ export function getProjects(projects: ProjectInfo[]): IProjectTable[] {
     name: project.name || "-",
     internalName: project.internal_name || "-",
     startDate: project.start_date,
-    endDate: project.end_date || "-",
+    endDate: project.end_date || "Till now",
   }));
 }
