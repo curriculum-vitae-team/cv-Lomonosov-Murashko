@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 import { EmployeeCreateInfoFormProps } from "./EmployeeCreateInfoForm.types";
 import { IEmployeeCore } from "@interfaces/IEmployee";
 import { ErrorToast } from "@components/ErrorToast";
-import { SelectLabelWrapper } from "./EmployeeCreateInfoForm.styles";
+import { SelectLabelWrapper } from "@components/styled/SelectLabel";
 import { ROLES } from "@constants/roles";
 
 export const EmployeeCreateInfoForm = ({
