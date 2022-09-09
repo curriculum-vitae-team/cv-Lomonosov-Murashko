@@ -92,6 +92,7 @@ export const EmployeesPage = () => {
               deleteButtonText="Delete"
               entryType={TableEntry.EMPLOYEE}
               showNewEntryButton={true}
+              searchBy="name"
             />
           )
         )}

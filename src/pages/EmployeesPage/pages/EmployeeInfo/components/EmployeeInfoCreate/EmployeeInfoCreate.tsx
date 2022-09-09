@@ -49,7 +49,7 @@ export const EmployeeInfoCreate = () => {
   });
 
   const onSubmit: SubmitHandler<IEmployeeCore> = useCallback(
-    (data) => {      
+    (data) => {
       createUser({
         variables: {
           user: {
@@ -66,7 +66,7 @@ export const EmployeeInfoCreate = () => {
               languages: [],
             },
             cvsIds: [],
-            role: data.role
+            role: data.role,
           },
         },
         update: createUserCacheUpdate(),

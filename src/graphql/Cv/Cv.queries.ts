@@ -67,6 +67,14 @@ export const GET_FULL_CV_INFO = gql`
       }
     }
   }
+`
+
+export const GET_CV_NAME = gql`
+  query GetCvName($id: ID!) {
+    cv(id: $id) {
+      name
+    }
+  }
 `;
 
 export const CREATE_CV = gql`

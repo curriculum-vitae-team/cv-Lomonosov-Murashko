@@ -25,6 +25,12 @@ export interface CvFullInfoData {
   user: UserFullInfo;
 }
 
+export interface CvNameData {
+  cv: {
+    name: string;
+  };
+}
+
 /* Mutations */
 
 export interface CreateCvInput {

@@ -4,6 +4,7 @@ export const WrapperDiv = styled("div")({
   position: "relative",
   display: "flex",
   width: "100%",
+  height: "100%",
   justifyContent: "space-between",
   "& .sidebar": {
     marginRight: "0.5em",

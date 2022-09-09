@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const StyledGrid = styled(Grid)({
@@ -42,7 +42,7 @@ export const StyledGrid = styled(Grid)({
   "& .MuiButton-root ": {
     backgroundColor: "#1890FF",
     border: "none",
-    margin: "1rem 1rem 0 0",
+    margin: "0 0 1rem 1rem",
 
     borderRadius: "2px",
     color: "#fff",

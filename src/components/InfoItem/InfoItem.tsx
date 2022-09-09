@@ -1,12 +1,14 @@
-import { StyledDiv, StyledLink } from "./CvItem.styles";
+import { StyledDiv, StyledLink } from "./InfoItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Typography } from "@mui/material";
-import { CvItemProps } from "./CvItem.types";
-import { withAdminAccess } from "@src/hoc/withAdminAccess";
+import { withAdminAccess } from "@hoc/withAdminAccess";
+import { InfoItemProps } from "./InfoItem.types";
 
 const DeleteOutlineIconWithAdminAccess = withAdminAccess(DeleteOutlineIcon);
 
-export const CvItem = ({ id, name, onDelete }: CvItemProps) => {
+export const InfoItem = ({ id, name, onDelete }: InfoItemProps) => {
+  // move outside
+
   const handleDelete: React.MouseEventHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();

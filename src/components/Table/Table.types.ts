@@ -9,6 +9,7 @@ export type TableProps<T = Item> = {
   showNewEntryButton?: boolean;
   onDelete: (id: string) => void;
   onCreate?: () => void;
+  searchBy: string;
 };
 
 export type TableHead = {

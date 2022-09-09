@@ -16,9 +16,9 @@ import { GET_CV_INFO, UPDATE_CV } from "@graphql/Cv/Cv.queries";
 import { memo, useCallback, useLayoutEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { CvInfo } from "../CvInfo/CvInfo";
+import { CvInfo } from "@components/CvInfo";
 
-export const CvInfoUpdatePage = memo(() => {
+export const CvInfoUpdate = memo(() => {
   const { cvId } = useParams();
   const [error, setError] = useState("");
   const { pathname } = useLocation();
@@ -118,36 +118,23 @@ export const CvInfoUpdatePage = memo(() => {
     refetch();
   };
 
-  return (
-    <PageWrapper>
-      <PageTop>
-        <Breadcrumb
-          config={{
-            cvs: "Cvs",
-          }}
+  return getCvInfoLoading || saveCvLoading ? (
+    <Loader />
+  ) : error ? (
+    <InlineError
+      message="Something went wrong when trying to fetch form data"
+      tryAgainFn={handleTryAgain}
+    />
+  ) : (
+    cvInput && (
+      <>
+        <CvInfo
+          cv={cvInput}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          onAddProject={handleAddProject}
         />
-      </PageTop>
-      <PageBody>
-        {getCvInfoLoading || saveCvLoading ? (
-          <Loader />
-        ) : error ? (
-          <InlineError
-            message="Something went wrong when trying to fetch form data"
-            tryAgainFn={handleTryAgain}
-          />
-        ) : (
-          cvInput && (
-            <>
-              <CvInfo
-                cv={cvInput}
-                onSubmit={handleSubmit}
-                onCancel={handleCancel}
-                onAddProject={handleAddProject}
-              />
-            </>
-          )
-        )}
-      </PageBody>
-    </PageWrapper>
+      </>
+    )
   );
 });
