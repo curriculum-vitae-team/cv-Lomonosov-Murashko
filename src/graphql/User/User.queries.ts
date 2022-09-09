@@ -33,15 +33,45 @@ export const GET_USERS = gql`
 export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
-      id
-      email
       profile {
         first_name
         last_name
-        specialization
+        position_name
+        position {
+          name
+          id
+        }
         department {
           name
           id
+        }
+        languages {
+          language_name
+        }
+        skills {
+          skill_name
+        }
+      }
+      cvs {
+        id
+        name
+        description
+        projects {
+          name
+          internal_name
+          start_date
+          end_date
+          tech_stack {
+            name
+          }
+        }
+        skills {
+          skill_name
+          mastery
+        }
+        languages {
+          language_name
+          proficiency
         }
       }
     }

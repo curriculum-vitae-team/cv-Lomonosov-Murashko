@@ -13,15 +13,17 @@ import {
   UpdateUserOutput,
   UserInfo,
 } from "@graphql/User/User.interface";
-import { memo, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
+import { AuthContext } from "@context/authContext/authContext";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
@@ -43,7 +45,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   });
 
   const {
-    data,
+    data: userData,
     refetch,
     loading: getUserInfoLoading,
   } = useQuery<UserInfoData>(GET_USER_INFO, {
@@ -106,6 +108,12 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     refetch();
   };
 
+  const isUsersMatched = () => {
+    return user.email === userData?.user?.email;
+  };
+
+  console.log(user.email, userData);  
+
   return getUserInfoLoading || saveUserLoading ? (
     <Loader />
   ) : error ? (
@@ -142,7 +150,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         />
       </InfoFormWrapper>
       <DialogActions>
-        <SaveButtonWithAdminAccess />
+        <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
         <Button
           onClick={onCancel}
           type="reset"
