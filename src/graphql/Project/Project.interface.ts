@@ -1,5 +1,7 @@
 /* Queries */
 
+import { Skills } from "../Skills/Skills.interface";
+
 export interface ProjectsData {
   projects: ProjectInfo[];
 }
@@ -59,13 +61,15 @@ export interface ProjectInput {
 }
 
 export interface ProjectInfo {
+  id: string;
   name: string;
   internal_name: string;
   description: string;
   domain: string;
   start_date: string;
   end_date: string;
-  id: string;
+  tech_stack: Skills[] | null;
+  team_size: number;
 }
 
 /* For table */

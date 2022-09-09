@@ -1,6 +1,8 @@
 /* Queries */
 
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
+import { ProjectInfo } from "../Project/Project.interface";
+import { Skills } from "../Skills/Skills.interface";
 
 export interface UsersData {
   users: User[];
@@ -88,9 +90,24 @@ export interface UserInfo {
   email: string;
   role: string;
   profile: Profile;
+  cvs: UserCvs[];
 }
 
 export interface UserCVEntry {
   id: string;
   name: string;
+}
+
+export interface UserCvs {
+  id: string;
+  name: string;
+  description: string;
+  projects: ProjectInfo;
+  skills: Skills;
+  languages: UserLanguages;
+}
+
+export interface UserLanguages {
+  language_name: string;
+  proficiency: string;
 }
