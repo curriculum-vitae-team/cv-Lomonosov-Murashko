@@ -112,8 +112,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     return user.email === userData?.user?.email;
   };
 
-  console.log(user.email, userData);  
-
   return getUserInfoLoading || saveUserLoading ? (
     <Loader />
   ) : error ? (

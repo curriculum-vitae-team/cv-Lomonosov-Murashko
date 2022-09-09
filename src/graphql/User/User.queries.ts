@@ -33,6 +33,8 @@ export const GET_USERS = gql`
 export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
+      id
+      email
       profile {
         first_name
         last_name
