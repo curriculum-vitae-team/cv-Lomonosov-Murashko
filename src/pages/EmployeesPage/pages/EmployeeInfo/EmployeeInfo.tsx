@@ -50,7 +50,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     variables: {
       id: employeeId,
     },
-    onCompleted: (data) => {      
+    onCompleted: (data) => {
       reset(resetEmployee(data.user));
     },
     onError: (error) => {
@@ -69,7 +69,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       setError(error.message);
     },
   });
-
 
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
     // TODO: delete `= []` constructions later

@@ -27,6 +27,8 @@ export const EmployeesPage = () => {
 
   const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
     onError: (error) => {
+      console.log(error);
+      
       setError(error.message);
     },
   });
