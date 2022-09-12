@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
-import { CvItem } from "./components/CvItem";
+import { InfoItem as CvItem } from "@src/components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
@@ -11,16 +11,22 @@ import { UserCVEntry, UserCvsData } from "@graphql/User/User.interface";
 import { UNBIND_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
+import { Loader } from "@components/Loader";
+import { InlineError } from "@components/InlineError";
 
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
-
   const [error, setError] = useState("");
-
+  const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const { data: userData, loading } = useQuery<UserCvsData>(GET_USER_CVS, {
+  const {
+    data: userData,
+    loading,
+    refetch,
+  } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
     onCompleted: (data) => {
       const firstCv = data.user.cvs[0];
@@ -28,7 +34,6 @@ export const EmployeeCv = () => {
       if (firstCv && (firstCv.id === cvId || !cvId)) {
         const cvToOpen = searchParams.get("opencv") || firstCv.id;
         setActive(cvToOpen);
-        navigate(cvToOpen);
       } else {
         setActive(cvId || "-1");
       }
@@ -59,10 +64,6 @@ export const EmployeeCv = () => {
     },
   });
 
-  const [active, setActive] = useState("-1");
-
-  const navigate = useNavigate();
-
   const handleActive = (activeId: string) => {
     setActive(activeId);
   };
@@ -86,9 +87,14 @@ export const EmployeeCv = () => {
   return (
     <WrapperDiv>
       {loading ? (
-        <>loader</>
+        <Loader />
       ) : error ? (
-        <>{error}</>
+        <InlineError
+          message={error}
+          tryAgainFn={() => {
+            refetch();
+          }}
+        ></InlineError>
       ) : (
         userData?.user.cvs && (
           <>

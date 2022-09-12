@@ -8,6 +8,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PROJECT_NAME } from "@graphql/Project/Project.queries";
 import { ProjectName } from "@graphql/Project/Project.interface";
 import { useState } from "react";
+import { Loader } from "@components/Loader";
 
 export const ProjectPage = () => {
   const { projectId } = useParams();
@@ -25,7 +26,7 @@ export const ProjectPage = () => {
   return (
     <Stack sx={{ width: "100%" }}>
       {isLoading ? (
-        <>loading</>
+        <Loader />
       ) : (
         <>
           <PageTop>

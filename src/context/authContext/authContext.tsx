@@ -1,7 +1,7 @@
 import React, { useReducer, createContext, useEffect } from "react";
 import { AuthUserInfo } from "@graphql/Auth/Auth.interface";
 import { IUserInfo } from "@interfaces/IAuth";
-import { IAction, IContext } from "./authContext.interface";
+import { IAction, IAuthContextProps, IContext } from "./authContext.interface";
 import { ACTIONS } from "@constants/actions";
 import {
   deleteUserInfoFromLocalStorage,
@@ -36,7 +36,7 @@ function authReducer(state: IUserInfo, action: IAction) {
   }
 }
 
-function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+function AuthProvider({ children }: IAuthContextProps) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const login = (
@@ -55,9 +55,9 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
     deleteUserInfoFromLocalStorage();
   };
 
-  useEffect(() => {    
+  useEffect(() => {
     const restoreUser = () => {
-      if (isUserExists()) {        
+      if (isUserExists()) {
         const { user, isMemorized } = getUserInfoFromLocalStorage();
 
         if (isMemorized) {
@@ -74,12 +74,11 @@ function AuthProvider(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 
     restoreUser();
   }, []);
-  
+
   return (
-    <AuthContext.Provider
-      value={{ user: state.user, login, logout }}
-      {...props}
-    />
+    <AuthContext.Provider value={{ user: state.user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 

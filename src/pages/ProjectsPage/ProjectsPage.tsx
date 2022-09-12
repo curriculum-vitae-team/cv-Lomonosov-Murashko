@@ -18,7 +18,7 @@ import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { logoutObserver } from "@src/helpers/observer";
+import { Loader } from "@components/Loader";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -38,7 +38,7 @@ export const ProjectsPage = () => {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {
+    onError: (error) => {      
       setError(error.message);
     },
   });
@@ -54,7 +54,7 @@ export const ProjectsPage = () => {
         update: deleteProjectCacheUpdate(id),
       });
     },
-    [deleteProject]
+    [deleteProject],
   );
 
   const handleCreate = useCallback(() => {
@@ -69,7 +69,7 @@ export const ProjectsPage = () => {
       </PageTop>
       <PageBody>
         {isLoading
-          ? "loader"
+          ? <Loader />
           : error
           ? "error"
           : data?.projects && (
@@ -82,6 +82,7 @@ export const ProjectsPage = () => {
                 deleteButtonText="Delete"
                 entryType={TableEntry.PROJECT}
                 showNewEntryButton={true}
+                searchBy="name"
               />
             )}
       </PageBody>

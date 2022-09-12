@@ -1,4 +1,6 @@
 /* Queries */
+import { Skills } from "../Skills/Skills.interface";
+import { UserFullInfo, UserLanguages } from "../User/User.interface";
 
 export interface CvsData {
   cvs: Cv[];
@@ -6,6 +8,27 @@ export interface CvsData {
 
 export interface CvInfoData {
   cv: CvInfo;
+}
+
+export interface CvFullInfo {
+  cv: {
+    name: string;
+    projects: ProjectFullInfo[];
+    skills: SkillMastery[];
+    languages: CvLanguagesInfo[];
+    user: UserFullInfo;
+  };
+}
+
+export interface CvFullInfoData {
+  name: string;
+  user: UserFullInfo;
+}
+
+export interface CvNameData {
+  cv: {
+    name: string;
+  };
 }
 
 /* Mutations */
@@ -64,6 +87,9 @@ export interface CvInput {
   description: string;
   userId?: string;
   projectsIds: string[];
+  skills: SkillMastery[];
+  languages: UserLanguages[];
+  is_template: boolean;
 }
 
 export interface CvInfo {
@@ -74,10 +100,33 @@ export interface CvInfo {
   user: null | {
     id: string;
   };
+  skills: SkillMastery[];
+  languages: UserLanguages[];
+  is_template: boolean;
 }
 
 interface ProjectPart {
   id: string;
   name: string;
   internal_name: string;
+}
+
+export interface ProjectFullInfo {
+  start_date: string;
+  end_date: string;
+  team_size: number;
+  tech_stack: Skills[];
+  name: string;
+  internal_name: string;
+  description: string;
+}
+
+export interface CvLanguagesInfo {
+  language_name: string;
+  proficiency: string;
+}
+
+export interface SkillMastery {
+  skill_name: string;
+  mastery: string;
 }

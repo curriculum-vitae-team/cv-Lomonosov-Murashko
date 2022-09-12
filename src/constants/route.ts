@@ -19,14 +19,22 @@ export enum ROUTE {
   PDF_PATTERNS = "/pdf-patterns",
   RESET_PASSWORD = "/reset-password",
   EMPLOYEES = "/employees",
+  ADD_EMPLOYEE = "/employees/create-employee",
   TARGET_EMPLOYEE = "/employees/:employeeId",
   PROJECTS = "/projects",
   ADD_PROJECT = "/projects/create-project",
   TARGET_PROJECT = "/projects/:projectId",
   CVS = "/cvs",
+  ADD_CV = "/cvs/create-cv",
   TARGET_CV = "/cvs/:cvId",
   ENTITIES = "/entities",
+  TARGET_ENTITY_ENTRY = ":entryId",
   ANY_OTHER = "*",
   TARGET_EMPLOYEE_INFO = "info",
   TARGET_EMPLOYEE_CV = "cv",
+}
+
+export enum ENTITY {
+  LANGUAGES = "languages",
+  SKILLS = "skills",
 }
