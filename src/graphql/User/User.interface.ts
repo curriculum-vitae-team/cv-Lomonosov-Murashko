@@ -1,6 +1,9 @@
 /* Queries */
 
+import { SkillMastery } from "../Cv/Cv.interface";
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
+import { ProjectInfo } from "../Project/Project.interface";
+import { Skills } from "../Skills/Skills.interface";
 
 export interface UsersData {
   users: User[];
@@ -14,6 +17,10 @@ export interface UserCvsData {
   user: {
     cvs: UserCVEntry[];
   };
+}
+
+export interface UsersNamesIdsData {
+  users: UserNameIds[];
 }
 
 export interface UserFullnameData {
@@ -59,17 +66,17 @@ export interface CreateUserInput {
       first_name: string;
       last_name: string;
       departmentId: string;
-      specialization: string;
-      skills: string[];
-      languages: string[];
+      positionId: string;
+      skills: SkillMastery[];
+      languages: UserLanguages[];
     };
-    cvsId: string[];
+    cvsIds: string[];
+    role: string;
   };
 }
 
 export interface CreateUserOutput {
-  id: string;
-  email: string;
+  user: UserInfo;
 }
 /* Parts */
 
@@ -87,10 +94,44 @@ export interface UserInfo {
   id: string;
   email: string;
   role: string;
+  cvs: UserCvs;
   profile: Profile;
 }
 
 export interface UserCVEntry {
   id: string;
   name: string;
+}
+
+export interface UserProfile {
+  full_name: string;
+  skills: SkillMastery[];
+  languages: UserLanguages[];
+  position_name: string;
+}
+
+export interface UserFullInfo {
+  email: string;
+  profile: UserProfile;
+}
+
+export interface UserLanguages {
+  language_name: string;
+  proficiency: string;
+}
+
+export interface UserCvs {
+  id: string;
+  name: string;
+  description: string;
+  projects: ProjectInfo;
+  skills: Skills;
+  languages: UserLanguages;
+}
+
+export interface UserNameIds {
+  id: string;
+  profile: {
+    full_name: string;
+  };
 }

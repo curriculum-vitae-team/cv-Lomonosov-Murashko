@@ -38,7 +38,7 @@ export const ProjectsPage = () => {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {
+    onError: (error) => {      
       setError(error.message);
     },
   });
