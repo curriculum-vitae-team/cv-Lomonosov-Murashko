@@ -26,6 +26,8 @@ import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInf
 import { ProtectedRoute } from "./ProtectedRoute";
 import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
+import { EmployeeInfoCreate } from "@pages/EmployeesPage/pages/EmployeeInfo/components/EmployeeInfoCreate";
+import { CvInfoCreatePage } from "@pages/CvsPage/components/CvInfoCreatePage";
 
 export function Router() {
   return (
@@ -47,6 +49,7 @@ export function Router() {
           >
             <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
             <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
+            <Route path={ROUTE.ADD_EMPLOYEE} element={<EmployeeInfoCreate />} />
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
@@ -63,6 +66,7 @@ export function Router() {
             </Route>
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
+          <Route path={ROUTE.ADD_CV} element={<CvInfoCreatePage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route
             element={

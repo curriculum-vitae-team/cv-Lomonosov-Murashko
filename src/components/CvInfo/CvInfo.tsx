@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { ProjectAccordion } from "@components/ProjectAccordion";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
-import { memo, useLayoutEffect } from "react";
+import { memo, useEffect } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { CvPatternsWithOverlay } from "@components/CvPatterns";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
@@ -17,7 +17,7 @@ export const CvInfo = memo(
   ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
     const [isPatternsVisible, setIsPatternsVisible] = useState(false);
 
-    const { control, handleSubmit, reset, getValues } = useForm<CvInput>({
+    const { control, handleSubmit, reset } = useForm<CvInput>({
       defaultValues: {
         name: cv.name,
         description: cv.description,
@@ -25,7 +25,7 @@ export const CvInfo = memo(
       },
     });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
       const { name, description, projectsIds } = cv;
 
       reset({ name, description, projectsIds });
@@ -40,7 +40,7 @@ export const CvInfo = memo(
     };
     const hidePreview = () => {
       setIsPatternsVisible(false);
-    };
+    };    
 
     return (
       <>

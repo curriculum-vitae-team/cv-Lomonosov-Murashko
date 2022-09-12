@@ -20,13 +20,9 @@ import { CvInfo } from "@components/CvInfo";
 
 export const CvInfoUpdate = memo(() => {
   const { cvId } = useParams();
-
   const [error, setError] = useState("");
-
   const { pathname } = useLocation();
-
   const [cvInput, setCvInput] = useState<CvInput | null>(null);
-
   const { setToastError } = useErrorToast();
 
   const {
@@ -48,11 +44,16 @@ export const CvInfoUpdate = memo(() => {
     if (cvInfoData) {
       const { name, description, user, projects } = cvInfoData.cv;
 
+      console.log("user id", user?.id);
+
       setCvInput({
         name,
         description,
         userId: user?.id,
         projectsIds: projects.map((p) => p.id),
+        skills: [],
+        languages: [],
+        is_template: false,
       });
     }
   }, [cvInfoData]);
@@ -82,6 +83,9 @@ export const CvInfoUpdate = memo(() => {
             name,
             description,
             projectsIds,
+            skills: [],
+            languages: [],
+            is_template: false,
           },
         },
         optimisticResponse: {
@@ -90,7 +94,10 @@ export const CvInfoUpdate = memo(() => {
             description,
             id: cvId!,
             projects: [],
-            user: cvInfoData?.cv.user || null,
+            user: null, // TODO: user can assign cv to himself only, admin to everyone
+            skills: [],
+            languages: [],
+            is_template: false,
           },
         },
       });

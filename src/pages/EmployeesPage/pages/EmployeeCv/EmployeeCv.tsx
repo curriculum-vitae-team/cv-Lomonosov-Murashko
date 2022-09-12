@@ -17,10 +17,10 @@ import { InlineError } from "@components/InlineError";
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
   const { cvId } = useParams();
-
   const [error, setError] = useState("");
-
+  const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const {
     data: userData,
@@ -34,7 +34,6 @@ export const EmployeeCv = () => {
       if (firstCv && (firstCv.id === cvId || !cvId)) {
         const cvToOpen = searchParams.get("opencv") || firstCv.id;
         setActive(cvToOpen);
-        navigate(cvToOpen);
       } else {
         setActive(cvId || "-1");
       }
@@ -64,10 +63,6 @@ export const EmployeeCv = () => {
       },
     },
   });
-
-  const [active, setActive] = useState("-1");
-
-  const navigate = useNavigate();
 
   const handleActive = (activeId: string) => {
     setActive(activeId);
