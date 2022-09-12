@@ -30,12 +30,13 @@ import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
 import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
 import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
 import { SelectLabelWrapper } from "@components/styled/SelectLabel";
+
 import { AuthContext } from "@context/authContext/authContext";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
   const { control, handleSubmit, reset } = useForm<UserInfo>({
@@ -149,6 +150,10 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     refetch();
   };
 
+  const isUsersMatched = () => {
+    return user.email === userData?.user?.email;
+  };
+
   return getUserInfoLoading || saveUserLoading ? (
     <Loader />
   ) : error ? (
@@ -205,7 +210,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         </SelectLabelWrapper>
       </InfoFormWrapper>
       <DialogActions>
-        <SaveButtonWithAdminAccess />
+        <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
         <Button
           onClick={onCancel}
           type="reset"

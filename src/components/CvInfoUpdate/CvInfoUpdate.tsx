@@ -1,10 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Breadcrumb } from "@components/Breadcrumb";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
-import { PageBody } from "@components/styled/PageBody";
-import { PageTop } from "@components/styled/PageTop";
-import { PageWrapper } from "@components/styled/PageWrapper";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import {
   CvInfoData,

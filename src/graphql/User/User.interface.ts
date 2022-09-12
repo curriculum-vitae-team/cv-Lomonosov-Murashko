@@ -94,8 +94,8 @@ export interface UserInfo {
   id: string;
   email: string;
   role: string;
-  cvs: UserCvs;
   profile: Profile;
+  cvs: UserCvs;
 }
 
 export interface UserCVEntry {
