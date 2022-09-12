@@ -17,18 +17,18 @@ export const GET_USERS = gql`
     users {
       id
       email
+      position_name
+      position {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
       }
     }
   }
@@ -43,25 +43,25 @@ export const GET_USERS_NAMES_IDS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
       id
       email
+      position_name
+      position {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
         languages {
           language_name
         }

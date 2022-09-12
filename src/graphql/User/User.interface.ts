@@ -1,6 +1,8 @@
 /* Queries */
 
 import { SkillMastery } from "../Cv/Cv.interface";
+import { Department } from "../Department/Department.interface";
+import { Position } from "../Position/Position.interface";
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
 import { ProjectInfo } from "../Project/Project.interface";
 import { Skills } from "../Skills/Skills.interface";
@@ -87,6 +89,9 @@ export interface User {
   email: string;
   role: string;
   profile: Profile;
+  department: Department;
+  position_name: string;
+  position: Position;
 }
 // For detailed user info (may contain additional properties in the future)
 
@@ -95,8 +100,10 @@ export interface UserInfo {
   email: string;
   role: string;
   cvs: UserCvs;
+  department: Department;
+  position_name: string;
+  position: Position;
   profile: Profile;
-  cvs: UserCvs[];
 }
 
 export interface UserCVEntry {
