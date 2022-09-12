@@ -8,7 +8,7 @@ export function getEmployees(users: User[]): IEmployeeTable[] {
     lastName: user.profile.last_name,
     email: user.email,
     department: user.profile.department?.name || "Unknown",
-    specialization: user.profile.specialization || "Unknown",
+    specialization: user.profile.position_name || "Unknown",
   }));
 }
 

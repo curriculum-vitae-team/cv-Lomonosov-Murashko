@@ -1,17 +1,20 @@
-import { Document, Page, Text, View } from "@react-pdf/renderer";
-import { styles } from "./PdfViewer.styles";
+import { Document } from "@react-pdf/renderer";
+import { PDFVariants } from "@src/constants/pdfVariants";
+import { PdfViewerPattern1 } from "../PdfViewerPatterns/PdfViewerPattern1";
+import { PdfViewerPattern2 } from "../PdfViewerPatterns/PdfViewerPattern2";
+import { PdfViewerProps } from "./PdfViewer.types";
 
-export const PdfViewer = () => {
-  return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Section #1</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
-        </View>
-      </Page>
-    </Document>
-  );
+export const PdfViewer = ({ data, variant }: PdfViewerProps) => {
+  const handlePDFVariant = (variant: string) => {
+    switch (variant) {
+      case PDFVariants.VARIANT_1:
+        return <PdfViewerPattern1 data={data} />;
+      case PDFVariants.VARIANT_2:
+      default: {
+        return <PdfViewerPattern2 data={data} />;
+      }
+    }
+  };
+
+  return <Document>{variant && handlePDFVariant(variant)}</Document>;
 };

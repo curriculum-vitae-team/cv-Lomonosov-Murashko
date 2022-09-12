@@ -29,6 +29,46 @@ export const GET_CV_INFO = gql`
   }
 `;
 
+export const GET_FULL_CV_INFO = gql`
+  query GetFullCvInfo($id: ID!) {
+    cv(id: $id) {
+      name
+      user {
+        email
+        profile {
+          full_name
+          position_name
+          skills {
+            skill_name
+            mastery
+          }
+          languages {
+            language_name
+            proficiency
+          }
+        }
+      }
+      projects {
+        name
+        internal_name
+        description
+        start_date
+        end_date
+        team_size
+        tech_stack {
+          name
+        }
+      }
+      skills {
+        skill_name
+      }
+      languages {
+        language_name
+      }
+    }
+  }
+`
+
 export const GET_CV_NAME = gql`
   query GetCvName($id: ID!) {
     cv(id: $id) {
@@ -39,7 +79,9 @@ export const GET_CV_NAME = gql`
 
 export const CREATE_CV = gql`
   mutation CreateCv($cv: CvInput!) {
-    createCv {
+    createCv(cv: $cv) {
+      name
+      description
       id
     }
   }

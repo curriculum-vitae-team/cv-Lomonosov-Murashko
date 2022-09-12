@@ -19,11 +19,14 @@ import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { tableHead } from "./tableHead";
+import { ROUTE } from "@src/constants/route";
+import { useNavigate } from "react-router";
 
 const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const { data, refetch, loading } = useQuery<CvsData>(GET_ALL_CVS, {
     onError: (error) => {
@@ -58,6 +61,10 @@ export const CvsPage = () => {
     refetch();
   };
 
+  const handleCreate = useCallback(() => {
+    navigate(ROUTE.ADD_CV);
+  }, [navigate]);
+
   return (
     <PageWrapper>
       <PageTop>
@@ -80,6 +87,7 @@ export const CvsPage = () => {
           data?.cvs && (
             <Table
               onDelete={handleItemDelete}
+              onCreate={handleCreate}
               head={tableHead}
               items={data.cvs}
               redirectButtonText="CV details"

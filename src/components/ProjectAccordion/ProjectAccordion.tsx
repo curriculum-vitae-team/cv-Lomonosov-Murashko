@@ -6,19 +6,18 @@ import {
   Accordion,
 } from "@mui/material";
 import { ProjectNameWrapper } from "./ProjectAccordion.styles";
-import { projectsMock } from "@mock/projects";
 
 export const ProjectAccordion = () => {
   return (
     <Accordion>
       <AccordionSummary id="project" aria-controls="content">
         <ProjectNameWrapper>
-          <Typography>{projectsMock[0].name}</Typography>
+          <Typography>{/* project here */}</Typography>
           <DeleteOutlineIcon />
         </ProjectNameWrapper>
       </AccordionSummary>
       <AccordionDetails>
-        {/* <ProjectInfo projectId={projectsMock[0].id} /> */}
+        {/* <ProjectInfo projectId={} /> */}
       </AccordionDetails>
     </Accordion>
   );
