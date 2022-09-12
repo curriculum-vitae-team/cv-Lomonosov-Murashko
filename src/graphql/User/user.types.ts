@@ -1,5 +1,5 @@
-import { Auth } from "@interfaces/auth.interface";
 import { User } from "@interfaces/user.interface";
+import { AuthInput } from "../Auth/Auth.types";
 import { ProfileInput } from "../Profile/profile.types";
 import { DeleteInput, DeleteResult } from "../delete.types";
 
@@ -12,7 +12,7 @@ export type GetUsersResult = {
 };
 
 export type CreateUserInput = {
-  auth: Auth;
+  auth: AuthInput;
   profile: ProfileInput;
   cvsIds: string[];
   departmentId: string;

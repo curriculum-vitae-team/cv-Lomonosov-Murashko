@@ -1,5 +1,10 @@
 import { User } from "@interfaces/user.interface";
 
+export type AuthInput = {
+  email: string;
+  password: string;
+};
+
 export type AuthResult = {
   user: User;
   access_token: string;
