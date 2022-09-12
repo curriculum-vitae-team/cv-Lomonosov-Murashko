@@ -19,11 +19,14 @@ import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { tableHead } from "./tableHead";
+import { ROUTE } from "@constants/route";
+import { useNavigate } from "react-router";
 
 const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
     onError: (error) => {
@@ -54,6 +57,10 @@ export const EmployeesPage = () => {
     [deleteUser],
   );
 
+  const handleCreate = useCallback(() => {
+    navigate(ROUTE.ADD_EMPLOYEE);
+  }, [navigate]);
+
   const handleTryAgain = () => {
     refetch();
   };
@@ -80,11 +87,13 @@ export const EmployeesPage = () => {
           data?.users && (
             <Table
               onDelete={handleItemDelete}
+              onCreate={handleCreate}
               head={tableHead}
               items={getEmployees(data.users)}
               redirectButtonText="Profile"
               deleteButtonText="Delete"
               entryType={TableEntry.EMPLOYEE}
+              showNewEntryButton={true}
               searchBy="name"
             />
           )

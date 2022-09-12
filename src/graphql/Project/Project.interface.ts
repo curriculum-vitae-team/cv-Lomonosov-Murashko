@@ -58,6 +58,8 @@ export interface ProjectInput {
   domain: string;
   start_date: string;
   end_date: string | null;
+  team_size: number;
+  skillsIds: string[];
 }
 
 export interface ProjectInfo {

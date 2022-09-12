@@ -1,7 +1,10 @@
-import { StyledDiv, StyledEntry, StyledLink } from "./InfoItem.styles";
+import { StyledDiv, StyledLink } from "./InfoItem.styles";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Typography } from "@mui/material";
+import { withAdminAccess } from "@hoc/withAdminAccess";
 import { InfoItemProps } from "./InfoItem.types";
+
+const DeleteOutlineIconWithAdminAccess = withAdminAccess(DeleteOutlineIcon);
 
 export const InfoItem = ({ id, name, onDelete }: InfoItemProps) => {
   // move outside
@@ -16,7 +19,7 @@ export const InfoItem = ({ id, name, onDelete }: InfoItemProps) => {
     <StyledDiv>
       <StyledLink to={id}>
         <Typography>{name}</Typography>
-        <DeleteOutlineIcon onClick={handleDelete} />
+        <DeleteOutlineIconWithAdminAccess onClick={handleDelete} />
       </StyledLink>
     </StyledDiv>
   );

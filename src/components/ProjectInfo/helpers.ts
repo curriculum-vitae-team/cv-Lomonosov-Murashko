@@ -6,8 +6,11 @@ export const resetProject = (project: ProjectInfo) => {
     internalName: project.internal_name || "",
     name: project.name || "",
     startDate: format(new Date(project.start_date), "MM/dd/yyyy") || "",
-    endDate: format(new Date(project.end_date), "MM/dd/yyyy") || "",
+    endDate: project.end_date
+      ? format(new Date(project.end_date), "MM/dd/yyyy")
+      : "",
     domain: project.domain || "",
     description: project.description || "",
+    teamSize: project.team_size || 0,
   };
 };
