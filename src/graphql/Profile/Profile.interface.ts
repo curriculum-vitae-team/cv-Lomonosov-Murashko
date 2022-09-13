@@ -6,9 +6,7 @@ import { UserLanguages } from "../User/User.interface";
 export interface Profile {
   first_name: string;
   last_name: string;
-  department: Department;
-  position_name: string;
-  position: Position;
+
   skills: SkillMastery[];
   languages: UserLanguages[];
 }
