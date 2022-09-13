@@ -43,6 +43,8 @@ function AuthProvider({ children }: IAuthContextProps) {
     { user, access_token }: AuthUserInfo,
     isMemorized: boolean,
   ) => {
+    console.log("user", user);
+    
     dispatch({
       type: ACTIONS.LOGIN,
       payload: user,

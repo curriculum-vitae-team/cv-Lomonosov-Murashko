@@ -1,8 +1,9 @@
 import { AuthContext } from "@context/authContext/authContext";
 import { withOverlay } from "@hoc/withOverlay";
+import { Typography } from "@mui/material";
 import { useContext } from "react";
 import {
-  StyledTypography,
+  StyledTypographyEmail,
   StyledButton,
   StyledDiv,
   StyledAccountCircleIcon,
@@ -21,7 +22,8 @@ function UserProfileCard() {
   return (
     <StyledDiv onClick={onUserProfileCardClick}>
       <StyledAccountCircleIcon />
-      <StyledTypography>{user?.email}</StyledTypography>
+      <Typography>{user?.profile?.full_name}</Typography>
+      <StyledTypographyEmail>{user?.email}</StyledTypographyEmail>
       <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
     </StyledDiv>
   );
