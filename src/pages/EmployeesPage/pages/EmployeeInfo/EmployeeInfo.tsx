@@ -42,14 +42,15 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const { control, handleSubmit, reset } = useForm<UserInfo>({
     defaultValues: {
       id: "",
+      department: {
+        id: "",
+        name: "",
+      },
+      position: { id: "", name: "" },
       profile: {
         first_name: "",
         last_name: "",
-        department: {
-          id: "",
-          name: "",
-        },
-        position: { id: "", name: "" },
+
         skills: [],
         languages: [],
       },
@@ -116,10 +117,14 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const onSubmit: SubmitHandler<UserInfo> = (data) => {
     // TODO: delete `= []` constructions later
     const {
-      first_name,
-      last_name,
       department: { id: departmentId },
       position: { id: positionId },
+    } = data;
+
+    const {
+      first_name,
+      last_name,
+
       languages = [],
       skills = [],
     } = data.profile;
@@ -179,7 +184,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         <SelectLabelWrapper>
           <Typography sx={{ opacity: "0.7" }}>Departments</Typography>
           <Controller
-            name="profile.department.id"
+            name="department.id"
             control={control}
             render={({ field }) => (
               <Select sx={{ minWidth: "12em" }} {...field}>
@@ -195,7 +200,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         <SelectLabelWrapper>
           <Typography sx={{ opacity: "0.7" }}>Position</Typography>
           <Controller
-            name="profile.position.id"
+            name="position.id"
             control={control}
             render={({ field }) => (
               <Select sx={{ minWidth: "12em" }} {...field}>
