@@ -10,8 +10,8 @@ export function getEmployeeInfo<T extends UserInfo>(
     name: user.profile.first_name,
     lastName: user.profile.last_name,
     email: user.email,
-    departmentId: user.profile.department?.id || "Unknown",
-    specialization: user.profile.position_name || "Unknown",
+    departmentId: user.department?.id || "Unknown",
+    specialization: user.position_name || "Unknown",
     id: user.id,
   };
 }
@@ -23,12 +23,12 @@ export const resetEmployee = (user: UserInfo) => {
       first_name: user.profile.first_name || "",
       last_name: user.profile.last_name || "",
       department: {
-        id: user.profile.department?.id || "",
-        name: user.profile.department?.name || "",
+        id: user.department?.id || "",
+        name: user.department?.name || "",
       },
       position: {
-        id: user.profile.position?.id || "",
-        name: user.profile.position?.name || "",
+        id: user.position?.id || "",
+        name: user.position?.name || "",
       },
     },
     cvs: {
