@@ -16,9 +16,9 @@ import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
 import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
-import { useNavigate } from "react-router";
-import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
+import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
+import { useModal } from "@hooks/useModal";
 
 const head = [
   { columnKey: "internalName", columnName: "Internal name", isSortable: true },
@@ -32,13 +32,13 @@ const Table = createTable<IProjectTable>();
 export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [mountedDialog, openModal] = useModal(ProjectInfoCreate);
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {      
+    onError: (error) => {
       setError(error.message);
     },
   });
@@ -57,34 +57,37 @@ export const ProjectsPage = () => {
     [deleteProject],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_PROJECT);
-  }, [navigate]);
-  
+  const handleCreate = () => {
+    openModal();
+  };
+
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb config={{ projects: "Projects" }} />
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? <Loader />
-          : error
-          ? "error"
-          : data?.projects && (
-              <Table
-                onDelete={handleItemDelete}
-                onCreate={handleCreate}
-                head={head}
-                items={getProjects(data.projects)}
-                redirectButtonText="Project details"
-                deleteButtonText="Delete"
-                entryType={TableEntry.PROJECT}
-                showNewEntryButton={true}
-                searchBy="name"
-              />
-            )}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          "error"
+        ) : (
+          data?.projects && (
+            <Table
+              onDelete={handleItemDelete}
+              onCreate={handleCreate}
+              head={head}
+              items={getProjects(data.projects)}
+              redirectButtonText="Project details"
+              deleteButtonText="Delete"
+              entryType={TableEntry.PROJECT}
+              showNewEntryButton={true}
+              searchBy="name"
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

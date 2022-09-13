@@ -13,6 +13,7 @@ export const Fieldset = <T,>({
   label,
   render,
   type,
+  isMultiline,
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
@@ -28,6 +29,7 @@ export const Fieldset = <T,>({
                   {...field}
                   type={type}
                   label={label}
+                  multiline={isMultiline}
                   helperText={fieldState.error?.message || " "}
                   error={!!fieldState.error}
                 />

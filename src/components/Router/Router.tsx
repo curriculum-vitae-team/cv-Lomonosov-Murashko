@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { CvsPage } from "@pages/CvsPage";
 import { EmployeesPage } from "@pages/EmployeesPage/";
@@ -12,7 +12,6 @@ import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ENTITY, ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
-import { CvInfoUpdate } from "@components/CvInfoUpdate";
 import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
@@ -49,7 +48,6 @@ export function Router() {
           >
             <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
             <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
-            <Route path={ROUTE.ADD_EMPLOYEE} element={<EmployeeInfoCreate />} />
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
@@ -60,13 +58,11 @@ export function Router() {
               </Route>
             </Route>
             <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
-            <Route path={ROUTE.ADD_PROJECT} element={<ProjectInfoCreate />} />
             <Route path={ROUTE.TARGET_PROJECT} element={<ProjectPage />}>
               <Route index element={<ProjectInfoPage />} />
             </Route>
           </Route>
           <Route path={ROUTE.CVS} element={<CvsPage />} />
-          <Route path={ROUTE.ADD_CV} element={<CvInfoCreatePage />} />
           <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route
             element={

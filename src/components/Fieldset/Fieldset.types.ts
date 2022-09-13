@@ -15,4 +15,5 @@ export type FieldsetProps<T> = {
   name: Path<T>;
   rules?: UseControllerProps<T>["rules"];
   render?: ControllerProps<T>["render"];
+  isMultiline?: boolean,
 };
