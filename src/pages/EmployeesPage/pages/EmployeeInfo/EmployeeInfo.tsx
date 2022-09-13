@@ -1,6 +1,7 @@
 import {
   Button,
   DialogActions,
+  Menu,
   MenuItem,
   Select,
   Typography,
@@ -19,19 +20,25 @@ import {
   UpdateUserOutput,
   UserInfo,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { DepartmentsData } from "@graphql/Department/Department.interface";
-import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
-import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
+import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
+import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
+import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
 import { SelectLabelWrapper } from "@components/styled/SelectLabel";
 
 import { AuthContext } from "@context/authContext/authContext";
+import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
+import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
+import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
+import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
+import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
+import { CreateUserInput } from "@src/graphql/User/user.types";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -39,35 +46,16 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset } = useForm<UserInfo>({
+  const { control, handleSubmit, reset } = useForm<CreateUserInput>({
     defaultValues: {
-      id: "",
-      department: {
-        id: "",
-        name: "",
-      },
-      position: { id: "", name: "" },
+      departmentId: "",
+      positionId: "",
+
       profile: {
         first_name: "",
         last_name: "",
-
-        skills: [],
-        languages: [],
       },
-      cvs: {
-        id: "",
-        name: "",
-        description: "",
-        projects: {
-          id: "",
-          name: "",
-          internal_name: "",
-          domain: "",
-          start_date: "",
-          end_date: "",
-          tech_stack: [],
-        },
-      },
+      cvsIds: [],
     },
   });
 
@@ -86,6 +74,18 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   );
 
+  const { data: languages } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const { data: skills } = useQuery<GetSkillsData>(GET_SKILLS, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
   const {
     data: userData,
     refetch,
@@ -96,6 +96,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
     onCompleted: (data) => {
       reset(resetEmployee(data.user));
+      console.log(data);
     },
     onError: (error) => {
       setToastError(error.message);
@@ -114,12 +115,9 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserInfo> = (data) => {
+  const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
     // TODO: delete `= []` constructions later
-    const {
-      department: { id: departmentId },
-      position: { id: positionId },
-    } = data;
+    const { departmentId, positionId } = data;
 
     const {
       first_name,
@@ -129,15 +127,17 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       skills = [],
     } = data.profile;
 
+    console.log(departmentId, positionId);
+
     saveUser({
       variables: {
         id: employeeId,
         user: {
+          departmentId,
+          positionId,
           profile: {
             first_name,
             last_name,
-            departmentId,
-            positionId,
             languages, // TODO: Replace with entities input
             skills, // TODO: Replace with entities input
           },
@@ -181,38 +181,18 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           label="Last Name"
           name="profile.last_name"
         />
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Departments</Typography>
-          <Controller
-            name="department.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {departments?.departments.map((dep) => (
-                  <MenuItem key={dep.id} value={dep.id}>
-                    {dep.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Position</Typography>
-          <Controller
-            name="position.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {positions?.positions.map((pos) => (
-                  <MenuItem key={pos.id} value={pos.id}>
-                    {pos.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
+        <SelectEntry
+          name="departmentId"
+          control={control}
+          title="Departments"
+          entries={departments?.departments}
+        />
+        <SelectEntry
+          name="positionId"
+          control={control}
+          title="Positions"
+          entries={positions?.positions}
+        />
       </InfoFormWrapper>
       <DialogActions>
         <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />

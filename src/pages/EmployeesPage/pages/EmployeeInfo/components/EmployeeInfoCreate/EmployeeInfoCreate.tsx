@@ -12,10 +12,10 @@ import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoForm } from "../EmployeeCreateInfoForm";
 import { Loader } from "@components/Loader";
-import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
-import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
-import { DepartmentsData } from "@graphql/Department/Department.interface";
+import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
+import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
+import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
 
 export const EmployeeInfoCreate = () => {
   const navigate = useNavigate();

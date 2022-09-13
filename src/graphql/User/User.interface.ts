@@ -1,8 +1,8 @@
 /* Queries */
 
 import { SkillMastery } from "../Cv/Cv.interface";
-import { Department } from "../Department/Department.interface";
-import { Position } from "../Position/Position.interface";
+import { Department } from "../Entity/Department/Department.interface";
+import { Position } from "../Entity/Position/Position.interface";
 import { ProfileInput, Profile } from "../Profile/Profile.interface";
 import { ProjectInfo } from "../Project/Project.interface";
 import { Skills } from "../Skills/Skills.interface";
@@ -49,8 +49,10 @@ export interface DeleteUserOutput {
 export interface UpdateUserInput {
   id: string;
   user: {
-    profile?: ProfileInput;
-    cvsIds?: string[];
+    profile: ProfileInput;
+    cvsIds: string[];
+    departmentId?: string;
+    positionId?: string;
   };
 }
 
