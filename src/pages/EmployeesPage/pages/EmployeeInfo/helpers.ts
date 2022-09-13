@@ -1,5 +1,6 @@
 import { UserInfo } from "@graphql/User/User.interface";
 import { IEmployeeInfo } from "@interfaces/IEmployee";
+import { CreateUserInput } from "@src/graphql/User/user.types";
 
 export function getEmployeeInfo<T extends UserInfo>(
   user: T,
@@ -18,32 +19,14 @@ export function getEmployeeInfo<T extends UserInfo>(
 
 export const resetEmployee = (user: UserInfo) => {
   return {
-    id: user.id,
+    departmentId: user.department?.id || "",
+    positionId: user.position?.id || "",
     profile: {
       first_name: user.profile.first_name || "",
       last_name: user.profile.last_name || "",
-      department: {
-        id: user.department?.id || "",
-        name: user.department?.name || "",
-      },
-      position: {
-        id: user.position?.id || "",
-        name: user.position?.name || "",
-      },
+      skills: user.profile.skills,
+      languages: user.profile.languages,
     },
-    cvs: {
-      id: user.cvs?.id || "",
-      name: user.cvs?.name || "",
-      description: user.cvs?.description || "",
-      projects: {
-        id: user.cvs?.projects?.id || "",
-        name: user.cvs?.projects?.name || "",
-        internal_name: user.cvs?.projects?.internal_name || "",
-        domain: user.cvs?.projects?.domain || "",
-        start_date: user.cvs?.projects?.start_date || "",
-        end_date: user.cvs?.projects?.end_date || "",
-        tech_stack: user.cvs?.projects?.tech_stack || [],
-      },
-    },
+    cvsIds: user.cvs.map((cv) => cv.id),
   };
 };

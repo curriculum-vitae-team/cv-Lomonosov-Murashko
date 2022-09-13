@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { SelectLabelWrapper } from "@src/components/styled/SelectLabel";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { SelectEntryProps } from "./SelectEntry.types";
 
@@ -24,9 +25,9 @@ export const SelectEntry = <T,>({
           control={control}
           render={({ field: { name, onBlur, onChange, ref, value } }) => (
             <>
-              <InputLabel id={title + "-label"}>{title}</InputLabel>
+              <InputLabel id={name + "-label"}>{title}</InputLabel>
               <Select
-                labelId={title + "-label"}
+                labelId={name + "-label"}
                 label={title}
                 sx={{ minWidth: "12em" }}
                 id={title}
@@ -34,7 +35,7 @@ export const SelectEntry = <T,>({
                 onBlur={onBlur}
                 onChange={onChange}
                 ref={ref}
-                value={value ?? ""}
+                value={value || ""}
               >
                 {entries &&
                   entries.map((entry, index) => (

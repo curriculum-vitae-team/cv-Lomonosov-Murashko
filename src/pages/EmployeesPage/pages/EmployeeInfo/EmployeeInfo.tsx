@@ -39,6 +39,7 @@ import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
 import { CreateUserInput } from "@src/graphql/User/user.types";
+import { MultipleSelect } from "@src/graphql/shared/components/MultipleSelect";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -54,6 +55,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       profile: {
         first_name: "",
         last_name: "",
+        skills: [],
+        languages: [],
       },
       cvsIds: [],
     },
@@ -96,7 +99,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
     onCompleted: (data) => {
       reset(resetEmployee(data.user));
-      console.log(data);
     },
     onError: (error) => {
       setToastError(error.message);
@@ -192,6 +194,20 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           control={control}
           title="Positions"
           entries={positions?.positions}
+        />
+      </InfoFormWrapper>
+      <InfoFormWrapper>
+        <MultipleSelect
+          name="profile.skills"
+          control={control}
+          title="Skills"
+          entries={skills?.skills}
+        />
+        <MultipleSelect
+          name="profile.languages"
+          control={control}
+          title="Languages"
+          entries={languages?.languages}
         />
       </InfoFormWrapper>
       <DialogActions>

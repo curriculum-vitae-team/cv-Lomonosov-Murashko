@@ -101,7 +101,7 @@ export interface UserInfo {
   id: string;
   email: string;
   role: string;
-  cvs: UserCvs;
+  cvs: UserCv[];
   department: Department;
   position_name: string;
   position: Position;
@@ -130,7 +130,7 @@ export interface UserLanguages {
   proficiency: string;
 }
 
-export interface UserCvs {
+export interface UserCv {
   id: string;
   name: string;
   description: string;
