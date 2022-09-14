@@ -15,10 +15,9 @@ import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
 import {
-  UserInfoData,
+  GetUserResult,
   UpdateUserInput,
-  UpdateUserOutput,
-  UserInfo,
+  UpdateUserResult,
 } from "@graphql/User/User.interface";
 import { memo, useContext, useEffect, useState } from "react";
 import { InlineError } from "@components/InlineError";
@@ -30,7 +29,6 @@ import { DepartmentsData } from "@src/graphql/Entity/Department/Department.inter
 import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
 import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
 import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
-import { SelectLabelWrapper } from "@components/styled/SelectLabel";
 
 import { AuthContext } from "@context/authContext/authContext";
 import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
@@ -38,8 +36,9 @@ import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
-import { CreateUserInput } from "@src/graphql/User/user.types";
+import { CreateUserInput } from "@src/graphql/User/User.interface";
 import { MultipleSelect } from "@src/graphql/shared/components/MultipleSelect";
+import { IEmployee } from "@src/interfaces/IEmployee";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -47,18 +46,20 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
+  // TODO: Form must correspond the data sent
   const { control, handleSubmit, reset } = useForm<CreateUserInput>({
     defaultValues: {
-      departmentId: "",
-      positionId: "",
-
-      profile: {
-        first_name: "",
-        last_name: "",
-        skills: [],
-        languages: [],
+      user: {
+        departmentId: "",
+        positionId: "",
+        profile: {
+          first_name: "",
+          last_name: "",
+          skills: [],
+          languages: [],
+        },
+        cvsIds: [],
       },
-      cvsIds: [],
     },
   });
 
@@ -93,12 +94,14 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     data: userData,
     refetch,
     loading: getUserInfoLoading,
-  } = useQuery<UserInfoData>(GET_USER_INFO, {
+  } = useQuery<GetUserResult>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
     onCompleted: (data) => {
-      reset(resetEmployee(data.user));
+      if (data.user) {
+        reset(resetEmployee(data.user));
+      }
     },
     onError: (error) => {
       setToastError(error.message);
@@ -106,7 +109,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   });
 
   const [saveUser, { loading: saveUserLoading }] = useMutation<
-    UpdateUserOutput,
+    UpdateUserResult,
     UpdateUserInput
   >(UPDATE_USER, {
     onCompleted: (data) => {
@@ -119,17 +122,11 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
 
   const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
     // TODO: delete `= []` constructions later
-    const { departmentId, positionId } = data;
-
     const {
-      first_name,
-      last_name,
-
-      languages = [],
-      skills = [],
-    } = data.profile;
-
-    console.log(departmentId, positionId);
+      departmentId,
+      positionId,
+      profile: { first_name, last_name, languages = [], skills = [] },
+    } = data.user;
 
     saveUser({
       variables: {
@@ -140,10 +137,10 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           profile: {
             first_name,
             last_name,
-            languages, // TODO: Replace with entities input
-            skills, // TODO: Replace with entities input
+            languages,
+            skills,
           },
-          cvsIds: [], // TODO: Replace with Select
+          cvsIds: [],
         },
       },
     });
@@ -175,22 +172,22 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           control={control}
           required="Please, specify the field"
           label="First Name"
-          name="profile.first_name"
+          name="user.profile.first_name"
         />
         <Fieldset
           control={control}
           required="Please, specify the field"
           label="Last Name"
-          name="profile.last_name"
+          name="user.profile.last_name"
         />
         <SelectEntry
-          name="departmentId"
+          name="user.departmentId"
           control={control}
           title="Departments"
           entries={departments?.departments}
         />
         <SelectEntry
-          name="positionId"
+          name="user.positionId"
           control={control}
           title="Positions"
           entries={positions?.positions}
@@ -198,13 +195,13 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       </InfoFormWrapper>
       <InfoFormWrapper>
         <MultipleSelect
-          name="profile.skills"
+          name="user.profile.skills"
           control={control}
           title="Skills"
           entries={skills?.skills}
         />
         <MultipleSelect
-          name="profile.languages"
+          name="user.profile.languages"
           control={control}
           title="Languages"
           entries={languages?.languages}

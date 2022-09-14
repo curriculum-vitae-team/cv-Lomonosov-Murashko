@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ROUTE } from "@constants/route";
 import {
   CreateUserInput,
-  CreateUserOutput,
+  CreateUserResult,
 } from "@graphql/User/User.interface";
 import { CREATE_USER } from "@graphql/User/User.queries";
 import { IEmployeeCore } from "@interfaces/IEmployee";
@@ -37,7 +37,7 @@ export const EmployeeInfoCreate = () => {
   );
 
   const [createUser, { loading: createCvLoading }] = useMutation<
-    CreateUserOutput,
+    CreateUserResult,
     CreateUserInput
   >(CREATE_USER, {
     onCompleted: () => {
@@ -60,13 +60,12 @@ export const EmployeeInfoCreate = () => {
             profile: {
               first_name: data.profile.first_name,
               last_name: data.profile.last_name,
-              departmentId: data.profile.departmentId,
-              positionId: data.profile.positionId,
               skills: [],
               languages: [],
             },
             cvsIds: [],
-            role: data.role,
+            departmentId: data.profile.departmentId,
+            positionId: data.profile.positionId,
           },
         },
         update: createUserCacheUpdate(),
