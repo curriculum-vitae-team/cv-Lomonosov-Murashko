@@ -19,14 +19,14 @@ import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { tableHead } from "./tableHead";
-import { ROUTE } from "@constants/route";
-import { useNavigate } from "react-router";
+import { useModal } from "@hooks/useModal";
+import { EmployeeInfoCreate } from "./pages/EmployeeInfo/components/EmployeeInfoCreate";
 
 const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [mountedDialog, openModal] = useModal(EmployeeInfoCreate);
 
   const { data, refetch, loading } = useQuery<GetUsersResult>(GET_USERS, {
     onError: (error) => {
@@ -57,9 +57,9 @@ export const EmployeesPage = () => {
     [deleteUser],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_EMPLOYEE);
-  }, [navigate]);
+  const handleCreate = () => {
+    openModal();
+  };
 
   const handleTryAgain = () => {
     refetch();
@@ -67,6 +67,7 @@ export const EmployeesPage = () => {
 
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb
           config={{

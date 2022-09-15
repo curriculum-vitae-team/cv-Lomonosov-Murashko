@@ -18,5 +18,5 @@ export const StyledFieldsetWrapper = styled("fieldset", {
     minHeight: "56px",
     width: inputWidth,
   },
-  width: isFullWidth ? "100%" : "unset",
+  width: isFullWidth ? "100%" : "",
 }));

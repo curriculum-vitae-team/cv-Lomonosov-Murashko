@@ -13,6 +13,7 @@
       "@features/*": ["src/features/*"],
       "@graphql/*": ["src/graphql/*"],
       "@hoc/*": ["src/hoc/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@helpers/*": ["src/helpers/*"]
     }
   }
