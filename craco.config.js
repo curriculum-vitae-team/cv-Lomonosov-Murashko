@@ -1,8 +1,6 @@
 const { CracoAliasPlugin } = require("react-app-alias");
 const webpack = require("webpack");
 
-const options = {}; // default is empty for most cases
-
 module.exports = {
   webpack: {
     configure: {
