@@ -8,3 +8,10 @@ export interface Profile {
   skills: SkillMastery[];
   languages: LanguageProficiency[];
 }
+
+export type ProfileInput = {
+  first_name: string;
+  last_name: string;
+  skills: SkillMastery[];
+  languages: LanguageProficiency[];
+};
