@@ -12,7 +12,7 @@ import { SubmitHandler } from "react-hook-form";
 import { createCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 import { CvCreateInfoForm } from "../CvCreateInfoForm";
 import { GET_USERS_NAMES_IDS } from "@graphql/User/User.queries";
-import { UsersNamesIdsData } from "@graphql/User/User.interface";
+import { UsersNamesIdsData } from "../CvCreateInfoForm/CvCreateInfoForm.types";
 
 export const CvInfoCreatePage = () => {
   const navigate = useNavigate();

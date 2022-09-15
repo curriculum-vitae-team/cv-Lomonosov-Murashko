@@ -1,13 +1,13 @@
 /* Queries */
 
-import { Skills } from "../Skills/Skills.interface";
+import { Project } from "@interfaces/project.interface";
 
 export interface ProjectsData {
-  projects: ProjectInfo[];
+  projects: Project[];
 }
 
 export interface ProjectInfoData {
-  project: ProjectInfo;
+  project: Project;
 }
 
 export interface ProjectName {
@@ -46,7 +46,7 @@ export interface UpdateProjectInput {
 }
 
 export interface UpdateProjectOutput {
-  updateProject: ProjectInfo;
+  updateProject: Project;
 }
 
 /* Parts */
@@ -62,21 +62,9 @@ export interface ProjectInput {
   skillsIds: string[];
 }
 
-export interface ProjectInfo {
-  id: string;
-  name: string;
-  internal_name: string;
-  description: string;
-  domain: string;
-  start_date: string;
-  end_date: string;
-  tech_stack: Skills[] | null;
-  team_size: number;
-}
-
 /* For table */
 
-export interface Project {
+export interface ProjectTable {
   id: string;
   internal_name: string;
   start_date: string;

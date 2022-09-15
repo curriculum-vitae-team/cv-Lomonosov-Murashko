@@ -1,4 +1,4 @@
-import { User } from "@graphql/User/User.interface";
+import { User } from "./user.interface";
 
 export interface IResetPassword {
   email: string;

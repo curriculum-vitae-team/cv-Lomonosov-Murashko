@@ -9,7 +9,7 @@ import { PageTopTypography } from "@components/PageTopTypography";
 import { PageBody } from "@components/styled/PageBody";
 import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
-import { UserFullnameData } from "@graphql/User/User.interface";
+import { GetUserFullnameResult } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { validateUserFullName } from "../../helpers";
 import { Loader } from "@components/Loader";
@@ -20,7 +20,7 @@ export const EmployeePage = () => {
   const { pathname } = useLocation();
   const pathnames = pathname.split("/");
 
-  const { data, loading } = useQuery<UserFullnameData>(GET_USER_FULLNAME, {
+  const { data, loading } = useQuery<GetUserFullnameResult>(GET_USER_FULLNAME, {
     variables: {
       id: employeeId,
     },

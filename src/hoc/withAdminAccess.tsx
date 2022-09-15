@@ -1,7 +1,7 @@
 import { AuthContext } from "@context/authContext/authContext";
-import { ROLES } from "@constants/roles";
 import { useContext } from "react";
 import { FormSaveButtonProps } from "@components/FormSaveButton/FormSaveButton.types";
+import { UserRoles } from "@src/constants/user-roles.constants";
 
 export const withAdminAccess =
   <T extends {}>(Component: React.ComponentType<T>) =>
@@ -10,7 +10,7 @@ export const withAdminAccess =
 
     return (
       <>
-        {user.role === ROLES.ADMIN || props?.allowAccess ? (
+        {user.role === UserRoles.Admin || props?.allowAccess ? (
           <Component {...props} />
         ) : (
           <></>
