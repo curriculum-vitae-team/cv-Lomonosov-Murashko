@@ -29,9 +29,7 @@ export const EmployeesPage = () => {
   const navigate = useNavigate();
 
   const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
-    onError: (error) => {
-      console.log(error);
-      
+    onError: (error) => {      
       setError(error.message);
     },
   });

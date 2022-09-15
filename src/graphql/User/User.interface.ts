@@ -99,11 +99,11 @@ export interface UserInfo {
   id: string;
   email: string;
   role: string;
-  cvs: UserCvs;
   department: Department;
   position_name: string;
   position: Position;
   profile: Profile;
+  cvs: UserCvs;
 }
 
 export interface UserCVEntry {
