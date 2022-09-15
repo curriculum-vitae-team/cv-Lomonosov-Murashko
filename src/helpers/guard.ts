@@ -1,4 +1,4 @@
-import { User } from "@graphql/User/User.interface";
+import { User } from "@interfaces/user.interface";
 
 export type GuardFunction = (user: User) => boolean;
 export type RoleGuardWithUser = (roles: string[]) => GuardFunction;

@@ -1,5 +1,4 @@
 import { CvInput } from "@graphql/Cv/Cv.interface";
-import { UsersNamesIdsData } from "@graphql/User/User.interface";
 import { SubmitHandler } from "react-hook-form";
 
 export type CvCreateInfoFormProps = {
@@ -7,3 +6,14 @@ export type CvCreateInfoFormProps = {
   error?: string;
   users?: UsersNamesIdsData;
 };
+
+export interface UsersNamesIdsData {
+  users: UserNameIds[];
+}
+
+export interface UserNameIds {
+  id: string;
+  profile: {
+    full_name: string;
+  };
+}

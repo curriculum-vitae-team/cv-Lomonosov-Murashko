@@ -1,7 +1,7 @@
-import { ProjectInfo } from "@graphql/Project/Project.interface";
+import { Project } from "@src/interfaces/project.interface";
 import { format } from "date-fns";
 
-export const resetProject = (project: ProjectInfo) => {
+export const resetProject = (project: Project) => {
   return {
     internalName: project.internal_name || "",
     name: project.name || "",

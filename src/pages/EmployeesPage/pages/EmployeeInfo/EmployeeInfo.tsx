@@ -1,6 +1,7 @@
 import {
   Button,
   DialogActions,
+  Menu,
   MenuItem,
   Select,
   Typography,
@@ -14,24 +15,30 @@ import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
 import {
-  UserInfoData,
+  GetUserResult,
   UpdateUserInput,
-  UpdateUserOutput,
-  UserInfo,
+  UpdateUserResult,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { DepartmentsData } from "@graphql/Department/Department.interface";
-import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
-import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
-import { SelectLabelWrapper } from "@components/styled/SelectLabel";
+import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
+import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
+import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
 
 import { AuthContext } from "@context/authContext/authContext";
+import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
+import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
+import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
+import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
+import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
+import { CreateUserInput } from "@src/graphql/User/User.interface";
+import { MultipleSelect } from "@src/graphql/shared/components/MultipleSelect";
+import { IEmployee } from "@src/interfaces/IEmployee";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -39,34 +46,19 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const navigate = useNavigate();
   const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset } = useForm<UserInfo>({
+  // TODO: Form must correspond the data sent
+  const { control, handleSubmit, reset } = useForm<CreateUserInput>({
     defaultValues: {
-      id: "",
-      department: {
-        id: "",
-        name: "",
-      },
-      position: { id: "", name: "" },
-      profile: {
-        first_name: "",
-        last_name: "",
-
-        skills: [],
-        languages: [],
-      },
-      cvs: {
-        id: "",
-        name: "",
-        description: "",
-        projects: {
-          id: "",
-          name: "",
-          internal_name: "",
-          domain: "",
-          start_date: "",
-          end_date: "",
-          tech_stack: [],
+      user: {
+        departmentId: "",
+        positionId: "",
+        profile: {
+          first_name: "",
+          last_name: "",
+          skills: [],
+          languages: [],
         },
+        cvsIds: [],
       },
     },
   });
@@ -86,16 +78,30 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   );
 
+  const { data: languages } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const { data: skills } = useQuery<GetSkillsData>(GET_SKILLS, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
   const {
     data: userData,
     refetch,
     loading: getUserInfoLoading,
-  } = useQuery<UserInfoData>(GET_USER_INFO, {
+  } = useQuery<GetUserResult>(GET_USER_INFO, {
     variables: {
       id: employeeId,
     },
     onCompleted: (data) => {
-      reset(resetEmployee(data.user));
+      if (data.user) {
+        reset(resetEmployee(data.user));
+      }
     },
     onError: (error) => {
       setToastError(error.message);
@@ -103,7 +109,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   });
 
   const [saveUser, { loading: saveUserLoading }] = useMutation<
-    UpdateUserOutput,
+    UpdateUserResult,
     UpdateUserInput
   >(UPDATE_USER, {
     onCompleted: (data) => {
@@ -114,34 +120,27 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserInfo> = (data) => {
+  const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
     // TODO: delete `= []` constructions later
     const {
-      department: { id: departmentId },
-      position: { id: positionId },
-    } = data;
-
-    const {
-      first_name,
-      last_name,
-
-      languages = [],
-      skills = [],
-    } = data.profile;
+      departmentId,
+      positionId,
+      profile: { first_name, last_name, languages = [], skills = [] },
+    } = data.user;
 
     saveUser({
       variables: {
         id: employeeId,
         user: {
+          departmentId,
+          positionId,
           profile: {
             first_name,
             last_name,
-            departmentId,
-            positionId,
-            languages, // TODO: Replace with entities input
-            skills, // TODO: Replace with entities input
+            languages,
+            skills,
           },
-          cvsIds: [], // TODO: Replace with Select
+          cvsIds: [],
         },
       },
     });
@@ -173,46 +172,40 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           control={control}
           required="Please, specify the field"
           label="First Name"
-          name="profile.first_name"
+          name="user.profile.first_name"
         />
         <Fieldset
           control={control}
           required="Please, specify the field"
           label="Last Name"
-          name="profile.last_name"
+          name="user.profile.last_name"
         />
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Departments</Typography>
-          <Controller
-            name="department.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {departments?.departments.map((dep) => (
-                  <MenuItem key={dep.id} value={dep.id}>
-                    {dep.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Position</Typography>
-          <Controller
-            name="position.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {positions?.positions.map((pos) => (
-                  <MenuItem key={pos.id} value={pos.id}>
-                    {pos.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
+        <SelectEntry
+          name="user.departmentId"
+          control={control}
+          title="Departments"
+          entries={departments?.departments}
+        />
+        <SelectEntry
+          name="user.positionId"
+          control={control}
+          title="Positions"
+          entries={positions?.positions}
+        />
+      </InfoFormWrapper>
+      <InfoFormWrapper>
+        <MultipleSelect
+          name="user.profile.skills"
+          control={control}
+          title="Skills"
+          entries={skills?.skills}
+        />
+        <MultipleSelect
+          name="user.profile.languages"
+          control={control}
+          title="Languages"
+          entries={languages?.languages}
+        />
       </InfoFormWrapper>
       <DialogActions>
         <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
