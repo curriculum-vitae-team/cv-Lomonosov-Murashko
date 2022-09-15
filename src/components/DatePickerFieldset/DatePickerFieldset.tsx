@@ -1,9 +1,10 @@
 import { Fieldset } from "@components/Fieldset";
 import { TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
+import { FieldValues } from "react-hook-form";
 import { DatePickerFieldsetProps } from "./DatePickerFieldset.types";
 
-export const DatePickerFieldset = <T,>({
+export const DatePickerFieldset = <T extends FieldValues>({
   control,
   name,
   label,

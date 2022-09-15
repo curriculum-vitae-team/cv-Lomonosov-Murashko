@@ -1,6 +1,6 @@
-import { Control, Path } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 
-export type DatePickerFieldsetProps<T> = {
+export type DatePickerFieldsetProps<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   required?: string;

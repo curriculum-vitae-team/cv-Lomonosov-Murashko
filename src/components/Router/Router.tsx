@@ -1,5 +1,4 @@
-import { Route, Routes } from "react-router-dom";
-import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CvsPage } from "@pages/CvsPage";
 import { EmployeesPage } from "@pages/EmployeesPage/";
 import { EntitiesPage } from "@pages/EntitiesPage";
@@ -20,14 +19,13 @@ import { CvInfoUpdatePage } from "@pages/CvInfoUpdatePage";
 import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
 import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
 import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
-import { browserHistory } from "@src/browserHistory";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
 
 export function Router() {
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Routes>
         <Route element={<Auth />}>
           <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
@@ -86,6 +84,6 @@ export function Router() {
         </Route>
         <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
