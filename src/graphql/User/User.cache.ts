@@ -1,17 +1,17 @@
 import { CacheUpdaterFunction } from "src/types";
 import {
   CreateUserInput,
-  CreateUserOutput,
+  CreateUserResult,
   DeleteUserInput,
-  DeleteUserOutput,
-  UsersData,
+  DeleteUserResult,
+  GetUsersResult,
 } from "./User.interface";
 import { GET_USERS } from "./User.queries";
 
 export const deleteUserCacheUpdate =
-  (id: string): CacheUpdaterFunction<DeleteUserOutput, DeleteUserInput> =>
+  (id: string): CacheUpdaterFunction<DeleteUserResult, DeleteUserInput> =>
   (cache, { data }) => {
-    const existingUsers = cache.readQuery<UsersData>({ query: GET_USERS });
+    const existingUsers = cache.readQuery<GetUsersResult>({ query: GET_USERS });
 
     if (existingUsers && data?.deleteUser.affected) {
       cache.writeQuery({
@@ -24,17 +24,17 @@ export const deleteUserCacheUpdate =
   };
 
 export const createUserCacheUpdate =
-  (): CacheUpdaterFunction<CreateUserOutput, CreateUserInput> =>
+  (): CacheUpdaterFunction<CreateUserResult, CreateUserInput> =>
   (cache, { data }) => {
-    const existingUsers = cache.readQuery<UsersData>({
+    const existingUsers = cache.readQuery<GetUsersResult>({
       query: GET_USERS,
-    });    
+    });
 
     if (existingUsers) {
       cache.writeQuery({
         query: GET_USERS,
         data: {
-          users: [data?.user, ...existingUsers.users],
+          users: [data?.createUser.user, ...existingUsers.users],
         },
       });
     }

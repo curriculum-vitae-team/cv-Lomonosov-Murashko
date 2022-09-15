@@ -10,7 +10,6 @@ import {
   setUserInfoToLocalStorage,
 } from "@helpers/localStorage";
 import { ROUTE } from "@src/constants/route";
-import { browserHistory } from "@src/browserHistory";
 
 const initialState = {
   user: {},
@@ -67,7 +66,7 @@ function AuthProvider({ children }: IAuthContextProps) {
           });
         } else {
           deleteUserInfoFromLocalStorage();
-          browserHistory.push(ROUTE.SIGN_IN);
+          // browserHistory.push(ROUTE.SIGN_IN);
         }
       }
     };

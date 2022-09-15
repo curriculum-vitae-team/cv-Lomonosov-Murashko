@@ -17,8 +17,9 @@ export const StyledDiv = styled("div")({
   boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
 });
 
-export const StyledTypography = styled(Typography)({
+export const StyledTypographyEmail = styled(Typography)({
   marginBottom: "1em",
+  fontSize: "0.9em"
 });
 
 export const StyledButton = styled(Button)({

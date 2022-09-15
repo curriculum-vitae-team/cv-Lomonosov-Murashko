@@ -6,8 +6,8 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { DELETE_USER, GET_USERS } from "@graphql/User/User.queries";
 import {
-  DeleteUserOutput,
-  UsersData,
+  DeleteUserResult,
+  GetUsersResult,
   DeleteUserInput,
 } from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
@@ -35,13 +35,15 @@ export const EmployeesPage = () => {
   const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
   const isSmallScreenMatch = useMediaQuery("(max-width: 540px)");
 
-  const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
+  const { data, refetch, loading } = useQuery<GetUsersResult>(GET_USERS, {
     onError: (error) => {
+      console.log(error);
+
       setError(error.message);
     },
   });
 
-  const [deleteUser] = useMutation<DeleteUserOutput, DeleteUserInput>(
+  const [deleteUser] = useMutation<DeleteUserResult, DeleteUserInput>(
     DELETE_USER,
     {
       optimisticResponse: {

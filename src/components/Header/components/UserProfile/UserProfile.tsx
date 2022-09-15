@@ -25,7 +25,9 @@ export function UserProfile() {
     <StyledGrid>
       <StyledBox onClick={handleProfileCardOpen}>
         <AccountCircleIcon sx={{ marginRight: "0.5em" }} />
-        <StyledTypography>{user.email}</StyledTypography>
+        <StyledTypography>
+          {user.profile?.full_name || user.email}
+        </StyledTypography>
       </StyledBox>
       <StyledTranslateIcon />
       {isProfileOpen && (

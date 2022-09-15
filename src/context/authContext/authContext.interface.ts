@@ -1,6 +1,5 @@
 import { AuthUserInfo } from "@graphql/Auth/Auth.interface";
-import { User } from "@graphql/User/User.interface";
-import React from "react";
+import { User } from "@interfaces/user.interface";
 
 export interface IAction {
   type: string;
