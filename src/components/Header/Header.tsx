@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { ChangeEvent, useContext } from "react";
 import {
   StyledHeader,
   Img,
@@ -11,14 +11,23 @@ import logo from "@assets/images/logo.svg";
 import { SidebarContext } from "@context/sidebarContext/sidebarContext";
 
 export function Header() {
-  const { handleMenuBurgerClick } = useContext(SidebarContext);
+  const { handleMenuBurgerClick, burgerMenuRef } = useContext(SidebarContext);
+
+  const handleMenuClick = (e: ChangeEvent<HTMLInputElement>) => {
+    handleMenuBurgerClick();
+  };
 
   return (
     <StyledHeader>
       <StyledGrid>
         <FlexWrapper>
           <StyledLabel htmlFor="check">
-            <input onClick={handleMenuBurgerClick} type="checkbox" id="check" />
+            <input
+              ref={burgerMenuRef}
+              onChange={handleMenuClick}
+              type="checkbox"
+              id="check"
+            />
             <span></span>
             <span></span>
             <span></span>

@@ -11,9 +11,12 @@ export const StyledGrid = styled(Grid)({
 });
 
 export const StyledTypography = styled(Typography)({
-  padding: "0 1.546875em 0 0.5rem",
+  padding: "0 1.546875em 0 0",
   "&:hover": {
     color: "#1890FF",
+  },
+  "@media(max-width: 650px)": {
+    display: "none",
   },
 });
 

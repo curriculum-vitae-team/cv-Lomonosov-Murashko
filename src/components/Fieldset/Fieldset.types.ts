@@ -1,11 +1,12 @@
 import {
   Control,
   ControllerProps,
+  FieldValues,
   Path,
   UseControllerProps,
 } from "react-hook-form";
 
-export type FieldsetProps<T> = {
+export type FieldsetProps<T extends FieldValues> = {
   isFullWidth?: boolean;
   inputWidth?: string;
   required?: string;

@@ -19,13 +19,12 @@ import { getProjects } from "./helpers";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
-
-const head = [
-  { columnKey: "internalName", columnName: "Internal name", isSortable: true },
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "startDate", columnName: "Start date", isSortable: true },
-  { columnKey: "endDate", columnName: "End date", isSortable: true },
-];
+import { useMediaQuery } from "@src/hooks/useMediaQuery";
+import {
+  mediumScreenTableHead,
+  smallScreenTableHead,
+  tableHead,
+} from "./tableHead";
 
 const Table = createTable<IProjectTable>();
 
@@ -33,12 +32,14 @@ export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
+  const isSmallScreenMatch = useMediaQuery("(max-width: 640px)");
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {      
+    onError: (error) => {
       setError(error.message);
     },
   });
@@ -60,7 +61,7 @@ export const ProjectsPage = () => {
   const handleCreate = useCallback(() => {
     navigate(ROUTE.ADD_PROJECT);
   }, [navigate]);
-  
+
   return (
     <PageWrapper>
       <PageTop>
@@ -68,23 +69,31 @@ export const ProjectsPage = () => {
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? <Loader />
-          : error
-          ? "error"
-          : data?.projects && (
-              <Table
-                onDelete={handleItemDelete}
-                onCreate={handleCreate}
-                head={head}
-                items={getProjects(data.projects)}
-                redirectButtonText="Project details"
-                deleteButtonText="Delete"
-                entryType={TableEntry.PROJECT}
-                showNewEntryButton={true}
-                searchBy="name"
-              />
-            )}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          "error"
+        ) : (
+          data?.projects && (
+            <Table
+              onDelete={handleItemDelete}
+              onCreate={handleCreate}
+              head={
+                isSmallScreenMatch
+                  ? smallScreenTableHead
+                  : isMediumScreenMatch
+                  ? mediumScreenTableHead
+                  : tableHead
+              }
+              items={getProjects(data.projects)}
+              redirectButtonText="Project details"
+              deleteButtonText="Delete"
+              entryType={TableEntry.PROJECT}
+              showNewEntryButton={true}
+              searchBy="name"
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

@@ -6,11 +6,10 @@ const SidebarContext = createContext({} as ISidebarContext);
 const SidebarProvider = ({ children }: SidebarProviderProps) => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(true);
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const burgerMenuRef = useRef<HTMLInputElement>(null);
 
-  const handleMenuBurgerClick = (e: React.SyntheticEvent) => {
+  const handleMenuBurgerClick = () => {
     sidebarRef.current?.classList.toggle("show");
-
-    // e.preventDefault();
   };
 
   return (
@@ -18,6 +17,7 @@ const SidebarProvider = ({ children }: SidebarProviderProps) => {
       value={{
         isSidebarOpened,
         sidebarRef,
+        burgerMenuRef,
         handleMenuBurgerClick,
         setIsSidebarOpened,
       }}

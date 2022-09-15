@@ -7,6 +7,7 @@ export type SidebarProviderProps = {
 export interface ISidebarContext {
   isSidebarOpened: boolean;
   sidebarRef: RefObject<HTMLDivElement>;
+  burgerMenuRef: RefObject<HTMLInputElement>;
   setIsSidebarOpened: Dispatch<SetStateAction<boolean>>;
-  handleMenuBurgerClick: (e: React.SyntheticEvent) => void;
+  handleMenuBurgerClick: () => void;
 }

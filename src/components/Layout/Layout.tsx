@@ -11,12 +11,14 @@ import { SidebarContext } from "@context/sidebarContext/sidebarContext";
 
 export function Layout() {
   const { user } = useContext(AuthContext);
-  const { sidebarRef, setIsSidebarOpened } = useContext(SidebarContext);
+  const { sidebarRef, burgerMenuRef, setIsSidebarOpened } =
+    useContext(SidebarContext);
   const location = useLocation();
 
   useEffect(() => {
     sidebarRef.current!.classList.remove("show");
-  }, [location, setIsSidebarOpened, sidebarRef]);
+    burgerMenuRef.current!.checked = false;
+  }, [burgerMenuRef, location, setIsSidebarOpened, sidebarRef]);
 
   return (
     <>

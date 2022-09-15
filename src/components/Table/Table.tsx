@@ -8,6 +8,7 @@ import { TableRowItem } from "./components/TableRowItem";
 import { IEntryData } from "@interfaces/IEntryData";
 import { SearchBox } from "@components/SearchBox";
 import { ButtonWithAdminAccess } from "./components/TableEntryTypeButton";
+import { useMediaQuery } from "@src/hooks/useMediaQuery";
 
 export function createTable<T extends AbstractEntity>(): React.ComponentType<
   TableProps<T>
@@ -49,7 +50,7 @@ export function Table({
 
   const handleQuery = (query: string) => {
     setFilter(query);
-  };
+  };    
 
   return (
     <StyledGrid container>
