@@ -19,14 +19,14 @@ import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { tableHead } from "./tableHead";
-import { ROUTE } from "@src/constants/route";
-import { useNavigate } from "react-router";
+import { useModal } from "@src/hooks/useModal";
+import { CvInfoCreatePage } from "./components/CvInfoCreatePage";
 
 const Table = createTable<ICVTable>();
 
 export const CvsPage = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [mountedDialog, openModal] = useModal(CvInfoCreatePage);
 
   const { data, refetch, loading } = useQuery<CvsData>(GET_ALL_CVS, {
     onError: (error) => {
@@ -61,44 +61,47 @@ export const CvsPage = () => {
     refetch();
   };
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_CV);
-  }, [navigate]);
+  const handleCreate = () => {
+    openModal();
+  };
 
   return (
     <PageWrapper>
-      <PageTop>
-        <Breadcrumb
-          config={{
-            cvs: "Cvs",
-          }}
-        />
-        <PageTopTypography title="CVs" caption="Cvs list" />
-      </PageTop>
-      <PageBody>
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <InlineError
-            message="Something went wrong when trying to fetch cvs data"
-            tryAgainFn={handleTryAgain}
+      <>
+        {mountedDialog}
+        <PageTop>
+          <Breadcrumb
+            config={{
+              cvs: "Cvs",
+            }}
           />
-        ) : (
-          data?.cvs && (
-            <Table
-              onDelete={handleItemDelete}
-              onCreate={handleCreate}
-              head={tableHead}
-              items={data.cvs}
-              redirectButtonText="CV details"
-              deleteButtonText="Delete"
-              entryType={TableEntry.CV}
-              showNewEntryButton={true}
-              searchBy="name"
+          <PageTopTypography title="CVs" caption="Cvs list" />
+        </PageTop>
+        <PageBody>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <InlineError
+              message="Something went wrong when trying to fetch cvs data"
+              tryAgainFn={handleTryAgain}
             />
-          )
-        )}
-      </PageBody>
+          ) : (
+            data?.cvs && (
+              <Table
+                onDelete={handleItemDelete}
+                onCreate={handleCreate}
+                head={tableHead}
+                items={data.cvs}
+                redirectButtonText="CV details"
+                deleteButtonText="Delete"
+                entryType={TableEntry.CV}
+                showNewEntryButton={true}
+                searchBy="name"
+              />
+            )
+          )}
+        </PageBody>
+      </>
     </PageWrapper>
   );
 };

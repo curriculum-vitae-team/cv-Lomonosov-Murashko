@@ -18,14 +18,11 @@ export const CvInfoCreatePage = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  const { data: users, loading } = useQuery<UsersNamesIdsData>(
-    GET_USERS_NAMES_IDS,
-    {
-      onError: (error) => {
-        setError(error.message);
-      },
+  const { data: users } = useQuery<UsersNamesIdsData>(GET_USERS_NAMES_IDS, {
+    onError: (error) => {
+      setError(error.message);
     },
-  );
+  });
 
   const [createCv] = useMutation<CreateCvOutput, CreateCvInput>(CREATE_CV, {
     onCompleted: () => {
@@ -38,7 +35,6 @@ export const CvInfoCreatePage = () => {
 
   const onSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
-      console.log(data);
       createCv({
         variables: {
           cv: {

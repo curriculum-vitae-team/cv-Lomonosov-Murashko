@@ -23,17 +23,17 @@ import {
   smallScreenTableHead,
   tableHead,
 } from "./tableHead";
-import { ROUTE } from "@constants/route";
-import { useNavigate } from "react-router";
 import { useMediaQuery } from "@src/hooks/useMediaQuery";
+import { useModal } from "@hooks/useModal";
+import { EmployeeInfoCreate } from "./pages/EmployeeInfo/components/EmployeeInfoCreate";
 
 const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
   const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
   const isSmallScreenMatch = useMediaQuery("(max-width: 540px)");
+  const [mountedDialog, openModal] = useModal(EmployeeInfoCreate);
 
   const { data, refetch, loading } = useQuery<GetUsersResult>(GET_USERS, {
     onError: (error) => {
@@ -64,9 +64,9 @@ export const EmployeesPage = () => {
     [deleteUser],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_EMPLOYEE);
-  }, [navigate]);
+  const handleCreate = () => {
+    openModal();
+  };
 
   const handleTryAgain = () => {
     refetch();
@@ -74,6 +74,7 @@ export const EmployeesPage = () => {
 
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb
           config={{

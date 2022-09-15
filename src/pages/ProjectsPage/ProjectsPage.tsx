@@ -16,8 +16,6 @@ import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
 import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
-import { useNavigate } from "react-router";
-import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
 import { useMediaQuery } from "@src/hooks/useMediaQuery";
 import {
@@ -25,15 +23,17 @@ import {
   smallScreenTableHead,
   tableHead,
 } from "./tableHead";
+import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
+import { useModal } from "@hooks/useModal";
 
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
   const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
   const isSmallScreenMatch = useMediaQuery("(max-width: 640px)");
+  const [mountedDialog, openModal] = useModal(ProjectInfoCreate);
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
     onCompleted: () => {
@@ -58,12 +58,13 @@ export const ProjectsPage = () => {
     [deleteProject],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_PROJECT);
-  }, [navigate]);
+  const handleCreate = () => {
+    openModal();
+  };
 
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb config={{ projects: "Projects" }} />
         <PageTopTypography title="Projects" caption="Projects list" />
