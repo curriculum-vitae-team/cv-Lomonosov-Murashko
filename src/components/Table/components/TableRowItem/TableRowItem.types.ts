@@ -1,6 +1,10 @@
-import { EntryValue, TableEntryValue } from "@interfaces/IEntryData";
+import { TableEntryValue } from "@interfaces/IEntryData";
 
 export type TableRowItemProps = {
-  value: TableEntryValue;
+  value?: TableEntryValue;
   gridXS: number;
+};
+
+export type StyledGridProps = {
+  xs: number;
 };
