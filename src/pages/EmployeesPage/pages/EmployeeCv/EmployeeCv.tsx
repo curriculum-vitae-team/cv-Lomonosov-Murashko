@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_CVS } from "@graphql/User/User.queries";
 import { UnbindCvInput, UnbindCvOutput } from "@graphql/Cv/Cv.interface";
-import { UserCVEntry, UserCvsData } from "@graphql/User/User.interface";
+import { UserCVEntry, UserCvsData } from "./EmployeeCv.types";
 import { UNBIND_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
@@ -99,7 +99,7 @@ export const EmployeeCv = () => {
         userData?.user.cvs && (
           <>
             <div className="sidebar">
-              {userData.user.cvs.map((cv: UserCVEntry, index: number) => {
+              {userData.user.cvs.map((cv) => {
                 return (
                   <div
                     className={active === cv.id ? "active" : ""}

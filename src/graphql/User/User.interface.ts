@@ -1,145 +1,57 @@
-/* Queries */
+import { User } from "@interfaces/user.interface";
+import { AuthInput } from "../Auth/Auth.types";
+import { ProfileInput } from "@interfaces/profile.interface";
+import { DeleteInput, DeleteResult } from "../delete.types";
 
-import { SkillMastery } from "../Cv/Cv.interface";
-import { Department } from "../Department/Department.interface";
-import { Position } from "../Position/Position.interface";
-import { ProfileInput, Profile } from "../Profile/Profile.interface";
-import { ProjectInfo } from "../Project/Project.interface";
-import { Skills } from "../Skills/Skills.interface";
+export type GetUserResult = {
+  user: User;
+};
 
-export interface UsersData {
-  users: User[];
-}
-
-export interface UserInfoData {
-  user: UserInfo;
-}
-
-export interface UserCvsData {
-  user: {
-    cvs: UserCVEntry[];
-  };
-}
-
-export interface UsersNamesIdsData {
-  users: UserNameIds[];
-}
-
-export interface UserFullnameData {
+export interface GetUserFullnameResult {
   user: {
     id: string;
-    profile: {
-      first_name: string;
-      last_name: string;
-    };
-  };
-}
-/* Mutations */
-
-export interface DeleteUserInput {
-  id: string;
-}
-
-export interface DeleteUserOutput {
-  deleteUser: {
-    affected: number;
+    profile: Pick<User["profile"], "first_name" | "last_name">;
   };
 }
 
-export interface UpdateUserInput {
-  id: string;
+export type GetUsersResult = {
+  users: User[];
+};
+
+export type CreateUserInput = {
   user: {
-    profile?: ProfileInput;
-    cvsIds?: string[];
-  };
-}
-
-export interface UpdateUserOutput {
-  updateUser: User;
-}
-
-export interface CreateUserInput {
-  user: {
-    auth: {
-      email: string;
-      password: string;
-    };
-    profile: {
-      first_name: string;
-      last_name: string;
-      departmentId: string;
-      positionId: string;
-      skills: SkillMastery[];
-      languages: UserLanguages[];
-    };
+    auth: AuthInput;
+    profile: ProfileInput;
     cvsIds: string[];
-    role: string;
+    departmentId: string;
+    positionId: string;
   };
-}
+};
 
-export interface CreateUserOutput {
-  user: UserInfo;
-}
-/* Parts */
-
-// For table
-
-export interface User {
-  id: string;
-  email: string;
-  role: string;
-  profile: Profile;
-  department: Department;
-  position_name: string;
-  position: Position;
-}
-// For detailed user info (may contain additional properties in the future)
-
-export interface UserInfo {
-  id: string;
-  email: string;
-  role: string;
-  department: Department;
-  position_name: string;
-  position: Position;
-  profile: Profile;
-  cvs: UserCvs;
-}
-
-export interface UserCVEntry {
-  id: string;
-  name: string;
-}
-
-export interface UserProfile {
-  full_name: string;
-  skills: SkillMastery[];
-  languages: UserLanguages[];
-  position_name: string;
-}
-
-export interface UserFullInfo {
-  email: string;
-  profile: UserProfile;
-}
-
-export interface UserLanguages {
-  language_name: string;
-  proficiency: string;
-}
-
-export interface UserCvs {
-  id: string;
-  name: string;
-  description: string;
-  projects: ProjectInfo;
-  skills: Skills;
-  languages: UserLanguages;
-}
-
-export interface UserNameIds {
-  id: string;
-  profile: {
-    full_name: string;
+export type CreateUserResult = {
+  createUser: {
+    user: User;
   };
-}
+};
+
+export type UpdateUserInput = {
+  id: string;
+  user: {
+    profile: ProfileInput;
+    cvsIds: string[];
+    departmentId: string;
+    positionId: string;
+  };
+};
+
+export type UpdateUserResult = {
+  updateUser: {
+    user: User;
+  };
+};
+
+export type DeleteUserInput = DeleteInput;
+
+export type DeleteUserResult = {
+  deleteUser: DeleteResult;
+};

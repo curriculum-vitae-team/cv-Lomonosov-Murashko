@@ -111,18 +111,19 @@ export const UPDATE_USER = gql`
     updateUser(id: $id, user: $user) {
       id
       email
+      position_name
+      position {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
+
         languages {
           language_name
         }

@@ -1,5 +1,5 @@
 import { SkillMastery } from "@graphql/Cv/Cv.interface";
-import { UserLanguages } from "@graphql/User/User.interface";
+import { LanguageProficiency } from "@interfaces/language.interface";
 
 export interface IEmployee {
   id: string;
@@ -29,7 +29,7 @@ export interface IEmployeeCore {
     departmentId: string;
     positionId: string;
     skills: SkillMastery[];
-    languages: UserLanguages[];
+    languages: LanguageProficiency[];
   };
   cvsIds: string[];
   role: string;
