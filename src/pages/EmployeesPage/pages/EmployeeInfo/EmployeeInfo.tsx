@@ -109,6 +109,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
 
   const handleTryAgain = () => {
     refetchObservable.current.notify();
+    refetchUserData({ variables: { id: employeeId } });
   };
 
   const checkIfOwnProfile = (data?: GetUserResult) => {
