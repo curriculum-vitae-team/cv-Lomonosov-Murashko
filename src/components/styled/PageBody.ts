@@ -9,3 +9,10 @@ export const PageBody = styled("div")({
   background: "#fff",
   padding: "24px",
 });
+
+export const LinksPageBody = styled("div")({
+  margin: "24px",
+  marginBottom: "-24px",
+  width: "calc(100% - 48px)",
+  background: "#fff",
+});
