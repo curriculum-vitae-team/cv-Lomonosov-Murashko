@@ -4,12 +4,19 @@ import {
   Menu,
   MenuItem,
   Select,
+  Stack,
   Typography,
 } from "@mui/material";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  useFieldArray,
+} from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
+import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
@@ -37,8 +44,10 @@ import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
 import { CreateUserInput } from "@src/graphql/User/User.interface";
-import { MultipleSelect } from "@src/graphql/shared/components/MultipleSelect";
-import { IEmployee } from "@src/interfaces/IEmployee";
+import { DynamicFieldset } from "@src/components/DynamicFieldset";
+import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
+import { Mastery } from "@src/constants/skill-mastery.constants";
+import { Proficiency } from "@src/constants/language-proficiency.constants";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -47,7 +56,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const { setToastError } = useErrorToast();
 
   // TODO: Form must correspond the data sent
-  const { control, handleSubmit, reset } = useForm<CreateUserInput>({
+  const { control, handleSubmit, reset, register } = useForm<CreateUserInput>({
     defaultValues: {
       user: {
         departmentId: "",
@@ -60,6 +69,38 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         },
         cvsIds: [],
       },
+    },
+  });
+
+  const {
+    fields: skillsFields,
+    append: appendSkill,
+    remove: removeSkill,
+    update: updateSkill,
+  } = useFieldArray({
+    control,
+    name: "user.profile.skills",
+  });
+
+  const {
+    fields: languagesFields,
+    append: appendLanguage,
+    remove: removeLanguage,
+    update: updateLanguage,
+  } = useFieldArray({
+    control,
+    name: "user.profile.languages",
+  });
+
+  const { data: languagesData } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const { data: skillsData } = useQuery<GetSkillsData>(GET_SKILLS, {
+    onError: (error) => {
+      setError(error.message);
     },
   });
 
@@ -78,18 +119,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   );
 
-  const { data: languages } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const { data: skills } = useQuery<GetSkillsData>(GET_SKILLS, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
   const {
     data: userData,
     refetch,
@@ -106,6 +135,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     onError: (error) => {
       setToastError(error.message);
     },
+    fetchPolicy: "network-only",
   });
 
   const [saveUser, { loading: saveUserLoading }] = useMutation<
@@ -121,12 +151,13 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   });
 
   const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
-    // TODO: delete `= []` constructions later
     const {
       departmentId,
       positionId,
       profile: { first_name, last_name, languages = [], skills = [] },
     } = data.user;
+
+    if (!userData) return;
 
     saveUser({
       variables: {
@@ -137,8 +168,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           profile: {
             first_name,
             last_name,
-            languages,
             skills,
+            languages,
           },
           cvsIds: [],
         },
@@ -152,6 +183,64 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
 
   const handleTryAgain = () => {
     refetch();
+  };
+
+  const handleSkillDelete = (name: string) => {
+    userData &&
+      removeSkill(
+        userData.user.profile.skills.findIndex(
+          (skill) => skill.skill_name === name,
+        ),
+      );
+  };
+
+  const handleSkillChange = (name: string, newValue: string) => {
+    if (isMastery(newValue)) {
+      userData &&
+        updateSkill(
+          userData.user.profile.skills.findIndex(
+            (skill) => skill.skill_name === name,
+          ),
+          { skill_name: name, mastery: newValue },
+        );
+    }
+
+    function isMastery(value: string): value is Mastery {
+      if (Object.values(Mastery).includes(value as Mastery)) {
+        return true;
+      }
+
+      return false;
+    }
+  };
+
+  const handleLanguageDelete = (name: string) => {
+    userData &&
+      removeLanguage(
+        userData.user.profile.languages.findIndex(
+          (language) => language.language_name === name,
+        ),
+      );
+  };
+
+  const handleLanguageChange = (name: string, newValue: string) => {
+    if (isProficiency(newValue)) {
+      userData &&
+        updateLanguage(
+          userData.user.profile.languages.findIndex(
+            (language) => language.language_name === name,
+          ),
+          { language_name: name, proficiency: newValue },
+        );
+    }
+
+    function isProficiency(value: string): value is Proficiency {
+      if (Object.values(Proficiency).includes(value as Proficiency)) {
+        return true;
+      }
+
+      return false;
+    }
   };
 
   const isUsersMatched = () => {
@@ -193,20 +282,80 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           entries={positions?.positions}
         />
       </InfoFormWrapper>
-      <InfoFormWrapper>
-        <MultipleSelect
-          name="user.profile.skills"
-          control={control}
-          title="Skills"
-          entries={skills?.skills}
-        />
-        <MultipleSelect
-          name="user.profile.languages"
-          control={control}
-          title="Languages"
-          entries={languages?.languages}
-        />
-      </InfoFormWrapper>
+      <DynamicFieldsetGroupWrapper>
+        <Stack gap={2} justifyContent="start">
+          <Typography variant="h5" component="h2">
+            Skills
+          </Typography>
+          <DynamicFieldset
+            onNew={(entryName: string) => {
+              appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
+            }}
+            inputEntries={
+              skillsData && userData
+                ? skillsData.skills
+                    .filter(
+                      (skill) =>
+                        !skillsFields.find(
+                          (field) => field.skill_name === skill.name,
+                        ),
+                    )
+                    .map((skill) => ({ entryName: skill.name }))
+                : []
+            }
+          >
+            {skillsFields.map((field, index) => (
+              <DynamicArrayField
+                key={field.id}
+                entryName={field.skill_name}
+                possibleValues={Mastery}
+                registerFnReturn={register(`user.profile.skills.${index}`)}
+                onDelete={handleSkillDelete}
+                onChange={handleSkillChange}
+                value={field.mastery}
+              />
+            ))}
+          </DynamicFieldset>
+        </Stack>
+
+        <Stack gap={2} justifyContent="start">
+          <Typography variant="h5" component="h2">
+            Languages
+          </Typography>
+          <DynamicFieldset
+            onNew={(entryName: string) => {
+              appendLanguage({
+                language_name: entryName,
+                proficiency: Proficiency.A1,
+              });
+            }}
+            inputEntries={
+              languagesData && userData
+                ? languagesData.languages
+                    .filter(
+                      (language) =>
+                        !languagesFields.find(
+                          (field) => field.language_name === language.name,
+                        ),
+                    )
+                    .map((language) => ({ entryName: language.name }))
+                : []
+            }
+          >
+            {languagesFields.map((field, index) => (
+              <DynamicArrayField
+                key={field.id}
+                entryName={field.language_name}
+                possibleValues={Proficiency}
+                registerFnReturn={register(`user.profile.languages.${index}`)}
+                onDelete={handleLanguageDelete}
+                onChange={handleLanguageChange}
+                value={field.proficiency}
+              />
+            ))}
+          </DynamicFieldset>
+        </Stack>
+      </DynamicFieldsetGroupWrapper>
       <DialogActions>
         <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
         <Button

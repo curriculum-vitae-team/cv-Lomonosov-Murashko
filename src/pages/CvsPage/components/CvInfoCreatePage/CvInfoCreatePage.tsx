@@ -38,7 +38,6 @@ export const CvInfoCreatePage = () => {
 
   const onSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
-      console.log(data);
       createCv({
         variables: {
           cv: {
