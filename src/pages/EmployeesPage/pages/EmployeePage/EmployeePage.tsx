@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ROUTE } from "@constants/route";
 import { PageTop } from "@components/styled/PageTop";
 import { PageTopTypography } from "@components/PageTopTypography";
-import { PageBody } from "@components/styled/PageBody";
+import { LinksPageBody, PageBody } from "@components/styled/PageBody";
 import { useQuery } from "@apollo/client";
 import { GET_USER_FULLNAME } from "@graphql/User/User.queries";
 import { GetUserFullnameResult } from "@graphql/User/User.interface";
@@ -60,7 +60,7 @@ export const EmployeePage = () => {
           caption={displayedName + "'s profile"}
         />
       </PageTop>
-      <PageBody>
+      <LinksPageBody>
         <Box
           sx={{
             borderBottom: 1,
@@ -80,6 +80,8 @@ export const EmployeePage = () => {
             <Tab label="CV" component={Link} to={"cv"} />
           </Tabs>
         </Box>
+      </LinksPageBody>
+      <PageBody>
         <Outlet />
       </PageBody>
     </PageWrapper>
