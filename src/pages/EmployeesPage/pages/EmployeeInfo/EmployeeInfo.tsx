@@ -1,18 +1,5 @@
-import {
-  Button,
-  DialogActions,
-  Menu,
-  MenuItem,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
-import {
-  useForm,
-  SubmitHandler,
-  Controller,
-  useFieldArray,
-} from "react-hook-form";
+import { Button, DialogActions, Stack, Typography } from "@mui/material";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
@@ -26,7 +13,7 @@ import {
   UpdateUserInput,
   UpdateUserResult,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
@@ -38,8 +25,6 @@ import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.int
 import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
 
 import { AuthContext } from "@context/authContext/authContext";
-import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
-import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
@@ -47,7 +32,8 @@ import { CreateUserInput } from "@src/graphql/User/User.interface";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
 import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
 import { Mastery } from "@src/constants/skill-mastery.constants";
-import { Proficiency } from "@src/constants/language-proficiency.constants";
+import { LanguagesInput } from "./components/LanguagesInput";
+import { SkillsInput } from "./SkillsInput";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -56,7 +42,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const { setToastError } = useErrorToast();
 
   // TODO: Form must correspond the data sent
-  const { control, handleSubmit, reset, register } = useForm<CreateUserInput>({
+  const { control, handleSubmit, reset, getValues } = useForm<CreateUserInput>({
     defaultValues: {
       user: {
         departmentId: "",
@@ -69,38 +55,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         },
         cvsIds: [],
       },
-    },
-  });
-
-  const {
-    fields: skillsFields,
-    append: appendSkill,
-    remove: removeSkill,
-    update: updateSkill,
-  } = useFieldArray({
-    control,
-    name: "user.profile.skills",
-  });
-
-  const {
-    fields: languagesFields,
-    append: appendLanguage,
-    remove: removeLanguage,
-    update: updateLanguage,
-  } = useFieldArray({
-    control,
-    name: "user.profile.languages",
-  });
-
-  const { data: languagesData } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const { data: skillsData } = useQuery<GetSkillsData>(GET_SKILLS, {
-    onError: (error) => {
-      setError(error.message);
     },
   });
 
@@ -185,64 +139,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     refetch();
   };
 
-  const handleSkillDelete = (name: string) => {
-    userData &&
-      removeSkill(
-        userData.user.profile.skills.findIndex(
-          (skill) => skill.skill_name === name,
-        ),
-      );
-  };
-
-  const handleSkillChange = (name: string, newValue: string) => {
-    if (isMastery(newValue)) {
-      userData &&
-        updateSkill(
-          userData.user.profile.skills.findIndex(
-            (skill) => skill.skill_name === name,
-          ),
-          { skill_name: name, mastery: newValue },
-        );
-    }
-
-    function isMastery(value: string): value is Mastery {
-      if (Object.values(Mastery).includes(value as Mastery)) {
-        return true;
-      }
-
-      return false;
-    }
-  };
-
-  const handleLanguageDelete = (name: string) => {
-    userData &&
-      removeLanguage(
-        userData.user.profile.languages.findIndex(
-          (language) => language.language_name === name,
-        ),
-      );
-  };
-
-  const handleLanguageChange = (name: string, newValue: string) => {
-    if (isProficiency(newValue)) {
-      userData &&
-        updateLanguage(
-          userData.user.profile.languages.findIndex(
-            (language) => language.language_name === name,
-          ),
-          { language_name: name, proficiency: newValue },
-        );
-    }
-
-    function isProficiency(value: string): value is Proficiency {
-      if (Object.values(Proficiency).includes(value as Proficiency)) {
-        return true;
-      }
-
-      return false;
-    }
-  };
-
   const isUsersMatched = () => {
     return user.email === userData?.user?.email;
   };
@@ -282,78 +178,16 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           entries={positions?.positions}
         />
       </InfoFormWrapper>
-      <DynamicFieldsetGroupWrapper>
-        <Stack gap={2} justifyContent="start">
-          <Typography variant="h5" component="h2">
-            Skills
-          </Typography>
-          <DynamicFieldset
-            onNew={(entryName: string) => {
-              appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
-            }}
-            inputEntries={
-              skillsData
-                ? skillsData.skills
-                    .filter(
-                      (skill) =>
-                        !skillsFields.find(
-                          (field) => field.skill_name === skill.name,
-                        ),
-                    )
-                    .map((skill) => ({ entryName: skill.name }))
-                : []
-            }
-          >
-            {skillsFields.map((field, index) => (
-              <DynamicArrayField
-                key={field.id}
-                entryName={field.skill_name}
-                possibleValues={Mastery}
-                onDelete={handleSkillDelete}
-                onChange={handleSkillChange}
-                value={field.mastery}
-              />
-            ))}
-          </DynamicFieldset>
-        </Stack>
-
-        <Stack gap={2} justifyContent="start">
-          <Typography variant="h5" component="h2">
-            Languages
-          </Typography>
-          <DynamicFieldset
-            onNew={(entryName: string) => {
-              appendLanguage({
-                language_name: entryName,
-                proficiency: Proficiency.A1,
-              });
-            }}
-            inputEntries={
-              languagesData && userData
-                ? languagesData.languages
-                    .filter(
-                      (language) =>
-                        !languagesFields.find(
-                          (field) => field.language_name === language.name,
-                        ),
-                    )
-                    .map((language) => ({ entryName: language.name }))
-                : []
-            }
-          >
-            {languagesFields.map((field, index) => (
-              <DynamicArrayField
-                key={field.id}
-                entryName={field.language_name}
-                possibleValues={Proficiency}
-                onDelete={handleLanguageDelete}
-                onChange={handleLanguageChange}
-                value={field.proficiency}
-              />
-            ))}
-          </DynamicFieldset>
-        </Stack>
-      </DynamicFieldsetGroupWrapper>
+      <SkillsInput
+        control={control}
+        skillsInForm={getValues().user.profile.skills}
+        onError={(error) => setError(error.message)}
+      />
+      <LanguagesInput
+        control={control}
+        languagesInForm={getValues().user.profile.languages}
+        onError={(error) => setError(error.message)}
+      />
       <DialogActions>
         <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
         <Button
