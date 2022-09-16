@@ -292,7 +292,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
               appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
             }}
             inputEntries={
-              skillsData && userData
+              skillsData
                 ? skillsData.skills
                     .filter(
                       (skill) =>
