@@ -309,7 +309,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
                 key={field.id}
                 entryName={field.skill_name}
                 possibleValues={Mastery}
-                registerFnReturn={register(`user.profile.skills.${index}`)}
                 onDelete={handleSkillDelete}
                 onChange={handleSkillChange}
                 value={field.mastery}
@@ -347,7 +346,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
                 key={field.id}
                 entryName={field.language_name}
                 possibleValues={Proficiency}
-                registerFnReturn={register(`user.profile.languages.${index}`)}
                 onDelete={handleLanguageDelete}
                 onChange={handleLanguageChange}
                 value={field.proficiency}

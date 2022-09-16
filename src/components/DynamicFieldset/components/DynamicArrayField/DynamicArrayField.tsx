@@ -15,7 +15,6 @@ import { DynamicArrayFieldProps } from "./DynamicArrayField.types";
 export const DynamicArrayField = <T extends string>({
   entryName,
   possibleValues,
-  registerFnReturn,
   onDelete,
   onChange,
   value,
