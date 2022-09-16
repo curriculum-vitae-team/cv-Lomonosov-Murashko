@@ -1,9 +1,8 @@
-import { Button, DialogActions, Stack, Typography } from "@mui/material";
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import { Button, DialogActions } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
@@ -25,15 +24,10 @@ import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.int
 import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
 
 import { AuthContext } from "@context/authContext/authContext";
-import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
-import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
-import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
 import { CreateUserInput } from "@src/graphql/User/User.interface";
-import { DynamicFieldset } from "@src/components/DynamicFieldset";
-import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
-import { Mastery } from "@src/constants/skill-mastery.constants";
 import { LanguagesInput } from "./components/LanguagesInput";
 import { SkillsInput } from "./SkillsInput";
+import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
