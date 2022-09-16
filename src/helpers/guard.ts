@@ -3,8 +3,8 @@ import { User } from "@interfaces/user.interface";
 export type GuardFunction = (user: User) => boolean;
 export type RoleGuardWithUser = (roles: string[]) => GuardFunction;
 
-export const authGuard: GuardFunction = (user) => {
-  return !!user;
+export const authGuard: GuardFunction = (user) => {  
+  return !!user.profile;
 };
 
 export const roleGuard: RoleGuardWithUser = (roles) => {

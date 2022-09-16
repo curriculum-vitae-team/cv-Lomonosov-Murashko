@@ -58,6 +58,8 @@ function AuthProvider({ children }: IAuthContextProps) {
     const restoreUser = () => {
       if (isUserExists()) {
         const { user, isMemorized } = getUserInfoFromLocalStorage();
+        console.log("isMem", isMemorized);
+        
 
         if (isMemorized) {
           dispatch({
@@ -66,7 +68,6 @@ function AuthProvider({ children }: IAuthContextProps) {
           });
         } else {
           deleteUserInfoFromLocalStorage();
-          // browserHistory.push(ROUTE.SIGN_IN);
         }
       }
     };
