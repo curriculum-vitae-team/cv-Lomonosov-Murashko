@@ -5,7 +5,7 @@ import { DynamicArrayField } from "@src/components/DynamicFieldset/components/Dy
 import { Proficiency } from "@src/constants/language-proficiency.constants";
 import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
 import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { LanguagesInputProps } from "./LanguagesInput.types";
 
@@ -53,7 +53,7 @@ export const LanguagesInput = ({
     }
   };
 
-  const getAvailable = () => {
+  const availableLanguages = useMemo(() => {
     if (!languagesData) return [];
 
     const languagesAlreadyTaken = new Set(
@@ -67,7 +67,7 @@ export const LanguagesInput = ({
 
       return acc;
     }, [] as { entryName: string }[]);
-  };
+  }, [languagesData, languagesFields]);
 
   const handleNewLanguage = useCallback(
     (entryName: string) => {
@@ -87,7 +87,7 @@ export const LanguagesInput = ({
         </Typography>
         <DynamicFieldset
           onNew={handleNewLanguage}
-          inputEntries={getAvailable()}
+          inputEntries={availableLanguages}
         >
           {languagesFields.map((field, index) => (
             <DynamicArrayField
