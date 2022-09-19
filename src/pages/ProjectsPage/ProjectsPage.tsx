@@ -17,7 +17,6 @@ import { IProjectTable } from "@interfaces/IProject";
 import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { Loader } from "@components/Loader";
-import { useMediaQuery } from "@src/hooks/useMediaQuery";
 import {
   mediumScreenTableHead,
   smallScreenTableHead,
@@ -25,6 +24,7 @@ import {
 } from "./tableHead";
 import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
 import { useModal } from "@hooks/useModal";
+import { useMediaQuery } from "@mui/material";
 
 const Table = createTable<IProjectTable>();
 

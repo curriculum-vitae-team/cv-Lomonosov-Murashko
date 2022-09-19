@@ -23,9 +23,9 @@ import {
   smallScreenTableHead,
   tableHead,
 } from "./tableHead";
-import { useMediaQuery } from "@src/hooks/useMediaQuery";
 import { useModal } from "@hooks/useModal";
 import { EmployeeInfoCreate } from "./pages/EmployeeInfo/components/EmployeeInfoCreate";
+import { useMediaQuery } from "@mui/material";
 
 const Table = memo(createTable<IEmployeeTable>());
 
