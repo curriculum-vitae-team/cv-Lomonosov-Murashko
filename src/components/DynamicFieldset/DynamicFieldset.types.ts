@@ -9,7 +9,7 @@ export type DynamicFieldsetProps<T extends string> = {
 
 export type GenericEntry<T> = {
   entryName: T;
-  possibleValues: unknown;
+  possibleValues: object;
 };
 
 export type InputGenericEntry<T> = {

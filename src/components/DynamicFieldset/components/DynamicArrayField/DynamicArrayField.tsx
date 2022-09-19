@@ -47,8 +47,7 @@ export const DynamicArrayField = <T extends string>({
           },
         }}
       >
-        {typeof possibleValues === "object" &&
-          possibleValues &&
+        {possibleValues &&
           Object.entries(possibleValues).map((kv, i) => {
             const displayedValue = kv[1] as string;
 
