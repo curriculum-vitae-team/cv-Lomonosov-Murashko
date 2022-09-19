@@ -114,7 +114,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   };
 
   const checkIfOwnProfile = (data?: GetUserResult) => {
-    return user.email === data?.user?.email;
+    return user?.email === data?.user?.email;
   };
 
   return getUserInfoLoading || saveUserLoading ? (
@@ -134,12 +134,12 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       <DynamicFieldsetGroupWrapper>
         <SkillsInput
           control={control}
-          skillsInForm={getValues().user.profile.skills}
+          skillsInForm={getValues().user?.profile.skills}
           onError={(error) => setError(error.message)}
         />
         <LanguagesInput
           control={control}
-          languagesInForm={getValues().user.profile.languages}
+          languagesInForm={getValues().user?.profile.languages}
           onError={(error) => setError(error.message)}
         />
       </DynamicFieldsetGroupWrapper>

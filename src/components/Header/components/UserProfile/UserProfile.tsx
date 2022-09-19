@@ -26,7 +26,7 @@ export function UserProfile() {
       <StyledBox onClick={handleProfileCardOpen}>
         <AccountCircleIcon sx={{ marginRight: "0.5em" }} />
         <StyledTypography>
-          {user.profile?.full_name || user.email}
+          {user?.profile?.full_name || user?.email}
         </StyledTypography>
       </StyledBox>
       <StyledTranslateIcon />

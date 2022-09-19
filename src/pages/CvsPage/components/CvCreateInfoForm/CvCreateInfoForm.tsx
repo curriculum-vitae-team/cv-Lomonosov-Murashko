@@ -68,7 +68,7 @@ export const CvCreateInfoForm = ({
             render={({ field }) => (
               <Select sx={{ minWidth: "12em" }} {...field}>
                 {users?.users.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
+                  <MenuItem key={user?.id} value={user?.id}>
                     {user?.profile?.full_name || "Unknown"}
                   </MenuItem>
                 ))}

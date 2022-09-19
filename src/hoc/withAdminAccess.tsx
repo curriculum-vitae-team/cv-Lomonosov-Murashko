@@ -10,7 +10,7 @@ export const withAdminAccess =
 
     return (
       <>
-        {user.role === UserRoles.Admin || props?.allowAccess ? (
+        {user?.role === UserRoles.Admin || props?.allowAccess ? (
           <Component {...props} />
         ) : (
           <></>

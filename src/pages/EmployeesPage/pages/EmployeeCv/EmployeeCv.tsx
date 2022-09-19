@@ -29,7 +29,7 @@ export const EmployeeCv = () => {
   } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
     onCompleted: (data) => {
-      const firstCv = data.user.cvs[0];
+      const firstCv = data.user?.cvs[0];
 
       if (firstCv && (firstCv.id === cvId || !cvId)) {
         const cvToOpen = searchParams.get("opencv") || firstCv.id;
@@ -53,7 +53,7 @@ export const EmployeeCv = () => {
           const { id } = options.mutationResult.data.unbindCv;
           return {
             user: {
-              cvs: prevResult.user.cvs.filter(
+              cvs: prevResult.user?.cvs.filter(
                 (cv: { id: string; name: string }) => cv.id !== id,
               ),
             },
@@ -96,10 +96,10 @@ export const EmployeeCv = () => {
           }}
         ></InlineError>
       ) : (
-        userData?.user.cvs && (
+        userData?.user?.cvs && (
           <>
             <div className="sidebar">
-              {userData.user.cvs.map((cv) => {
+              {userData.user?.cvs.map((cv) => {
                 return (
                   <div
                     className={active === cv.id ? "active" : ""}

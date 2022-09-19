@@ -1,83 +1,23 @@
-import React, { useReducer, createContext, useEffect } from "react";
-import { AuthUserInfo } from "@graphql/Auth/Auth.interface";
-import { IUserInfo } from "@interfaces/IAuth";
-import { IAction, IAuthContextProps, IContext } from "./authContext.interface";
-import { ACTIONS } from "@constants/actions";
-import {
-  deleteUserInfoFromLocalStorage,
-  getUserInfoFromLocalStorage,
-  isUserExists,
-  setUserInfoToLocalStorage,
-} from "@helpers/localStorage";
-import { ROUTE } from "@src/constants/route";
-
-const initialState = {
-  user: {},
-};
+import React, { createContext, useEffect, useState } from "react";
+import { IAuthContextProps, IContext } from "./authContext.interface";
+import { observer } from "mobx-react";
+import { AuthStore } from "@src/stores/AuthStore/AuthStore";
+import { autorun } from "mobx";
 
 const AuthContext = createContext({} as IContext);
 
-function authReducer(state: IUserInfo, action: IAction) {
-  switch (action.type) {
-    case ACTIONS.LOGIN:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case ACTIONS.LOGOUT: {
-      return {
-        ...state,
-        user: null,
-      };
-    }
-    default:
-      return state;
-  }
-}
-
-function AuthProvider({ children }: IAuthContextProps) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
-
-  const login = (
-    { user, access_token }: AuthUserInfo,
-    isMemorized: boolean,
-  ) => {
-    dispatch({
-      type: ACTIONS.LOGIN,
-      payload: user,
-    });
-    setUserInfoToLocalStorage({ user, access_token, isMemorized });
-  };
-
-  const logout = () => {
-    dispatch({ type: ACTIONS.LOGOUT });
-    deleteUserInfoFromLocalStorage();
-  };
+const AuthProvider = observer(({ children }: IAuthContextProps) => {
+  const [{ user, login, logout, restoreUser }] = useState(new AuthStore());
 
   useEffect(() => {
-    const restoreUser = () => {
-      if (isUserExists()) {
-        const { user, isMemorized } = getUserInfoFromLocalStorage();        
-        
-        if (isMemorized) {
-          dispatch({
-            type: ACTIONS.LOGIN,
-            payload: user,
-          });
-        } else {
-          deleteUserInfoFromLocalStorage();
-        }
-      }
-    };
-
     restoreUser();
-  }, []);
+  }, [restoreUser]);
 
   return (
-    <AuthContext.Provider value={{ user: state.user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+});
 
 export { AuthContext, AuthProvider };

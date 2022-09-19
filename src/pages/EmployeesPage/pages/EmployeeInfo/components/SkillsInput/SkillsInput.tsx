@@ -73,8 +73,6 @@ export const SkillsInput = ({
     [appendSkill],
   );
 
-  console.log(skillsFields);
-
   return (
     <>
       <Stack gap={2} justifyContent="start">
