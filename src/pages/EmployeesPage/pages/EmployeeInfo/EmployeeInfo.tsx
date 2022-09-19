@@ -1,4 +1,4 @@
-import { Button, DialogActions } from "@mui/material";
+import { Button, DialogActions, Stack } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
@@ -21,6 +21,7 @@ import { LanguagesInput } from "./components/LanguagesInput";
 import { SkillsInput } from "./components/SkillsInput";
 import { Observable } from "./Observable";
 import { UserDetailsInput } from "./components/UserDetailsInput";
+import { DynamicFieldsetGroupWrapper } from "@src/components/styled/DynamicFieldsetGroupWrapper";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -130,16 +131,19 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
         control={control}
         refetchObservable={refetchObservable.current}
       />
-      <SkillsInput
-        control={control}
-        skillsInForm={getValues().user.profile.skills}
-        onError={(error) => setError(error.message)}
-      />
-      <LanguagesInput
-        control={control}
-        languagesInForm={getValues().user.profile.languages}
-        onError={(error) => setError(error.message)}
-      />
+      <DynamicFieldsetGroupWrapper>
+        <SkillsInput
+          control={control}
+          skillsInForm={getValues().user.profile.skills}
+          onError={(error) => setError(error.message)}
+        />
+        <LanguagesInput
+          control={control}
+          languagesInForm={getValues().user.profile.languages}
+          onError={(error) => setError(error.message)}
+        />
+      </DynamicFieldsetGroupWrapper>
+
       <DialogActions>
         <SaveButtonWithAdminAccess allowAccess={checkIfOwnProfile(userData)} />
         <Button

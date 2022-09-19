@@ -61,7 +61,7 @@ export const SkillsInput = ({
   };
 
   return (
-    <DynamicFieldsetGroupWrapper>
+    <>
       <Stack gap={2} justifyContent="start">
         <Typography variant="h5" component="h2">
           Skills
@@ -84,6 +84,6 @@ export const SkillsInput = ({
           ))}
         </DynamicFieldset>
       </Stack>
-    </DynamicFieldsetGroupWrapper>
+    </>
   );
 };
