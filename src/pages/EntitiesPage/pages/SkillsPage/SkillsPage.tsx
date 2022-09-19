@@ -28,15 +28,10 @@ import { deleteSkillCacheUpdate } from "@graphql/Entity/Skill/Skill.cache";
 
 export const SkillsPage = () => {
   const { entryId } = useParams();
-
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const { setToastError } = useErrorToast();
-
   const [active, setActive] = useState("-1");
 
   const { data, loading, refetch } = useQuery<GetSkillsData>(GET_SKILLS, {
