@@ -14,3 +14,10 @@ export const PageBody = styled("div")({
     padding: "12px",
   },
 });
+
+export const LinksPageBody = styled("div")({
+  margin: "24px",
+  marginBottom: "-24px",
+  width: "calc(100% - 48px)",
+  background: "#fff",
+});

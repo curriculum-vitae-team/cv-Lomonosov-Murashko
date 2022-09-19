@@ -1,6 +1,3 @@
-import { ROUTE } from "@constants/route";
-import { RedirectPage } from "@pages/RedirectPage";
-import { AuthContext } from "@context/authContext/authContext";
 import { useContext, useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Footer } from "../Footer";
@@ -10,7 +7,6 @@ import { Content } from "./Layout.styles";
 import { SidebarContext } from "@context/sidebarContext/sidebarContext";
 
 export function Layout() {
-  const { user } = useContext(AuthContext);
   const { sidebarRef, burgerMenuRef, setIsSidebarOpened } =
     useContext(SidebarContext);
   const location = useLocation();
@@ -22,18 +18,12 @@ export function Layout() {
 
   return (
     <>
-      {!user ? (
-        <RedirectPage to={ROUTE.SIGN_IN} />
-      ) : (
-        <>
-          <Header />
-          <Content>
-            <SideBar />
-            <Outlet />
-          </Content>
-          <Footer />
-        </>
-      )}
+      <Header />
+      <Content>
+        <SideBar />
+        <Outlet />
+      </Content>
+      <Footer />
     </>
   );
 }

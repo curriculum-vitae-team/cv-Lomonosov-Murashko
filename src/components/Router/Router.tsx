@@ -46,16 +46,19 @@ export function Router() {
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-                <Route path={ROUTE_PARAM.CV_ID} element={<CvInfoUpdatePage />} />
+                <Route
+                  path={ROUTE_PARAM.CV_ID}
+                  element={<CvInfoUpdatePage />}
+                />
               </Route>
             </Route>
             <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
             <Route path={ROUTE.TARGET_PROJECT} element={<ProjectPage />}>
               <Route index element={<ProjectInfoPage />} />
             </Route>
+            <Route path={ROUTE.CVS} element={<CvsPage />} />
+            <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           </Route>
-          <Route path={ROUTE.CVS} element={<CvsPage />} />
-          <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route
             element={
               <ProtectedRoute
