@@ -50,11 +50,10 @@ export const DynamicArrayField = <T extends string>({
         {typeof possibleValues === "object" &&
           possibleValues &&
           Object.entries(possibleValues).map((kv, i) => {
-            const keyValue = kv[0] as string;
             const displayedValue = kv[1] as string;
 
             return (
-              <MenuItem key={i} value={displayedValue}>
+              <MenuItem key={displayedValue} value={displayedValue}>
                 {displayedValue}
               </MenuItem>
             );
