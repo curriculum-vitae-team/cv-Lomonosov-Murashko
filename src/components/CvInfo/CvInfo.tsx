@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { ICV } from "@interfaces/ICV";
 import { ButtonWrapper } from "./CvInfo.styles";
 import { StyledDialogActions } from "../styled/StyledDialogActions";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { ProjectAccordion } from "@components/ProjectAccordion";
+import { ProjectAutocomplete } from "@components/ProjectAutocomplete";
 import { Fieldset } from "@components/Fieldset";
 import { CvInfoProps } from "./CvInfo.types";
 import { memo, useEffect } from "react";
@@ -16,6 +15,7 @@ import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 export const CvInfo = memo(
   ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
     const [isPatternsVisible, setIsPatternsVisible] = useState(false);
+    // const [mountedDialog, openModal] = useModal(ProjectAutocomplete);
 
     const { control, handleSubmit, reset } = useForm<CvInput>({
       defaultValues: {
@@ -33,6 +33,7 @@ export const CvInfo = memo(
 
     const addProjectClickHandler = () => {
       // show projects select component
+      // openModal
     };
 
     const showPreview = () => {
@@ -40,11 +41,12 @@ export const CvInfo = memo(
     };
     const hidePreview = () => {
       setIsPatternsVisible(false);
-    };    
+    };
 
     return (
       <>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* {mountedDialog} */}
           <InfoFormWrapper>
             <Fieldset
               control={control}
@@ -65,7 +67,6 @@ export const CvInfo = memo(
               Add Project
             </Button>
           </ButtonWrapper>
-          <ProjectAccordion />
 
           <StyledDialogActions>
             <SaveButtonWithAdminAccess />
