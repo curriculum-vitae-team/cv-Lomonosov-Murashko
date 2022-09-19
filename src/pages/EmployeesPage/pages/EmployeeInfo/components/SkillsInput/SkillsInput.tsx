@@ -50,14 +50,19 @@ export const SkillsInput = ({
   };
 
   const getAvailable = () => {
-    return skillsData
-      ? skillsData.skills
-          .filter(
-            (skill) =>
-              !skillsFields.find((field) => field.skill_name === skill.name),
-          )
-          .map((skill) => ({ entryName: skill.name }))
-      : [];
+    if (!skillsData) return [];
+
+    const skillsAlreadyTaken = new Set(
+      skillsFields.map(({ skill_name }) => skill_name),
+    );
+
+    return skillsData.skills.reduce((acc, cur) => {
+      if (!skillsAlreadyTaken.has(cur.name)) {
+        acc.push({ entryName: cur.name });
+      }
+
+      return acc;
+    }, [] as { entryName: string }[]);
   };
 
   return (

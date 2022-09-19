@@ -53,16 +53,19 @@ export const LanguagesInput = ({
   };
 
   const getAvailable = () => {
-    return languagesData
-      ? languagesData.languages
-          .filter(
-            (language) =>
-              !languagesFields.find(
-                (field) => field.language_name === language.name,
-              ),
-          )
-          .map((language) => ({ entryName: language.name }))
-      : [];
+    if (!languagesData) return [];
+
+    const languagesAlreadyTaken = new Set(
+      languagesFields.map(({ language_name }) => language_name),
+    );
+
+    return languagesData.languages.reduce((acc, cur) => {
+      if (!languagesAlreadyTaken.has(cur.name)) {
+        acc.push({ entryName: cur.name });
+      }
+
+      return acc;
+    }, [] as { entryName: string }[]);
   };
 
   return (
