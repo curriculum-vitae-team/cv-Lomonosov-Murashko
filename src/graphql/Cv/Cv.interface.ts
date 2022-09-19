@@ -88,6 +88,7 @@ export interface CvInput {
   description: string;
   userId?: string;
   projectsIds: string[];
+  projects?: Project[];
   skills: SkillMastery[];
   languages: LanguageProficiency[];
   is_template: boolean;
@@ -97,7 +98,7 @@ export interface CvInfo {
   id: string;
   name: string;
   description: string;
-  projects: ProjectPart[];
+  projects: Project[];
   user: null | {
     id: string;
   };
@@ -106,7 +107,7 @@ export interface CvInfo {
   is_template: boolean;
 }
 
-interface ProjectPart {
+export interface ProjectPart {
   id: string;
   name: string;
   internal_name: string;

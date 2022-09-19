@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { ButtonWrapper } from "./CvInfo.styles";
 import { StyledDialogActions } from "../styled/StyledDialogActions";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -11,81 +10,92 @@ import { memo, useEffect } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { CvPatternsWithOverlay } from "@components/CvPatterns";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
-import { useModal } from "@hooks/useModal";
+import { useQuery } from "@apollo/client";
+import { ProjectsData } from "@graphql/Project/Project.interface";
+import { GET_PROJECTS } from "@graphql/Project/Project.queries";
 
-export const CvInfo = memo(
-  ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
-    const [isPatternsVisible, setIsPatternsVisible] = useState(false);
-    const [mountedDialog, openModal] = useModal(ProjectAutocomplete);
+export const CvInfo = memo(({ cv, onSubmit, onCancel }: CvInfoProps) => {
+  const [isPatternsVisible, setIsPatternsVisible] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-    const { control, handleSubmit, reset } = useForm<CvInput>({
-      defaultValues: {
-        name: cv.name,
-        description: cv.description,
-        projectsIds: cv.projectsIds,
-      },
-    });
+  const { data: projects } = useQuery<ProjectsData>(GET_PROJECTS, {
+    onCompleted: () => {
+      setIsLoading(false);
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
 
-    useEffect(() => {
-      const { name, description, projectsIds } = cv;
+  const { control, handleSubmit, reset } = useForm<CvInput>({
+    defaultValues: {
+      name: cv.name,
+      description: cv.description,
+      projectsIds: cv.projectsIds,
+    },
+  });
 
-      reset({ name, description, projectsIds });
-    }, [cv, reset]);
+  useEffect(() => {
+    const { name, description, projectsIds } = cv;
 
-    const addProjectClickHandler = () => {
-      openModal();
-    };
+    reset({ name, description, projectsIds });
+  }, [cv, reset]);
 
-    const showPreview = () => {
-      setIsPatternsVisible(true);
-    };
-    const hidePreview = () => {
-      setIsPatternsVisible(false);
-    };
+  const showPreview = () => {
+    setIsPatternsVisible(true);
+  };
+  const hidePreview = () => {
+    setIsPatternsVisible(false);
+  };
 
-    return (
-      <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {mountedDialog}
-          <InfoFormWrapper>
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Name"
-              name="name"
-            />
-            <Fieldset
-              control={control}
-              required="Please, specify the field"
-              label="Description"
-              name="description"
-            />
-          </InfoFormWrapper>
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InfoFormWrapper>
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Name"
+            name="name"
+          />
+          <Fieldset
+            control={control}
+            required="Please, specify the field"
+            label="Description"
+            name="description"
+          />
+        </InfoFormWrapper>
+        {/* TODO: delete cv.projects */}
+        {projects && (
+          <ProjectAutocomplete
+            existingProjects={cv.projects}
+            projects={projects}
+            control={control}
+            error={error}
+            defaultValue=""
+            isLoading={isLoading}
+            name="projectsIds"
+          />
+        )}
 
-          <ButtonWrapper>
-            <Button onClick={addProjectClickHandler} variant="contained">
-              Add Project
-            </Button>
-          </ButtonWrapper>
-
-          <StyledDialogActions>
-            <SaveButtonWithAdminAccess />
-            <Button
-              onClick={onCancel}
-              type="reset"
-              value="Cancel"
-              variant="outlined"
-              color="info"
-            >
-              Cancel
-            </Button>
-            <Button onClick={showPreview} variant="outlined">
-              Preview
-            </Button>
-          </StyledDialogActions>
-        </form>
-        {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
-      </>
-    );
-  },
-);
+        <StyledDialogActions>
+          <SaveButtonWithAdminAccess />
+          <Button
+            onClick={onCancel}
+            type="reset"
+            value="Cancel"
+            variant="outlined"
+            color="info"
+          >
+            Cancel
+          </Button>
+          <Button onClick={showPreview} variant="outlined">
+            Preview
+          </Button>
+        </StyledDialogActions>
+      </form>
+      {isPatternsVisible && <CvPatternsWithOverlay onClose={hidePreview} />}
+    </>
+  );
+});
