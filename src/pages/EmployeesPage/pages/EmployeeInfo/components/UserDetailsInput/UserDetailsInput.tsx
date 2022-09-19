@@ -6,10 +6,7 @@ import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queri
 import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
 import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
 import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
-import { GetUserResult } from "@src/graphql/User/User.interface";
-import { GET_USER_INFO } from "@src/graphql/User/User.queries";
 import { useEffect } from "react";
-import { useParams } from "react-router";
 import { UserDetailsInputProps } from "./UserDetailsInput.types";
 
 export const UserDetailsInput = ({
