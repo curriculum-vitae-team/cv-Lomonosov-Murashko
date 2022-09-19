@@ -11,27 +11,32 @@ import {
   DeleteUserInput,
 } from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
 import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
-import { tableHead } from "./tableHead";
+import {
+  mediumScreenTableHead,
+  smallScreenTableHead,
+  tableHead,
+} from "./tableHead";
 import { useModal } from "@hooks/useModal";
 import { EmployeeInfoCreate } from "./pages/EmployeeInfo/components/EmployeeInfoCreate";
+import { useMediaQuery } from "@mui/material";
 
 const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
+  const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
+  const isSmallScreenMatch = useMediaQuery("(max-width: 540px)");
   const [mountedDialog, openModal] = useModal(EmployeeInfoCreate);
 
   const { data, refetch, loading } = useQuery<GetUsersResult>(GET_USERS, {
     onError: (error) => {
-      console.log(error);
-
       setError(error.message);
     },
   });
@@ -89,7 +94,13 @@ export const EmployeesPage = () => {
             <Table
               onDelete={handleItemDelete}
               onCreate={handleCreate}
-              head={tableHead}
+              head={
+                isSmallScreenMatch
+                  ? smallScreenTableHead
+                  : isMediumScreenMatch
+                  ? mediumScreenTableHead
+                  : tableHead
+              }
               items={getEmployees(data.users)}
               redirectButtonText="Profile"
               deleteButtonText="Delete"

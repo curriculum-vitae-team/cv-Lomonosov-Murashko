@@ -20,7 +20,7 @@ export function TableRow({
   const handleDelete: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onDelete(id);
   };
-
+  
   return (
     <Accordion sx={{ width: "100%" }}>
       <AccordionSummary

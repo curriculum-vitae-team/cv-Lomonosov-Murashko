@@ -6,6 +6,7 @@ import { Project } from "@src/interfaces/project.interface";
 import { useState } from "react";
 import { ErrorToast } from "../ErrorToast";
 import { Loader } from "../Loader";
+import { AutocompleteWrapper } from "./ProjectAutocomplete.styles";
 
 export const ProjectAutocomplete = () => {
   const [error, setError] = useState("");
@@ -35,21 +36,23 @@ export const ProjectAutocomplete = () => {
         <ErrorToast message={error} />
       ) : (
         data?.projects && (
-          <Autocomplete
-            multiple
-            id="tags-projects"
-            options={data.projects}
-            onChange={handleAutocompleteChange}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="Projects"
-                placeholder=""
-              />
-            )}
-          />
+          <AutocompleteWrapper>
+            <Autocomplete
+              multiple
+              id="tags-projects"
+              options={data.projects}
+              onChange={handleAutocompleteChange}
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Projects"
+                  placeholder=""
+                />
+              )}
+            />
+          </AutocompleteWrapper>
         )
       )}
     </>

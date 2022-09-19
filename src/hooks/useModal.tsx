@@ -10,9 +10,7 @@ const Transition = forwardRef(function Transition(
   },
   ref: Ref<unknown>,
 ) {
-  return (
-    <Slide direction="up" ref={ref} {...props} />
-  );
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export const useModal = (
@@ -39,7 +37,7 @@ export const useModal = (
         color="inherit"
         onClick={closeModal}
         aria-label="close"
-        style={{ position: "absolute", right: 0, top: 0 }}
+        style={{ position: "absolute", zIndex: 100, right: 0, top: 0 }}
       >
         <Close />
       </IconButton>

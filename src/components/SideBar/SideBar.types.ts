@@ -3,3 +3,7 @@ export interface ISideBarLink {
   name: string;
   Icon: React.ComponentType;
 }
+
+// export type StyledPaperProps = {
+//   isopened: string;
+// };

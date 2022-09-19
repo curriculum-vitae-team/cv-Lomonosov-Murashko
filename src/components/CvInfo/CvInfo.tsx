@@ -11,11 +11,12 @@ import { memo, useEffect } from "react";
 import { CvInput } from "@graphql/Cv/Cv.interface";
 import { CvPatternsWithOverlay } from "@components/CvPatterns";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
+import { useModal } from "@hooks/useModal";
 
 export const CvInfo = memo(
   ({ cv, onSubmit, onAddProject, onCancel }: CvInfoProps) => {
     const [isPatternsVisible, setIsPatternsVisible] = useState(false);
-    // const [mountedDialog, openModal] = useModal(ProjectAutocomplete);
+    const [mountedDialog, openModal] = useModal(ProjectAutocomplete);
 
     const { control, handleSubmit, reset } = useForm<CvInput>({
       defaultValues: {
@@ -32,8 +33,7 @@ export const CvInfo = memo(
     }, [cv, reset]);
 
     const addProjectClickHandler = () => {
-      // show projects select component
-      // openModal
+      openModal();
     };
 
     const showPreview = () => {
@@ -46,7 +46,7 @@ export const CvInfo = memo(
     return (
       <>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* {mountedDialog} */}
+          {mountedDialog}
           <InfoFormWrapper>
             <Fieldset
               control={control}
@@ -63,7 +63,7 @@ export const CvInfo = memo(
           </InfoFormWrapper>
 
           <ButtonWrapper>
-            <Button onClick={onAddProject} variant="contained">
+            <Button onClick={addProjectClickHandler} variant="contained">
               Add Project
             </Button>
           </ButtonWrapper>
