@@ -17,21 +17,22 @@ import { IProjectTable } from "@interfaces/IProject";
 import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
 import { Loader } from "@components/Loader";
+import {
+  mediumScreenTableHead,
+  smallScreenTableHead,
+  tableHead,
+} from "./tableHead";
 import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
 import { useModal } from "@hooks/useModal";
-
-const head = [
-  { columnKey: "internalName", columnName: "Internal name", isSortable: true },
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "startDate", columnName: "Start date", isSortable: true },
-  { columnKey: "endDate", columnName: "End date", isSortable: true },
-];
+import { useMediaQuery } from "@mui/material";
 
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
+  const isSmallScreenMatch = useMediaQuery("(max-width: 640px)");
   const [mountedDialog, openModal] = useModal(ProjectInfoCreate);
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
@@ -78,7 +79,13 @@ export const ProjectsPage = () => {
             <Table
               onDelete={handleItemDelete}
               onCreate={handleCreate}
-              head={head}
+              head={
+                isSmallScreenMatch
+                  ? smallScreenTableHead
+                  : isMediumScreenMatch
+                  ? mediumScreenTableHead
+                  : tableHead
+              }
               items={getProjects(data.projects)}
               redirectButtonText="Project details"
               deleteButtonText="Delete"

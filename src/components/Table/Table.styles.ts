@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const StyledGrid = styled(Grid)({
@@ -8,6 +8,9 @@ export const StyledGrid = styled(Grid)({
   marginTop: "1em",
   padding: "1em",
   borderRadius: "5px",
+  "@media(max-width: 540px)": {
+    padding: "0.5rem",
+  },
   "& svg": {
     fontSize: "1em",
     margin: "0.5em 0 0 0.3em",
