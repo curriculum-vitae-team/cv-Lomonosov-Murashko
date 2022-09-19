@@ -19,26 +19,25 @@ import {
   UpdateUserInput,
   UpdateUserResult,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
-import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
-import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
+import { GetDepartmentsData } from "@graphql/Entity/Department/Department.interface";
+import { GET_DEPARTMENTS } from "@graphql/Entity/Department/Department.queries";
+import { PositionsNamesIdsData } from "@graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@graphql/Entity/Position/Position.queries";
 
 import { AuthContext } from "@context/authContext/authContext";
-import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
-import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
-import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
-import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
-import { SelectEntry } from "@src/graphql/shared/components/SelectEntry";
-import { CreateUserInput } from "@src/graphql/User/User.interface";
-import { MultipleSelect } from "@src/graphql/shared/components/MultipleSelect";
-import { IEmployee } from "@src/interfaces/IEmployee";
+import { GetLanguagesData } from "@graphql/Entity/Language/Language.interface";
+import { GET_LANGUAGES } from "@graphql/Entity/Language/Language.queries";
+import { GetSkillsData } from "@graphql/Entity/Skill/Skill.interface";
+import { GET_SKILLS } from "@graphql/Entity/Skill/Skill.queries";
+import { SelectEntry } from "@graphql/shared/components/SelectEntry";
+import { CreateUserInput } from "@graphql/User/User.interface";
+import { MultipleSelect } from "@graphql/shared/components/MultipleSelect";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
@@ -63,7 +62,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const { data: departments } = useQuery<DepartmentsData>(GET_DEPARTMENTS, {
+  const { data: departments } = useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
     onError: (error) => {
       setError(error.message);
     },

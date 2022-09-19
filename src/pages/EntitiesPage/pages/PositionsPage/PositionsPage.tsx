@@ -1,92 +1,84 @@
-import { InfoForm } from "./components/InfoForm";
-import { useEffect, useState } from "react";
-import { WrapperDiv, StyledButtonWrapper } from "../../EntitiesPage.styles";
-import { InfoItem } from "@components/InfoItem";
-import { useNavigate, useParams } from "react-router";
-import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
+import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
+import { WrapperDiv, StyledButtonWrapper } from "../../EntitiesPage.styles";
 import { ROUTE } from "@constants/route";
+import AddIcon from "@mui/icons-material/Add";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
-import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
-
+import { Button } from "@mui/material";
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
-import {
-  DELETE_SKILL,
-  GET_SKILLS,
-  UPDATE_SKILL,
-} from "@graphql/Entity/Skill/Skill.queries";
-import {
-  DeleteSkillOutput,
-  GetSkillsData,
-  Skill,
-  UpdateSkillInput,
-} from "@graphql/Entity/Skill/Skill.interface";
-import { deleteSkillCacheUpdate } from "@graphql/Entity/Skill/Skill.cache";
+import { Department } from "@interfaces/department.interface";
+import { InfoItem } from "@components/InfoItem";
+import { InfoForm } from "../SkillsPage/components/InfoForm";
+import { DeletePositionOutput, GetPositionsData, Position, UpdatePositionInput } from "@graphql/Entity/Position/Position.interface";
+import { deletePositionCacheUpdate } from "@graphql/Entity/Position/Position.cache";
+import { DELETE_POSITION, GET_POSITIONS, UPDATE_POSITION } from "@graphql/Entity/Position/Position.queries";
 
-export const SkillsPage = () => {
+export const PositionsPage = () => {
   const { entryId } = useParams();
-
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const { setToastError } = useErrorToast();
-
   const [active, setActive] = useState("-1");
 
-  const { data, loading, refetch } = useQuery<GetSkillsData>(GET_SKILLS, {
-    variables: { id: entryId },
-    onCompleted: (data) => {
-      const firstEntry = data.skills[0];
-
-      if (firstEntry && (firstEntry.id === entryId || !entryId)) {
-        const entryToOpen = searchParams.get("open") || firstEntry.id;
-        setActive(entryToOpen);
-      } else {
-        setActive(entryId || "-1");
-      }
-    },
-    onError: (err) => {
-      setError(err.message);
-    },
-  });
-
-  const [deleteEntry] = useMutation<DeleteSkillOutput, DeleteEntityEntryInput>(
-    DELETE_SKILL,
+  const { data, loading, refetch } = useQuery<GetPositionsData>(
+    GET_POSITIONS,
     {
-      variables: {
-        id: entryId!,
+      variables: { id: entryId },
+      onCompleted: (data) => {
+        const firstEntry = data.positions[0];
+
+        if (firstEntry && (firstEntry.id === entryId || !entryId)) {
+          const entryToOpen = searchParams.get("open") || firstEntry.id;
+          setActive(entryToOpen);
+        } else {
+          setActive(entryId || "-1");
+        }
       },
       onError: (err) => {
-        const response = err.graphQLErrors[0].extensions.response as {
-          message?: string[];
-        };
-
-        if (response) {
-          setToastError(
-            (response.message && response.message[0]) || "Something went wrong",
-          );
-        }
+        setError(err.message);
       },
     },
   );
 
-  const [updateEntry] = useMutation<Skill, UpdateSkillInput>(UPDATE_SKILL, {
+  const [deleteEntry] = useMutation<
+    DeletePositionOutput,
+    DeleteEntityEntryInput
+  >(DELETE_POSITION, {
+    variables: {
+      id: entryId!,
+    },
     onError: (err) => {
       const response = err.graphQLErrors[0].extensions.response as {
         message?: string[];
       };
 
-      setToastError(
-        (response?.message && response.message[0]) || "Something went wrong",
-      );
+      if (response) {
+        setToastError(
+          (response.message && response.message[0]) || "Something went wrong",
+        );
+      }
     },
   });
+
+  const [updateEntry] = useMutation<Position, UpdatePositionInput>(
+    UPDATE_POSITION,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
+
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
+    },
+  );
 
   useEffect(() => {
     if (active !== "-1") {
@@ -104,24 +96,24 @@ export const SkillsPage = () => {
 
   const handleEntryDelete = (id: string) => {
     if (active === id) {
-      navigate(`${ROUTE.ENTITIES}/skills`);
+      navigate(`${ROUTE.ENTITIES}/positions`);
     }
     deleteEntry({
       variables: { id },
       optimisticResponse: {
-        deleteSkill: {
+        deletePosition: {
           affected: 1,
         },
       },
-      update: deleteSkillCacheUpdate(id),
+      update: deletePositionCacheUpdate(id),
     });
   };
 
-  const handleInfoFormSubmit = (data: Skill) => {
+  const handleInfoFormSubmit = (data: Department) => {
     updateEntry({
       variables: {
         id: entryId!,
-        skill: {
+        position: {
           name: data.name,
         },
       },
@@ -141,7 +133,7 @@ export const SkillsPage = () => {
       ) : (
         <>
           <div className="sidebar">
-            {data?.skills?.map((entry: Skill, index: number) => {
+            {data?.positions?.map((entry: Position, index: number) => {
               return (
                 <div
                   className={active === entry.id ? "active" : ""}
@@ -165,7 +157,8 @@ export const SkillsPage = () => {
           {active !== "-1" && data && (
             <InfoForm
               input={
-                data.skills.find(({ id }) => id === active) || ({} as Skill)
+                data.positions.find(({ id }) => id === active) ||
+                ({} as Department)
               }
               onSubmit={handleInfoFormSubmit}
               onCancel={handleCancel}
