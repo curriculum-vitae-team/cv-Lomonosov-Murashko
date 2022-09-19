@@ -32,7 +32,7 @@ export const UserDetailsInput = ({
     return () => {
       refetchObservable.unsubscribe(...refetchFunctions);
     };
-  });
+  }, [refetchDepartments, refetchObservable, refetchPositions]);
 
   return (
     <InfoFormWrapper>
