@@ -6,6 +6,7 @@ import { DynamicFieldsetGroupWrapper } from "@src/components/styled/DynamicField
 import { Mastery } from "@src/constants/skill-mastery.constants";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
+import { useCallback } from "react";
 import { useFieldArray } from "react-hook-form";
 import { SkillsInputProps } from "./SkillsInput.types";
 
@@ -65,18 +66,20 @@ export const SkillsInput = ({
     }, [] as { entryName: string }[]);
   };
 
+  const handleNewSkill = useCallback(
+    (entryName: string) => {
+      appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
+    },
+    [appendSkill],
+  );
+
   return (
     <>
       <Stack gap={2} justifyContent="start">
         <Typography variant="h5" component="h2">
           Skills
         </Typography>
-        <DynamicFieldset
-          onNew={(entryName: string) => {
-            appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
-          }}
-          inputEntries={getAvailable()}
-        >
+        <DynamicFieldset onNew={handleNewSkill} inputEntries={getAvailable()}>
           {skillsFields.map((field, index) => (
             <DynamicArrayField
               key={field.id}
