@@ -21,9 +21,9 @@ import {
 import {
   DeleteSkillOutput,
   GetSkillsData,
-  Skill,
   UpdateSkillInput,
 } from "@graphql/Entity/Skill/Skill.interface";
+import { Skill } from "@interfaces/skill.interface";
 import { deleteSkillCacheUpdate } from "@graphql/Entity/Skill/Skill.cache";
 
 export const SkillsPage = () => {
