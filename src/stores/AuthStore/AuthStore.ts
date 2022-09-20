@@ -21,7 +21,12 @@ export class AuthStore implements IAuthStore {
 
   constructor() {
     this.restoreUser();
-    makeObservable(this, { restoreUser: false });
+
+    makeObservable(this, {
+      login: action.bound,
+      logout: action.bound,
+      user: observable,
+    });
   }
 
   login = (userData: AuthUserInfo, isMemorized: boolean) => {
@@ -36,7 +41,7 @@ export class AuthStore implements IAuthStore {
     deleteUserInfoFromLocalStorage();
   };
 
-  restoreUser = () => {
+  private restoreUser = () => {
     if (isUserExists()) {
       const { user, isMemorized } = getUserInfoFromLocalStorage();
       if (isMemorized) {
@@ -47,3 +52,5 @@ export class AuthStore implements IAuthStore {
     }
   };
 }
+
+export const authStore = new AuthStore();

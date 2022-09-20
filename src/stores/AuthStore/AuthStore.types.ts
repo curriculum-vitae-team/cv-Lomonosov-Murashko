@@ -5,7 +5,6 @@ export interface IAuthStore {
   user: User | null | "pending";
   login: (userData: AuthUserInfo, isMemorized: boolean) => void;
   logout: () => void;
-  restoreUser: () => void;
 }
 
 export interface IAuthContextProps {
