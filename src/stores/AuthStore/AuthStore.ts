@@ -1,13 +1,6 @@
 import { AuthUserInfo } from "@src/graphql/Auth/Auth.interface";
 import { User } from "@src/interfaces/user.interface";
-import {
-  action,
-  autorun,
-  makeAutoObservable,
-  makeObservable,
-  observable,
-  runInAction,
-} from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { IAuthStore } from "./AuthStore.types";
 import {
   deleteUserInfoFromLocalStorage,

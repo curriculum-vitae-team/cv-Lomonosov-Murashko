@@ -1,8 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext } from "react";
 import { IAuthContextProps, IContext } from "./authContext.interface";
 import { observer } from "mobx-react";
-import { authStore, AuthStore } from "@src/stores/AuthStore/AuthStore";
-import { autorun } from "mobx";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 const AuthContext = createContext({} as IContext);
 
