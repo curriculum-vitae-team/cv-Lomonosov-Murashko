@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Fieldset } from "@src/components/Fieldset";
 import { InfoFormWrapper } from "@src/components/styled/InfoFormWrapper";
-import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
+import { GetDepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
 import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
 import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
 import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
@@ -16,7 +16,7 @@ export const UserDetailsInput = ({
 }: UserDetailsInputProps) => {
   // при нажатии на кнопку там затриггерить все рефетчи тут
   const { data: departments, refetch: refetchDepartments } =
-    useQuery<DepartmentsData>(GET_DEPARTMENTS, {
+    useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
       onError,
     });
 
