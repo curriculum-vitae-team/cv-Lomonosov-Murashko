@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
 import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
-import { DynamicFieldsetGroupWrapper } from "@src/components/styled/DynamicFieldsetGroupWrapper";
 import { Mastery } from "@src/constants/skill-mastery.constants";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
@@ -72,8 +71,6 @@ export const SkillsInput = ({
     },
     [appendSkill],
   );
-
-  console.log(skillsFields);
 
   return (
     <>

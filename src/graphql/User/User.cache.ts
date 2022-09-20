@@ -5,6 +5,8 @@ import {
   DeleteUserInput,
   DeleteUserResult,
   GetUsersResult,
+  UpdateUserInput,
+  UpdateUserResult,
 } from "./User.interface";
 import { GET_USERS } from "./User.queries";
 
@@ -35,6 +37,26 @@ export const createUserCacheUpdate =
         query: GET_USERS,
         data: {
           users: [data?.createUser.user, ...existingUsers.users],
+        },
+      });
+    }
+  };
+
+export const userCacheUpdate =
+  (id: string): CacheUpdaterFunction<UpdateUserResult, UpdateUserInput> =>
+  (cache, { data }) => {
+    const existingUsers = cache.readQuery<GetUsersResult>({
+      query: GET_USERS,
+    });
+
+    if (existingUsers) {
+      cache.writeQuery({
+        query: GET_USERS,
+        data: {
+          users: [
+            ...existingUsers.users.filter((user) => user.id !== id),
+            data?.updateUser,
+          ],
         },
       });
     }

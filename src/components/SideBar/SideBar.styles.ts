@@ -3,7 +3,7 @@ import { Paper, styled } from "@mui/material";
 export const StyledPaper = styled(Paper)({
   minWidth: "13em",
   zIndex: "1",
-  minHeight: "calc(100vh - 6em)",
+  minHeight: "calc(100vh - 5em)",
   paddingTop: "1em",
   background: "#fff",
   boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
@@ -23,7 +23,6 @@ export const StyledPaper = styled(Paper)({
       top: "3em",
       left: 0,
       zIndex: "100",
-      height: "100vh",
       transform: "translateX(-200px)",
     },
   },

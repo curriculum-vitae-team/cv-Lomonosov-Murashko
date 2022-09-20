@@ -13,7 +13,6 @@ import { GetUserFullnameResult } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { validateUserFullName } from "../../helpers";
 import { Loader } from "@components/Loader";
-import { LoaderWrapper } from "./EmployeePage.styles";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -41,9 +40,7 @@ export const EmployeePage = () => {
   }, [pathnames]);
 
   return loading ? (
-    <LoaderWrapper>
-      <Loader />
-    </LoaderWrapper>
+    <Loader />
   ) : (
     <PageWrapper>
       <PageTop>
