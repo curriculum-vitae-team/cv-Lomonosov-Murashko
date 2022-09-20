@@ -22,6 +22,8 @@ import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
+import { DepartmentsPage } from "@pages/EntitiesPage/pages/DepartmentsPage";
+import { PositionsPage } from "@pages/EntitiesPage/pages/PositionsPage";
 
 export function Router() {
   return (
@@ -80,6 +82,18 @@ export function Router() {
                 <Route
                   path={ROUTE.TARGET_ENTITY_ENTRY}
                   element={<SkillsPage />}
+                />
+              </Route>
+              <Route path={ENTITY.DEPARTMENTS} element={<DepartmentsPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<DepartmentsPage />}
+                />
+              </Route>
+              <Route path={ENTITY.POSITIONS} element={<PositionsPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<PositionsPage />}
                 />
               </Route>
             </Route>
