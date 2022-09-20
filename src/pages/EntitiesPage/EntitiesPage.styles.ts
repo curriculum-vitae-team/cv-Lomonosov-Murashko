@@ -14,12 +14,16 @@ export const WrapperDiv = styled("div")({
     borderBottom: "2px solid #1890FF",
     padding: "0 0.5em 0.5em 0.5em",
   },
+  "@media(max-width: 760px)": {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  },
 });
 
 export const StyledButtonWrapper = styled("div")({
   background: "#fff",
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: "flex-start",
   "& button": {
     backgroundColor: "#F0F0F0",
   },

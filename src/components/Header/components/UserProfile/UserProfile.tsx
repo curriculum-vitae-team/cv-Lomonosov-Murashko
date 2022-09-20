@@ -11,7 +11,7 @@ import { AuthContext } from "@context/authContext/authContext";
 
 export function UserProfile() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
-  const { user } = useContext(AuthContext);  
+  const { user } = useContext(AuthContext);
 
   const handleProfileCardClose = () => {
     setIsProfileOpen(false);
@@ -24,8 +24,10 @@ export function UserProfile() {
   return (
     <StyledGrid>
       <StyledBox onClick={handleProfileCardOpen}>
-        <AccountCircleIcon />
-        <StyledTypography>{user.profile?.full_name || user.email}</StyledTypography>
+        <AccountCircleIcon sx={{ marginRight: "0.5em" }} />
+        <StyledTypography>
+          {user.profile?.full_name || user.email}
+        </StyledTypography>
       </StyledBox>
       <StyledTranslateIcon />
       {isProfileOpen && (

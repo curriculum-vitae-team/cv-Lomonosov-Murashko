@@ -1,16 +1,7 @@
-import {
-  Button,
-  DialogActions,
-  Menu,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Button, DialogActions, Stack } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
@@ -19,34 +10,27 @@ import {
   UpdateUserInput,
   UpdateUserResult,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useRef, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
-import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { GetDepartmentsData } from "@graphql/Entity/Department/Department.interface";
-import { GET_DEPARTMENTS } from "@graphql/Entity/Department/Department.queries";
-import { PositionsNamesIdsData } from "@graphql/Entity/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Entity/Position/Position.queries";
-
 import { AuthContext } from "@context/authContext/authContext";
-import { GetLanguagesData } from "@graphql/Entity/Language/Language.interface";
-import { GET_LANGUAGES } from "@graphql/Entity/Language/Language.queries";
-import { GetSkillsData } from "@graphql/Entity/Skill/Skill.interface";
-import { GET_SKILLS } from "@graphql/Entity/Skill/Skill.queries";
-import { SelectEntry } from "@graphql/shared/components/SelectEntry";
-import { CreateUserInput } from "@graphql/User/User.interface";
-import { MultipleSelect } from "@graphql/shared/components/MultipleSelect";
+import { CreateUserInput } from "@src/graphql/User/User.interface";
+import { LanguagesInput } from "./components/LanguagesInput";
+import { SkillsInput } from "./components/SkillsInput";
+import { Observable } from "./Observable";
+import { UserDetailsInput } from "./components/UserDetailsInput";
+import { DynamicFieldsetGroupWrapper } from "@src/components/styled/DynamicFieldsetGroupWrapper";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
-  const { setToastError } = useErrorToast();
 
   // TODO: Form must correspond the data sent
-  const { control, handleSubmit, reset } = useForm<CreateUserInput>({
+  const { control, handleSubmit, reset, getValues } = useForm<CreateUserInput>({
     defaultValues: {
       user: {
         departmentId: "",
@@ -62,51 +46,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const { data: departments } = useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const { data: positions } = useQuery<PositionsNamesIdsData>(
-    GET_POSITIONS_NAMES_IDS,
-    {
-      onError: (error) => {
-        setError(error.message);
-      },
-    },
-  );
-
-  const { data: languages } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const { data: skills } = useQuery<GetSkillsData>(GET_SKILLS, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const {
-    data: userData,
-    refetch,
-    loading: getUserInfoLoading,
-  } = useQuery<GetUserResult>(GET_USER_INFO, {
-    variables: {
-      id: employeeId,
-    },
-    onCompleted: (data) => {
-      if (data.user) {
-        reset(resetEmployee(data.user));
-      }
-    },
-    onError: (error) => {
-      setToastError(error.message);
-    },
-  });
-
   const [saveUser, { loading: saveUserLoading }] = useMutation<
     UpdateUserResult,
     UpdateUserInput
@@ -119,8 +58,28 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
+  const {
+    data: userData,
+    refetch: refetchUserData,
+    loading: getUserInfoLoading,
+  } = useQuery<GetUserResult>(GET_USER_INFO, {
+    variables: {
+      id: employeeId,
+    },
+    onCompleted: (data) => {
+      if (data.user) {
+        reset(resetEmployee(data.user));
+      }
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  const refetchObservable = useRef(new Observable());
+
   const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
-    // TODO: delete `= []` constructions later
     const {
       departmentId,
       positionId,
@@ -136,8 +95,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           profile: {
             first_name,
             last_name,
-            languages,
             skills,
+            languages,
           },
           cvsIds: [],
         },
@@ -150,11 +109,12 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   };
 
   const handleTryAgain = () => {
-    refetch();
+    refetchObservable.current.notify();
+    refetchUserData({ variables: { id: employeeId } });
   };
 
-  const isUsersMatched = () => {
-    return user.email === userData?.user?.email;
+  const checkIfOwnProfile = (data?: GetUserResult) => {
+    return user.email === data?.user?.email;
   };
 
   return getUserInfoLoading || saveUserLoading ? (
@@ -166,48 +126,26 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     />
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoFormWrapper>
-        <Fieldset
+      <UserDetailsInput
+        onError={(error) => setError(error.message)}
+        control={control}
+        refetchObservable={refetchObservable.current}
+      />
+      <DynamicFieldsetGroupWrapper>
+        <SkillsInput
           control={control}
-          required="Please, specify the field"
-          label="First Name"
-          name="user.profile.first_name"
+          skillsInForm={getValues().user.profile.skills}
+          onError={(error) => setError(error.message)}
         />
-        <Fieldset
+        <LanguagesInput
           control={control}
-          required="Please, specify the field"
-          label="Last Name"
-          name="user.profile.last_name"
+          languagesInForm={getValues().user.profile.languages}
+          onError={(error) => setError(error.message)}
         />
-        <SelectEntry
-          name="user.departmentId"
-          control={control}
-          title="Departments"
-          entries={departments?.departments}
-        />
-        <SelectEntry
-          name="user.positionId"
-          control={control}
-          title="Positions"
-          entries={positions?.positions}
-        />
-      </InfoFormWrapper>
-      <InfoFormWrapper>
-        <MultipleSelect
-          name="user.profile.skills"
-          control={control}
-          title="Skills"
-          entries={skills?.skills}
-        />
-        <MultipleSelect
-          name="user.profile.languages"
-          control={control}
-          title="Languages"
-          entries={languages?.languages}
-        />
-      </InfoFormWrapper>
+      </DynamicFieldsetGroupWrapper>
+
       <DialogActions>
-        <SaveButtonWithAdminAccess allowAccess={isUsersMatched()} />
+        <SaveButtonWithAdminAccess allowAccess={checkIfOwnProfile(userData)} />
         <Button
           onClick={onCancel}
           type="reset"

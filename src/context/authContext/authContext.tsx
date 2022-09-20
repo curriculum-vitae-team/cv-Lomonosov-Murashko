@@ -57,7 +57,7 @@ function AuthProvider({ children }: IAuthContextProps) {
     const restoreUser = () => {
       if (isUserExists()) {
         const { user, isMemorized } = getUserInfoFromLocalStorage();        
-
+        
         if (isMemorized) {
           dispatch({
             type: ACTIONS.LOGIN,

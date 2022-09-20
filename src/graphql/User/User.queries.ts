@@ -64,9 +64,11 @@ export const GET_USER_INFO = gql`
         last_name
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
       cvs {
@@ -126,9 +128,11 @@ export const UPDATE_USER = gql`
 
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
     }
@@ -162,9 +166,11 @@ export const CREATE_USER = gql`
         }
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
     }
