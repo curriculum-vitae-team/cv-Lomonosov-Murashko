@@ -1,7 +1,21 @@
+import { DeleteResult } from "@graphql/delete.types";
+
+export interface GetPositionsData {
+  positions: Position[];
+}
+
 export interface Position {
   id: string;
   name: string;
-  created_at: string;
+}
+
+export interface UpdatePositionInput {
+  id: string;
+  position: Pick<Position, "name">;
+}
+
+export interface DeletePositionOutput {
+  deletePosition: DeleteResult;
 }
 
 export interface PositionsNamesIdsData {

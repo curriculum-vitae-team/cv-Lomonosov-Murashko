@@ -12,16 +12,16 @@ import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoForm } from "../EmployeeCreateInfoForm";
 import { Loader } from "@components/Loader";
-import { PositionsNamesIdsData } from "@src/graphql/Entity/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@src/graphql/Entity/Position/Position.queries";
-import { GET_DEPARTMENTS } from "@src/graphql/Entity/Department/Department.queries";
-import { DepartmentsData } from "@src/graphql/Entity/Department/Department.interface";
+import { PositionsNamesIdsData } from "@graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@graphql/Entity/Position/Position.queries";
+import { GET_DEPARTMENTS } from "@graphql/Entity/Department/Department.queries";
+import { GetDepartmentsData } from "@graphql/Entity/Department/Department.interface";
 
 export const EmployeeInfoCreate = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  const { data: departments } = useQuery<DepartmentsData>(GET_DEPARTMENTS, {
+  const { data: departments } = useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
     onError: (error) => {
       setError(error.message);
     },

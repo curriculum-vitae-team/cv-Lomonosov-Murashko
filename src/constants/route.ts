@@ -34,4 +34,6 @@ export enum ROUTE {
 export enum ENTITY {
   LANGUAGES = "languages",
   SKILLS = "skills",
+  DEPARTMENTS = "departments",
+  POSITIONS = "positions",
 }

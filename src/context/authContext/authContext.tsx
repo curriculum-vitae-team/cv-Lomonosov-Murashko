@@ -9,7 +9,6 @@ import {
   isUserExists,
   setUserInfoToLocalStorage,
 } from "@helpers/localStorage";
-import { ROUTE } from "@src/constants/route";
 
 const initialState = {
   user: {},
