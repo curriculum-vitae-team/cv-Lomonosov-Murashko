@@ -1,7 +1,14 @@
 import { CacheUpdaterFunction } from "src/types";
 import { DeleteEntityEntryInput } from "../Entity.interface";
 import { GET_LANGUAGES } from "./Language.queries";
-import { DeleteLanguageOutput, GetLanguagesData } from "./Language.interface";
+import {
+  CreateLanguageInput,
+  CreateLanguageOutput,
+  DeleteLanguageOutput,
+  GetLanguagesData,
+  UpdateLanguageInput,
+  UpdateLanguageResult,
+} from "./Language.interface";
 
 export const deleteLanguageUpdateCache =
   (
@@ -19,6 +26,47 @@ export const deleteLanguageUpdateCache =
           languages: existingLanguages.languages.filter(
             (entry) => entry.id !== id,
           ),
+        },
+      });
+    }
+  };
+
+export const createLanguageCacheUpdate =
+  (): CacheUpdaterFunction<CreateLanguageOutput, CreateLanguageInput> =>
+  (cache, { data }) => {
+    const existingLanguages = cache.readQuery<GetLanguagesData>({
+      query: GET_LANGUAGES,
+    });
+
+    if (existingLanguages) {
+      cache.writeQuery({
+        query: GET_LANGUAGES,
+        data: {
+          languages: [data?.createLanguage, ...existingLanguages.languages],
+        },
+      });
+    }
+  };
+
+export const languageCacheUpdate =
+  (
+    id: string,
+  ): CacheUpdaterFunction<UpdateLanguageResult, UpdateLanguageInput> =>
+  (cache, { data }) => {
+    const existingLanguages = cache.readQuery<GetLanguagesData>({
+      query: GET_LANGUAGES,
+    });
+
+    if (existingLanguages) {
+      cache.writeQuery({
+        query: GET_LANGUAGES,
+        data: {
+          languages: [
+            ...existingLanguages.languages.filter(
+              (language) => language.id !== id,
+            ),
+            data?.updateLanguage,
+          ],
         },
       });
     }

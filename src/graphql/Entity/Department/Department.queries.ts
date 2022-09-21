@@ -25,3 +25,12 @@ export const UPDATE_DEPARTMENT = gql`
     }
   }
 `;
+
+export const CREATE_DEPARTMENT = gql`
+  mutation CreateDepartment($department: DepartmentInput!) {
+    createDepartment(department: $department) {
+      id
+      name
+    }
+  }
+`

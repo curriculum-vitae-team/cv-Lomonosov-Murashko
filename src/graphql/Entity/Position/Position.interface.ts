@@ -26,3 +26,18 @@ export interface PositionNamesIds {
   id: string;
   name: string;
 }
+
+export interface UpdatePositionResult {
+  updatePosition: Position;
+}
+
+export interface CreatePositionInput {
+  position: Pick<Position, "name">;
+}
+
+export interface CreatePositionOutput {
+  createPosition: {
+    position: Position;
+    affected: number;
+  };
+}

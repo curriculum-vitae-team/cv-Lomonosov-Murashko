@@ -13,3 +13,18 @@ export interface UpdateSkillInput {
 export interface DeleteSkillOutput {
   deleteSkill: DeleteResult;
 }
+
+export interface UpdateSkillResult {
+  updateSkill: Skill;
+}
+
+export interface CreateSkillInput {
+  skill: Pick<Skill, "name">;
+}
+
+export interface CreateSkillOutput {
+  createSkill: {
+    skills: Skill;
+    affected: number;
+  };
+}

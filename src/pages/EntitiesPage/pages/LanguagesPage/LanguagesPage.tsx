@@ -1,4 +1,5 @@
 import {
+  CREATE_LANGUAGE,
   DELETE_LANGUAGE,
   GET_LANGUAGES,
   UPDATE_LANGUAGE,
@@ -17,13 +18,20 @@ import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import {
+  CreateLanguageInput,
+  CreateLanguageOutput,
   DeleteLanguageOutput,
   GetLanguagesData,
   Language,
   UpdateLanguageInput,
+  UpdateLanguageResult,
 } from "@graphql/Entity/Language/Language.interface";
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
-import { deleteLanguageUpdateCache } from "@graphql/Entity/Language/Language.cache";
+import {
+  createLanguageCacheUpdate,
+  deleteLanguageUpdateCache,
+  languageCacheUpdate,
+} from "@graphql/Entity/Language/Language.cache";
 
 export const LanguagesPage = () => {
   const { entryId } = useParams();
@@ -75,7 +83,22 @@ export const LanguagesPage = () => {
     },
   });
 
-  const [updateEntry] = useMutation<Language, UpdateLanguageInput>(
+  const [createEntry] = useMutation<CreateLanguageOutput, CreateLanguageInput>(
+    CREATE_LANGUAGE,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
+
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
+    },
+  );
+
+  const [updateEntry] = useMutation<UpdateLanguageResult, UpdateLanguageInput>(
     UPDATE_LANGUAGE,
     {
       onError: (err) => {
@@ -121,6 +144,18 @@ export const LanguagesPage = () => {
     });
   };
 
+  const handleEntryCreate = (data: Language) => {
+    createEntry({
+      variables: {
+        language: {
+          name: data.name,
+          iso2: data.iso2,
+        },
+      },
+      update: createLanguageCacheUpdate(),
+    });
+  };
+
   const handleInfoFormSubmit = (data: Language) => {
     updateEntry({
       variables: {
@@ -130,6 +165,7 @@ export const LanguagesPage = () => {
           name: data.name,
         },
       },
+      update: languageCacheUpdate(entryId!),
     });
   };
 

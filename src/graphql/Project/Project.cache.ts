@@ -5,6 +5,8 @@ import {
   DeleteProjectInput,
   DeleteProjectOutput,
   ProjectsData,
+  UpdateProjectInput,
+  UpdateProjectOutput,
 } from "./Project.interface";
 import { GET_PROJECTS } from "./Project.queries";
 
@@ -38,7 +40,27 @@ export const createProjectCacheUpdate =
       cache.writeQuery({
         query: GET_PROJECTS,
         data: {
-          projects: [data?.createProject, ...existingProjects.projects],
+          projects: [data?.createProject.project, ...existingProjects.projects],
+        },
+      });
+    }
+  };
+
+export const projectCacheUpdate =
+  (id: string): CacheUpdaterFunction<UpdateProjectOutput, UpdateProjectInput> =>
+  (cache, { data }) => {
+    const existingProjects = cache.readQuery<ProjectsData>({
+      query: GET_PROJECTS,
+    });
+
+    if (existingProjects) {
+      cache.writeQuery({
+        query: GET_PROJECTS,
+        data: {
+          projects: [
+            ...existingProjects.projects.filter((project) => project.id !== id),
+            data?.updateProject,
+          ],
         },
       });
     }
