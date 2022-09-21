@@ -23,6 +23,7 @@ export const StyledPaper = styled(Paper)({
       top: "3em",
       left: 0,
       zIndex: "100",
+      height: "100vh",
       transform: "translateX(-200px)",
     },
   },
