@@ -1,7 +1,9 @@
 import { GuardFunction } from "@helpers/guard";
+import { ROUTE } from "@src/constants/route";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
 import { observer } from "mobx-react-lite";
-import { Outlet, RouteProps } from "react-router";
+import { useEffect } from "react";
+import { Outlet, RouteProps, useLocation, useNavigate } from "react-router";
 
 export type ProtectedRouteProps = RouteProps & {
   fallback: () => JSX.Element | null;
