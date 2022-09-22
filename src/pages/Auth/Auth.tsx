@@ -7,12 +7,13 @@ import { ROUTE } from "@constants/route";
 import { Tab } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
 import { StyledTabs } from "./Auth.styles";
-import { AuthContext } from "@context/authContext/authContext";
 import { RedirectPage } from "../RedirectPage";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 export const Auth = () => {
   const [currentTab, setCurrentTab] = useState(0);
-  const { user } = useContext(AuthContext);
+
+  const { user$ } = authStore;
 
   const handleTabChange = () => {
     currentTab === 0 ? setCurrentTab(1) : setCurrentTab(0);
@@ -20,7 +21,7 @@ export const Auth = () => {
 
   return (
     <>
-      {user?.profile ? (
+      {user$?.profile ? (
         <RedirectPage to={ROUTE.EMPLOYEES} />
       ) : (
         <AuthWrapper>

@@ -1,6 +1,6 @@
-import { AuthContext } from "@context/authContext/authContext";
 import { GuardFunction } from "@helpers/guard";
-import { useContext } from "react";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
+import { observer } from "mobx-react-lite";
 import { Outlet, RouteProps } from "react-router";
 
 export type ProtectedRouteProps = RouteProps & {
@@ -8,8 +8,12 @@ export type ProtectedRouteProps = RouteProps & {
   guards: GuardFunction[];
 };
 
-export const ProtectedRoute = ({ guards, fallback }: ProtectedRouteProps) => {
-  const { user } = useContext(AuthContext);
+export const ProtectedRoute = observer(
+  ({ guards, fallback }: ProtectedRouteProps) => {
+    const { user$ } = authStore;
 
-  return <>{guards.every((guard) => guard(user)) ? <Outlet /> : fallback()}</>;
-};
+    return (
+      <>{guards.every((guard) => guard(user$)) ? <Outlet /> : fallback()}</>
+    );
+  },
+);

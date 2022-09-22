@@ -10,7 +10,7 @@ import {
 } from "@helpers/localStorage";
 
 export class AuthStore implements IAuthStore {
-  user: User | null = null;
+  user$: User | null = null;
 
   constructor() {
     this.restoreUser();
@@ -18,19 +18,19 @@ export class AuthStore implements IAuthStore {
     makeObservable(this, {
       login: action.bound,
       logout: action.bound,
-      user: observable,
+      user$: observable,
     });
   }
 
   login = (userData: AuthUserInfo, isMemorized: boolean) => {
     const { user, access_token } = userData;
-    this.user = user;
+    this.user$ = user;
 
     setUserInfoToLocalStorage({ user, access_token, isMemorized });
   };
 
   logout = () => {
-    this.user = null;
+    this.user$ = null;
     deleteUserInfoFromLocalStorage();
   };
 
@@ -38,7 +38,7 @@ export class AuthStore implements IAuthStore {
     if (isUserExists()) {
       const { user, isMemorized } = getUserInfoFromLocalStorage();
       if (isMemorized) {
-        this.user = user;
+        this.user$ = user;
       } else {
         deleteUserInfoFromLocalStorage();
       }

@@ -14,7 +14,6 @@ import {
 } from "@components/styled/auth-styles/Auth.styles";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { AuthContext } from "@context/authContext/authContext";
 import { useLazyQuery } from "@apollo/client";
 import {
   AuthInputData,
@@ -22,12 +21,16 @@ import {
 } from "@graphql/Auth/Auth.interface";
 import { SIGNIN } from "@graphql/Auth/Auth.queries";
 import { Loader } from "@components/Loader";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 export const SignIn = () => {
   const [isMemorized, setIsMemorized] = useState(false);
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
+
+  const { login } = authStore;
+
   const navigate = useNavigate();
+
   const { control, handleSubmit, reset } = useForm<ISignIn>({
     defaultValues: {
       email: "",

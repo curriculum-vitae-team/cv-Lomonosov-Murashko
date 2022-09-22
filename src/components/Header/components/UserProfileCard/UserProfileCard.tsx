@@ -1,8 +1,6 @@
-import { AuthContext } from "@context/authContext/authContext";
 import { withOverlay } from "@hoc/withOverlay";
 import { Typography } from "@mui/material";
 import { ROUTE } from "@constants/route";
-import { useContext } from "react";
 import { useNavigate } from "react-router";
 import {
   StyledTypographyEmail,
@@ -10,9 +8,11 @@ import {
   StyledDiv,
   StyledAccountCircleIcon,
 } from "./UserProfileCard.styles";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 function UserProfileCard() {
-  const { user, logout } = useContext(AuthContext);
+  const { user$, logout } = authStore;
+
   const navigate = useNavigate();
   const handleSignOutClick = () => {
     logout();
@@ -26,8 +26,8 @@ function UserProfileCard() {
   return (
     <StyledDiv onClick={onUserProfileCardClick}>
       <StyledAccountCircleIcon />
-      <Typography>{user?.profile?.full_name}</Typography>
-      <StyledTypographyEmail>{user?.email}</StyledTypographyEmail>
+      <Typography>{user$?.profile?.full_name}</Typography>
+      <StyledTypographyEmail>{user$?.email}</StyledTypographyEmail>
       <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
     </StyledDiv>
   );
