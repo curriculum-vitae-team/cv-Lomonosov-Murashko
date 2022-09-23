@@ -15,6 +15,7 @@ export const UserDetailsInput = ({
   refetchObservable,
 }: UserDetailsInputProps) => {
   // при нажатии на кнопку там затриггерить все рефетчи тут
+
   const { data: departments, refetch: refetchDepartments } =
     useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
       onError,
