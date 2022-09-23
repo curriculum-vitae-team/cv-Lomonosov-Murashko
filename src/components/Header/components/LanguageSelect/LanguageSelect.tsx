@@ -1,12 +1,11 @@
-import { Button, Typography } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import { withOverlay } from "@src/hoc/withOverlay";
 import { languageStore } from "@src/stores/LanguageStore/LanguageStore";
 import { AppLanguage } from "@src/stores/LanguageStore/LanguageStore.types";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { StyledDiv } from "../../StyledDiv";
 import { languages } from "./LanguageSelect.data";
-import { StyledTranslateIcon } from "./LanguageSelect.styles";
+import { StyledMenu, StyledTranslateIcon } from "./LanguageSelect.styles";
 
 export const LanguageSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +19,7 @@ export const LanguageSelect = () => {
       />
       {isOpen && (
         <LanguageSelector
+          open={isOpen}
           onClose={() => {
             setIsOpen(false);
           }}
@@ -30,12 +30,8 @@ export const LanguageSelect = () => {
 };
 
 const LanguageSelector = withOverlay(
-  observer(() => {
+  observer(({ open }: { open: boolean }) => {
     const { setLanguage } = languageStore;
-
-    const onCardClick: React.MouseEventHandler = (e) => {
-      e.stopPropagation();
-    };
 
     const handleLanguageChange = (lang: AppLanguage) => {
       return function () {
@@ -44,18 +40,18 @@ const LanguageSelector = withOverlay(
     };
 
     return (
-      <StyledDiv onClick={onCardClick}>
+      <StyledMenu open={open}>
         {languages.map((lang) => (
-          <Button
+          <MenuItem
             disabled={lang === languageStore.language$}
             sx={{ width: "100%" }}
             onClick={handleLanguageChange(lang)}
             key={lang}
           >
             {lang}
-          </Button>
+          </MenuItem>
         ))}
-      </StyledDiv>
+      </StyledMenu>
     );
   }),
 );
