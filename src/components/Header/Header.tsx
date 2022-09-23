@@ -6,7 +6,7 @@ import {
   StyledLabel,
   FlexWrapper,
 } from "./Header.styles";
-import { UserProfile } from "./components/UserProfile/UserProfile";
+import { UserProfile } from "./components/UserProfile";
 import logo from "@assets/images/logo.svg";
 import { SidebarContext } from "@context/sidebarContext/sidebarContext";
 

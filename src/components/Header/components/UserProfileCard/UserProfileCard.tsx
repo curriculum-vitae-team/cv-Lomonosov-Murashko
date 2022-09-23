@@ -5,9 +5,9 @@ import { useNavigate } from "react-router";
 import {
   StyledTypographyEmail,
   StyledButton,
-  StyledDiv,
   StyledAccountCircleIcon,
 } from "./UserProfileCard.styles";
+import { StyledDiv } from "../../StyledDiv";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 function UserProfileCard() {
