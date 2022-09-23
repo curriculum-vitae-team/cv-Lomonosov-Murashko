@@ -24,6 +24,7 @@ import { authFormsGuard, authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
 import { DepartmentsPage } from "@pages/EntitiesPage/pages/DepartmentsPage";
 import { PositionsPage } from "@pages/EntitiesPage/pages/PositionsPage";
+import { CvInfoUpdate } from "../CvInfoUpdate";
 
 export function Router() {
   return (
@@ -58,10 +59,7 @@ export function Router() {
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-                <Route
-                  path={ROUTE_PARAM.CV_ID}
-                  element={<CvInfoUpdatePage />}
-                />
+                <Route path={ROUTE_PARAM.CV_ID} element={<CvInfoUpdate />} />
               </Route>
             </Route>
             <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
