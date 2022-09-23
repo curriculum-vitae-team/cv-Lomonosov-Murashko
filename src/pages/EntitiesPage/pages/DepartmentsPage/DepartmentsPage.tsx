@@ -13,8 +13,12 @@ import {
   GetDepartmentsData,
   DeleteDepartmentOutput,
   UpdateDepartmentInput,
+  UpdateDepartmentResult,
+  CreateDepartmentOutput,
+  CreateDepartmentInput,
 } from "@graphql/Entity/Department/Department.interface";
 import {
+  CREATE_DEPARTMENT,
   DELETE_DEPARTMENT,
   GET_DEPARTMENTS,
   UPDATE_DEPARTMENT,
@@ -22,7 +26,11 @@ import {
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import { Department } from "@interfaces/department.interface";
 import { InfoItem } from "@components/InfoItem";
-import { deleteDepartmentCacheUpdate } from "@graphql/Entity/Department/Departments.cache";
+import {
+  createDepartmentCacheUpdate,
+  deleteDepartmentCacheUpdate,
+  departmentCacheUpdate,
+} from "@graphql/Entity/Department/Departments.cache";
 import { InfoForm } from "../SkillsPage/components/InfoForm";
 
 export const DepartmentsPage = () => {
@@ -73,20 +81,35 @@ export const DepartmentsPage = () => {
     },
   });
 
-  const [updateEntry] = useMutation<Department, UpdateDepartmentInput>(
-    UPDATE_DEPARTMENT,
-    {
-      onError: (err) => {
-        const response = err.graphQLErrors[0].extensions.response as {
-          message?: string[];
-        };
+  const [updateEntry] = useMutation<
+    UpdateDepartmentResult,
+    UpdateDepartmentInput
+  >(UPDATE_DEPARTMENT, {
+    onError: (err) => {
+      const response = err.graphQLErrors[0].extensions.response as {
+        message?: string[];
+      };
 
-        setToastError(
-          (response?.message && response.message[0]) || "Something went wrong",
-        );
-      },
+      setToastError(
+        (response?.message && response.message[0]) || "Something went wrong",
+      );
     },
-  );
+  });
+
+  const [createEntry] = useMutation<
+    CreateDepartmentOutput,
+    CreateDepartmentInput
+  >(CREATE_DEPARTMENT, {
+    onError: (err) => {
+      const response = err.graphQLErrors[0].extensions.response as {
+        message?: string[];
+      };
+
+      setToastError(
+        (response?.message && response.message[0]) || "Something went wrong",
+      );
+    },
+  });
 
   useEffect(() => {
     if (active !== "-1") {
@@ -117,6 +140,17 @@ export const DepartmentsPage = () => {
     });
   };
 
+  const handleEntryCreate = (data: Department) => {
+    createEntry({
+      variables: {
+        department: {
+          name: data.name,
+        },
+      },
+      update: createDepartmentCacheUpdate(),
+    });
+  };
+
   const handleInfoFormSubmit = (data: Department) => {
     updateEntry({
       variables: {
@@ -125,6 +159,7 @@ export const DepartmentsPage = () => {
           name: data.name,
         },
       },
+      update: departmentCacheUpdate(entryId!),
     });
   };
 
@@ -165,7 +200,8 @@ export const DepartmentsPage = () => {
           {active !== "-1" && data && (
             <InfoForm
               input={
-                data.departments.find(({ id }) => id === active) || ({} as Department)
+                data.departments.find(({ id }) => id === active) ||
+                ({} as Department)
               }
               onSubmit={handleInfoFormSubmit}
               onCancel={handleCancel}

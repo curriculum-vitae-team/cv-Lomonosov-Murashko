@@ -25,3 +25,12 @@ export const UPDATE_SKILL = gql`
     }
   }
 `;
+
+export const CREATE_SKILL = gql`
+  mutation CreateSkill($skill: SkillInput!) {
+    createSkill(skill: $skill) {
+      id
+      name
+    }
+  }
+`

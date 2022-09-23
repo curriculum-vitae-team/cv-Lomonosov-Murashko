@@ -13,9 +13,26 @@ import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import { Department } from "@interfaces/department.interface";
 import { InfoItem } from "@components/InfoItem";
 import { InfoForm } from "../SkillsPage/components/InfoForm";
-import { DeletePositionOutput, GetPositionsData, Position, UpdatePositionInput } from "@graphql/Entity/Position/Position.interface";
-import { deletePositionCacheUpdate } from "@graphql/Entity/Position/Position.cache";
-import { DELETE_POSITION, GET_POSITIONS, UPDATE_POSITION } from "@graphql/Entity/Position/Position.queries";
+import {
+  CreatePositionInput,
+  CreatePositionOutput,
+  DeletePositionOutput,
+  GetPositionsData,
+  Position,
+  UpdatePositionInput,
+  UpdatePositionResult,
+} from "@graphql/Entity/Position/Position.interface";
+import {
+  createPositionCacheUpdate,
+  deletePositionCacheUpdate,
+  positionCacheUpdate,
+} from "@graphql/Entity/Position/Position.cache";
+import {
+  CREATE_POSITION,
+  DELETE_POSITION,
+  GET_POSITIONS,
+  UPDATE_POSITION,
+} from "@graphql/Entity/Position/Position.queries";
 
 export const PositionsPage = () => {
   const { entryId } = useParams();
@@ -25,25 +42,22 @@ export const PositionsPage = () => {
   const { setToastError } = useErrorToast();
   const [active, setActive] = useState("-1");
 
-  const { data, loading, refetch } = useQuery<GetPositionsData>(
-    GET_POSITIONS,
-    {
-      variables: { id: entryId },
-      onCompleted: (data) => {
-        const firstEntry = data.positions[0];
+  const { data, loading, refetch } = useQuery<GetPositionsData>(GET_POSITIONS, {
+    variables: { id: entryId },
+    onCompleted: (data) => {
+      const firstEntry = data.positions[0];
 
-        if (firstEntry && (firstEntry.id === entryId || !entryId)) {
-          const entryToOpen = searchParams.get("open") || firstEntry.id;
-          setActive(entryToOpen);
-        } else {
-          setActive(entryId || "-1");
-        }
-      },
-      onError: (err) => {
-        setError(err.message);
-      },
+      if (firstEntry && (firstEntry.id === entryId || !entryId)) {
+        const entryToOpen = searchParams.get("open") || firstEntry.id;
+        setActive(entryToOpen);
+      } else {
+        setActive(entryId || "-1");
+      }
     },
-  );
+    onError: (err) => {
+      setError(err.message);
+    },
+  });
 
   const [deleteEntry] = useMutation<
     DeletePositionOutput,
@@ -65,7 +79,22 @@ export const PositionsPage = () => {
     },
   });
 
-  const [updateEntry] = useMutation<Position, UpdatePositionInput>(
+  const [createEntry] = useMutation<CreatePositionOutput, CreatePositionInput>(
+    CREATE_POSITION,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
+
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
+    },
+  );
+
+  const [updateEntry] = useMutation<UpdatePositionResult, UpdatePositionInput>(
     UPDATE_POSITION,
     {
       onError: (err) => {
@@ -109,6 +138,17 @@ export const PositionsPage = () => {
     });
   };
 
+  const handleEntryCreate = (data: Position) => {
+    createEntry({
+      variables: {
+        position: {
+          name: data.name,
+        },
+      },
+      update: createPositionCacheUpdate(),
+    });
+  };
+
   const handleInfoFormSubmit = (data: Department) => {
     updateEntry({
       variables: {
@@ -117,6 +157,7 @@ export const PositionsPage = () => {
           name: data.name,
         },
       },
+      update: positionCacheUpdate(entryId!),
     });
   };
 

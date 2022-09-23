@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
+import { projectCacheUpdate } from "@graphql/Project/Project.cache";
 
 export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +68,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
             skillsIds: [], // TODO: replace with entities
           },
         },
+        update: projectCacheUpdate(projectId),
       });
     },
     [projectId, updateProject],

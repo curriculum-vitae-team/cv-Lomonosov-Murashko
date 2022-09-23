@@ -26,6 +26,15 @@ export const UPDATE_POSITION = gql`
   }
 `;
 
+export const CREATE_POSITION = gql`
+  mutation CreatePosition($position: PositionInput!) {
+    createPosition(position: $position) {
+      id
+      name
+    }
+  }
+`
+
 export const GET_POSITIONS_NAMES_IDS = gql`
   query GetPositionNamesIds {
     positions {
