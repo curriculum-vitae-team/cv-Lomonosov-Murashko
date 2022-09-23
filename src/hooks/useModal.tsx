@@ -39,7 +39,8 @@ export const useModal = (
         color="inherit"
         onClick={closeModal}
         aria-label="close"
-        style={{ position: "absolute", right: 0, top: 0 }}
+        style={{ position: "absolute", zIndex: 100, right: 0, top: 0 }}
+
       >
         <Close />
       </IconButton>

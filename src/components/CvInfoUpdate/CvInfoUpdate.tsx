@@ -21,6 +21,7 @@ export const CvInfoUpdate = memo(() => {
   const { pathname } = useLocation();
   const [cvInput, setCvInput] = useState<CvInput | null>(null);
   const { setToastError } = useErrorToast();
+  const navigate = useNavigate();
 
   const {
     data: cvInfoData,
@@ -39,13 +40,14 @@ export const CvInfoUpdate = memo(() => {
 
   useLayoutEffect(() => {
     if (cvInfoData) {
-      const { name, description, user, projects } = cvInfoData.cv;
+      const { name, description, user, projects } = cvInfoData.cv;      
 
       setCvInput({
         name,
         description,
         userId: user?.id,
         projectsIds: projects.map((p) => p.id),
+        projects: projects,
         skills: [],
         languages: [],
         is_template: false,
@@ -64,8 +66,6 @@ export const CvInfoUpdate = memo(() => {
       setToastError(error.message);
     },
   });
-
-  const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
@@ -89,7 +89,7 @@ export const CvInfoUpdate = memo(() => {
             description,
             id: cvId!,
             projects: [],
-            user: null, // TODO: user can assign cv to himself only, admin to everyone
+            user: null,
             skills: [],
             languages: [],
             is_template: false,
@@ -103,11 +103,6 @@ export const CvInfoUpdate = memo(() => {
 
   const handleCancel: React.MouseEventHandler = (e) => {
     navigate(pathname.split("/").includes("cvs") ? "/cvs" : "/employees");
-  };
-
-  const handleAddProject: React.MouseEventHandler = (e) => {
-    // TODO: Fetch projects. Show projects select component.
-    // Not a table.
   };
 
   const handleTryAgain = () => {
@@ -124,12 +119,7 @@ export const CvInfoUpdate = memo(() => {
   ) : (
     cvInput && (
       <>
-        <CvInfo
-          cv={cvInput}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-          onAddProject={handleAddProject}
-        />
+        <CvInfo cv={cvInput} onSubmit={handleSubmit} onCancel={handleCancel} />
       </>
     )
   );

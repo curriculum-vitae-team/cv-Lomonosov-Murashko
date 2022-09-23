@@ -1,13 +1,8 @@
 import { AuthUserInfo } from "@graphql/Auth/Auth.interface";
 import { User } from "@interfaces/user.interface";
 
-export interface IAction {
-  type: string;
-  payload?: any;
-}
-
-export interface IContext {
-  user: User;
+export interface IAuthStore {
+  user$: User | null;
   login: (userData: AuthUserInfo, isMemorized: boolean) => void;
   logout: () => void;
 }
