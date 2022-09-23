@@ -1,12 +1,5 @@
 import { Add } from "@mui/icons-material";
-import {
-  FormControl,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-} from "@mui/material";
-import { useEffect, useState } from "react";
+import { MenuItem, Select, SelectChangeEvent, Stack } from "@mui/material";
 import { DynamicFieldsetProps } from "./DynamicFieldset.types";
 
 export const DynamicFieldset = <T extends string>({

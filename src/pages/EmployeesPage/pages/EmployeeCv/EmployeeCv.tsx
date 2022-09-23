@@ -64,7 +64,7 @@ export const EmployeeCv = () => {
           const { id } = options.mutationResult.data.unbindCv;
           return {
             user: {
-              cvs: prevResult.user.cvs.filter(
+              cvs: prevResult.user?.cvs.filter(
                 (cv: { id: string; name: string }) => cv.id !== id,
               ),
             },
@@ -107,10 +107,10 @@ export const EmployeeCv = () => {
           }}
         ></InlineError>
       ) : (
-        userData?.user.cvs && (
+        userData?.user?.cvs && (
           <>
             <div className="sidebar">
-              {userData.user.cvs.map((cv) => {
+              {userData.user?.cvs.map((cv) => {
                 return (
                   <div
                     className={active === cv.id ? "active" : ""}
