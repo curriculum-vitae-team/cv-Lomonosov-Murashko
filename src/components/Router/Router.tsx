@@ -20,19 +20,30 @@ import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
 import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
 import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { authGuard, roleGuard } from "@helpers/guard";
+import { authFormsGuard, authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
 import { DepartmentsPage } from "@pages/EntitiesPage/pages/DepartmentsPage";
 import { PositionsPage } from "@pages/EntitiesPage/pages/PositionsPage";
+import { CvInfoUpdate } from "../CvInfoUpdate";
 
 export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Auth />}>
-          <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
-          <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
+        <Route
+          element={
+            <ProtectedRoute
+              guards={[authFormsGuard]}
+              fallback={() => <RedirectPage to={ROUTE.EMPLOYEES} />}
+            />
+          }
+        >
+          <Route element={<Auth />}>
+            <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
+            <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
+          </Route>
         </Route>
+
         <Route path={ROUTE.EMPTY} element={<Layout />}>
           <Route
             element={
@@ -48,10 +59,7 @@ export function Router() {
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-                <Route
-                  path={ROUTE_PARAM.CV_ID}
-                  element={<CvInfoUpdatePage />}
-                />
+                <Route path={ROUTE_PARAM.CV_ID} element={<CvInfoUpdate />} />
               </Route>
             </Route>
             <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />

@@ -10,21 +10,26 @@ import {
   AuthStyledForm,
   InvalidInputError,
 } from "@components/styled/auth-styles/Auth.styles";
-import { useCallback, useContext, useState } from "react";
-import { AuthInputData, AuthSignupOutputData } from "@graphql/Auth/Auth.interface";
+import { useCallback, useState } from "react";
+import {
+  AuthInputData,
+  AuthSignupOutputData,
+} from "@graphql/Auth/Auth.interface";
 import { SIGNUP } from "@graphql/Auth/Auth.queries";
 import { useMutation } from "@apollo/client";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
-import { AuthContext } from "@context/authContext/authContext";
 import { Loader } from "@components/Loader";
 import { createUserCacheUpdate } from "@graphql/Auth/Auth.cache";
 import { ERRORS } from "@constants/errors";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 export const SignUp = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
+
+  const { login } = authStore;
+
   const { control, handleSubmit, reset } = useForm<IAuth>({
     defaultValues: {
       email: "",
@@ -32,7 +37,10 @@ export const SignUp = () => {
     },
   });
 
-  const [signup, { loading }] = useMutation<AuthSignupOutputData, AuthInputData>(SIGNUP, {
+  const [signup, { loading }] = useMutation<
+    AuthSignupOutputData,
+    AuthInputData
+  >(SIGNUP, {
     onCompleted: (data) => {
       login(data.signup, false);
       navigate(ROUTE.EMPLOYEES);
@@ -40,7 +48,7 @@ export const SignUp = () => {
     onError: (error) => {
       reset();
       if (error.message.includes("duplicate key")) {
-        setError(ERRORS.EMAIL_TAKEN)
+        setError(ERRORS.EMAIL_TAKEN);
       } else {
         setError(error.message);
       }

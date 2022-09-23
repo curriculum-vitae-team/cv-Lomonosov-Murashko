@@ -19,7 +19,7 @@ export const deleteUserCacheUpdate =
       cache.writeQuery({
         query: GET_USERS,
         data: {
-          users: existingUsers.users.filter((user) => user.id !== id),
+          users: existingUsers.users.filter((user) => user?.id !== id),
         },
       });
     }
