@@ -10,21 +10,18 @@ import { StyledMenu, StyledTranslateIcon } from "./LanguageSelect.styles";
 export const LanguageSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
-      <StyledTranslateIcon
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      />
-      {isOpen && (
-        <LanguageSelector
-          open={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        />
-      )}
+      <StyledTranslateIcon onClick={handleOpen} />
+      {isOpen && <LanguageSelector open={isOpen} onClose={handleClose} />}
     </>
   );
 };
