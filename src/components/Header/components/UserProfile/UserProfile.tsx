@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
 import { LanguageSelect } from "../LanguageSelect";
 
-export const UserProfile = observer(() => {
+const UserProfile = () => {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
   const { user$ } = authStore;
 
@@ -32,4 +32,6 @@ export const UserProfile = observer(() => {
       )}
     </StyledGrid>
   );
-});
+};
+
+export default observer(UserProfile);
