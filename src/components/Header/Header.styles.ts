@@ -7,6 +7,7 @@ export const StyledHeader = styled("header")({
   width: "100vw",
   backgroundColor: "#001529",
   height: "3em",
+  paddingRight: "1rem",
 });
 
 export const Img = styled("img")({

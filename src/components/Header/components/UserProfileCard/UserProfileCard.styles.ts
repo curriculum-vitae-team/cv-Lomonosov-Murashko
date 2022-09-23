@@ -1,25 +1,9 @@
 import { styled, Button, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-export const StyledDiv = styled("div")({
-  position: "absolute",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-around",
-  alignItems: "center",
-  top: "4em",
-  right: "1.5em",
-  width: "24em",
-  height: "15em",
-  color: "#000",
-  borderRadius: "10px",
-  background: "#fff",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
-});
-
 export const StyledTypographyEmail = styled(Typography)({
   marginBottom: "1em",
-  fontSize: "0.9em"
+  fontSize: "0.9em",
 });
 
 export const StyledButton = styled(Button)({
