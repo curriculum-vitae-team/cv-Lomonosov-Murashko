@@ -27,3 +27,13 @@ export const UPDATE_LANGUAGE = gql`
     }
   }
 `;
+
+export const CREATE_LANGUAGE = gql`
+  mutation CreateLanguage($language: LanguageInput!) {
+    createLanguage(language: $language) {
+      id
+      iso2
+      name
+    }
+  }
+`;

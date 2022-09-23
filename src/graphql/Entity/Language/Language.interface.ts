@@ -18,3 +18,18 @@ export interface Language {
 export interface GetLanguagesData {
   languages: Language[];
 }
+
+export interface UpdateLanguageResult {
+  updateLanguage: Language;
+}
+
+export interface CreateLanguageInput {
+  language: Pick<Language, "name" | "iso2">;
+}
+
+export interface CreateLanguageOutput {
+  createLanguage: {
+    languages: Language;
+    affected: number;
+  };
+}
