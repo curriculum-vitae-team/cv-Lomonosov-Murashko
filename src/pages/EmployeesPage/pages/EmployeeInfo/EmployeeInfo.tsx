@@ -20,8 +20,7 @@ import { LanguagesInput } from "./components/LanguagesInput";
 import { SkillsInput } from "./components/SkillsInput";
 import { Observable } from "./Observable";
 import { UserDetailsInput } from "./components/UserDetailsInput";
-import { DynamicFieldsetGroupWrapper } from "@src/components/styled/DynamicFieldsetGroupWrapper";
-import { authStore } from "@src/stores/AuthStore/AuthStore";
+import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");

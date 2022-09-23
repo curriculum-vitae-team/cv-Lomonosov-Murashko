@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
 import { InfoItem as CvItem } from "@src/components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
@@ -28,20 +28,31 @@ export const EmployeeCv = () => {
     refetch,
   } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
-    onCompleted: (data) => {
-      const firstCv = data.user?.cvs[0];
 
-      if (firstCv && (firstCv.id === cvId || !cvId)) {
-        const cvToOpen = searchParams.get("opencv") || firstCv.id;
-        setActive(cvToOpen);
-      } else {
-        setActive(cvId || "-1");
-      }
-    },
     onError: (err) => {
       setError(err.message);
     },
   });
+
+  useEffect(() => {
+    if (!userData) return;
+
+    const firstCv = userData.user.cvs[0];
+
+    if (firstCv && (firstCv.id === cvId || !cvId)) {
+      const cvToOpen = searchParams.get("opencv") || firstCv.id;
+      navigate(cvToOpen);
+      setActive(cvToOpen);
+    } else {
+      if (cvId) {
+        navigate(cvId);
+        setActive(cvId);
+      }
+
+      setActive("-1");
+      // setActive(cvId || "-1");
+    }
+  }, [userData?.user.cvs]);
 
   const [unbindCv] = useMutation<UnbindCvOutput, UnbindCvInput>(UNBIND_CV, {
     onError: (err) => {
