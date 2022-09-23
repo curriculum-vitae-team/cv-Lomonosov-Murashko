@@ -1,4 +1,4 @@
-import { Button, DialogActions, Stack } from "@mui/material";
+import { Button, DialogActions } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
@@ -20,6 +20,7 @@ import { LanguagesInput } from "./components/LanguagesInput";
 import { SkillsInput } from "./components/SkillsInput";
 import { Observable } from "./Observable";
 import { UserDetailsInput } from "./components/UserDetailsInput";
+import { userCacheUpdate } from "@graphql/User/User.cache";
 import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
 
@@ -54,6 +55,8 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       navigate(ROUTE.EMPLOYEES);
     },
     onError: (error) => {
+      console.log(error);
+
       setError(error.message);
     },
   });
@@ -101,6 +104,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
           cvsIds: [],
         },
       },
+      update: userCacheUpdate(employeeId),
     });
   };
 

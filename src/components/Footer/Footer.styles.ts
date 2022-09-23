@@ -2,7 +2,8 @@ import { styled } from "@mui/material";
 
 export const StyledFooter = styled("footer")({
   display: "flex",
-  position: "absolute",
+  position: "fixed",
+  bottom: 0,
   zIndex: "100",
   justifyContent: "center",
   alignItems: "center",

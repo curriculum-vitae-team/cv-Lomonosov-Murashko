@@ -14,17 +14,25 @@ import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import {
+  CREATE_SKILL,
   DELETE_SKILL,
   GET_SKILLS,
   UPDATE_SKILL,
 } from "@graphql/Entity/Skill/Skill.queries";
 import {
+  CreateSkillInput,
+  CreateSkillOutput,
   DeleteSkillOutput,
   GetSkillsData,
   UpdateSkillInput,
+  UpdateSkillResult,
 } from "@graphql/Entity/Skill/Skill.interface";
 import { Skill } from "@interfaces/skill.interface";
-import { deleteSkillCacheUpdate } from "@graphql/Entity/Skill/Skill.cache";
+import {
+  createSkillCacheUpdate,
+  deleteSkillCacheUpdate,
+  skillCacheUpdate,
+} from "@graphql/Entity/Skill/Skill.cache";
 
 export const SkillsPage = () => {
   const { entryId } = useParams();
@@ -71,17 +79,35 @@ export const SkillsPage = () => {
     },
   );
 
-  const [updateEntry] = useMutation<Skill, UpdateSkillInput>(UPDATE_SKILL, {
-    onError: (err) => {
-      const response = err.graphQLErrors[0].extensions.response as {
-        message?: string[];
-      };
+  const [createEntry] = useMutation<CreateSkillOutput, CreateSkillInput>(
+    CREATE_SKILL,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
 
-      setToastError(
-        (response?.message && response.message[0]) || "Something went wrong",
-      );
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
     },
-  });
+  );
+
+  const [updateEntry] = useMutation<UpdateSkillResult, UpdateSkillInput>(
+    UPDATE_SKILL,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
+
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
+    },
+  );
 
   useEffect(() => {
     if (active !== "-1") {
@@ -120,6 +146,18 @@ export const SkillsPage = () => {
           name: data.name,
         },
       },
+      update: skillCacheUpdate(entryId!),
+    });
+  };
+
+  const handleEntryCreate = (data: Skill) => {
+    createEntry({
+      variables: {
+        skill: {
+          name: data.name,
+        },
+      },
+      update: createSkillCacheUpdate(),
     });
   };
 

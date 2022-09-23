@@ -13,6 +13,7 @@ import { memo, useCallback, useLayoutEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { CvInfo } from "@components/CvInfo";
+import { cvCacheUpdate } from "@graphql/Cv/Cv.cache";
 
 export const CvInfoUpdate = memo(() => {
   const { cvId } = useParams();
@@ -94,6 +95,7 @@ export const CvInfoUpdate = memo(() => {
             is_template: false,
           },
         },
+        update: cvCacheUpdate(cvId!),
       });
     },
     [cvId, cvInfoData?.cv.user, saveCv],
