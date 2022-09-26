@@ -2,13 +2,10 @@ import { withOverlay } from "@hoc/withOverlay";
 import { Typography } from "@mui/material";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
-import {
-  StyledTypographyEmail,
-  StyledButton,
-  StyledAccountCircleIcon,
-} from "./UserProfileCard.styles";
+import { StyledTypographyEmail, StyledButton } from "./UserProfileCard.styles";
 import { StyledDiv } from "../../StyledDiv";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
+import { AvatarSelector } from "@src/components/Header/components/AvatarSelector";
 
 function UserProfileCard() {
   const { user$, logout } = authStore;
@@ -25,7 +22,7 @@ function UserProfileCard() {
 
   return (
     <StyledDiv onClick={onUserProfileCardClick}>
-      <StyledAccountCircleIcon />
+      <AvatarSelector />
       <Typography>{user$?.profile?.full_name}</Typography>
       <StyledTypographyEmail>{user$?.email}</StyledTypographyEmail>
       <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
