@@ -2,17 +2,25 @@ import { useMutation } from "@apollo/client";
 import { CircularProgress } from "@mui/material";
 import { useErrorToast } from "@src/context/ErrorToastStore/ErrorToastStore";
 import {
+  DeleteAvatarInput,
   UploadAvatarInput,
   UploadAvatarResult,
 } from "@src/graphql/Avatar/Avatar.interface";
-import { UPLOAD_AVATAR } from "@src/graphql/Avatar/Avatar.queries";
+import {
+  DELETE_AVATAR,
+  UPLOAD_AVATAR,
+} from "@src/graphql/Avatar/Avatar.queries";
 import { GET_ACCOUNT_INFO } from "@src/graphql/User/User.queries";
 import { toBase64 } from "@src/helpers/toBase64";
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { Loader } from "../../../Loader";
 import { UserProfileContext } from "../UserProfile/UserProfile";
-import { Avatar, StyledAccountCircleIcon } from "./AvatarSelector.styles";
+import {
+  Avatar,
+  AvatarWrapper,
+  PositionedAvatarDeleteIcon,
+  StyledAccountCircleIcon,
+} from "./AvatarSelector.styles";
 
 const AvatarSelector = () => {
   const { user } = useContext(UserProfileContext);
@@ -25,13 +33,17 @@ const AvatarSelector = () => {
     },
   );
 
+  const [deleteAvatar] = useMutation<void, DeleteAvatarInput>(DELETE_AVATAR, {
+    refetchQueries: [{ query: GET_ACCOUNT_INFO, variables: { id: user?.id } }],
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const { setToastError } = useErrorToast();
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = async (
     e,
   ) => {
-    if (e.target.files && user?.id) {
+    if (e.target.files && user?.profile.id) {
       try {
         setIsLoading(true);
         const file = e.target.files[0];
@@ -55,25 +67,48 @@ const AvatarSelector = () => {
     }
   };
 
+  const handleDelete: React.MouseEventHandler = async (e) => {
+    if (user?.profile.id) {
+      try {
+        setIsLoading(true);
+
+        await deleteAvatar({
+          variables: {
+            id: user?.profile.id,
+          },
+        });
+
+        setIsLoading(false);
+      } catch (err) {
+        setToastError("Something went wrong when deleting avatar");
+      }
+    }
+  };
+
   if (isLoading) {
     return <CircularProgress />;
   }
 
   return (
-    <label htmlFor="avatar-upload">
-      <input
-        type="file"
-        id="avatar-upload"
-        hidden={true}
-        onChange={handleChange}
-        disabled={isLoading}
-      />
-      {user?.profile.avatar ? (
-        <Avatar backgroundUrl={user?.profile.avatar} />
-      ) : (
-        <StyledAccountCircleIcon />
-      )}
-    </label>
+    <AvatarWrapper>
+      <PositionedAvatarDeleteIcon onClick={handleDelete} />
+      <label htmlFor="avatar-upload">
+        <input
+          type="file"
+          id="avatar-upload"
+          hidden={true}
+          onChange={handleChange}
+          disabled={isLoading}
+        />
+        {user?.profile.avatar ? (
+          <>
+            <Avatar backgroundUrl={user?.profile.avatar} />
+          </>
+        ) : (
+          <StyledAccountCircleIcon />
+        )}
+      </label>
+    </AvatarWrapper>
   );
 };
 

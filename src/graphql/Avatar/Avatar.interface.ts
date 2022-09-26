@@ -4,7 +4,11 @@ export interface UploadAvatarResult {
 
 export interface UploadAvatarInput {
   id: string;
-  avatar: {};
+  avatar: AvatarInput;
+}
+
+export interface DeleteAvatarInput {
+  id: string;
 }
 
 export interface AvatarInput {
