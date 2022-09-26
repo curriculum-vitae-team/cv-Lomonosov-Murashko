@@ -30,18 +30,9 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          element={
-            <ProtectedRoute
-              guards={[authFormsGuard]}
-              fallback={() => <RedirectPage to={ROUTE.EMPLOYEES} />}
-            />
-          }
-        >
-          <Route element={<Auth />}>
-            <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
-            <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
-          </Route>
+        <Route element={<Auth />}>
+          <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
+          <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
         </Route>
 
         <Route path={ROUTE.EMPTY} element={<Layout />}>
