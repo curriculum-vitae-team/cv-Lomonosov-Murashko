@@ -13,6 +13,7 @@ import { GetUserFullnameResult } from "@graphql/User/User.interface";
 import { PageWrapper } from "@components/styled/PageWrapper";
 import { validateUserFullName } from "../../helpers";
 import { Loader } from "@components/Loader";
+import { CurrentUserProvider } from "@context/currentUserContext/currentUserContext";
 
 export const EmployeePage = () => {
   const { employeeId } = useParams();
@@ -42,45 +43,47 @@ export const EmployeePage = () => {
   return loading ? (
     <Loader />
   ) : (
-    <PageWrapper>
-      <PageTop>
-        <Breadcrumb
-          config={{
-            info: "Info",
-            cv: "CV",
-            employees: "Employees",
-            [employeeId!]: displayedName,
-          }}
-        />
-        <PageTopTypography
-          title="Employees"
-          caption={displayedName + "'s profile"}
-        />
-      </PageTop>
-      <LinksPageBody>
-        <Box
-          sx={{
-            borderBottom: 1,
-            borderColor: "divider",
-          }}
-        >
-          <Tabs
-            value={selectedTab}
-            onChange={handleChange}
-            aria-label="nav tabs example"
+    <CurrentUserProvider>
+      <PageWrapper>
+        <PageTop>
+          <Breadcrumb
+            config={{
+              info: "Info",
+              cv: "CV",
+              employees: "Employees",
+              [employeeId!]: displayedName,
+            }}
+          />
+          <PageTopTypography
+            title="Employees"
+            caption={displayedName + "'s profile"}
+          />
+        </PageTop>
+        <LinksPageBody>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+            }}
           >
-            <Tab
-              label="Info"
-              component={Link}
-              to={ROUTE.EMPLOYEES + "/" + employeeId}
-            />
-            <Tab label="CV" component={Link} to={"cv"} />
-          </Tabs>
-        </Box>
-      </LinksPageBody>
-      <PageBody>
-        <Outlet />
-      </PageBody>
-    </PageWrapper>
+            <Tabs
+              value={selectedTab}
+              onChange={handleChange}
+              aria-label="nav tabs example"
+            >
+              <Tab
+                label="Info"
+                component={Link}
+                to={ROUTE.EMPLOYEES + "/" + employeeId}
+              />
+              <Tab label="CV" component={Link} to={"cv"} />
+            </Tabs>
+          </Box>
+        </LinksPageBody>
+        <PageBody>
+          <Outlet />
+        </PageBody>
+      </PageWrapper>
+    </CurrentUserProvider>
   );
 };

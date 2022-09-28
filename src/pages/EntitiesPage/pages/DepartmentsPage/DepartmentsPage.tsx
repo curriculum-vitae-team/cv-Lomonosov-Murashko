@@ -14,11 +14,8 @@ import {
   DeleteDepartmentOutput,
   UpdateDepartmentInput,
   UpdateDepartmentResult,
-  CreateDepartmentOutput,
-  CreateDepartmentInput,
 } from "@graphql/Entity/Department/Department.interface";
 import {
-  CREATE_DEPARTMENT,
   DELETE_DEPARTMENT,
   GET_DEPARTMENTS,
   UPDATE_DEPARTMENT,
@@ -27,11 +24,12 @@ import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import { Department } from "@interfaces/department.interface";
 import { InfoItem } from "@components/InfoItem";
 import {
-  createDepartmentCacheUpdate,
   deleteDepartmentCacheUpdate,
   departmentCacheUpdate,
 } from "@graphql/Entity/Department/Departments.cache";
 import { InfoForm } from "../SkillsPage/components/InfoForm";
+import { useModal } from "@hooks/useModal";
+import { CreateDepartmentWrapper } from "@components/CreateEntitie/components/CreateDepartmentWrapper";
 
 export const DepartmentsPage = () => {
   const { entryId } = useParams();
@@ -40,6 +38,7 @@ export const DepartmentsPage = () => {
   const [searchParams] = useSearchParams();
   const { setToastError } = useErrorToast();
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreateDepartmentWrapper);
 
   const { data, loading, refetch } = useQuery<GetDepartmentsData>(
     GET_DEPARTMENTS,
@@ -96,21 +95,6 @@ export const DepartmentsPage = () => {
     },
   });
 
-  const [createEntry] = useMutation<
-    CreateDepartmentOutput,
-    CreateDepartmentInput
-  >(CREATE_DEPARTMENT, {
-    onError: (err) => {
-      const response = err.graphQLErrors[0].extensions.response as {
-        message?: string[];
-      };
-
-      setToastError(
-        (response?.message && response.message[0]) || "Something went wrong",
-      );
-    },
-  });
-
   useEffect(() => {
     if (active !== "-1") {
       navigate(active);
@@ -140,17 +124,6 @@ export const DepartmentsPage = () => {
     });
   };
 
-  const handleEntryCreate = (data: Department) => {
-    createEntry({
-      variables: {
-        department: {
-          name: data.name,
-        },
-      },
-      update: createDepartmentCacheUpdate(),
-    });
-  };
-
   const handleInfoFormSubmit = (data: Department) => {
     updateEntry({
       variables: {
@@ -165,10 +138,12 @@ export const DepartmentsPage = () => {
 
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -192,7 +167,7 @@ export const DepartmentsPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

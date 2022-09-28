@@ -26,6 +26,10 @@ export interface CvFullInfoData {
   user: User;
 }
 
+export interface CvsNamesData {
+  cvs: Cv[];
+}
+
 export interface CvNameData {
   cv: {
     name: string;

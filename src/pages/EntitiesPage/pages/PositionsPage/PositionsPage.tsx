@@ -33,6 +33,8 @@ import {
   GET_POSITIONS,
   UPDATE_POSITION,
 } from "@graphql/Entity/Position/Position.queries";
+import { CreatePositionWrapper } from "@components/CreateEntitie/components/CreatePositionWrapper";
+import { useModal } from "@hooks/useModal";
 
 export const PositionsPage = () => {
   const { entryId } = useParams();
@@ -41,6 +43,7 @@ export const PositionsPage = () => {
   const [searchParams] = useSearchParams();
   const { setToastError } = useErrorToast();
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreatePositionWrapper);
 
   const { data, loading, refetch } = useQuery<GetPositionsData>(GET_POSITIONS, {
     variables: { id: entryId },
@@ -78,21 +81,6 @@ export const PositionsPage = () => {
       }
     },
   });
-
-  const [createEntry] = useMutation<CreatePositionOutput, CreatePositionInput>(
-    CREATE_POSITION,
-    {
-      onError: (err) => {
-        const response = err.graphQLErrors[0].extensions.response as {
-          message?: string[];
-        };
-
-        setToastError(
-          (response?.message && response.message[0]) || "Something went wrong",
-        );
-      },
-    },
-  );
 
   const [updateEntry] = useMutation<UpdatePositionResult, UpdatePositionInput>(
     UPDATE_POSITION,
@@ -138,17 +126,6 @@ export const PositionsPage = () => {
     });
   };
 
-  const handleEntryCreate = (data: Position) => {
-    createEntry({
-      variables: {
-        position: {
-          name: data.name,
-        },
-      },
-      update: createPositionCacheUpdate(),
-    });
-  };
-
   const handleInfoFormSubmit = (data: Department) => {
     updateEntry({
       variables: {
@@ -163,10 +140,12 @@ export const PositionsPage = () => {
 
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -190,7 +169,7 @@ export const PositionsPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

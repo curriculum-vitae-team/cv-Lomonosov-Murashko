@@ -22,6 +22,10 @@ export const GET_USERS = gql`
         name
         id
       }
+      cvs {
+        name
+        id
+      }
       department {
         name
         id
@@ -113,6 +117,10 @@ export const UPDATE_USER = gql`
     updateUser(id: $id, user: $user) {
       id
       email
+      cvs {
+        name
+        id
+      }
       position_name
       position {
         name
