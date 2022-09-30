@@ -47,7 +47,7 @@ export const CvInfo = memo(({ cv, onSubmit, onCancel }: CvInfoProps) => {
   };
   const hidePreview = () => {
     setIsPatternsVisible(false);
-  };
+  };  
 
   return (
     <>
@@ -66,8 +66,7 @@ export const CvInfo = memo(({ cv, onSubmit, onCancel }: CvInfoProps) => {
             name="description"
           />
         </InfoFormWrapper>
-        {/* TODO: delete cv.projects */}
-        {projects && (
+        {projects && cv.projects && (
           <ProjectAutocomplete
             existingProjects={cv.projects}
             projects={projects}
