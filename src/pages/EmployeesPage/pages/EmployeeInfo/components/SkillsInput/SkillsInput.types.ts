@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client";
-import { CreateUserInput } from "@src/graphql/User/User.interface";
-import { SkillMastery } from "@src/interfaces/skill.interface";
+import { CreateUserInput } from "@graphql/User/User.interface";
+import { SkillMastery } from "@interfaces/skill.interface";
 import { Control } from "react-hook-form";
 
 export type SkillsInputProps = {

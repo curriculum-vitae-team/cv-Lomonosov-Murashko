@@ -27,6 +27,11 @@ export const styles = StyleSheet.create({
   projects: {
     marginLeft: 25,
   },
+  positionNames: {
+    width: "302.5px",
+    margin: "10px -30px",
+    fontSize: "10px",
+  },
   project: {
     display: "flex",
     justifyContent: "space-between",

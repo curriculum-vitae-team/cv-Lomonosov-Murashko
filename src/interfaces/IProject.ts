@@ -1,4 +1,4 @@
-import { Skill } from "./skill.interface";
+import { SkillMastery } from "./skill.interface";
 
 export interface IProjectCore {
   id: string;
@@ -11,7 +11,7 @@ export interface IProjectCore {
 export interface IProject extends IProjectCore {
   domain: string;
   description: string;
-  techStack: Skill[]; // TODO: replace with entities
+  techStack: SkillMastery[];
   teamSize: number;
 }
 

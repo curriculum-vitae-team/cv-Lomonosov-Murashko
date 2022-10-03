@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
@@ -9,12 +9,15 @@ import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
 import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
-import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
+import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
+import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
+import { SkillsInput } from "@pages/EmployeesPage/pages/EmployeeInfo/components/SkillsInput";
 
 export const ProjectInfoForm = memo(
   ({ onSubmit, data }: ProjectInfoFormProps) => {
+    const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { control, handleSubmit, reset } = useForm<IProject>({
+    const { control, handleSubmit, reset, getValues } = useForm<IProject>({
       mode: "all",
       defaultValues: {
         name: "",
@@ -92,7 +95,13 @@ export const ProjectInfoForm = memo(
             control={control}
             name="description"
           />
-          {/* TODO: add skills here */}
+          {/* <DynamicFieldsetGroupWrapper>
+            <SkillsInput
+              control={control}
+              skillsInForm={getValues().techStack}
+              onError={(error) => setError(error.message)}
+            />
+          </DynamicFieldsetGroupWrapper> */}
         </InfoFormWrapper>
 
         <DialogActions>
