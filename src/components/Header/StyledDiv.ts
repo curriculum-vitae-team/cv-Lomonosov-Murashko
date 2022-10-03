@@ -10,6 +10,7 @@ export const StyledDiv = styled("div")({
   right: "1.5em",
   width: "24em",
   height: "15em",
+  padding: "1em",
   color: "#000",
   borderRadius: "10px",
   background: "#fff",

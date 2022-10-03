@@ -60,6 +60,7 @@ export const GET_USER_INFO = gql`
         id
       }
       profile {
+        id
         first_name
         last_name
         languages {
@@ -92,6 +93,20 @@ export const GET_USER_INFO = gql`
           language_name
           proficiency
         }
+      }
+    }
+  }
+`;
+
+export const GET_ACCOUNT_INFO = gql`
+  query GetAccountInfo($id: ID!) {
+    user(id: $id) {
+      id
+      email
+      profile {
+        id
+        full_name
+        avatar
       }
     }
   }

@@ -50,9 +50,8 @@ export const EmployeeCv = () => {
       }
 
       setActive("-1");
-      // setActive(cvId || "-1");
     }
-  }, [userData?.user.cvs]);
+  }, [userData?.user.cvs, cvId, navigate, searchParams, userData]);
 
   const [unbindCv] = useMutation<UnbindCvOutput, UnbindCvInput>(UNBIND_CV, {
     onError: (err) => {
