@@ -7,6 +7,14 @@ export type GetUserResult = {
   user: User;
 };
 
+export type GetAccountInfoResult = {
+  user: {
+    id: string;
+    email: string;
+    profile: Pick<User["profile"], "full_name" | "avatar" | "id">;
+  };
+};
+
 export interface GetUserFullnameResult {
   user: {
     id: string;
