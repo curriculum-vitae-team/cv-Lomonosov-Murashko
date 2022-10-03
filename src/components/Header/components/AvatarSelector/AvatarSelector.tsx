@@ -49,8 +49,6 @@ const AvatarSelector = () => {
 
         const base64 = await toBase64(file);
 
-        console.log(user?.profile.id);
-
         await uploadAvatar({
           variables: {
             id: user?.profile.id,
