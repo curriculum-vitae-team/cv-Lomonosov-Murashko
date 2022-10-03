@@ -22,18 +22,20 @@ import {
 } from "./AvatarSelector.styles";
 
 const AvatarSelector = () => {
-  const { user } = useContext(UserProfileContext);
+  const { user, updateProfile } = useContext(UserProfileContext);
   const [uploadAvatar] = useMutation<UploadAvatarResult, UploadAvatarInput>(
     UPLOAD_AVATAR,
     {
-      refetchQueries: [
-        { query: GET_ACCOUNT_INFO, variables: { id: user?.id } },
-      ],
+      onCompleted: (data) => {
+        updateProfile("avatar", data.uploadAvatar);
+      },
     },
   );
 
   const [deleteAvatar] = useMutation<void, DeleteAvatarInput>(DELETE_AVATAR, {
-    refetchQueries: [{ query: GET_ACCOUNT_INFO, variables: { id: user?.id } }],
+    onCompleted: (data) => {
+      updateProfile("avatar", "");
+    },
   });
 
   const [isLoading, setIsLoading] = useState(false);

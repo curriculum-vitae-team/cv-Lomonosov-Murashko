@@ -9,19 +9,25 @@ import { GET_ACCOUNT_INFO } from "@src/graphql/User/User.queries";
 
 import { GetAccountInfoResult } from "@src/graphql/User/User.interface";
 import { Avatar } from "@mui/material";
+import { UserProfileContextType } from "./UserProfile.types";
 
-export const UserProfileContext = createContext<
-  { user: null } | GetAccountInfoResult
->({ user: null });
+export const UserProfileContext = createContext<UserProfileContextType>({
+  user: null,
+} as UserProfileContextType);
 
 const UserProfile = () => {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
   const { user$ } = authStore;
 
+  const [user, setUser] = useState<GetAccountInfoResult["user"] | null>(null);
+
   const { data: accountInfoData, loading } = useQuery<GetAccountInfoResult>(
     GET_ACCOUNT_INFO,
     {
       variables: { id: user$?.id },
+      onCompleted: (data) => {
+        setUser(data.user);
+      },
     },
   );
 
@@ -33,16 +39,25 @@ const UserProfile = () => {
     setIsProfileOpen(true);
   };
 
+  const handleProfileUpdate = (
+    field: "full_name" | "avatar" | "id",
+    value: string,
+  ) => {
+    if (user) {
+      setUser({ ...user, profile: { ...user.profile, [field]: value } });
+    }
+  };
+
   return (
     <UserProfileContext.Provider
-      value={{ user: accountInfoData ? accountInfoData.user : null }}
+      value={{ user, updateProfile: handleProfileUpdate }}
     >
       <StyledGrid>
         <StyledBox onClick={handleProfileCardOpen}>
           {
             <Avatar
-              src={accountInfoData?.user.profile.avatar}
-              alt={accountInfoData?.user.profile.full_name}
+              src={user?.profile.avatar}
+              alt={user?.profile.full_name}
               sx={{
                 width: "1.6rem",
                 height: "1.6rem",
