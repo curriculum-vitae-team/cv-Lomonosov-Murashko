@@ -62,11 +62,11 @@ export const LanguagesInput = ({
 
     return languagesData.languages.reduce((acc, cur) => {
       if (!languagesAlreadyTaken.has(cur.name)) {
-        acc.push({ entryName: cur.name });
+        acc.push({ entryName: cur.name, id: cur.id });
       }
 
       return acc;
-    }, [] as { entryName: string }[]);
+    }, [] as { entryName: string; id: string }[]);
   }, [languagesData, languagesFields]);
 
   const handleNewLanguage = useCallback(
@@ -88,15 +88,18 @@ export const LanguagesInput = ({
         <DynamicFieldset
           onNew={handleNewLanguage}
           inputEntries={availableLanguages}
+          fieldForValue="entryName"
         >
           {languagesFields.map((field, index) => (
             <DynamicArrayField
               key={field.id}
               entryName={field.language_name}
-              possibleValues={Proficiency}
+              possibleValuesHandler={{
+                possibleValues: Proficiency,
+                onChange: handleLanguageChange,
+                value: field.proficiency,
+              }}
               onDelete={handleLanguageDelete}
-              onChange={handleLanguageChange}
-              value={field.proficiency}
             />
           ))}
         </DynamicFieldset>

@@ -10,11 +10,12 @@ import { useNavigate } from "react-router";
 import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
 import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
+import { SkillsInput } from "../SkillsInput";
 
 export const ProjectInfoForm = memo(
-  ({ onSubmit, data }: ProjectInfoFormProps) => {
+  ({ onSubmit, onError, data }: ProjectInfoFormProps) => {
     const navigate = useNavigate();
-    const { control, handleSubmit, reset } = useForm<IProject>({
+    const { control, handleSubmit, reset, getValues } = useForm<IProject>({
       mode: "all",
       defaultValues: {
         name: "",
@@ -24,6 +25,7 @@ export const ProjectInfoForm = memo(
         domain: "",
         description: "",
         teamSize: 0,
+        techStack: [],
       },
     });
 
@@ -92,7 +94,13 @@ export const ProjectInfoForm = memo(
             control={control}
             name="description"
           />
-          {/* TODO: add skills here */}
+        </InfoFormWrapper>
+        <InfoFormWrapper>
+          <SkillsInput
+            control={control}
+            skillsInForm={getValues().techStack}
+            onError={onError}
+          />
         </InfoFormWrapper>
 
         <DialogActions>

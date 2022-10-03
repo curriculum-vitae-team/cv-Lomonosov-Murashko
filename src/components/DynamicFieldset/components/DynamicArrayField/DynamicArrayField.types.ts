@@ -1,8 +1,11 @@
-import { UseFormRegisterReturn } from "react-hook-form";
-import { GenericEntry } from "../../DynamicFieldset.types";
-
 export type DynamicArrayFieldProps<T extends string> = {
-  onChange: (name: string, newValue: string) => void;
   onDelete: (name: T) => void;
+  entryName: T;
+  possibleValuesHandler?: PossibleValuesHandler;
+};
+
+type PossibleValuesHandler = {
+  possibleValues: Record<string, string>;
+  onChange: (name: string, newValue: string) => void;
   value: string;
-} & GenericEntry<T>;
+};

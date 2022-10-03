@@ -5,7 +5,6 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -14,13 +13,13 @@ import { DynamicArrayFieldProps } from "./DynamicArrayField.types";
 
 export const DynamicArrayField = <T extends string>({
   entryName,
-  possibleValues,
+  possibleValuesHandler,
   onDelete,
-  onChange,
-  value,
 }: DynamicArrayFieldProps<T>) => {
   const handleChange = (e: SelectChangeEvent) => {
-    onChange(entryName, e.target.value);
+    if (possibleValuesHandler) {
+      possibleValuesHandler.onChange(entryName, e.target.value);
+    }
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,29 +34,33 @@ export const DynamicArrayField = <T extends string>({
           <Close />
         </IconButton>
       </StyledCard>
-      <Select
-        onChange={handleChange}
-        displayEmpty={true}
-        defaultValue={value}
-        variant="outlined"
-        sx={{
-          "& .MuiOutlinedInput-notchedOutline": {
-            top: "0",
-            bottom: "0",
-          },
-        }}
-      >
-        {possibleValues &&
-          Object.entries(possibleValues).map((kv, i) => {
-            const displayedValue = kv[1] as string;
+      {possibleValuesHandler && (
+        <Select
+          onChange={handleChange}
+          displayEmpty={true}
+          defaultValue={possibleValuesHandler.value}
+          variant="outlined"
+          sx={{
+            "& .MuiOutlinedInput-notchedOutline": {
+              top: "0",
+              bottom: "0",
+            },
+          }}
+        >
+          {possibleValuesHandler.possibleValues &&
+            Object.entries(possibleValuesHandler.possibleValues).map(
+              (kv, i) => {
+                const displayedValue = kv[1] as string;
 
-            return (
-              <MenuItem key={displayedValue} value={displayedValue}>
-                {displayedValue}
-              </MenuItem>
-            );
-          })}
-      </Select>
+                return (
+                  <MenuItem key={displayedValue} value={displayedValue}>
+                    {displayedValue}
+                  </MenuItem>
+                );
+              },
+            )}
+        </Select>
+      )}
     </Stack>
   );
 };

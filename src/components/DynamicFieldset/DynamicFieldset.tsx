@@ -6,6 +6,7 @@ export const DynamicFieldset = <T extends string>({
   onNew,
   inputEntries,
   children,
+  fieldForValue,
 }: DynamicFieldsetProps<T>) => {
   const handleSelectChange = (e: SelectChangeEvent<unknown>) => {
     onNew(e.target.value as T);
@@ -25,7 +26,10 @@ export const DynamicFieldset = <T extends string>({
         sx={{ width: "8em" }}
       >
         {inputEntries.map((inputEntry) => (
-          <MenuItem value={inputEntry.entryName} key={inputEntry.entryName}>
+          <MenuItem
+            value={inputEntry[fieldForValue]}
+            key={inputEntry[fieldForValue]}
+          >
             {inputEntry.entryName}
           </MenuItem>
         ))}

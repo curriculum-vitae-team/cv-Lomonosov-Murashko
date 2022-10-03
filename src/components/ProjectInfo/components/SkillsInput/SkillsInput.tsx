@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Stack, Typography } from "@mui/material";
+import { SelectChangeEvent, Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
 import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
 import { Mastery } from "@src/constants/skill-mastery.constants";
@@ -21,7 +21,7 @@ export const SkillsInput = ({
     update: updateSkill,
   } = useFieldArray({
     control,
-    name: "user.profile.skills",
+    name: "techStack",
   });
 
   const { data: skillsData } = useQuery<GetSkillsData>(GET_SKILLS, {
@@ -29,32 +29,13 @@ export const SkillsInput = ({
   });
 
   const handleSkillDelete = (name: string) => {
-    removeSkill(skillsInForm.findIndex((skill) => skill.skill_name === name));
-  };
-
-  const handleSkillChange = (name: string, newValue: string) => {
-    if (isMastery(newValue)) {
-      updateSkill(
-        skillsInForm.findIndex((skill) => skill.skill_name === name),
-        { skill_name: name, mastery: newValue },
-      );
-    }
-
-    function isMastery(value: string): value is Mastery {
-      if (Object.values(Mastery).includes(value as Mastery)) {
-        return true;
-      }
-
-      return false;
-    }
+    removeSkill(skillsInForm.findIndex((skill) => skill.name === name));
   };
 
   const availableSkills = useMemo(() => {
     if (!skillsData) return [];
 
-    const skillsAlreadyTaken = new Set(
-      skillsFields.map(({ skill_name }) => skill_name),
-    );
+    const skillsAlreadyTaken = new Set(skillsFields.map(({ name }) => name));
 
     return skillsData.skills.reduce((acc, cur) => {
       if (!skillsAlreadyTaken.has(cur.name)) {
@@ -66,10 +47,15 @@ export const SkillsInput = ({
   }, [skillsData, skillsFields]);
 
   const handleNewSkill = useCallback(
-    (entryName: string) => {
-      appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
+    (id: string) => {
+      appendSkill({
+        id,
+        name:
+          skillsData?.skills.find((skill) => skill.id === id)?.name ||
+          "unknown",
+      });
     },
-    [appendSkill],
+    [appendSkill, skillsData?.skills],
   );
 
   return (
@@ -81,17 +67,12 @@ export const SkillsInput = ({
         <DynamicFieldset
           onNew={handleNewSkill}
           inputEntries={availableSkills}
-          fieldForValue="entryName"
+          fieldForValue="id"
         >
           {skillsFields.map((field, index) => (
             <DynamicArrayField
               key={field.id}
-              entryName={field.skill_name}
-              possibleValuesHandler={{
-                possibleValues: Mastery,
-                onChange: handleSkillChange,
-                value: field.mastery,
-              }}
+              entryName={field.name}
               onDelete={handleSkillDelete}
             />
           ))}
