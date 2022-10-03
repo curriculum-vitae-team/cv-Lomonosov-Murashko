@@ -91,7 +91,9 @@ const AvatarSelector = () => {
 
   return (
     <AvatarWrapper>
-      <PositionedAvatarDeleteIcon onClick={handleDelete} />
+      {user?.profile.avatar && (
+        <PositionedAvatarDeleteIcon onClick={handleDelete} />
+      )}
       <label htmlFor="avatar-upload">
         <input
           type="file"
