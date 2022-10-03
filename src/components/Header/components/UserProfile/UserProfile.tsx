@@ -10,14 +10,17 @@ import { GET_ACCOUNT_INFO } from "@src/graphql/User/User.queries";
 import { GetAccountInfoResult } from "@src/graphql/User/User.interface";
 import { Avatar } from "@mui/material";
 import { UserProfileContextType } from "./UserProfile.types";
+import { useToggle } from "./UserProfile.hooks";
 
 export const UserProfileContext = createContext<UserProfileContextType>({
   user: null,
 } as UserProfileContextType);
 
 const UserProfile = () => {
-  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
   const { user$ } = authStore;
+
+  const [isProfileCardOpen, openProfileCard, closeProfileCard] =
+    useToggle(false);
 
   const [user, setUser] = useState<GetAccountInfoResult["user"] | null>(null);
 
@@ -30,14 +33,6 @@ const UserProfile = () => {
       },
     },
   );
-
-  const handleProfileCardClose = () => {
-    setIsProfileOpen(false);
-  };
-
-  const handleProfileCardOpen = () => {
-    setIsProfileOpen(true);
-  };
 
   const handleProfileUpdate = (
     field: "full_name" | "avatar" | "id",
@@ -53,7 +48,7 @@ const UserProfile = () => {
       value={{ user, updateProfile: handleProfileUpdate }}
     >
       <StyledGrid>
-        <StyledBox onClick={handleProfileCardOpen}>
+        <StyledBox onClick={openProfileCard}>
           {
             <Avatar
               src={user?.profile.avatar}
@@ -69,8 +64,8 @@ const UserProfile = () => {
           </StyledTypography>
         </StyledBox>
         <LanguageSelect />
-        {isProfileOpen && (
-          <UserProfileCardWithOverlay onClose={handleProfileCardClose} />
+        {isProfileCardOpen && (
+          <UserProfileCardWithOverlay onClose={closeProfileCard} />
         )}
       </StyledGrid>
     </UserProfileContext.Provider>
