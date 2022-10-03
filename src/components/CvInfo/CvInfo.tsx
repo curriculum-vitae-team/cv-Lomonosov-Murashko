@@ -13,9 +13,10 @@ import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { useQuery } from "@apollo/client";
 import { ProjectsData } from "@graphql/Project/Project.interface";
 import { GET_PROJECTS } from "@graphql/Project/Project.queries";
+import { useToggle } from "@src/hooks/useToggle";
 
 export const CvInfo = memo(({ cv, onSubmit, onCancel }: CvInfoProps) => {
-  const [isPatternsVisible, setIsPatternsVisible] = useState(false);
+  const [isPatternsVisible, showPreview, hidePreview] = useToggle(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,13 +42,6 @@ export const CvInfo = memo(({ cv, onSubmit, onCancel }: CvInfoProps) => {
 
     reset({ name, description, projectsIds });
   }, [cv, reset]);
-
-  const showPreview = () => {
-    setIsPatternsVisible(true);
-  };
-  const hidePreview = () => {
-    setIsPatternsVisible(false);
-  };
 
   return (
     <>

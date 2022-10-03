@@ -50,7 +50,6 @@ export const EmployeeCv = () => {
       }
 
       setActive("-1");
-      // setActive(cvId || "-1");
     }
   }, [userData?.user.cvs, cvId, navigate, searchParams, userData]);
 
