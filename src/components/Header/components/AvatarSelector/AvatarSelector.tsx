@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { CircularProgress } from "@mui/material";
+import { Avatar, CircularProgress } from "@mui/material";
 import { useErrorToast } from "@src/context/ErrorToastStore/ErrorToastStore";
 import {
   DeleteAvatarInput,
@@ -16,7 +16,6 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { UserProfileContext } from "../UserProfile/UserProfile";
 import {
-  Avatar,
   AvatarWrapper,
   PositionedAvatarDeleteIcon,
   StyledAccountCircleIcon,
@@ -103,13 +102,11 @@ const AvatarSelector = () => {
           onChange={handleChange}
           disabled={isLoading}
         />
-        {user?.profile.avatar ? (
-          <>
-            <Avatar backgroundUrl={user?.profile.avatar} />
-          </>
-        ) : (
-          <StyledAccountCircleIcon />
-        )}
+        <Avatar
+          alt={user?.profile.full_name}
+          src={user?.profile.avatar}
+          sx={{ cursor: "pointer" }}
+        />
       </label>
     </AvatarWrapper>
   );

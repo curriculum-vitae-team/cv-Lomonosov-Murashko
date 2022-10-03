@@ -4,11 +4,11 @@ import { UserProfileCardWithOverlay } from "../UserProfileCard";
 import { observer } from "mobx-react-lite";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
 import { LanguageSelect } from "../LanguageSelect";
-import { Avatar } from "../Avatar";
 import { useQuery } from "@apollo/client";
 import { GET_ACCOUNT_INFO } from "@src/graphql/User/User.queries";
 
 import { GetAccountInfoResult } from "@src/graphql/User/User.interface";
+import { Avatar } from "@mui/material";
 
 export const UserProfileContext = createContext<
   { user: null } | GetAccountInfoResult
@@ -39,7 +39,16 @@ const UserProfile = () => {
     >
       <StyledGrid>
         <StyledBox onClick={handleProfileCardOpen}>
-          {<Avatar url={accountInfoData?.user.profile.avatar || ""} />}
+          {
+            <Avatar
+              src={accountInfoData?.user.profile.avatar}
+              alt={accountInfoData?.user.profile.full_name}
+              sx={{
+                width: "1.6rem",
+                height: "1.6rem",
+              }}
+            />
+          }
           <StyledTypography sx={{ marginLeft: "0.5em" }}>
             {user$?.profile?.full_name || user$?.email}
           </StyledTypography>
