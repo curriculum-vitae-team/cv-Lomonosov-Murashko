@@ -97,6 +97,7 @@ const AvatarSelector = () => {
       <label htmlFor="avatar-upload">
         <input
           type="file"
+          accept="image/*"
           id="avatar-upload"
           hidden={true}
           onChange={handleChange}
