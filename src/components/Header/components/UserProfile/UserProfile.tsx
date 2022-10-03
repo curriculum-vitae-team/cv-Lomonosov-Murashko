@@ -10,7 +10,7 @@ import { GET_ACCOUNT_INFO } from "@src/graphql/User/User.queries";
 import { GetAccountInfoResult } from "@src/graphql/User/User.interface";
 import { Avatar } from "@mui/material";
 import { UserProfileContextType } from "./UserProfile.types";
-import { useToggle } from "./UserProfile.hooks";
+import { useToggle } from "../../../../hooks/useToggle";
 
 export const UserProfileContext = createContext<UserProfileContextType>({
   user: null,
