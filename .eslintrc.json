@@ -13,13 +13,14 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "plugin:react-hooks/recommended"
       ],
 
       "parserOptions": {

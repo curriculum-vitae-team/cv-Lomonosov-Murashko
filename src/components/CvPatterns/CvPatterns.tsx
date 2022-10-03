@@ -1,29 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { withOverlay } from "@hoc/withOverlay";
 import { StyledDiv, StyledPattern, Img } from "./CvPatterns.styles";
 import { PdfWrapperWithOverlay } from "@components/PdfWrapper/PdfWrapper";
 import pattern1 from "@assets/images/pattern1.png";
 import pattern2 from "@assets/images/pattern2.png";
-import { PDFVariants } from "@constants/pdfVariants";
+import { usePdf } from "./CvPatterns.hooks";
 
 const CvPatterns = () => {
-  const [isPdfVisible, setIsPdfVisible] = useState(false);
-  const [choosenPattern, setChoosenPattern] = useState("");
-  const patternRef = useRef<HTMLDivElement>(null);
-  const onPatternsClick = (e: React.MouseEvent<HTMLElement>) => {
-    patternRef?.current?.classList.add("hidden");
-    e.stopPropagation();
-  };
-
-  // dont like it
-  const showPdf = (e: React.SyntheticEvent) => {
-    if (e.currentTarget.classList.value.includes("variant-1")) {
-      setChoosenPattern(PDFVariants.VARIANT_1);
-    } else {
-      setChoosenPattern(PDFVariants.VARIANT_2);
-    }
-    setIsPdfVisible(true);
-  };
+  const { isPdfVisible, choosenPattern, patternRef, onPatternsClick, showPdf } =
+    usePdf();
 
   return (
     <>
