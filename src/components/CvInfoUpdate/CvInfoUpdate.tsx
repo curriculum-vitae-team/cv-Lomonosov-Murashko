@@ -16,7 +16,7 @@ import { CvInfo } from "@components/CvInfo";
 import { cvCacheUpdate } from "@graphql/Cv/Cv.cache";
 
 export const CvInfoUpdate = memo(() => {
-  const { cvId } = useParams();
+  const { cvId, employeeId } = useParams();
   const [error, setError] = useState("");
   const { pathname } = useLocation();
   const [cvInput, setCvInput] = useState<CvInput | null>(null);
@@ -78,6 +78,7 @@ export const CvInfoUpdate = memo(() => {
             name,
             description,
             projectsIds,
+            userId: cvInfoData?.cv.user?.id || "",
             skills: [],
             languages: [],
             is_template: false,

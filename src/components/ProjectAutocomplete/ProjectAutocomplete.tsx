@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { Project } from "@interfaces/project.interface";
 import { Controller, FieldValues } from "react-hook-form";
@@ -5,7 +6,6 @@ import { ErrorToast } from "../ErrorToast";
 import { Loader } from "../Loader";
 import { AutocompleteWrapper } from "./ProjectAutocomplete.styles";
 import { ProjectAutocompleteProps } from "./ProjectAutocomplete.types";
-import React from "react";
 
 export const ProjectAutocomplete = <T extends FieldValues>({
   control,
@@ -16,6 +16,12 @@ export const ProjectAutocomplete = <T extends FieldValues>({
   isLoading,
   defaultValue,
 }: ProjectAutocompleteProps<T>) => {
+  const [values, setValues] = useState<Project[]>(existingProjects);
+
+  useEffect(() => {
+    setValues(existingProjects);
+  }, [existingProjects]);
+
   return (
     <>
       {isLoading ? (
@@ -27,21 +33,21 @@ export const ProjectAutocomplete = <T extends FieldValues>({
           <Controller
             name={name}
             control={control}
-            defaultValue={defaultValue}
             render={({ field: { ref, onChange, ...field } }) => {
               return (
                 <Autocomplete
                   multiple
                   id="tags-projects"
-                  defaultValue={[...(existingProjects || defaultValue)]}
+                  value={values}
                   options={projects.projects}
                   getOptionLabel={(project) => project.name}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }
-                  onChange={(e: React.SyntheticEvent, data: Project[]) =>
-                    onChange(data.map((project: Project) => project.id))
-                  }
+                  onChange={(e: React.SyntheticEvent, data: Project[]) => {
+                    setValues(data);
+                    onChange(data.map((project: Project) => project.id));
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}

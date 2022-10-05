@@ -9,14 +9,15 @@ import { Button } from "@mui/material";
 export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
   const { control, handleSubmit, reset } = useForm<SkillInput>({
     defaultValues: {
-      name: input.name,
+      name: input?.name,
     },
   });
 
   useEffect(() => {
-    const { name } = input;
-
-    reset({ name });
+    if (input) {
+      const { name } = input;
+      reset({ name });
+    }
   }, [input, reset]);
 
   return (
@@ -31,7 +32,7 @@ export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
           />
         </InfoFormWrapper>
 
-        <StyledDialogActions>
+        <StyledDialogActions sx={{ marginRight: "1em" }}>
           <Button type="submit" value="Save" variant="contained">
             Save
           </Button>

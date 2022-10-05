@@ -14,14 +14,11 @@ import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import {
-  CREATE_SKILL,
   DELETE_SKILL,
   GET_SKILLS,
   UPDATE_SKILL,
 } from "@graphql/Entity/Skill/Skill.queries";
 import {
-  CreateSkillInput,
-  CreateSkillOutput,
   DeleteSkillOutput,
   GetSkillsData,
   UpdateSkillInput,
@@ -29,10 +26,11 @@ import {
 } from "@graphql/Entity/Skill/Skill.interface";
 import { Skill } from "@interfaces/skill.interface";
 import {
-  createSkillCacheUpdate,
   deleteSkillCacheUpdate,
   skillCacheUpdate,
 } from "@graphql/Entity/Skill/Skill.cache";
+import { useModal } from "@hooks/useModal";
+import { CreateSkillWrapper } from "@components/CreateEntitie/components/CreateSkillsWrapper";
 
 export const SkillsPage = () => {
   const { entryId } = useParams();
@@ -41,6 +39,7 @@ export const SkillsPage = () => {
   const [searchParams] = useSearchParams();
   const { setToastError } = useErrorToast();
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreateSkillWrapper);
 
   const { data, loading, refetch } = useQuery<GetSkillsData>(GET_SKILLS, {
     variables: { id: entryId },
@@ -75,21 +74,6 @@ export const SkillsPage = () => {
             (response.message && response.message[0]) || "Something went wrong",
           );
         }
-      },
-    },
-  );
-
-  const [createEntry] = useMutation<CreateSkillOutput, CreateSkillInput>(
-    CREATE_SKILL,
-    {
-      onError: (err) => {
-        const response = err.graphQLErrors[0].extensions.response as {
-          message?: string[];
-        };
-
-        setToastError(
-          (response?.message && response.message[0]) || "Something went wrong",
-        );
       },
     },
   );
@@ -150,23 +134,14 @@ export const SkillsPage = () => {
     });
   };
 
-  const handleEntryCreate = (data: Skill) => {
-    createEntry({
-      variables: {
-        skill: {
-          name: data.name,
-        },
-      },
-      update: createSkillCacheUpdate(),
-    });
-  };
-
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -190,7 +165,7 @@ export const SkillsPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

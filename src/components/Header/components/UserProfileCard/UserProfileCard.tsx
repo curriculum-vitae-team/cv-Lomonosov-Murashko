@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { StyledTypographyEmail, StyledButton } from "./UserProfileCard.styles";
 import { StyledDiv } from "../../StyledDiv";
 import { authStore } from "@src/stores/AuthStore/AuthStore";
-import { AvatarSelector } from "@src/components/Header/components/AvatarSelector";
+import { AvatarSelector } from "@components/Header/components/AvatarSelector";
 
 function UserProfileCard() {
   const { user$, logout } = authStore;

@@ -3,7 +3,7 @@ import { SubmitHandler } from "react-hook-form";
 export type InfoFormProps = {
   onSubmit: SubmitHandler<LanguageInput>;
   onCancel: () => void;
-  input: LanguageInput;
+  input?: LanguageInput;
 };
 
 export type LanguageInput = {
