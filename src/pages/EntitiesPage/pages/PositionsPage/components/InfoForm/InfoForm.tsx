@@ -2,22 +2,22 @@ import { StyledDialogActions } from "@components/styled/StyledDialogActions";
 import { Fieldset } from "@components/Fieldset";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { useForm } from "react-hook-form";
-import { InfoFormProps, LanguageInput } from "./InfoForm.types";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
+import { Position } from "@interfaces/position.interface";
+import { InfoFormProps } from "./InfoForm.types";
 
 export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
-  const { control, handleSubmit, reset } = useForm<LanguageInput>({
+  const { control, handleSubmit, reset } = useForm<Position>({
     defaultValues: {
       name: input?.name,
-      iso2: input?.iso2,
     },
   });
 
   useEffect(() => {
     if (input) {
-      const { name, iso2 } = input;
-      reset({ name, iso2 });
+      const { name } = input;
+      reset({ name });
     }
   }, [input, reset]);
 
@@ -30,12 +30,6 @@ export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
             required="Please, specify the field"
             label="Name"
             name="name"
-          />
-          <Fieldset
-            control={control}
-            required="Please, specify the field"
-            label="iso2"
-            name="iso2"
           />
         </InfoFormWrapper>
 

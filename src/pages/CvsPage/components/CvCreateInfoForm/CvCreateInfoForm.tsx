@@ -96,8 +96,6 @@ export const CvCreateInfoForm = ({
           />
           <Typography sx={{ opacity: "0.7" }}>Use as a template</Typography>
         </FormContolLabelWrapper>
-
-        {/* TODO: Add skills, projectsIds and languages here */}
       </InfoFormWrapper>
       <DialogActions>
         <SaveButtonWithAdminAccess />

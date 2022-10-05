@@ -1,5 +1,4 @@
 import {
-  CREATE_LANGUAGE,
   DELETE_LANGUAGE,
   GET_LANGUAGES,
   UPDATE_LANGUAGE,
@@ -18,8 +17,6 @@ import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
 import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import {
-  CreateLanguageInput,
-  CreateLanguageOutput,
   DeleteLanguageOutput,
   GetLanguagesData,
   Language,
@@ -28,23 +25,20 @@ import {
 } from "@graphql/Entity/Language/Language.interface";
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
 import {
-  createLanguageCacheUpdate,
   deleteLanguageUpdateCache,
   languageCacheUpdate,
 } from "@graphql/Entity/Language/Language.cache";
+import { CreateLanguageWrapper } from "@components/CreateEntitie/components/CreateLanguageWrapper";
+import { useModal } from "@hooks/useModal";
 
 export const LanguagesPage = () => {
   const { entryId } = useParams();
-
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const { setToastError } = useErrorToast();
-
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreateLanguageWrapper);
 
   const { data, loading, refetch } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
     variables: { id: entryId },
@@ -82,21 +76,6 @@ export const LanguagesPage = () => {
       }
     },
   });
-
-  const [createEntry] = useMutation<CreateLanguageOutput, CreateLanguageInput>(
-    CREATE_LANGUAGE,
-    {
-      onError: (err) => {
-        const response = err.graphQLErrors[0].extensions.response as {
-          message?: string[];
-        };
-
-        setToastError(
-          (response?.message && response.message[0]) || "Something went wrong",
-        );
-      },
-    },
-  );
 
   const [updateEntry] = useMutation<UpdateLanguageResult, UpdateLanguageInput>(
     UPDATE_LANGUAGE,
@@ -144,18 +123,6 @@ export const LanguagesPage = () => {
     });
   };
 
-  const handleEntryCreate = (data: Language) => {
-    createEntry({
-      variables: {
-        language: {
-          name: data.name,
-          iso2: data.iso2,
-        },
-      },
-      update: createLanguageCacheUpdate(),
-    });
-  };
-
   const handleInfoFormSubmit = (data: Language) => {
     updateEntry({
       variables: {
@@ -171,10 +138,12 @@ export const LanguagesPage = () => {
 
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -198,7 +167,7 @@ export const LanguagesPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

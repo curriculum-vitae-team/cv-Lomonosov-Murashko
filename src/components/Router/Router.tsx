@@ -20,7 +20,7 @@ import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
 import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
 import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { authFormsGuard, authGuard, roleGuard } from "@helpers/guard";
+import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
 import { DepartmentsPage } from "@pages/EntitiesPage/pages/DepartmentsPage";
 import { PositionsPage } from "@pages/EntitiesPage/pages/PositionsPage";
