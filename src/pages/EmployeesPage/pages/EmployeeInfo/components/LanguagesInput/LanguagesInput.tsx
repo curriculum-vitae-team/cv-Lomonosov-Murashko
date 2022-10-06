@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
-import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
 import { Proficiency } from "@src/constants/language-proficiency.constants";
+import { DynamicArrayFieldWithSelect } from "@src/components/DynamicFieldset/components/DynamicArrayFieldWithSelect";
 import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
 import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
 import { useCallback, useMemo } from "react";
@@ -91,14 +91,12 @@ export const LanguagesInput = ({
           fieldForValue="entryName"
         >
           {languagesFields.map((field, index) => (
-            <DynamicArrayField
+            <DynamicArrayFieldWithSelect
               key={field.id}
               entryName={field.language_name}
-              possibleValuesHandler={{
-                possibleValues: Proficiency,
-                onChange: handleLanguageChange,
-                value: field.proficiency,
-              }}
+              possibleValues={Proficiency}
+              onChange={handleLanguageChange}
+              value={field.proficiency}
               onDelete={handleLanguageDelete}
             />
           ))}

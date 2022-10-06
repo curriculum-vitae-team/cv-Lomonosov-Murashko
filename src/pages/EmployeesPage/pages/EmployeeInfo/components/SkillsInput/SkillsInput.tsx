@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
-import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
+import { DynamicArrayFieldWithSelect } from "@src/components/DynamicFieldset/components/DynamicArrayFieldWithSelect";
 import { Mastery } from "@src/constants/skill-mastery.constants";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
@@ -84,14 +84,12 @@ export const SkillsInput = ({
           fieldForValue="entryName"
         >
           {skillsFields.map((field, index) => (
-            <DynamicArrayField
+            <DynamicArrayFieldWithSelect
               key={field.id}
               entryName={field.skill_name}
-              possibleValuesHandler={{
-                possibleValues: Mastery,
-                onChange: handleSkillChange,
-                value: field.mastery,
-              }}
+              possibleValues={Mastery}
+              onChange={handleSkillChange}
+              value={field.mastery}
               onDelete={handleSkillDelete}
             />
           ))}
