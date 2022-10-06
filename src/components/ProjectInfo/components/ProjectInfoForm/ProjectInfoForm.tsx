@@ -96,11 +96,7 @@ export const ProjectInfoForm = memo(
           />
         </InfoFormWrapper>
         <InfoFormWrapper>
-          <SkillsInput
-            control={control}
-            skillsInForm={getValues().techStack}
-            onError={onError}
-          />
+          <SkillsInput control={control} onError={onError} />
         </InfoFormWrapper>
 
         <DialogActions>

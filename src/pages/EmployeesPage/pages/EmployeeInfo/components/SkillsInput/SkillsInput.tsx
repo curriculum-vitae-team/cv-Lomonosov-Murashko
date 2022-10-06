@@ -9,11 +9,7 @@ import { useCallback, useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { SkillsInputProps } from "./SkillsInput.types";
 
-export const SkillsInput = ({
-  onError,
-  control,
-  skillsInForm,
-}: SkillsInputProps) => {
+export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
   const {
     fields: skillsFields,
     append: appendSkill,
@@ -29,13 +25,13 @@ export const SkillsInput = ({
   });
 
   const handleSkillDelete = (name: string) => {
-    removeSkill(skillsInForm.findIndex((skill) => skill.skill_name === name));
+    removeSkill(skillsFields.findIndex((skill) => skill.skill_name === name));
   };
 
   const handleSkillChange = (name: string, newValue: string) => {
     if (isMastery(newValue)) {
       updateSkill(
-        skillsInForm.findIndex((skill) => skill.skill_name === name),
+        skillsFields.findIndex((skill) => skill.skill_name === name),
         { skill_name: name, mastery: newValue },
       );
     }

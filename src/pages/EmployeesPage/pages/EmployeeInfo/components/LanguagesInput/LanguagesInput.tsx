@@ -9,11 +9,7 @@ import { useCallback, useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { LanguagesInputProps } from "./LanguagesInput.types";
 
-export const LanguagesInput = ({
-  onError,
-  control,
-  languagesInForm,
-}: LanguagesInputProps) => {
+export const LanguagesInput = ({ onError, control }: LanguagesInputProps) => {
   const {
     fields: languagesFields,
     append: appendLanguage,
@@ -30,14 +26,14 @@ export const LanguagesInput = ({
 
   const handleLanguageDelete = (name: string) => {
     removeLanguage(
-      languagesInForm.findIndex((language) => language.language_name === name),
+      languagesFields.findIndex((language) => language.language_name === name),
     );
   };
 
   const handleLanguageChange = (name: string, newValue: string) => {
     if (isProficiency(newValue)) {
       updateLanguage(
-        languagesInForm.findIndex(
+        languagesFields.findIndex(
           (language) => language.language_name === name,
         ),
         { language_name: name, proficiency: newValue },

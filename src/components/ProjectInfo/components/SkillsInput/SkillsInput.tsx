@@ -1,19 +1,14 @@
 import { useQuery } from "@apollo/client";
-import { SelectChangeEvent, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
 import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
-import { Mastery } from "@src/constants/skill-mastery.constants";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { useCallback, useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { SkillsInputProps } from "./SkillsInput.types";
 
-export const SkillsInput = ({
-  onError,
-  control,
-  skillsInForm,
-}: SkillsInputProps) => {
+export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
   const {
     fields: skillsFields,
     append: appendSkill,
@@ -29,7 +24,7 @@ export const SkillsInput = ({
   });
 
   const handleSkillDelete = (name: string) => {
-    removeSkill(skillsInForm.findIndex((skill) => skill.name === name));
+    removeSkill(skillsFields.findIndex((skill) => skill.name === name));
   };
 
   const availableSkills = useMemo(() => {
