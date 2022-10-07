@@ -1,19 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
-import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
 import { Proficiency } from "@src/constants/language-proficiency.constants";
+import { DynamicArrayFieldWithSelect } from "@src/components/DynamicFieldset/components/DynamicArrayFieldWithSelect";
 import { GetLanguagesData } from "@src/graphql/Entity/Language/Language.interface";
 import { GET_LANGUAGES } from "@src/graphql/Entity/Language/Language.queries";
 import { useCallback, useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
 import { LanguagesInputProps } from "./LanguagesInput.types";
 
-export const LanguagesInput = ({
-  onError,
-  control,
-  languagesInForm,
-}: LanguagesInputProps) => {
+export const LanguagesInput = ({ onError, control }: LanguagesInputProps) => {
   const {
     fields: languagesFields,
     append: appendLanguage,
@@ -30,14 +26,14 @@ export const LanguagesInput = ({
 
   const handleLanguageDelete = (name: string) => {
     removeLanguage(
-      languagesInForm.findIndex((language) => language.language_name === name),
+      languagesFields.findIndex((language) => language.language_name === name),
     );
   };
 
   const handleLanguageChange = (name: string, newValue: string) => {
     if (isProficiency(newValue)) {
       updateLanguage(
-        languagesInForm.findIndex(
+        languagesFields.findIndex(
           (language) => language.language_name === name,
         ),
         { language_name: name, proficiency: newValue },
@@ -62,11 +58,11 @@ export const LanguagesInput = ({
 
     return languagesData.languages.reduce((acc, cur) => {
       if (!languagesAlreadyTaken.has(cur.name)) {
-        acc.push({ entryName: cur.name });
+        acc.push({ entryName: cur.name, id: cur.id });
       }
 
       return acc;
-    }, [] as { entryName: string }[]);
+    }, [] as { entryName: string; id: string }[]);
   }, [languagesData, languagesFields]);
 
   const handleNewLanguage = useCallback(
@@ -88,15 +84,16 @@ export const LanguagesInput = ({
         <DynamicFieldset
           onNew={handleNewLanguage}
           inputEntries={availableLanguages}
+          fieldForValue="entryName"
         >
           {languagesFields.map((field, index) => (
-            <DynamicArrayField
+            <DynamicArrayFieldWithSelect
               key={field.id}
               entryName={field.language_name}
               possibleValues={Proficiency}
-              onDelete={handleLanguageDelete}
               onChange={handleLanguageChange}
               value={field.proficiency}
+              onDelete={handleLanguageDelete}
             />
           ))}
         </DynamicFieldset>

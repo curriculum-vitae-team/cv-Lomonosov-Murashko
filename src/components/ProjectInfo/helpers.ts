@@ -12,5 +12,6 @@ export const resetProject = (project: Project) => {
     domain: project.domain || "",
     description: project.description || "",
     teamSize: project.team_size || 0,
+    techStack: project.tech_stack,
   };
 };

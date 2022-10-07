@@ -136,12 +136,10 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       <DynamicFieldsetGroupWrapper>
         <SkillsInput
           control={control}
-          skillsInForm={getValues().user?.profile.skills}
           onError={(error) => setError(error.message)}
         />
         <LanguagesInput
           control={control}
-          languagesInForm={getValues().user?.profile.languages}
           onError={(error) => setError(error.message)}
         />
       </DynamicFieldsetGroupWrapper>
