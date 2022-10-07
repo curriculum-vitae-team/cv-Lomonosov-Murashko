@@ -1,8 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Stack, Typography } from "@mui/material";
 import { DynamicFieldset } from "@src/components/DynamicFieldset";
-import { DynamicArrayFieldWithSelect } from "@src/components/DynamicFieldset/components/DynamicArrayFieldWithSelect";
-import { Mastery } from "@src/constants/skill-mastery.constants";
+import { DynamicArrayField } from "@src/components/DynamicFieldset/components/DynamicArrayField";
 import { GetSkillsData } from "@src/graphql/Entity/Skill/Skill.interface";
 import { GET_SKILLS } from "@src/graphql/Entity/Skill/Skill.queries";
 import { useCallback, useMemo } from "react";
@@ -17,7 +16,7 @@ export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
     update: updateSkill,
   } = useFieldArray({
     control,
-    name: "user.profile.skills",
+    name: "techStack",
   });
 
   const { data: skillsData } = useQuery<GetSkillsData>(GET_SKILLS, {
@@ -25,32 +24,13 @@ export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
   });
 
   const handleSkillDelete = (name: string) => {
-    removeSkill(skillsFields.findIndex((skill) => skill.skill_name === name));
-  };
-
-  const handleSkillChange = (name: string, newValue: string) => {
-    if (isMastery(newValue)) {
-      updateSkill(
-        skillsFields.findIndex((skill) => skill.skill_name === name),
-        { skill_name: name, mastery: newValue },
-      );
-    }
-
-    function isMastery(value: string): value is Mastery {
-      if (Object.values(Mastery).includes(value as Mastery)) {
-        return true;
-      }
-
-      return false;
-    }
+    removeSkill(skillsFields.findIndex((skill) => skill.name === name));
   };
 
   const availableSkills = useMemo(() => {
     if (!skillsData) return [];
 
-    const skillsAlreadyTaken = new Set(
-      skillsFields.map(({ skill_name }) => skill_name),
-    );
+    const skillsAlreadyTaken = new Set(skillsFields.map(({ name }) => name));
 
     return skillsData.skills.reduce((acc, cur) => {
       if (!skillsAlreadyTaken.has(cur.name)) {
@@ -62,10 +42,15 @@ export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
   }, [skillsData, skillsFields]);
 
   const handleNewSkill = useCallback(
-    (entryName: string) => {
-      appendSkill({ skill_name: entryName, mastery: Mastery.Novice });
+    (id: string) => {
+      appendSkill({
+        id,
+        name:
+          skillsData?.skills.find((skill) => skill.id === id)?.name ||
+          "unknown",
+      });
     },
-    [appendSkill],
+    [appendSkill, skillsData?.skills],
   );
 
   return (
@@ -77,15 +62,12 @@ export const SkillsInput = ({ onError, control }: SkillsInputProps) => {
         <DynamicFieldset
           onNew={handleNewSkill}
           inputEntries={availableSkills}
-          fieldForValue="entryName"
+          fieldForValue="id"
         >
           {skillsFields.map((field, index) => (
-            <DynamicArrayFieldWithSelect
+            <DynamicArrayField
               key={field.id}
-              entryName={field.skill_name}
-              possibleValues={Mastery}
-              onChange={handleSkillChange}
-              value={field.mastery}
+              entryName={field.name}
               onDelete={handleSkillDelete}
             />
           ))}

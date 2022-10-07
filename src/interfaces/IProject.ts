@@ -11,7 +11,7 @@ export interface IProjectCore {
 export interface IProject extends IProjectCore {
   domain: string;
   description: string;
-  techStack: Skill[]; // TODO: replace with entities
+  techStack: Skill[];
   teamSize: number;
 }
 

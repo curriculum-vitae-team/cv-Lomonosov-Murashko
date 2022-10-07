@@ -1,1 +1,1 @@
-export { DynamicArrayField } from "./DynamicArrayField";
+export { default as DynamicArrayField } from "./DynamicArrayField";
