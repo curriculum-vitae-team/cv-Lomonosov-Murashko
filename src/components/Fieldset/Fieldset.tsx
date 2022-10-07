@@ -1,9 +1,9 @@
 import { TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 import { StyledFieldsetWrapper } from "./Fieldset.styles";
 import { FieldsetProps } from "./Fieldset.types";
 
-export const Fieldset = <T,>({
+export const Fieldset = <T extends FieldValues,>({
   isFullWidth,
   inputWidth,
   name,
@@ -13,6 +13,7 @@ export const Fieldset = <T,>({
   label,
   render,
   type,
+  isMultiline,
 }: FieldsetProps<T>) => {
   return (
     <StyledFieldsetWrapper isFullWidth={isFullWidth} inputWidth={inputWidth}>
@@ -28,6 +29,7 @@ export const Fieldset = <T,>({
                   {...field}
                   type={type}
                   label={label}
+                  multiline={isMultiline}
                   helperText={fieldState.error?.message || " "}
                   error={!!fieldState.error}
                 />

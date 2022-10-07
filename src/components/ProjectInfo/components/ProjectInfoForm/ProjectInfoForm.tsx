@@ -10,11 +10,12 @@ import { useNavigate } from "react-router";
 import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
 import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
+import { SkillsInput } from "../SkillsInput";
 
 export const ProjectInfoForm = memo(
-  ({ onSubmit, data }: ProjectInfoFormProps) => {
+  ({ onSubmit, onError, data }: ProjectInfoFormProps) => {
     const navigate = useNavigate();
-    const { control, handleSubmit, reset } = useForm<IProject>({
+    const { control, handleSubmit, reset, getValues } = useForm<IProject>({
       mode: "all",
       defaultValues: {
         name: "",
@@ -24,6 +25,7 @@ export const ProjectInfoForm = memo(
         domain: "",
         description: "",
         teamSize: 0,
+        techStack: [],
       },
     });
 
@@ -36,25 +38,26 @@ export const ProjectInfoForm = memo(
     };
 
     return (
-      <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        style={{ width: "100%", padding: "1em" }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <InfoFormWrapper>
           <Fieldset
-            isFullWidth={true}
-            inputWidth="100%"
             required="Please, specify the field"
             label="Internal name"
             control={control}
             name="internalName"
           />
-        </InfoFormWrapper>
-
-        <InfoFormWrapper>
           <Fieldset
             required="Please, specify the field"
             label="Name"
             control={control}
             name="name"
           />
+        </InfoFormWrapper>
+
+        <InfoFormWrapper>
           <DatePickerFieldset
             control={control}
             label="Start date"
@@ -69,23 +72,10 @@ export const ProjectInfoForm = memo(
         </InfoFormWrapper>
         <InfoFormWrapper>
           <Fieldset
-            inputWidth="50%"
-            isFullWidth={true}
             required="Please, specify the field"
             label="Domain"
             control={control}
             name="domain"
-          />
-        </InfoFormWrapper>
-
-        <InfoFormWrapper>
-          <Fieldset
-            inputWidth="50%"
-            isFullWidth={true}
-            required="Please, specify the field"
-            label="Description"
-            control={control}
-            name="description"
           />
           <Fieldset
             required="Please, specify the field"
@@ -93,7 +83,20 @@ export const ProjectInfoForm = memo(
             control={control}
             name="teamSize"
           />
-          {/* TODO: add skills here */}
+        </InfoFormWrapper>
+
+        <InfoFormWrapper>
+          <Fieldset
+            inputWidth="31.25em"
+            isMultiline={true}
+            required="Please, specify the field"
+            label="Description"
+            control={control}
+            name="description"
+          />
+        </InfoFormWrapper>
+        <InfoFormWrapper>
+          <SkillsInput control={control} onError={onError} />
         </InfoFormWrapper>
 
         <DialogActions>

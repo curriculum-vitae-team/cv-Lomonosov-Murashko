@@ -17,6 +17,8 @@ import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
+import { projectCacheUpdate } from "@graphql/Project/Project.cache";
+import { InlineError } from "@src/components/InlineError";
 
 export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +36,7 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
       setIsLoading(false);
       setFetchError(error.message);
     },
+    fetchPolicy: "network-only",
   });
 
   const [updateProject] = useMutation<UpdateProjectOutput, UpdateProjectInput>(
@@ -64,9 +67,10 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
               ? format(new Date(data.endDate), "yyyy-MM-dd")
               : null,
             team_size: data.teamSize,
-            skillsIds: [], // TODO: replace with entities
+            skillsIds: data.techStack.map(({ id }) => id),
           },
         },
+        update: projectCacheUpdate(projectId),
       });
     },
     [projectId, updateProject],
@@ -77,9 +81,13 @@ export const ProjectInfoUpdate = ({ projectId }: ProjectInfoUpdateProps) => {
       {isLoading ? (
         <Loader />
       ) : fetchError ? (
-        fetchError
+        <InlineError message={fetchError} />
       ) : (
-        <ProjectInfoForm data={projectData} onSubmit={onSubmit} />
+        <ProjectInfoForm
+          data={projectData}
+          onSubmit={onSubmit}
+          onError={(err) => setFetchError(err.message)}
+        />
       )}
     </>
   );

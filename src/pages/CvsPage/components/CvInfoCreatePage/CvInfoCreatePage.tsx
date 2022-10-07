@@ -12,20 +12,17 @@ import { SubmitHandler } from "react-hook-form";
 import { createCvCacheUpdate } from "@graphql/Cv/Cv.cache";
 import { CvCreateInfoForm } from "../CvCreateInfoForm";
 import { GET_USERS_NAMES_IDS } from "@graphql/User/User.queries";
-import { UsersNamesIdsData } from "@graphql/User/User.interface";
+import { UsersNamesIdsData } from "../CvCreateInfoForm/CvCreateInfoForm.types";
 
 export const CvInfoCreatePage = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  const { data: users, loading } = useQuery<UsersNamesIdsData>(
-    GET_USERS_NAMES_IDS,
-    {
-      onError: (error) => {
-        setError(error.message);
-      },
+  const { data: users } = useQuery<UsersNamesIdsData>(GET_USERS_NAMES_IDS, {
+    onError: (error) => {
+      setError(error.message);
     },
-  );
+  });
 
   const [createCv] = useMutation<CreateCvOutput, CreateCvInput>(CREATE_CV, {
     onCompleted: () => {
@@ -38,7 +35,6 @@ export const CvInfoCreatePage = () => {
 
   const onSubmit: SubmitHandler<CvInput> = useCallback(
     (data) => {
-      console.log(data);
       createCv({
         variables: {
           cv: {

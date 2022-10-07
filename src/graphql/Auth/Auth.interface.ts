@@ -1,4 +1,4 @@
-import { User } from "@graphql/User/User.interface";
+import { User } from "@interfaces/user.interface";
 
 export interface AuthInputData {
   auth: AuthInput;
@@ -25,4 +25,3 @@ export interface AuthUserInfo {
 export interface AuthUserInfoWithMemorizedValue extends AuthUserInfo {
   isMemorized: boolean;
 }
- 

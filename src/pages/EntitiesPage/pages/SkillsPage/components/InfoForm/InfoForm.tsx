@@ -3,20 +3,21 @@ import { Fieldset } from "@components/Fieldset";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { useForm } from "react-hook-form";
 import { InfoFormProps, SkillInput } from "./InfoForm.types";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@mui/material";
 
 export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
   const { control, handleSubmit, reset } = useForm<SkillInput>({
     defaultValues: {
-      name: input.name,
+      name: input?.name,
     },
   });
 
   useEffect(() => {
-    const { name } = input;
-
-    reset({ name });
+    if (input) {
+      const { name } = input;
+      reset({ name });
+    }
   }, [input, reset]);
 
   return (
@@ -31,7 +32,7 @@ export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
           />
         </InfoFormWrapper>
 
-        <StyledDialogActions>
+        <StyledDialogActions sx={{ marginRight: "1em" }}>
           <Button type="submit" value="Save" variant="contained">
             Save
           </Button>

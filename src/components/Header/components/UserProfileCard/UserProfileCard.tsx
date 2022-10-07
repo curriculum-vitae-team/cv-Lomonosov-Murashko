@@ -1,17 +1,19 @@
-import { AuthContext } from "@context/authContext/authContext";
 import { withOverlay } from "@hoc/withOverlay";
-import { useContext } from "react";
-import {
-  StyledTypography,
-  StyledButton,
-  StyledDiv,
-  StyledAccountCircleIcon,
-} from "./UserProfileCard.styles";
+import { Typography } from "@mui/material";
+import { ROUTE } from "@constants/route";
+import { useNavigate } from "react-router";
+import { StyledTypographyEmail, StyledButton } from "./UserProfileCard.styles";
+import { StyledDiv } from "../../StyledDiv";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
+import { AvatarSelector } from "@components/Header/components/AvatarSelector";
 
 function UserProfileCard() {
-  const { user, logout } = useContext(AuthContext);
+  const { user$, logout } = authStore;
+
+  const navigate = useNavigate();
   const handleSignOutClick = () => {
     logout();
+    navigate(ROUTE.SIGN_IN);
   };
 
   const onUserProfileCardClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -20,8 +22,9 @@ function UserProfileCard() {
 
   return (
     <StyledDiv onClick={onUserProfileCardClick}>
-      <StyledAccountCircleIcon />
-      <StyledTypography>{user?.email}</StyledTypography>
+      <AvatarSelector />
+      <Typography>{user$?.profile?.full_name}</Typography>
+      <StyledTypographyEmail>{user$?.email}</StyledTypographyEmail>
       <StyledButton onClick={handleSignOutClick}>Sign Out</StyledButton>
     </StyledDiv>
   );

@@ -18,7 +18,7 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
           <Text style={styles.fullname}>
             {user?.profile?.full_name || "<Full name here>"}
           </Text>
-          <Text>{user?.profile?.position_name || "<Position>"}</Text>
+          <Text>{user?.position_name || "<Position>"}</Text>
         </View>
         <View style={styles.sectionRight}>
           <Image style={styles.redLineCenter} src={redLine}></Image>

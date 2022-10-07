@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { CvsPage } from "@pages/CvsPage";
 import { EmployeesPage } from "@pages/EmployeesPage/";
 import { EntitiesPage } from "@pages/EntitiesPage";
@@ -12,7 +11,6 @@ import { EmployeeCv } from "@pages/EmployeesPage/pages/EmployeeCv";
 import { ENTITY, ROUTE, ROUTE_PARAM } from "@constants/route";
 import { EmployeeInfoPage } from "@pages/EmployeesPage/pages/EmployeeInfoPage";
 import { ProjectPage } from "@pages/ProjectsPage/pages/ProjectPage";
-import { CvInfoUpdate } from "@components/CvInfoUpdate";
 import { ProjectInfoPage } from "@pages/ProjectInfoPage";
 import { SignIn } from "@pages/SignIn";
 import { SignUp } from "@pages/SignUp";
@@ -21,22 +19,22 @@ import { CvInfoUpdatePage } from "@pages/CvInfoUpdatePage";
 import { EntitiesList } from "@pages/EntitiesPage/pages/EntitiesList";
 import { LanguagesPage } from "@pages/EntitiesPage/pages/LanguagesPage";
 import { SkillsPage } from "@pages/EntitiesPage/pages/SkillsPage";
-import { browserHistory } from "@src/browserHistory";
-import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { authGuard, roleGuard } from "@helpers/guard";
 import { ROLES } from "@constants/roles";
-import { EmployeeInfoCreate } from "@pages/EmployeesPage/pages/EmployeeInfo/components/EmployeeInfoCreate";
-import { CvInfoCreatePage } from "@pages/CvsPage/components/CvInfoCreatePage";
+import { DepartmentsPage } from "@pages/EntitiesPage/pages/DepartmentsPage";
+import { PositionsPage } from "@pages/EntitiesPage/pages/PositionsPage";
+import { CvInfoUpdate } from "../CvInfoUpdate";
 
 export function Router() {
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Routes>
         <Route element={<Auth />}>
           <Route path={ROUTE.SIGN_IN} element={<SignIn />} />
           <Route path={ROUTE.SIGN_UP} element={<SignUp />} />
         </Route>
+
         <Route path={ROUTE.EMPTY} element={<Layout />}>
           <Route
             element={
@@ -49,25 +47,19 @@ export function Router() {
           >
             <Route index element={<RedirectPage to={ROUTE.EMPLOYEES} />} />
             <Route path={ROUTE.EMPLOYEES} element={<EmployeesPage />} />
-            <Route path={ROUTE.ADD_EMPLOYEE} element={<EmployeeInfoCreate />} />
             <Route path={ROUTE.TARGET_EMPLOYEE} element={<EmployeePage />}>
               <Route index element={<EmployeeInfoPage />} />
               <Route path={ROUTE.TARGET_EMPLOYEE_CV} element={<EmployeeCv />}>
-                <Route
-                  path={ROUTE_PARAM.CV_ID}
-                  element={<CvInfoUpdatePage />}
-                />
+                <Route path={ROUTE_PARAM.CV_ID} element={<CvInfoUpdate />} />
               </Route>
             </Route>
             <Route path={ROUTE.PROJECTS} element={<ProjectsPage />} />
-            <Route path={ROUTE.ADD_PROJECT} element={<ProjectInfoCreate />} />
             <Route path={ROUTE.TARGET_PROJECT} element={<ProjectPage />}>
               <Route index element={<ProjectInfoPage />} />
             </Route>
+            <Route path={ROUTE.CVS} element={<CvsPage />} />
+            <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           </Route>
-          <Route path={ROUTE.CVS} element={<CvsPage />} />
-          <Route path={ROUTE.ADD_CV} element={<CvInfoCreatePage />} />
-          <Route path={ROUTE.TARGET_CV} element={<CvInfoUpdatePage />} />
           <Route
             element={
               <ProtectedRoute
@@ -91,11 +83,23 @@ export function Router() {
                   element={<SkillsPage />}
                 />
               </Route>
+              <Route path={ENTITY.DEPARTMENTS} element={<DepartmentsPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<DepartmentsPage />}
+                />
+              </Route>
+              <Route path={ENTITY.POSITIONS} element={<PositionsPage />}>
+                <Route
+                  path={ROUTE.TARGET_ENTITY_ENTRY}
+                  element={<PositionsPage />}
+                />
+              </Route>
             </Route>
           </Route>
         </Route>
         <Route path={ROUTE.ANY_OTHER} element={<NotFoundPage />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }

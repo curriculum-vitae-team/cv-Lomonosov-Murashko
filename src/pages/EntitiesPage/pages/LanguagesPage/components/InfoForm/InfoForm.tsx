@@ -3,21 +3,22 @@ import { Fieldset } from "@components/Fieldset";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { useForm } from "react-hook-form";
 import { InfoFormProps, LanguageInput } from "./InfoForm.types";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@mui/material";
 
 export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
   const { control, handleSubmit, reset } = useForm<LanguageInput>({
     defaultValues: {
-      name: input.name,
-      iso2: input.iso2,
+      name: input?.name,
+      iso2: input?.iso2,
     },
   });
 
   useEffect(() => {
-    const { name, iso2 } = input;
-
-    reset({ name, iso2 });
+    if (input) {
+      const { name, iso2 } = input;
+      reset({ name, iso2 });
+    }
   }, [input, reset]);
 
   return (
@@ -38,7 +39,7 @@ export const InfoForm = ({ input, onSubmit, onCancel }: InfoFormProps) => {
           />
         </InfoFormWrapper>
 
-        <StyledDialogActions>
+        <StyledDialogActions sx={{ marginRight: "1em" }}>
           <Button type="submit" value="Save" variant="contained">
             Save
           </Button>

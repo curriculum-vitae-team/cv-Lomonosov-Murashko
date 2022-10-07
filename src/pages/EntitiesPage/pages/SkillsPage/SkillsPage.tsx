@@ -1,5 +1,5 @@
 import { InfoForm } from "./components/InfoForm";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "../../EntitiesPage.styles";
 import { InfoItem } from "@components/InfoItem";
 import { useNavigate, useParams } from "react-router";
@@ -21,23 +21,25 @@ import {
 import {
   DeleteSkillOutput,
   GetSkillsData,
-  Skill,
   UpdateSkillInput,
+  UpdateSkillResult,
 } from "@graphql/Entity/Skill/Skill.interface";
-import { deleteSkillCacheUpdate } from "@graphql/Entity/Skill/Skill.cache";
+import { Skill } from "@interfaces/skill.interface";
+import {
+  deleteSkillCacheUpdate,
+  skillCacheUpdate,
+} from "@graphql/Entity/Skill/Skill.cache";
+import { useModal } from "@hooks/useModal";
+import { CreateSkillWrapper } from "@components/CreateEntitie/components/CreateSkillsWrapper";
 
 export const SkillsPage = () => {
   const { entryId } = useParams();
-
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const { setToastError } = useErrorToast();
-
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreateSkillWrapper);
 
   const { data, loading, refetch } = useQuery<GetSkillsData>(GET_SKILLS, {
     variables: { id: entryId },
@@ -76,17 +78,20 @@ export const SkillsPage = () => {
     },
   );
 
-  const [updateEntry] = useMutation<Skill, UpdateSkillInput>(UPDATE_SKILL, {
-    onError: (err) => {
-      const response = err.graphQLErrors[0].extensions.response as {
-        message?: string[];
-      };
+  const [updateEntry] = useMutation<UpdateSkillResult, UpdateSkillInput>(
+    UPDATE_SKILL,
+    {
+      onError: (err) => {
+        const response = err.graphQLErrors[0].extensions.response as {
+          message?: string[];
+        };
 
-      setToastError(
-        (response?.message && response.message[0]) || "Something went wrong",
-      );
+        setToastError(
+          (response?.message && response.message[0]) || "Something went wrong",
+        );
+      },
     },
-  });
+  );
 
   useEffect(() => {
     if (active !== "-1") {
@@ -125,15 +130,18 @@ export const SkillsPage = () => {
           name: data.name,
         },
       },
+      update: skillCacheUpdate(entryId!),
     });
   };
 
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -157,7 +165,7 @@ export const SkillsPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

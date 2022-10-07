@@ -6,35 +6,42 @@ import { PageWrapper } from "@components/styled/PageWrapper";
 import { createTable } from "@components/Table/Table";
 import { DELETE_USER, GET_USERS } from "@graphql/User/User.queries";
 import {
-  DeleteUserOutput,
-  UsersData,
+  DeleteUserResult,
+  GetUsersResult,
   DeleteUserInput,
 } from "@graphql/User/User.interface";
 import { IEmployeeTable } from "@interfaces/IEmployee";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { TableEntry } from "../../constants/table";
 import { getEmployees } from "./helpers";
 import { deleteUserCacheUpdate } from "@graphql/User/User.cache";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
-import { tableHead } from "./tableHead";
-import { ROUTE } from "@constants/route";
-import { useNavigate } from "react-router";
+import {
+  mediumScreenTableHead,
+  smallScreenTableHead,
+  tableHead,
+} from "./tableHead";
+import { useModal } from "@hooks/useModal";
+import { EmployeeInfoCreate } from "./pages/EmployeeInfo/components/EmployeeInfoCreate";
+import { useMediaQuery } from "@mui/material";
 
 const Table = memo(createTable<IEmployeeTable>());
 
 export const EmployeesPage = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
+  const isSmallScreenMatch = useMediaQuery("(max-width: 540px)");
+  const [mountedDialog, openModal] = useModal(EmployeeInfoCreate);
 
-  const { data, refetch, loading } = useQuery<UsersData>(GET_USERS, {
+  const { data, refetch, loading } = useQuery<GetUsersResult>(GET_USERS, {
     onError: (error) => {
       setError(error.message);
     },
   });
 
-  const [deleteUser] = useMutation<DeleteUserOutput, DeleteUserInput>(
+  const [deleteUser] = useMutation<DeleteUserResult, DeleteUserInput>(
     DELETE_USER,
     {
       optimisticResponse: {
@@ -55,9 +62,9 @@ export const EmployeesPage = () => {
     [deleteUser],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_EMPLOYEE);
-  }, [navigate]);
+  const handleCreate = () => {
+    openModal();
+  };
 
   const handleTryAgain = () => {
     refetch();
@@ -65,6 +72,7 @@ export const EmployeesPage = () => {
 
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb
           config={{
@@ -86,7 +94,13 @@ export const EmployeesPage = () => {
             <Table
               onDelete={handleItemDelete}
               onCreate={handleCreate}
-              head={tableHead}
+              head={
+                isSmallScreenMatch
+                  ? smallScreenTableHead
+                  : isMediumScreenMatch
+                  ? mediumScreenTableHead
+                  : tableHead
+              }
               items={getEmployees(data.users)}
               redirectButtonText="Profile"
               deleteButtonText="Delete"

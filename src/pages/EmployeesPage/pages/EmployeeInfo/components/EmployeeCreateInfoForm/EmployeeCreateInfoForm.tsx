@@ -51,7 +51,10 @@ export const EmployeeCreateInfoForm = ({
   return error ? (
     <ErrorToast message={error} />
   ) : (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      style={{ width: "100%", padding: "1em" }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <InfoFormWrapper>
         <Fieldset
           control={control}

@@ -1,107 +1,53 @@
-import {
-  Button,
-  DialogActions,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Button, DialogActions } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE } from "@constants/route";
-import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
-import { Fieldset } from "@components/Fieldset";
 import { EmployeeInfoProps } from "./EmployeeInfo.types";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_INFO, UPDATE_USER } from "@graphql/User/User.queries";
 import {
-  UserInfoData,
+  GetUserResult,
   UpdateUserInput,
-  UpdateUserOutput,
-  UserInfo,
+  UpdateUserResult,
 } from "@graphql/User/User.interface";
-import { memo, useContext, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
-import { useErrorToast } from "@context/ErrorToastStore/ErrorToastStore";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { DepartmentsData } from "@graphql/Department/Department.interface";
-import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
-import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
-import { SelectLabelWrapper } from "@components/styled/SelectLabel";
-import { AuthContext } from "@context/authContext/authContext";
+import { CreateUserInput } from "@graphql/User/User.interface";
+import { LanguagesInput } from "./components/LanguagesInput";
+import { SkillsInput } from "./components/SkillsInput";
+import { Observable } from "./Observable";
+import { UserDetailsInput } from "./components/UserDetailsInput";
+import { userCacheUpdate } from "@graphql/User/User.cache";
+import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
+import { authStore } from "@src/stores/AuthStore/AuthStore";
 
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
+  const { user$ } = authStore;
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-  const { setToastError } = useErrorToast();
 
-  const { control, handleSubmit, reset } = useForm<UserInfo>({
+  // TODO: Form must correspond the data sent
+  const { control, handleSubmit, reset, getValues } = useForm<CreateUserInput>({
     defaultValues: {
-      id: "",
-      profile: {
-        first_name: "",
-        last_name: "",
-        department: {
-          id: "",
-          name: "",
+      user: {
+        departmentId: "",
+        positionId: "",
+        profile: {
+          first_name: "",
+          last_name: "",
+          skills: [],
+          languages: [],
         },
-        position: { id: "", name: "" },
-        skills: [],
-        languages: [],
+        cvsIds: [],
       },
-      cvs: {
-        id: "",
-        name: "",
-        description: "",
-        projects: {
-          id: "",
-          name: "",
-          internal_name: "",
-          domain: "",
-          start_date: "",
-          end_date: "",
-          tech_stack: [],
-        },
-      },
-    },
-  });
-
-  const { data: departments } = useQuery<DepartmentsData>(GET_DEPARTMENTS, {
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
-
-  const { data: positions } = useQuery<PositionsNamesIdsData>(
-    GET_POSITIONS_NAMES_IDS,
-    {
-      onError: (error) => {
-        setError(error.message);
-      },
-    },
-  );
-
-  const {
-    data: userData,
-    refetch,
-    loading: getUserInfoLoading,
-  } = useQuery<UserInfoData>(GET_USER_INFO, {
-    variables: {
-      id: employeeId,
-    },
-    onCompleted: (data) => {
-      reset(resetEmployee(data.user));
-    },
-    onError: (error) => {
-      setToastError(error.message);
     },
   });
 
   const [saveUser, { loading: saveUserLoading }] = useMutation<
-    UpdateUserOutput,
+    UpdateUserResult,
     UpdateUserInput
   >(UPDATE_USER, {
     onCompleted: (data) => {
@@ -112,32 +58,51 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserInfo> = (data) => {
-    // TODO: delete `= []` constructions later
+  const {
+    data: userData,
+    refetch: refetchUserData,
+    loading: getUserInfoLoading,
+  } = useQuery<GetUserResult>(GET_USER_INFO, {
+    variables: {
+      id: employeeId,
+    },
+    onCompleted: (data) => {
+      if (data.user) {
+        reset(resetEmployee(data.user));
+      }
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  const refetchObservable = useRef(new Observable());
+
+  const onSubmit: SubmitHandler<CreateUserInput> = (data) => {
     const {
-      first_name,
-      last_name,
-      department: { id: departmentId },
-      position: { id: positionId },
-      languages = [],
-      skills = [],
-    } = data.profile;
+      departmentId,
+      positionId,
+      cvsIds,
+      profile: { first_name, last_name, languages = [], skills = [] },
+    } = data.user;
 
     saveUser({
       variables: {
         id: employeeId,
         user: {
+          departmentId,
+          positionId,
           profile: {
             first_name,
             last_name,
-            departmentId,
-            positionId,
-            languages, // TODO: Replace with entities input
-            skills, // TODO: Replace with entities input
+            skills,
+            languages,
           },
-          cvsIds: [], // TODO: Replace with Select
+          cvsIds: cvsIds,
         },
       },
+      update: userCacheUpdate(employeeId),
     });
   };
 
@@ -146,8 +111,13 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   };
 
   const handleTryAgain = () => {
-    refetch();
+    refetchObservable.current.notify();
+    refetchUserData({ variables: { id: employeeId } });
   };
+
+  const checkIfOwnProfile = (data?: GetUserResult) => {
+    return user$?.email === data?.user?.email;
+  };  
 
   return getUserInfoLoading || saveUserLoading ? (
     <Loader />
@@ -158,54 +128,24 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     />
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoFormWrapper>
-        <Fieldset
+      <UserDetailsInput
+        onError={(error) => setError(error.message)}
+        control={control}
+        refetchObservable={refetchObservable.current}
+      />
+      <DynamicFieldsetGroupWrapper>
+        <SkillsInput
           control={control}
-          required="Please, specify the field"
-          label="First Name"
-          name="profile.first_name"
+          onError={(error) => setError(error.message)}
         />
-        <Fieldset
+        <LanguagesInput
           control={control}
-          required="Please, specify the field"
-          label="Last Name"
-          name="profile.last_name"
+          onError={(error) => setError(error.message)}
         />
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Departments</Typography>
-          <Controller
-            name="profile.department.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {departments?.departments.map((dep) => (
-                  <MenuItem key={dep.id} value={dep.id}>
-                    {dep.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
-        <SelectLabelWrapper>
-          <Typography sx={{ opacity: "0.7" }}>Position</Typography>
-          <Controller
-            name="profile.position.id"
-            control={control}
-            render={({ field }) => (
-              <Select sx={{ minWidth: "12em" }} {...field}>
-                {positions?.positions.map((pos) => (
-                  <MenuItem key={pos.id} value={pos.id}>
-                    {pos.name || "Unknown"}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </SelectLabelWrapper>
-      </InfoFormWrapper>
+      </DynamicFieldsetGroupWrapper>
+
       <DialogActions>
-        <SaveButtonWithAdminAccess />
+        <SaveButtonWithAdminAccess allowAccess={checkIfOwnProfile(userData)} />
         <Button
           onClick={onCancel}
           type="reset"

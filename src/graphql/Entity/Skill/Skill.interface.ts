@@ -1,4 +1,5 @@
 import { DeleteResult } from "@graphql/shared/interfaces";
+import { Skill } from "@src/interfaces/skill.interface";
 
 export interface GetSkillsData {
   skills: Skill[];
@@ -13,7 +14,17 @@ export interface DeleteSkillOutput {
   deleteSkill: DeleteResult;
 }
 
-export interface Skill {
-  id: string;
-  name: string;
+export interface UpdateSkillResult {
+  updateSkill: Skill;
+}
+
+export interface CreateSkillInput {
+  skill: Pick<Skill, "name">;
+}
+
+export interface CreateSkillOutput {
+  createSkill: {
+    skills: Skill;
+    affected: number;
+  };
 }

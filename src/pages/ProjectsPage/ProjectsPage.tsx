@@ -16,29 +16,30 @@ import { DELETE_PROJECT, GET_PROJECTS } from "@graphql/Project/Project.queries";
 import { IProjectTable } from "@interfaces/IProject";
 import { useCallback, useState } from "react";
 import { getProjects } from "./helpers";
-import { useNavigate } from "react-router";
-import { ROUTE } from "@constants/route";
 import { Loader } from "@components/Loader";
-
-const head = [
-  { columnKey: "internalName", columnName: "Internal name", isSortable: true },
-  { columnKey: "name", columnName: "Name", isSortable: true },
-  { columnKey: "startDate", columnName: "Start date", isSortable: true },
-  { columnKey: "endDate", columnName: "End date", isSortable: true },
-];
+import {
+  mediumScreenTableHead,
+  smallScreenTableHead,
+  tableHead,
+} from "./tableHead";
+import { ProjectInfoCreate } from "@components/ProjectInfo/components/ProjectInfoCreate";
+import { useModal } from "@hooks/useModal";
+import { useMediaQuery } from "@mui/material";
 
 const Table = createTable<IProjectTable>();
 
 export const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const isMediumScreenMatch = useMediaQuery("(max-width: 790px)");
+  const isSmallScreenMatch = useMediaQuery("(max-width: 640px)");
+  const [mountedDialog, openModal] = useModal(ProjectInfoCreate);
 
   const { data } = useQuery<ProjectsData>(GET_PROJECTS, {
     onCompleted: () => {
       setIsLoading(false);
     },
-    onError: (error) => {      
+    onError: (error) => {
       setError(error.message);
     },
   });
@@ -57,34 +58,43 @@ export const ProjectsPage = () => {
     [deleteProject],
   );
 
-  const handleCreate = useCallback(() => {
-    navigate(ROUTE.ADD_PROJECT);
-  }, [navigate]);
-  
+  const handleCreate = () => {
+    openModal();
+  };
+
   return (
     <PageWrapper>
+      {mountedDialog}
       <PageTop>
         <Breadcrumb config={{ projects: "Projects" }} />
         <PageTopTypography title="Projects" caption="Projects list" />
       </PageTop>
       <PageBody>
-        {isLoading
-          ? <Loader />
-          : error
-          ? "error"
-          : data?.projects && (
-              <Table
-                onDelete={handleItemDelete}
-                onCreate={handleCreate}
-                head={head}
-                items={getProjects(data.projects)}
-                redirectButtonText="Project details"
-                deleteButtonText="Delete"
-                entryType={TableEntry.PROJECT}
-                showNewEntryButton={true}
-                searchBy="name"
-              />
-            )}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          "error"
+        ) : (
+          data?.projects && (
+            <Table
+              onDelete={handleItemDelete}
+              onCreate={handleCreate}
+              head={
+                isSmallScreenMatch
+                  ? smallScreenTableHead
+                  : isMediumScreenMatch
+                  ? mediumScreenTableHead
+                  : tableHead
+              }
+              items={getProjects(data.projects)}
+              redirectButtonText="Project details"
+              deleteButtonText="Delete"
+              entryType={TableEntry.PROJECT}
+              showNewEntryButton={true}
+              searchBy="name"
+            />
+          )
+        )}
       </PageBody>
     </PageWrapper>
   );

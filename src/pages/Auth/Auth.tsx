@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   AuthFlexContainer,
   AuthWrapper,
@@ -16,14 +16,16 @@ export const Auth = () => {
   };
 
   return (
-    <AuthWrapper>
-      <StyledTabs onChange={handleTabChange} value={currentTab}>
-        <Tab label="Sign In" component={Link} to={ROUTE.SIGN_IN} />
-        <Tab label="Sign Up" component={Link} to={ROUTE.SIGN_UP} />
-      </StyledTabs>
-      <AuthFlexContainer>
-        <Outlet />
-      </AuthFlexContainer>
-    </AuthWrapper>
+    <>
+      <AuthWrapper>
+        <StyledTabs onChange={handleTabChange} value={currentTab}>
+          <Tab label="Sign In" component={Link} to={ROUTE.SIGN_IN} />
+          <Tab label="Sign Up" component={Link} to={ROUTE.SIGN_UP} />
+        </StyledTabs>
+        <AuthFlexContainer>
+          <Outlet />
+        </AuthFlexContainer>
+      </AuthWrapper>
+    </>
   );
 };

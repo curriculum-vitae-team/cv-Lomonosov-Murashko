@@ -17,18 +17,22 @@ export const GET_USERS = gql`
     users {
       id
       email
+      position_name
+      position {
+        name
+        id
+      }
+      cvs {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
       }
     }
   }
@@ -43,30 +47,33 @@ export const GET_USERS_NAMES_IDS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_USER_INFO = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
       id
       email
+      position_name
+      position {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
+        id
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
       cvs {
@@ -95,6 +102,20 @@ export const GET_USER_INFO = gql`
   }
 `;
 
+export const GET_ACCOUNT_INFO = gql`
+  query GetAccountInfo($id: ID!) {
+    user(id: $id) {
+      id
+      email
+      profile {
+        id
+        full_name
+        avatar
+      }
+    }
+  }
+`;
+
 export const GET_USER_CVS = gql`
   query GetUserCvs($id: ID!) {
     user(id: $id) {
@@ -111,23 +132,30 @@ export const UPDATE_USER = gql`
     updateUser(id: $id, user: $user) {
       id
       email
+      cvs {
+        name
+        id
+      }
+      position_name
+      position {
+        name
+        id
+      }
+      department {
+        name
+        id
+      }
       profile {
         first_name
         last_name
-        position_name
-        position {
-          name
-          id
-        }
-        department {
-          name
-          id
-        }
+
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
     }
@@ -161,9 +189,11 @@ export const CREATE_USER = gql`
         }
         languages {
           language_name
+          proficiency
         }
         skills {
           skill_name
+          mastery
         }
       }
     }

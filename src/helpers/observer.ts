@@ -1,4 +1,3 @@
-import { browserHistory } from "@src/browserHistory";
 import { ROUTE } from "@constants/route";
 
 interface ISubject {
@@ -37,7 +36,7 @@ class LogoutHandler implements IObserver {
   }
 
   public update() {
-    browserHistory.push(ROUTE.SIGN_IN);
+    // browserHistory.push(ROUTE.SIGN_IN);
   }
 }
 

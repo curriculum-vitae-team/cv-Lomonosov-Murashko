@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ROUTE } from "@constants/route";
 import {
   CreateUserInput,
-  CreateUserOutput,
+  CreateUserResult,
 } from "@graphql/User/User.interface";
 import { CREATE_USER } from "@graphql/User/User.queries";
 import { IEmployeeCore } from "@interfaces/IEmployee";
@@ -12,16 +12,16 @@ import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { EmployeeCreateInfoForm } from "../EmployeeCreateInfoForm";
 import { Loader } from "@components/Loader";
-import { PositionsNamesIdsData } from "@graphql/Position/Position.interface";
-import { GET_POSITIONS_NAMES_IDS } from "@graphql/Position/Position.queries";
-import { GET_DEPARTMENTS } from "@graphql/Department/Department.queries";
-import { DepartmentsData } from "@graphql/Department/Department.interface";
+import { PositionsNamesIdsData } from "@graphql/Entity/Position/Position.interface";
+import { GET_POSITIONS_NAMES_IDS } from "@graphql/Entity/Position/Position.queries";
+import { GET_DEPARTMENTS } from "@graphql/Entity/Department/Department.queries";
+import { GetDepartmentsData } from "@graphql/Entity/Department/Department.interface";
 
 export const EmployeeInfoCreate = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  const { data: departments } = useQuery<DepartmentsData>(GET_DEPARTMENTS, {
+  const { data: departments } = useQuery<GetDepartmentsData>(GET_DEPARTMENTS, {
     onError: (error) => {
       setError(error.message);
     },
@@ -37,7 +37,7 @@ export const EmployeeInfoCreate = () => {
   );
 
   const [createUser, { loading: createCvLoading }] = useMutation<
-    CreateUserOutput,
+    CreateUserResult,
     CreateUserInput
   >(CREATE_USER, {
     onCompleted: () => {
@@ -60,13 +60,12 @@ export const EmployeeInfoCreate = () => {
             profile: {
               first_name: data.profile.first_name,
               last_name: data.profile.last_name,
-              departmentId: data.profile.departmentId,
-              positionId: data.profile.positionId,
               skills: [],
               languages: [],
             },
             cvsIds: [],
-            role: data.role,
+            departmentId: data.profile.departmentId,
+            positionId: data.profile.positionId,
           },
         },
         update: createUserCacheUpdate(),

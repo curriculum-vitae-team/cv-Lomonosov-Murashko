@@ -1,49 +1,34 @@
-import { UserInfo } from "@graphql/User/User.interface";
 import { IEmployeeInfo } from "@interfaces/IEmployee";
+import { CreateUserInput } from "@src/graphql/User/User.interface";
+import { User } from "@src/interfaces/user.interface";
 
-export function getEmployeeInfo<T extends UserInfo>(
+export function getEmployeeInfo<T extends User | undefined>(
   user: T,
-): T extends undefined ? IEmployeeInfo | undefined : IEmployeeInfo {
+): undefined | IEmployeeInfo {
   if (!user) return user;
 
   return {
-    name: user.profile.first_name,
-    lastName: user.profile.last_name,
-    email: user.email,
-    departmentId: user.profile.department?.id || "Unknown",
-    specialization: user.profile.position_name || "Unknown",
-    id: user.id,
+    name: user?.profile.first_name || "Unknown",
+    lastName: user?.profile.last_name || "Unknown",
+    email: user?.email,
+    departmentId: user?.department?.id || "Unknown",
+    specialization: user?.position_name || "Unknown",
+    id: user?.id,
   };
 }
 
-export const resetEmployee = (user: UserInfo) => {
+export const resetEmployee = (user: User) => {
   return {
-    id: user.id,
-    profile: {
-      first_name: user.profile.first_name || "",
-      last_name: user.profile.last_name || "",
-      department: {
-        id: user.profile.department?.id || "",
-        name: user.profile.department?.name || "",
+    user: {
+      departmentId: user?.department?.id || "",
+      positionId: user?.position?.id || "",
+      profile: {
+        first_name: user?.profile.first_name || "",
+        last_name: user?.profile.last_name || "",
+        skills: user?.profile.skills,
+        languages: user?.profile.languages,
       },
-      position: {
-        id: user.profile.position?.id || "",
-        name: user.profile.position?.name || "",
-      },
-    },
-    cvs: {
-      id: user.cvs?.id || "",
-      name: user.cvs?.name || "",
-      description: user.cvs?.description || "",
-      projects: {
-        id: user.cvs?.projects?.id || "",
-        name: user.cvs?.projects?.name || "",
-        internal_name: user.cvs?.projects?.internal_name || "",
-        domain: user.cvs?.projects?.domain || "",
-        start_date: user.cvs?.projects?.start_date || "",
-        end_date: user.cvs?.projects?.end_date || "",
-        tech_stack: user.cvs?.projects?.tech_stack || [],
-      },
+      cvsIds: user?.cvs.map((cv) => cv.id),
     },
   };
 };

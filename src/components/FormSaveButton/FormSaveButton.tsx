@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { withAdminAccess } from "@src/hoc/withAdminAccess";
-import React from "react";
+import { FormSaveButtonProps } from "./FormSaveButton.types";
 
-export const FormSaveButton = () => {
+export const FormSaveButton = ({ allowAccess }: FormSaveButtonProps) => {
   return (
     <Button type="submit" value="Save" variant="contained">
       Save

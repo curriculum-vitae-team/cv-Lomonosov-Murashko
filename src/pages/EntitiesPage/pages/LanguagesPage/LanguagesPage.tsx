@@ -21,22 +21,24 @@ import {
   GetLanguagesData,
   Language,
   UpdateLanguageInput,
+  UpdateLanguageResult,
 } from "@graphql/Entity/Language/Language.interface";
 import { DeleteEntityEntryInput } from "@graphql/Entity/Entity.interface";
-import { deleteLanguageUpdateCache } from "@graphql/Entity/Language/Language.cache";
+import {
+  deleteLanguageUpdateCache,
+  languageCacheUpdate,
+} from "@graphql/Entity/Language/Language.cache";
+import { CreateLanguageWrapper } from "@components/CreateEntitie/components/CreateLanguageWrapper";
+import { useModal } from "@hooks/useModal";
 
 export const LanguagesPage = () => {
   const { entryId } = useParams();
-
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const { setToastError } = useErrorToast();
-
   const [active, setActive] = useState("-1");
+  const [Modal, openModal, closeModal] = useModal(CreateLanguageWrapper);
 
   const { data, loading, refetch } = useQuery<GetLanguagesData>(GET_LANGUAGES, {
     variables: { id: entryId },
@@ -75,7 +77,7 @@ export const LanguagesPage = () => {
     },
   });
 
-  const [updateEntry] = useMutation<Language, UpdateLanguageInput>(
+  const [updateEntry] = useMutation<UpdateLanguageResult, UpdateLanguageInput>(
     UPDATE_LANGUAGE,
     {
       onError: (err) => {
@@ -130,15 +132,18 @@ export const LanguagesPage = () => {
           name: data.name,
         },
       },
+      update: languageCacheUpdate(entryId!),
     });
   };
 
   const handleCancel = () => {
     navigate(ROUTE.ENTITIES);
+    closeModal();
   };
 
   return (
     <WrapperDiv>
+      {Modal}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -162,7 +167,7 @@ export const LanguagesPage = () => {
               );
             })}
             <StyledButtonWrapper>
-              <Button>
+              <Button onClick={openModal}>
                 <AddIcon />
               </Button>
             </StyledButtonWrapper>

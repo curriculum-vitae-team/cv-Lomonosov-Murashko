@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WrapperDiv, StyledButtonWrapper } from "./EmployeeCv.styles";
 import { InfoItem as CvItem } from "@src/components/InfoItem";
 import { Outlet, useNavigate, useParams } from "react-router";
@@ -7,12 +7,15 @@ import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_CVS } from "@graphql/User/User.queries";
 import { UnbindCvInput, UnbindCvOutput } from "@graphql/Cv/Cv.interface";
-import { UserCVEntry, UserCvsData } from "@graphql/User/User.interface";
+import { UserCvsData } from "./EmployeeCv.types";
 import { UNBIND_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
+import { AssignCvForm } from "@components/AssignCvForm/AssignCvForm";
+import { useModal } from "@hooks/useModal";
+import { AssignCvFormProps } from "@components/AssignCvForm/AssignCvForm.types";
 
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
@@ -21,6 +24,8 @@ export const EmployeeCv = () => {
   const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [ComponentToRender, openModal] =
+    useModal<AssignCvFormProps>(AssignCvForm);
 
   const {
     data: userData,
@@ -28,20 +33,30 @@ export const EmployeeCv = () => {
     refetch,
   } = useQuery<UserCvsData>(GET_USER_CVS, {
     variables: { id: employeeId },
-    onCompleted: (data) => {
-      const firstCv = data.user.cvs[0];
 
-      if (firstCv && (firstCv.id === cvId || !cvId)) {
-        const cvToOpen = searchParams.get("opencv") || firstCv.id;
-        setActive(cvToOpen);
-      } else {
-        setActive(cvId || "-1");
-      }
-    },
     onError: (err) => {
       setError(err.message);
     },
   });
+  
+  useEffect(() => {    
+    if (!userData) return;
+
+    const firstCv = userData.user.cvs[0];
+
+    if (firstCv && (firstCv.id === cvId || !cvId)) {
+      const cvToOpen = searchParams.get("opencv") || firstCv.id;
+      navigate(cvToOpen);
+      setActive(cvToOpen);
+    } else {
+      if (cvId) {
+        navigate(cvId);
+        setActive(cvId);
+      }
+
+      setActive("-1");
+    }
+  }, [userData?.user.cvs, cvId, navigate, searchParams, userData]);
 
   const [unbindCv] = useMutation<UnbindCvOutput, UnbindCvInput>(UNBIND_CV, {
     onError: (err) => {
@@ -53,7 +68,7 @@ export const EmployeeCv = () => {
           const { id } = options.mutationResult.data.unbindCv;
           return {
             user: {
-              cvs: prevResult.user.cvs.filter(
+              cvs: prevResult.user?.cvs.filter(
                 (cv: { id: string; name: string }) => cv.id !== id,
               ),
             },
@@ -84,6 +99,10 @@ export const EmployeeCv = () => {
     });
   };
 
+  const handleAddIconClick = () => {
+    openModal();
+  };  
+
   return (
     <WrapperDiv>
       {loading ? (
@@ -96,10 +115,10 @@ export const EmployeeCv = () => {
           }}
         ></InlineError>
       ) : (
-        userData?.user.cvs && (
+        userData?.user?.cvs && (
           <>
             <div className="sidebar">
-              {userData.user.cvs.map((cv: UserCVEntry, index: number) => {
+              {userData.user?.cvs.map((cv) => {
                 return (
                   <div
                     className={active === cv.id ? "active" : ""}
@@ -114,12 +133,13 @@ export const EmployeeCv = () => {
                   </div>
                 );
               })}
-              <StyledButtonWrapper>
+              <StyledButtonWrapper onClick={handleAddIconClick}>
                 <Button>
                   <AddIcon />
                 </Button>
               </StyledButtonWrapper>
             </div>
+            {ComponentToRender}
             <Outlet />
           </>
         )
