@@ -71,6 +71,15 @@ export const GET_FULL_CV_INFO = gql`
   }
 `;
 
+export const GET_CVS_NAMES = gql`
+  query GetCvsNames {
+    cvs {
+      id
+      name
+    }
+  }
+`
+
 export const GET_CV_NAME = gql`
   query GetCvName($id: ID!) {
     cv(id: $id) {

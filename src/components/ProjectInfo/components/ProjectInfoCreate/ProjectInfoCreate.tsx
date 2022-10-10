@@ -10,17 +10,25 @@ import {
 import { format } from "date-fns";
 import { ProjectInfoForm } from "../../components/ProjectInfoForm";
 import { ROUTE } from "@constants/route";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { createProjectCacheUpdate } from "@graphql/Project/Project.cache";
+import { Loader } from "@src/components/Loader";
+import { InlineError } from "@src/components/InlineError";
 
 export const ProjectInfoCreate = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
   const [createProject] = useMutation<CreateProjectOutput, CreateProjectInput>(
     CREATE_PROJECT,
     {
       onCompleted: () => {
         navigate(ROUTE.PROJECTS);
+      },
+      onError: (error) => {
+        setIsLoading(false);
+        setFetchError(error.message);
       },
     },
   );
@@ -48,5 +56,18 @@ export const ProjectInfoCreate = () => {
     [createProject],
   );
 
-  return <ProjectInfoForm onSubmit={onSubmit} />;
+  return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : fetchError ? (
+        <InlineError message={fetchError} />
+      ) : (
+        <ProjectInfoForm
+          onSubmit={onSubmit}
+          onError={(err) => setFetchError(err.message)}
+        />
+      )}
+    </>
+  );
 };

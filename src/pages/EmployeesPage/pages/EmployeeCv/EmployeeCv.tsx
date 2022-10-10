@@ -7,12 +7,15 @@ import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_CVS } from "@graphql/User/User.queries";
 import { UnbindCvInput, UnbindCvOutput } from "@graphql/Cv/Cv.interface";
-import { UserCVEntry, UserCvsData } from "./EmployeeCv.types";
+import { UserCvsData } from "./EmployeeCv.types";
 import { UNBIND_CV } from "@graphql/Cv/Cv.queries";
 import { ROUTE } from "@constants/route";
 import { useSearchParams } from "react-router-dom";
 import { Loader } from "@components/Loader";
 import { InlineError } from "@components/InlineError";
+import { AssignCvForm } from "@components/AssignCvForm/AssignCvForm";
+import { useModal } from "@hooks/useModal";
+import { AssignCvFormProps } from "@components/AssignCvForm/AssignCvForm.types";
 
 export const EmployeeCv = () => {
   const { employeeId } = useParams();
@@ -21,6 +24,8 @@ export const EmployeeCv = () => {
   const [active, setActive] = useState("-1");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [ComponentToRender, openModal] =
+    useModal<AssignCvFormProps>(AssignCvForm);
 
   const {
     data: userData,
@@ -33,8 +38,8 @@ export const EmployeeCv = () => {
       setError(err.message);
     },
   });
-
-  useEffect(() => {
+  
+  useEffect(() => {    
     if (!userData) return;
 
     const firstCv = userData.user.cvs[0];
@@ -94,6 +99,10 @@ export const EmployeeCv = () => {
     });
   };
 
+  const handleAddIconClick = () => {
+    openModal();
+  };  
+
   return (
     <WrapperDiv>
       {loading ? (
@@ -124,12 +133,13 @@ export const EmployeeCv = () => {
                   </div>
                 );
               })}
-              <StyledButtonWrapper>
+              <StyledButtonWrapper onClick={handleAddIconClick}>
                 <Button>
                   <AddIcon />
                 </Button>
               </StyledButtonWrapper>
             </div>
+            {ComponentToRender}
             <Outlet />
           </>
         )

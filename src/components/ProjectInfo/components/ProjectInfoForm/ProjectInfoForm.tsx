@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import { InfoFormWrapper } from "@components/styled/InfoFormWrapper";
 import { Fieldset } from "@components/Fieldset";
 import { DatePickerFieldset } from "@components/DatePickerFieldset";
@@ -7,17 +7,15 @@ import { useForm } from "react-hook-form";
 import { IProject } from "@interfaces/IProject";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
-import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
-import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
-import { DynamicFieldsetGroupWrapper } from "@components/styled/DynamicFieldsetGroupWrapper";
-import { SkillsInput } from "@pages/EmployeesPage/pages/EmployeeInfo/components/SkillsInput";
+import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
+import { SkillsInput } from "../SkillsInput";
+import { resetProject } from "../../helpers"
 
 export const ProjectInfoForm = memo(
-  ({ onSubmit, data }: ProjectInfoFormProps) => {
-    const [error, setError] = useState("");
+  ({ onSubmit, onError, data }: ProjectInfoFormProps) => {
     const navigate = useNavigate();
-    const { control, handleSubmit, reset, getValues } = useForm<IProject>({
+    const { control, handleSubmit, reset } = useForm<IProject>({
       mode: "all",
       defaultValues: {
         name: "",
@@ -27,6 +25,7 @@ export const ProjectInfoForm = memo(
         domain: "",
         description: "",
         teamSize: 0,
+        techStack: [],
       },
     });
 
@@ -95,13 +94,9 @@ export const ProjectInfoForm = memo(
             control={control}
             name="description"
           />
-          {/* <DynamicFieldsetGroupWrapper>
-            <SkillsInput
-              control={control}
-              skillsInForm={getValues().techStack}
-              onError={(error) => setError(error.message)}
-            />
-          </DynamicFieldsetGroupWrapper> */}
+        </InfoFormWrapper>
+        <InfoFormWrapper>
+          <SkillsInput control={control} onError={onError} />
         </InfoFormWrapper>
 
         <DialogActions>

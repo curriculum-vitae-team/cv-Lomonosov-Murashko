@@ -15,7 +15,7 @@ import { InlineError } from "@components/InlineError";
 import { Loader } from "@components/Loader";
 import { SaveButtonWithAdminAccess } from "@components/FormSaveButton";
 import { resetEmployee } from "./helpers";
-import { CreateUserInput } from "@src/graphql/User/User.interface";
+import { CreateUserInput } from "@graphql/User/User.interface";
 import { LanguagesInput } from "./components/LanguagesInput";
 import { SkillsInput } from "./components/SkillsInput";
 import { Observable } from "./Observable";
@@ -27,7 +27,6 @@ import { authStore } from "@src/stores/AuthStore/AuthStore";
 export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
   const [error, setError] = useState("");
   const { user$ } = authStore;
-
   const navigate = useNavigate();
 
   // TODO: Form must correspond the data sent
@@ -55,8 +54,6 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       navigate(ROUTE.EMPLOYEES);
     },
     onError: (error) => {
-      console.log(error);
-
       setError(error.message);
     },
   });
@@ -86,6 +83,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
     const {
       departmentId,
       positionId,
+      cvsIds,
       profile: { first_name, last_name, languages = [], skills = [] },
     } = data.user;
 
@@ -101,7 +99,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
             skills,
             languages,
           },
-          cvsIds: [],
+          cvsIds: cvsIds,
         },
       },
       update: userCacheUpdate(employeeId),
@@ -119,7 +117,7 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
 
   const checkIfOwnProfile = (data?: GetUserResult) => {
     return user$?.email === data?.user?.email;
-  };
+  };  
 
   return getUserInfoLoading || saveUserLoading ? (
     <Loader />
@@ -138,12 +136,10 @@ export const EmployeeInfo = memo(({ employeeId }: EmployeeInfoProps) => {
       <DynamicFieldsetGroupWrapper>
         <SkillsInput
           control={control}
-          skillsInForm={getValues().user?.profile.skills}
           onError={(error) => setError(error.message)}
         />
         <LanguagesInput
           control={control}
-          languagesInForm={getValues().user?.profile.languages}
           onError={(error) => setError(error.message)}
         />
       </DynamicFieldsetGroupWrapper>
