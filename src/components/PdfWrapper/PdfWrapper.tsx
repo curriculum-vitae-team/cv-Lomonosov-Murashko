@@ -21,7 +21,7 @@ export function PdfWrapper({ variant }: PdfWrapperProps) {
     onError: (error) => {
       setError(error.message);
     },
-  });
+  });  
 
   return (
     <>

@@ -7,10 +7,10 @@ import { useForm } from "react-hook-form";
 import { IProject } from "@interfaces/IProject";
 import { ROUTE } from "@constants/route";
 import { useNavigate } from "react-router";
-import { resetProject } from "../../helpers";
 import { ProjectInfoFormProps } from "./ProjectInfoForm.types";
 import { SaveButtonWithAdminAccess } from "@src/components/FormSaveButton";
 import { SkillsInput } from "../SkillsInput";
+import { resetProject } from "../../helpers"
 
 export const ProjectInfoForm = memo(
   ({ onSubmit, onError, data }: ProjectInfoFormProps) => {
