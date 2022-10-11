@@ -15,7 +15,7 @@ import { resetProject } from "../../helpers"
 export const ProjectInfoForm = memo(
   ({ onSubmit, onError, data }: ProjectInfoFormProps) => {
     const navigate = useNavigate();
-    const { control, handleSubmit, reset } = useForm<IProject>({
+    const { control, handleSubmit, reset, getValues } = useForm<IProject>({
       mode: "all",
       defaultValues: {
         name: "",
