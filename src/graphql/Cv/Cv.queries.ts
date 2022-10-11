@@ -35,9 +35,9 @@ export const GET_FULL_CV_INFO = gql`
       name
       user {
         email
+        position_name
         profile {
           full_name
-          position_name
           skills {
             skill_name
             mastery
@@ -61,13 +61,15 @@ export const GET_FULL_CV_INFO = gql`
       }
       skills {
         skill_name
+        mastery
       }
       languages {
         language_name
+        proficiency
       }
     }
   }
-`
+`;
 
 export const GET_CVS_NAMES = gql`
   query GetCvsNames {

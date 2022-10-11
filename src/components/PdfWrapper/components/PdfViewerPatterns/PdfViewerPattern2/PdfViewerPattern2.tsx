@@ -18,7 +18,9 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
           <Text style={styles.fullname}>
             {user?.profile?.full_name || "<Full name here>"}
           </Text>
-          <Text>{user?.position_name || "<Position>"}</Text>
+          <Text style={styles.positionNames}>
+            {user?.position_name || "<Position>"}
+          </Text>
         </View>
         <View style={styles.sectionRight}>
           <Image style={styles.redLineCenter} src={redLine}></Image>
@@ -35,7 +37,9 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
               </Text>
             ))}
           <div>
-            <Text style={styles.subtitle}>Language proficiency</Text>
+            {user?.profile?.languages && (
+              <Text style={styles.subtitle}>Language proficiency</Text>
+            )}
             {user?.profile?.languages.map((language) => (
               <Text key={language.language_name} style={styles.text}>
                 {language?.language_name +
@@ -63,7 +67,9 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
                 {project.name || "Project name"}
               </Text>
               <Text style={styles.text}>
-                {project?.start_date + " ~ " + project?.end_date}
+                {project?.start_date +
+                  " ~ " +
+                  (project?.end_date || "Till now")}
               </Text>
               <Text style={styles.text}>Team Size ~ {project?.team_size}</Text>
               <Text style={styles.subtitle}>Project Stack</Text>
@@ -74,9 +80,6 @@ export const PdfViewerPattern2 = ({ data }: PdfViewerProps) => {
             </div>
             <div style={styles.projectRight}>
               <Text style={styles.projectText}>{project.description}</Text>
-            </div>
-            <div>
-              <Text></Text>
             </div>
           </div>
         ))}
